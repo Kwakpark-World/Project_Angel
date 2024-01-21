@@ -53,6 +53,8 @@ public class EnemyAI : MonoBehaviour
     private bool isDie = false;
     private bool _isMoving = false;
 
+    private float timer = 0;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -175,11 +177,9 @@ public class EnemyAI : MonoBehaviour
                 }
             }
 
-
-
-            // 현재 방향으로 이동
-            Vector3 patrolDirection = isMovingRight ? Vector3.right : Vector3.left;
-            //patrolDirection.z = 0;  // Z축 고정
+            Vector3 patrolDirection = Random.insideUnitCircle;
+            patrolDirection.y = 0;
+            patrolDirection.z = 0;
 
             Vector3 randomPatrolPos = transform.position + patrolDirection.normalized * 10f;
             OnMoveTrue();
@@ -278,8 +278,7 @@ public class EnemyAI : MonoBehaviour
             if (directionToPlayer.magnitude > float.Epsilon)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-                targetRotation.x = 0;
-                targetRotation.z = 0;
+
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);
             }
         }
@@ -295,7 +294,7 @@ public class EnemyAI : MonoBehaviour
             }
 
             // 움직일 때 SetBool 호출
-            OnAttackFalse();
+             OnAttackFalse();
 
             transform.position = Vector3.MoveTowards(transform.position, _detectedPlayer.position, Time.deltaTime * _movementSpeed);
 
