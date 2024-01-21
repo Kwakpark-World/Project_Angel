@@ -53,6 +53,10 @@ public class EnemyAI : MonoBehaviour
     private bool isDie = false;
     private bool _isMoving = false;
 
+    //임시
+    private bool isReturningToOrigin = false;
+    private float elapsedTimeSinceReturn = 0f;
+
     private float timer = 0;
 
     private void Awake()
@@ -118,9 +122,10 @@ public class EnemyAI : MonoBehaviour
                 {
                     new ActionNode(CheckPatrol),
                     new ActionNode(MoveToLastKnownPlayerPos),
+                    new ActionNode(MoveToOriginPosition),
                 }
             ),
-            new ActionNode(MoveToOriginPosition),
+            
             }
         );
     }
@@ -130,63 +135,27 @@ public class EnemyAI : MonoBehaviour
         // 플레이어가 감지되지 않았는지 확인
         if (_detectedPlayer == null && isDie == false)
         {
-            // IDLE 타이머 갱신
-            if (idleTimer > 0f)
+            // 플레이어를 감지한 후 3초 동안 감지되지 않으면 원래 위치로 돌아가기 시작
+            if (isReturningToOrigin)
             {
-                idleTimer -= Time.deltaTime;
+                elapsedTimeSinceReturn += Time.deltaTime;
 
-                // IDLE 타이머가 종료되면 다시 움직임
-                if (idleTimer <= 0f)
+                if (elapsedTimeSinceReturn >= 3)
                 {
-                    OnMoveTrue();
-                    return INode.ENodeState.ENS_Running;
+                    isReturningToOrigin = false;
+
+                    // 원래 위치로 돌아가는 로직 추가
+                    return MoveToOriginPosition();
                 }
 
-                // 아직 IDLE 상태 유지 중
-                OnIdleTrue();
-                return INode.ENodeState.ENS_IDLE;
             }
 
-            patrolTimer += Time.deltaTime;
-
-            // 정찰 지속 시간 확인
-            if (patrolTimer >= patrolDuration)
-            {
-                // 랜덤한 확률로 IDLE 상태로 전환
-                if (Random.Range(0f, 1f) < idleProbability)
-                {
-                    OnIdleTrue();  // IDLE 상태로 전환
-                    idleTimer = idleDuration;  // IDLE 타이머 설정
-                    return INode.ENodeState.ENS_IDLE;
-                }
-
-                // 방향 전환 및 타이머 초기화
-                isMovingRight = !isMovingRight;
-                patrolTimer = 0f;
-
-                // 이동 방향에 맞춰 캐릭터 회전
-                if (isMovingRight)
-                {
-                    // 오른쪽으로 회전
-                    transform.rotation = Quaternion.Euler(0f, 450, 0);
-                }
-                else
-                {
-                    // 왼쪽으로 회전
-                    transform.rotation = Quaternion.Euler(0f, 270, 0);
-                }
-            }
-
-            Vector3 patrolDirection = Random.insideUnitCircle;
-            patrolDirection.y = 0;
-            patrolDirection.z = 0;
-
+            Vector3 patrolDirection = Vector3.zero;
             Vector3 randomPatrolPos = transform.position + patrolDirection.normalized * 10f;
             OnMoveTrue();
 
             if (Vector3.SqrMagnitude(randomPatrolPos - transform.position) < float.Epsilon * float.Epsilon)
             {
-                // 이미 무작위 정찰 위치에 도달함
                 return INode.ENodeState.ENS_Success;
             }
             else
@@ -196,11 +165,14 @@ public class EnemyAI : MonoBehaviour
                 return INode.ENodeState.ENS_Running;
             }
         }
-
-        // 플레이어가 감지됐으므로 이 부분의 동작은 실패로 반환
-        return INode.ENodeState.ENS_Failure;
+        else
+        {
+            // 플레이어가 감지됐으므로 이 부분의 동작은 실패로 반환
+            elapsedTimeSinceReturn = 0f;
+            isReturningToOrigin = false;
+            return INode.ENodeState.ENS_Failure;
+        }
     }
-
 
     #region Attack Node
 
@@ -257,6 +229,10 @@ public class EnemyAI : MonoBehaviour
 
                     _lastKnownPlayerPos = _detectedPlayer.position;
 
+                    // 원래 위치로 돌아가는 타이머 및 상태 초기화
+                    elapsedTimeSinceReturn = 0f;
+                    isReturningToOrigin = false;
+
                     RotateTowardsPlayer();
                     return INode.ENodeState.ENS_Success;
                 }
@@ -265,6 +241,10 @@ public class EnemyAI : MonoBehaviour
 
         // Player가 감지되지 않았을 경우
         _detectedPlayer = null;
+
+        // 플레이어를 감지하지 않았을 때, 원래 위치로 돌아가는 상태 설정
+        isReturningToOrigin = true;
+
         return INode.ENodeState.ENS_Failure;
     }
 
@@ -310,15 +290,15 @@ public class EnemyAI : MonoBehaviour
     #region  Move Origin Pos Node
     INode.ENodeState MoveToOriginPosition()
     {
-        if (Vector3.SqrMagnitude(_originPos - transform.position) < float.Epsilon * float.Epsilon)
+/*        if (Vector3.SqrMagnitude(_originPos - transform.position) <= float.Epsilon * float.Epsilon)
         {
-            return INode.ENodeState.ENS_Success;
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, _originPos, Time.deltaTime * _movementSpeed);
-            return INode.ENodeState.ENS_Failure;
-        }
+            Debug.Log("3");
+            return INode.ENodeState.ENS_IDLE;
+        }*/
+
+        transform.position = Vector3.MoveTowards(transform.position, _originPos, Time.deltaTime * _movementSpeed);
+
+        return INode.ENodeState.ENS_Running;
     }
 
     INode.ENodeState MoveToLastKnownPlayerPos()
