@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyAI : MonoBehaviour
@@ -56,6 +57,7 @@ public class EnemyAI : MonoBehaviour
     //임시
     private bool isReturningToOrigin = false;
     private float elapsedTimeSinceReturn = 0f;
+    NavMeshAgent _navMeshAgent;
 
     private float timer = 0;
 
@@ -68,6 +70,8 @@ public class EnemyAI : MonoBehaviour
         _originPos = transform.position;
 
         //player = GetComponent<Player>();
+
+        _navMeshAgent = GetComponent<NavMeshAgent>();
 
         _previousHealth = Enemy_CurrentHp;
     }
@@ -268,15 +272,14 @@ public class EnemyAI : MonoBehaviour
     {
         if (_detectedPlayer != null)
         {
+            _navMeshAgent.SetDestination(_detectedPlayer.position);
+
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
                 return INode.ENodeState.ENS_Success;
             }
 
-            // 움직일 때 SetBool 호출
             OnAttackFalse();
-
-            transform.position = Vector3.MoveTowards(transform.position, _detectedPlayer.position, Time.deltaTime * _movementSpeed);
 
             return INode.ENodeState.ENS_Running;
         }
@@ -290,29 +293,26 @@ public class EnemyAI : MonoBehaviour
     #region  Move Origin Pos Node
     INode.ENodeState MoveToOriginPosition()
     {
-        /*        if (Vector3.SqrMagnitude(_originPos - transform.position) <= float.Epsilon * float.Epsilon)
-                {
-                    Debug.Log("3");
-                    return INode.ENodeState.ENS_IDLE;
-                }*/
+        _navMeshAgent.SetDestination(_originPos);
 
-        transform.position = Vector3.MoveTowards(transform.position, _originPos, Time.deltaTime * _movementSpeed);
+        if (_navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance)
+        {
+            return INode.ENodeState.ENS_Success;
+        }
 
         return INode.ENodeState.ENS_Running;
     }
 
     INode.ENodeState MoveToLastKnownPlayerPos()
     {
-        if (Vector3.SqrMagnitude(_lastKnownPlayerPos - transform.position) < float.Epsilon * float.Epsilon)
+        _navMeshAgent.SetDestination(_lastKnownPlayerPos);
+
+        if (_navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance)
         {
             return INode.ENodeState.ENS_Success;
         }
-        else
-        {
-            OnIdleTrue();
-            transform.position = Vector3.MoveTowards(transform.position, _lastKnownPlayerPos, Time.deltaTime * _movementSpeed);
-            return INode.ENodeState.ENS_Failure;
-        }
+
+        return INode.ENodeState.ENS_Failure;
     }
     #endregion
 
