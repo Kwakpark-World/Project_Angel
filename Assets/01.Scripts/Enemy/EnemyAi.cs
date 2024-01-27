@@ -37,9 +37,9 @@ public class EnemyAI : MonoBehaviour
     Vector3 _originPos = default;
     BehaviorTreeRunner _BTRunner = null;
     Transform _detectedPlayer = null;
-    Animator _animator = null;
+    Animator _animator;
 
-    //Player player;
+    FakePlayer player;
     public Collider weaponCollider;
 
     private bool Isstride;
@@ -58,6 +58,7 @@ public class EnemyAI : MonoBehaviour
     private bool isReturningToOrigin = false;
     private float elapsedTimeSinceReturn = 0f;
     NavMeshAgent _navMeshAgent;
+    CharacterController _characterController;
 
     private float timer = 0;
 
@@ -69,7 +70,7 @@ public class EnemyAI : MonoBehaviour
 
         _originPos = transform.position;
 
-        //player = GetComponent<Player>();
+        player = GetComponent<FakePlayer>();
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -149,17 +150,21 @@ public class EnemyAI : MonoBehaviour
                     isReturningToOrigin = false;
 
                     // 원래 위치로 돌아가는 로직 추가
+                    //OnMoveTrue();
                     return MoveToOriginPosition();
+
                 }
 
             }
 
             Vector3 patrolDirection = Vector3.zero;
             Vector3 randomPatrolPos = transform.position + patrolDirection.normalized * 10f;
-            OnMoveTrue();
+            //OnIdleTrue();
+            Debug.Log("!");
 
             if (Vector3.SqrMagnitude(randomPatrolPos - transform.position) < float.Epsilon * float.Epsilon)
             {
+                OnIdleTrue();
                 return INode.ENodeState.ENS_Success;
             }
             else
@@ -274,13 +279,14 @@ public class EnemyAI : MonoBehaviour
         {
             _navMeshAgent.SetDestination(_detectedPlayer.position);
 
+           
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
+                OnAttackTrue();
                 return INode.ENodeState.ENS_Success;
             }
 
             OnAttackFalse();
-
             return INode.ENodeState.ENS_Running;
         }
         else
@@ -297,6 +303,7 @@ public class EnemyAI : MonoBehaviour
 
         if (_navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance)
         {
+            OnIdleTrue();
             return INode.ENodeState.ENS_Success;
         }
 
@@ -350,10 +357,10 @@ public class EnemyAI : MonoBehaviour
     private void OnIdleTrue()
     {
         if (isDie == false)
-            SetAnimatorBools(true, false, false, false, false);
+            SetAnimatorBools(false, false, false, false, false);
     }
 
-    public void OnAttackTrue()
+    private void OnAttackTrue()
     {
         if (isHit == false)
         {
