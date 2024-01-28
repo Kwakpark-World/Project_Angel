@@ -296,7 +296,7 @@ Transform:
   m_GameObject: {fileID: 60609517}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.54999995, z: 0}
+  m_LocalPosition: {x: 0, y: 1.042, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -860,7 +860,7 @@ Transform:
   m_GameObject: {fileID: 1854134291}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.77, z: 19.3}
+  m_LocalPosition: {x: 0, y: 0.77, z: 18.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1536,7 +1536,7 @@ Transform:
   m_GameObject: {fileID: 2094001110128337051}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 1.017, z: 4}
+  m_LocalPosition: {x: -0.2, y: 0.94, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1719,12 +1719,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1604603384504613409}
-  - component: {fileID: 4658022265981804640}
   - component: {fileID: 4658022265981804635}
   - component: {fileID: 4658022265981804639}
   - component: {fileID: 4658022265981804638}
   - component: {fileID: 4658022265981804637}
   - component: {fileID: 4658022265981804636}
+  - component: {fileID: 4658022265981804640}
+  - component: {fileID: 4658022265981804641}
   m_Layer: 7
   m_Name: DarkKnight2_skin1
   m_TagString: Untagged
@@ -2103,7 +2104,7 @@ Transform:
   m_GameObject: {fileID: 2975810340933467441}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: -0.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2650,7 +2651,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0.5
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4658022265981804637
@@ -2696,8 +2697,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72d15d0b3c463646af565e51eaee830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!143 &4658022265981804640
-CharacterController:
+--- !u!136 &4658022265981804640
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2706,22 +2707,46 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Height: 2
+  m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45.31
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.8
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Height: 1.5994368
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.29971838, z: 0}
+--- !u!54 &4658022265981804641
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094001110128337051}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &4755002147470881336
 Transform:
   m_ObjectHideFlags: 0
