@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundState
@@ -14,12 +14,15 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.Enter();
         _player.StopImmediately(false);
+        _player.PlayerInput.QSkillEvent += QSkillHandle;
+        _player.PlayerInput.ESkillEvent += ESkillHandle;
     }
 
     public override void Exit()
     {
+        _player.PlayerInput.QSkillEvent -= QSkillHandle;
+        _player.PlayerInput.ESkillEvent -= ESkillHandle;
         base.Exit();
-
     }
 
     public override void UpdateState()
@@ -34,6 +37,18 @@ public class PlayerIdleState : PlayerGroundState
         {
             _stateMachine.ChangeState(PlayerStateEnum.Move);
         }
+
     }
+
+    private void ESkillHandle()
+    {
+        _stateMachine.ChangeState(PlayerStateEnum.ESkill);
+    }
+
+    private void QSkillHandle()
+    {
+        _stateMachine.ChangeState(PlayerStateEnum.QSkill);
+    }
+
 
 }

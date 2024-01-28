@@ -26,7 +26,19 @@ public class PlayerMoveState : PlayerGroundState
         float xInput = _player.PlayerInput.XInput;
         float yInput = _player.PlayerInput.YInput;
 
-        _player.SetVelocity(xInput * _player.moveSpeed, _rigidbody.velocity.y, yInput * _player.moveSpeed);
+        Vector3 moveDir = new Vector3(xInput, 0, yInput).normalized;
+
+        Debug.Log("YValeu : " + GameManager.Instance.MainCam.transform.rotation.y);
+
+        moveDir = Quaternion.Euler(0, 45, 0) * moveDir;
+        moveDir *= _player.moveSpeed;
+
+        if (moveDir.sqrMagnitude > 0)
+            _player.transform.rotation = Quaternion.LookRotation(moveDir);
+        
+        moveDir.y = _rigidbody.velocity.y;
+
+        _player.SetVelocity(moveDir);
 
         if (Mathf.Abs(xInput) < 0.05f && Mathf.Abs(yInput) < 0.05f)
         {

@@ -10,6 +10,9 @@ public enum PlayerStateEnum
     Fall,
     Dash,
     MeleeAttack,
+    QSkill,
+    ESkill,
+    Defense
 }
 
 public class PlayerStateMachine

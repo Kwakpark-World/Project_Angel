@@ -27,16 +27,10 @@ public class PlayerMeleeAttackState : PlayerState
 
         _player.AnimatorCompo.speed = _player.attackSpeed;
 
-        float attackDirection = _player.FacingDirection;
         float xInput = _player.PlayerInput.XInput;
 
-        if (Mathf.Abs(xInput) > 0.05f)
-        {
-            attackDirection = xInput;
-        }
-
         Vector3 move = _player.attackMovement[_comboCounter];
-        _player.SetVelocity(move.x * attackDirection, move.y, move.z * attackDirection);
+        _player.SetVelocity(new Vector3(move.x, move.y, move.z));
 
         _player.StartDelayAction(0.1f, () =>
         {

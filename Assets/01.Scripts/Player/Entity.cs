@@ -17,10 +17,6 @@ public class Entity : MonoBehaviour
 
     [SerializeField] protected float _gravity = -9.8f;
     #endregion
-    //
-    #region facing
-    public int FacingDirection { get; private set; } = 1; // ¿À¸¥ÂÊ 1, ¿ÞÂÊ -1
-    #endregion 
 
     protected virtual void Awake()
     {
@@ -41,34 +37,10 @@ public class Entity : MonoBehaviour
         RigidbodyCompo.velocity += new Vector3(0, _gravity, 0) * Time.deltaTime;
     }
 
-    #region flip control
-    public virtual void Flip()
-    {
-        FacingDirection = FacingDirection * -1;
-        transform.Rotate(0, 180, 0);
-    }
-
-    public virtual void FlipController(float x)
-    {
-        bool goToRight = x > 0 && FacingDirection < 0;
-        bool goToLeft = x < 0 && FacingDirection > 0;
-
-        if (goToRight || goToLeft)
-        {
-            Flip();
-        }
-
-    }
-    #endregion
-
     #region velocity control
-    public void SetVelocity(float x, float y, float z, bool doNotFlip = false)
+    public void SetVelocity(Vector3 value)
     {
-        RigidbodyCompo.velocity = new Vector3(x, y, z);
-        if (!doNotFlip)
-        {
-            FlipController(x);
-        }
+        RigidbodyCompo.velocity = value;
     }
 
     public void StopImmediately(bool withYAxis)

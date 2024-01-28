@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerDashState : PlayerState
 {
     private float _dashStartTime;
-    private float _dashDirection;
+    private Vector3 _dashDirection;
 
     //private SkinnedMeshRenderer _skinnedMeshRenderer;
 
@@ -18,8 +18,6 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
 
-        float xInput = _player.PlayerInput.XInput;
-        _dashDirection = Mathf.Abs(xInput) > 0.05f ? xInput : _player.FacingDirection;
         _dashStartTime = Time.time;
     }
 
@@ -31,7 +29,10 @@ public class PlayerDashState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        _player.SetVelocity(_player.dashSpeed * _dashDirection, 0, 0);
+
+        _dashDirection = _player.transform.forward;
+
+        _player.SetVelocity(_dashDirection * _player.dashSpeed);
 
         if (_dashStartTime + _player.dashDuration <= Time.time)
         {
