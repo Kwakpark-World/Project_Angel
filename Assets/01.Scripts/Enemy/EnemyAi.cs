@@ -249,12 +249,11 @@ public class EnemyAI : MonoBehaviour
         }
 
         // Player가 감지되지 않았을 경우
+        OnIdleTrue();
         _detectedPlayer = null;
 
         // 플레이어를 감지하지 않았을 때, 원래 위치로 돌아가는 상태 설정
-        isReturningToOrigin = true;
-
-        return INode.ENodeState.ENS_Failure;
+        return MoveToOriginPosition();
     }
 
 
@@ -291,6 +290,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
+            
             return INode.ENodeState.ENS_Failure;
         }
     }
@@ -301,12 +301,12 @@ public class EnemyAI : MonoBehaviour
     {
         _navMeshAgent.SetDestination(_originPos);
 
-        if (_navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance)
+        if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
         {
             OnIdleTrue();
             return INode.ENodeState.ENS_Success;
         }
-
+        OnMoveTrue();
         return INode.ENodeState.ENS_Running;
     }
 
