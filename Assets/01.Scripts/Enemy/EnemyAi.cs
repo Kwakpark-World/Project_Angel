@@ -175,14 +175,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
-                // 이동을 멈추도록 설정
-                if (_navMeshAgent != null)
-                {
-                    _navMeshAgent.isStopped = true;
-                }
-
-                _isMoving = false;
-                Debug.Log("1");
+                
                 return INode.ENodeState.ENS_Success;
             }
         }
@@ -356,8 +349,16 @@ public class EnemyAI : MonoBehaviour
     {
         if (isHit == false)
         {
-            SetAnimatorBools(false, true, false, false, false);
+            // 이동을 멈추도록 설정
+            if (_navMeshAgent != null)
+            {
+                _navMeshAgent.isStopped = true;
+            }
+
             _isMoving = false;
+
+            SetAnimatorBools(false, true, false, false, false);
+            
         }
     }
 

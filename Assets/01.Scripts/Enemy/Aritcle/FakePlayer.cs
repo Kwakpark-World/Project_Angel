@@ -4,18 +4,30 @@ using UnityEngine;
 
 public class FakePlayer : MonoBehaviour
 {
-    private void Start()
+    EnemyAI enemyAI;
+    EnemyStats enemyStats;
+
+    public float damage;
+
+    private void Awake()
     {
-        // 예시로 FakePlayer가 생성될 때 적의 데미지를 받도록 함
-        EnemyAI enemyAI = FindObjectOfType<EnemyAI>(); // 적의 AI 스크립트를 찾아옴
+        enemyAI = FindObjectOfType<EnemyAI>();
+        enemyStats = FindObjectOfType<EnemyStats>();
     }
 
-    public void TakeDamage(float damage)
+    private void Start()
     {
-        // 여기에 데미지를 받는 로직 추가
-        // 이 예시에서는 단순히 데미지만 출력
-        Debug.Log("FakePlayer이 " + damage + "의 데미지를 받았습니다.");
+        
 
-        // 여기에서 필요한 추가적인 로직을 구현할 수 있습니다.
+        damage = enemyStats._damage;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (enemyAI != null)
+        {
+            enemyAI.OnDamage(damage);
+            Debug.Log("아야");
+        }
     }
 }
