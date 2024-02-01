@@ -12,27 +12,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     float _meleeAttackRange = 5f;
 
-    [Header("Movement")]
-    [SerializeField]
-    float _movementSpeed = 10f;
+    [Header("Enemy Stats")]
+    public EnemyStats enemyStats;
 
-    [Header("EnemyHP")]
-    [SerializeField]
-    public float Enemy_MaxHp;
-    [SerializeField]
-    public float Enemy_CurrentHp;
-
-    [Header("stride")]
-    float patrolTimer = 0f;
-    float patrolDuration = 2f;
-    bool isMovingRight = true;
-
-    [Header("Damage")]
-    public float meleeAttackDamage = 10;
-
-    [Header("Idle")]
-    float idleTimer = 0f;
-    float idleDuration = 2f;
+    private float timer;
 
     Vector3 _originPos = default;
     BehaviorTreeRunner _BTRunner = null;
@@ -60,8 +43,6 @@ public class EnemyAI : MonoBehaviour
     NavMeshAgent _navMeshAgent;
     CharacterController _characterController;
 
-    private float timer = 0;
-
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -74,19 +55,23 @@ public class EnemyAI : MonoBehaviour
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        _previousHealth = Enemy_CurrentHp;
+    }
+
+    private void Start()
+    {
+        timer = Time.deltaTime;
     }
 
     private void Update()
     {
-        if (Enemy_CurrentHp <= 0)
+        if (enemyStats._currentHp <= 0)
         {
             _BTRunner.Operate();
             OnDieTrue();
             isDie = true;
         }
 
-        if (Enemy_CurrentHp < _previousHealth)
+        if (enemyStats._currentHp < _previousHealth)
         {
             OnHitTrue();
             OnAttackFalse();
@@ -96,7 +81,7 @@ public class EnemyAI : MonoBehaviour
 
         _BTRunner.Operate();
 
-        _previousHealth = Enemy_CurrentHp;
+        _previousHealth = enemyStats._currentHp;
     }
 
     INode SettingBT()
@@ -160,7 +145,6 @@ public class EnemyAI : MonoBehaviour
             Vector3 patrolDirection = Vector3.zero;
             Vector3 randomPatrolPos = transform.position + patrolDirection.normalized * 10f;
             //OnIdleTrue();
-            Debug.Log("!");
 
             if (Vector3.SqrMagnitude(randomPatrolPos - transform.position) < float.Epsilon * float.Epsilon)
             {
@@ -170,7 +154,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 OnDie();
-                transform.position = Vector3.MoveTowards(transform.position, randomPatrolPos, Time.deltaTime * _movementSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, randomPatrolPos, Time.deltaTime * enemyStats._moveSpeed);
                 return INode.ENodeState.ENS_Running;
             }
         }
@@ -191,6 +175,14 @@ public class EnemyAI : MonoBehaviour
         {
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
+                // 이동을 멈추도록 설정
+                if (_navMeshAgent != null)
+                {
+                    _navMeshAgent.isStopped = true;
+                }
+
+                _isMoving = false;
+                Debug.Log("1");
                 return INode.ENodeState.ENS_Success;
             }
         }
@@ -301,7 +293,7 @@ public class EnemyAI : MonoBehaviour
     {
         _navMeshAgent.SetDestination(_originPos);
 
-        if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+        if (_navMeshAgent.remainingDistance <= 0.1f)
         {
             OnIdleTrue();
             return INode.ENodeState.ENS_Success;
@@ -325,7 +317,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnDie()
     {
-        if (Enemy_CurrentHp <= 0)
+        if (enemyStats._currentHp <= 0)
         {
             OnDieTrue();
             deathPosition = transform.position;
@@ -377,6 +369,11 @@ public class EnemyAI : MonoBehaviour
     private void OnAttackFalse()
     {
         SetAnimatorBools(false, false, true, false, false);
+        if (_navMeshAgent != null)
+        {
+            _navMeshAgent.isStopped = false;
+        }
+
         _isMoving = true;
     }
 
@@ -391,15 +388,21 @@ public class EnemyAI : MonoBehaviour
 
     public void OnDieTrue()
     {
-        if (Enemy_CurrentHp <= 0)
+        if (enemyStats._currentHp <= 0)
         {
             SetAnimatorBools(false, false, false, false, true);
+        }
+        timer += Time.deltaTime;
+        if (timer > 2.5f)
+        {
+            gameObject.SetActive(false);
         }
     }
     #endregion
 
     public void OnDamage(float damage)
     {
-        Enemy_CurrentHp -= damage;
+        damage = enemyStats._damage;
+        enemyStats._currentHp -= damage;
     }
 }
