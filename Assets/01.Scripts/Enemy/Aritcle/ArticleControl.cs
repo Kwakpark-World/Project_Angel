@@ -5,14 +5,13 @@ using UnityEngine;
 public class ArticleControl : MonoBehaviour
 {
     private EnemyAI enemyAI;
-    //public EnemyStats enemyStats;
 
     void Awake()
     {
         enemyAI = GetComponent<EnemyAI>();
 
-        //enemyStats._maxHp = 40;
-        //enemyStats._currentHp = enemyStats._maxHp;
+        enemyAI.Enemy_MaxHp = 40;
+        enemyAI.Enemy_CurrentHp = enemyAI.Enemy_MaxHp;
     }
 
     void Update()
