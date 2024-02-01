@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class FakePlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    EnemyAI enemyAI;
+    EnemyStats enemyStats;
+
+    public float damage;
+
+    private void Awake()
     {
-        
+        enemyAI = FindObjectOfType<EnemyAI>();
+        enemyStats = FindObjectOfType<EnemyStats>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
         
+
+        damage = enemyStats._damage;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (enemyAI != null)
+        {
+            enemyAI.OnDamage(damage);
+            Debug.Log("¾Æ¾ß");
+        }
     }
 }
