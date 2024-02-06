@@ -54,10 +54,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
 
     public void OnDefense(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            isDefense = context.ReadValue<bool>();
-        }
+        isDefense = context.performed;
     }
 
     public void OnQSkill(InputAction.CallbackContext context)
