@@ -28,7 +28,6 @@ public class ArticleControl : MonoBehaviour
         Vector3 leftDirection = GetDirectionFromLocal(Vector3.left);
         if (RaycastAndAttack(leftDirection, out leftHit))
         {
-            Debug.Log("왼쪽 방향으로 공격");
             //leftHit.collider.GetComponent<Player>().TakeDamage(); // 플레이어에게 데미지 입히기 예시
         }
 
@@ -36,7 +35,6 @@ public class ArticleControl : MonoBehaviour
         Vector3 rightDirection = GetDirectionFromLocal(Vector3.right);
         if (RaycastAndAttack(rightDirection, out rightHit))
         {
-            Debug.Log("오른쪽 방향으로 공격");
             //rightHit.collider.GetComponent<Player>().TakeDamage(); // 플레이어에게 데미지 입히기 예시
         }
     }
@@ -52,7 +50,7 @@ public class ArticleControl : MonoBehaviour
         // 레이 발사
         if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity, LayerMask.GetMask("Player")))
         {
-            FakePlayer player = hit.collider.GetComponent<FakePlayer>();
+            Player player = hit.collider.GetComponent<Player>();
             return player != null;
         }
 

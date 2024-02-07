@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator))]
 public class EnemyAI : MonoBehaviour
 {
+    public EnemyType _enemyTypes;
     [Header("Range")]
     [SerializeField]
     float _detectRange = 10f;
@@ -22,17 +23,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     public float Enemy_CurrentHp;
 
-    [Header("stride")]
-    float patrolTimer = 0f;
-    float patrolDuration = 2f;
-    bool isMovingRight = true;
-
     [Header("Damage")]
     public float meleeAttackDamage = 10;
-
-    [Header("Idle")]
-    float idleTimer = 0f;
-    float idleDuration = 2f;
 
     Vector3 _originPos = default;
     BehaviorTreeRunner _BTRunner = null;
@@ -41,6 +33,7 @@ public class EnemyAI : MonoBehaviour
 
     Player player;
     public Collider weaponCollider;
+    public GameObject WeaponSpawn;
 
     private bool Isstride;
     Vector3 _lastKnownPlayerPos = default;
@@ -62,6 +55,12 @@ public class EnemyAI : MonoBehaviour
 
     private float timer = 0;
 
+    public enum EnemyType
+    { 
+        knight,
+        archer
+    }
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -75,6 +74,14 @@ public class EnemyAI : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         _previousHealth = Enemy_CurrentHp;
+    }
+
+    private void Start()
+    {
+        if(_enemyTypes == EnemyType.archer)
+        {
+            //gameObject.AddComponent<>
+        }
     }
 
     private void Update()
@@ -206,6 +213,14 @@ public class EnemyAI : MonoBehaviour
             if (isHit == false)
             {
                 OnAttackTrue();
+                if (_enemyTypes == EnemyType.archer)
+                {
+                    GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
+
+                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
+                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
+                    Debug.Log("1");
+                }
             }
             else
             {
@@ -281,6 +296,7 @@ public class EnemyAI : MonoBehaviour
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
                 OnAttackTrue();
+               
                 return INode.ENodeState.ENS_Success;
             }
 

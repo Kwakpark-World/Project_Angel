@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class EnemySword : MonoBehaviour
 {
     public float meleeAttackDamage = 10f;
     private bool canDamage = true;
