@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator))]
 public class EnemyAI : MonoBehaviour
 {
+    public EnemyType _enemyTypes;
     [Header("Range")]
     [SerializeField]
     float _detectRange = 10f;
@@ -22,25 +23,17 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     public float Enemy_CurrentHp;
 
-    [Header("stride")]
-    float patrolTimer = 0f;
-    float patrolDuration = 2f;
-    bool isMovingRight = true;
-
     [Header("Damage")]
     public float meleeAttackDamage = 10;
-
-    [Header("Idle")]
-    float idleTimer = 0f;
-    float idleDuration = 2f;
 
     Vector3 _originPos = default;
     BehaviorTreeRunner _BTRunner = null;
     Transform _detectedPlayer = null;
     Animator _animator;
 
-    FakePlayer player;
+    Player player;
     public Collider weaponCollider;
+    public GameObject WeaponSpawn;
 
     private bool Isstride;
     Vector3 _lastKnownPlayerPos = default;
@@ -62,6 +55,12 @@ public class EnemyAI : MonoBehaviour
 
     private float timer = 0;
 
+    public enum EnemyType
+    { 
+        knight,
+        archer
+    }
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -70,11 +69,19 @@ public class EnemyAI : MonoBehaviour
 
         _originPos = transform.position;
 
-        player = GetComponent<FakePlayer>();
+        player = GetComponent<Player>();
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         _previousHealth = Enemy_CurrentHp;
+    }
+
+    private void Start()
+    {
+        if(_enemyTypes == EnemyType.archer)
+        {
+            //gameObject.AddComponent<>
+        }
     }
 
     private void Update()
@@ -160,7 +167,6 @@ public class EnemyAI : MonoBehaviour
             Vector3 patrolDirection = Vector3.zero;
             Vector3 randomPatrolPos = transform.position + patrolDirection.normalized * 10f;
             //OnIdleTrue();
-            Debug.Log("!");
 
             if (Vector3.SqrMagnitude(randomPatrolPos - transform.position) < float.Epsilon * float.Epsilon)
             {
@@ -207,6 +213,14 @@ public class EnemyAI : MonoBehaviour
             if (isHit == false)
             {
                 OnAttackTrue();
+                if (_enemyTypes == EnemyType.archer)
+                {
+                    GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
+
+                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
+                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
+                    Debug.Log("1");
+                }
             }
             else
             {
@@ -282,6 +296,7 @@ public class EnemyAI : MonoBehaviour
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
                 OnAttackTrue();
+               
                 return INode.ENodeState.ENS_Success;
             }
 
@@ -290,7 +305,6 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            
             return INode.ENodeState.ENS_Failure;
         }
     }
@@ -301,14 +315,21 @@ public class EnemyAI : MonoBehaviour
     {
         _navMeshAgent.SetDestination(_originPos);
 
-        if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+        if (_navMeshAgent.remainingDistance <= 0.1f && _isMoving)
         {
             OnIdleTrue();
             return INode.ENodeState.ENS_Success;
         }
-        OnMoveTrue();
+
+        if (_isMoving)
+        {
+            OnMoveTrue();
+        }
+
         return INode.ENodeState.ENS_Running;
     }
+
+
 
     INode.ENodeState MoveToLastKnownPlayerPos()
     {
@@ -365,19 +386,33 @@ public class EnemyAI : MonoBehaviour
         if (isHit == false)
         {
             SetAnimatorBools(false, true, false, false, false);
+
+            // 이동을 멈추도록 설정
+            if (_navMeshAgent != null)
+            {
+                _navMeshAgent.isStopped = true;
+            }
+
             _isMoving = false;
         }
-    }
-
-    private void OnMoveTrue()
-    {
-        SetAnimatorBools(false, false, true, false, false);
     }
 
     private void OnAttackFalse()
     {
         SetAnimatorBools(false, false, true, false, false);
+
+        // 이동을 다시 시작하도록 설정
+        if (_navMeshAgent != null)
+        {
+            _navMeshAgent.isStopped = false;
+        }
+
         _isMoving = true;
+    }
+
+    private void OnMoveTrue()
+    {
+        SetAnimatorBools(false, false, true, false, false);
     }
 
     private void OnHitTrue()
