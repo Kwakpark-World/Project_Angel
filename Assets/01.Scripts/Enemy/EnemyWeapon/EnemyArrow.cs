@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class EnemyArrow : MonoBehaviour
 {
-    public Transform target; // 플레이어의 위치
+    private Transform target; // 플레이어의 위치
     public float speed = 10f; // 화살의 속도
     private float gravity = 9.8f; // 중력 가속도
     private Rigidbody rb;
 
     void Start()
     {
+        target = GameManager.Instance.player.transform;
         rb = GetComponent<Rigidbody>();
     }
 
