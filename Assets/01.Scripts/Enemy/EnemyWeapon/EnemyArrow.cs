@@ -9,12 +9,15 @@ public class EnemyArrow : MonoBehaviour
     private float gravity = 9.8f; // 중력 가속도
     private Rigidbody rb;
 
+    private float timer;
+
     void Start()
     {
         target = GameManager.Instance.player.transform;
         rb = GetComponent<Rigidbody>();
+        timer += Time.deltaTime;
     }
-
+    
     void Update()
     {
         // 플레이어를 향해 회전
@@ -36,12 +39,21 @@ public class EnemyArrow : MonoBehaviour
         // 수평 거리에 따른 시간 계산
         float time = displacementXZ / speed;
 
-        // 수직 속도 계산
-        float velocityY = displacementY / time - 0.5f * gravity * time;
+        // 아래로 떨어지는 포물선 운동의 초기 속도 계산
+        float initialVelocityY = -Mathf.Abs(displacementY) / time + 0.5f * gravity * time;
 
         // 수평 속도 계산
         Vector3 velocityXZ = (targetPosition - currentPosition).normalized * speed;
 
-        return velocityXZ + Vector3.up * velocityY;
+        return velocityXZ + Vector3.up * initialVelocityY; // 아래로 떨어지도록 Vector3.up 사용
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
+
