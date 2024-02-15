@@ -33,6 +33,8 @@ public class EnemyArrow : MonoBehaviour
     // 포물선 운동을 위한 초기 속도 계산
     Vector3 CalculateInitialVelocity(Vector3 targetPosition, Vector3 currentPosition, float speed)
     {
+        float verticalSpeedCoefficient = 5f;
+
         float displacementY = targetPosition.y - currentPosition.y;
         float displacementXZ = Mathf.Sqrt((targetPosition - currentPosition).sqrMagnitude - displacementY * displacementY);
 
@@ -40,7 +42,7 @@ public class EnemyArrow : MonoBehaviour
         float time = displacementXZ / speed;
 
         // 아래로 떨어지는 포물선 운동의 초기 속도 계산
-        float initialVelocityY = -Mathf.Abs(displacementY) / time + 0.5f * gravity * time;
+        float initialVelocityY = -Mathf.Abs(displacementY) / time * verticalSpeedCoefficient + 0.5f * gravity * time;
 
         // 수평 속도 계산
         Vector3 velocityXZ = (targetPosition - currentPosition).normalized * speed;
