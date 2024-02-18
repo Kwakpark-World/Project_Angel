@@ -25,6 +25,8 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Damage")]
     public float meleeAttackDamage = 10;
+    [Header("Partical")]
+    public ParticleSystem Attack1Particle;
 
     Vector3 _originPos = default;
     BehaviorTreeRunner _BTRunner = null;
@@ -200,6 +202,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
+                
                 return INode.ENodeState.ENS_Success;
             }
         }
@@ -389,7 +392,15 @@ public class EnemyAI : MonoBehaviour
         if (isHit == false)
         {
             SetAnimatorBools(false, true, false, false, false);
+            
+            if(timer > 1.7f)
+            {
+                Attack1Particle.Play();
+                timer = 0;
+            }
 
+            //Attack1Particle.Stop();
+           
             // 이동을 멈추도록 설정
             if (_navMeshAgent != null)
             {
