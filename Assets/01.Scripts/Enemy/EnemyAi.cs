@@ -80,8 +80,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-        
-        if(_enemyTypes == EnemyType.archer)
+        if (_enemyTypes == EnemyType.archer)
         {
             //gameObject.AddComponent<>
         }
@@ -397,6 +396,15 @@ public class EnemyAI : MonoBehaviour
             {
                 Attack1Particle.Play();
                 timer = 0;
+
+                if(_enemyTypes == EnemyType.knight)
+                {
+                    SoundManager.Instance.PlayAttackSound("Attack1");
+                }
+                else if(_enemyTypes == EnemyType.archer)
+                {
+                    SoundManager.Instance.PlayAttackSound("Attack2");
+                }
             }
 
             //Attack1Particle.Stop();
@@ -413,6 +421,14 @@ public class EnemyAI : MonoBehaviour
 
     private void OnAttackFalse()
     {
+        if (_enemyTypes == EnemyType.knight)
+        {
+            SoundManager.Instance.StopAttackSound("Attack1");
+        }
+        else if (_enemyTypes == EnemyType.archer)
+        {
+            SoundManager.Instance.StopAttackSound("Attack2");
+        }
         SetAnimatorBools(false, false, true, false, false);
 
         // 이동을 다시 시작하도록 설정
