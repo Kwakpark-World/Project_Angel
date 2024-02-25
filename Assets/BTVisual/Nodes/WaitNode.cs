@@ -21,10 +21,10 @@ namespace BTVisual
         {
             if (Time.time - _startTime > duration)
             {
-                return State.SUCCESS;
+                return State.Success;
             }
 
-            return State.RUNNING;
+            return State.Running;
         }
     }
 }

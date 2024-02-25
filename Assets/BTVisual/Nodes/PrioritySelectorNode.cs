@@ -5,17 +5,18 @@ using UnityEngine;
 
 namespace BTVisual
 {
-    public class SelectorNode : CompositeNode
+    public class PrioritySelectorNode : CompositeNode
     {
-        
+        private int _beforeIndex = 0;
         protected override void OnStart()
         {
             //_current = 0;
+            _beforeIndex = 0;
         }
 
         protected override void OnStop()
         {
-            
+
         }
 
         protected override State OnUpdate()
@@ -23,20 +24,31 @@ namespace BTVisual
             for (int i = 0; i < children.Count; ++i)
             {
                 var child = children[i];
-                
+
                 switch (child.Update())
                 {
                     case State.Running:
+                        if (_beforeIndex != i)
+                        {
+                            children[_beforeIndex].Break();
+                        }
+                        Debug.Log($"{i}, {_beforeIndex}");
+                        _beforeIndex = i;
                         return State.Running;
                     case State.Failure:
-                        //ì‹¤íŒ¨í•˜ë©´ ì•„ë¬´ê²ƒë„ ì•ˆí•¨. ë‹¤ìŒë…¸ë“œë¡œ ë°”ë¡œ ë„˜ì–´ê°„ë‹¤.
+                        //½ÇÆÐÇÏ¸é ¾Æ¹«°Íµµ ¾ÈÇÔ. ´ÙÀ½³ëµå·Î ¹Ù·Î ³Ñ¾î°£´Ù.
                         break;
                     case State.Success:
+                        if (_beforeIndex != i)
+                        {
+                            children[_beforeIndex].Break();
+                        }
+                        _beforeIndex = i;
                         return State.Success;
                 }
             }
-            
-            return State.Failure; //ë‹¤ ëŒì•„ë„ ì‹¤íŒ¨ë©´ ì‹¤íŒ¨
+
+            return State.Failure; //´Ù µ¹¾Æµµ ½ÇÆÐ¸é ½ÇÆÐ
         }
     }
 }

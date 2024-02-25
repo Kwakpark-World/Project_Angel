@@ -8,13 +8,13 @@ namespace BTVisual
     public class BehaviourTree : ScriptableObject
     {
         public Node treeRoot;
-        public Node.State treeState = Node.State.RUNNING;
+        public Node.State treeState = Node.State.Running;
         public List<Node> nodes = new List<Node>();
-        public BlackBoard blackboard = new BlackBoard();
+        public Blackboard blackboard = new Blackboard();
 
         public Node.State Update()
         {
-            if (treeRoot.state == Node.State.RUNNING)
+            if (treeRoot.state == Node.State.Running)
             {
                 treeState = treeRoot.Update();
             }
@@ -169,12 +169,13 @@ namespace BTVisual
             return tree;
         }
 
-        public void Bind(Context context)
+        public void Bind(Context context, BossBrain brain)
         {
             Traverse(treeRoot, n =>
             {
                 n.blackboard = blackboard;
                 n.context = context;
+                n.brain = brain;
             });
         }
     }

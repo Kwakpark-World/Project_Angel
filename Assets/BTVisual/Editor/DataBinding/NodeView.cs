@@ -134,16 +134,16 @@ namespace BTVisual
                 
                 switch (node.state)
                 {
-                    case Node.State.RUNNING:
+                    case Node.State.Running:
                         if (node.started)
                         {
                             AddToClassList("running");    
                         }
                         break;
-                    case Node.State.FAILURE:
+                    case Node.State.Failure:
                         AddToClassList("failure");
                         break;
-                    case Node.State.SUCCESS:
+                    case Node.State.Success:
                         AddToClassList("success");
                         break;
                 }

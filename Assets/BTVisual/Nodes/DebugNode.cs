@@ -18,7 +18,7 @@ namespace BTVisual
         protected override State OnUpdate()
         {
             Debug.Log($"OnUpdate : {message}");
-            return State.SUCCESS;
+            return State.Success;
         }
     }
 }

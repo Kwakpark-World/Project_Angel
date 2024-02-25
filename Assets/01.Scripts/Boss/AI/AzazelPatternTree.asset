@@ -1,0 +1,388 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7241013195727709932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a664222551774468e89422b7938f78, type: 3}
+  m_Name: RepeatNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 36c44938d9a56ee4cbd8e0567cb00571
+  position: {x: -0.000051399722, y: 103.20003}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  child: {fileID: 6860470663022966651}
+--- !u!114 &-7097368935496057661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6505a514da6a3184e98fb84b60b97e14, type: 3}
+  m_Name: AzazelSecondPatternNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c721b5946cb4e0549bfed7efa668eea8
+  position: {x: 291.5751, y: 688.7999}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  nextPatternCooldown: 45
+  grigoris: []
+--- !u!114 &-2989378710378351037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f2692ec9bc03a449d2585a72177ec3, type: 3}
+  m_Name: PatternSelectedNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 5fd25d827d152c247b6a9c084d191b12
+  position: {x: -332.42487, y: 688.7999}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  conditioningPattern: 1
+--- !u!114 &-2564976456631366636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b6bfb9843b7224484993f2a3771df1, type: 3}
+  m_Name: ChaseNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 97bf7712d4b5adb4797d2fd009566769
+  position: {x: -574.4, y: 532.8}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  checkDelay: 0.2
+  chaseRange: 14
+  successRange: 6
+--- !u!114 &-2272794489515060441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
+  m_Name: SequenceNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 321ec9fe873f5f34b9ead1779312bfb6
+  position: {x: -217.22493, y: 532.7999}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  children:
+  - {fileID: -2989378710378351037}
+  - {fileID: 8035025821198376022}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a310246ca011401097a098354ca424fb, type: 3}
+  m_Name: AzazelPatternTree
+  m_EditorClassIdentifier: 
+  treeRoot: {fileID: 3514451634953570198}
+  treeState: 0
+  nodes:
+  - {fileID: 3514451634953570198}
+  - {fileID: -7241013195727709932}
+  - {fileID: 6920972661303305033}
+  - {fileID: 2686675453337645057}
+  - {fileID: -2564976456631366636}
+  - {fileID: -2272794489515060441}
+  - {fileID: -2989378710378351037}
+  - {fileID: 8035025821198376022}
+  - {fileID: 5391884970093767842}
+  - {fileID: 3224464128404318941}
+  - {fileID: -7097368935496057661}
+  - {fileID: 3966180506042895855}
+  - {fileID: 6860470663022966651}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 64
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+--- !u!114 &2686675453337645057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901a731da74368f47a7e5cdac77dc3ca, type: 3}
+  m_Name: InRangeNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 62bc8e5b0662a11419f506e63e09afba
+  position: {x: -724.2025, y: 533.2842}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  range: 14
+--- !u!114 &3224464128404318941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f2692ec9bc03a449d2585a72177ec3, type: 3}
+  m_Name: PatternSelectedNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: d41a5dc6070a07849ba8b7cfc717e4b1
+  position: {x: 102.77509, y: 689.5999}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  conditioningPattern: 2
+--- !u!114 &3514451634953570198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aef11151aacffd4385f2592ee5d632e, type: 3}
+  m_Name: RootNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 57f0ff30260ea264f8435ace2237a767
+  position: {x: 0, y: 0}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  child: {fileID: -7241013195727709932}
+--- !u!114 &3966180506042895855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec6c8849b3c40f40b689fe08f2c8ef6, type: 3}
+  m_Name: AzazelNormalAttackNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: b1570a03512eb1241aa5e73feca609ea
+  position: {x: 578.0203, y: 401.73962}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+--- !u!114 &5391884970093767842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
+  m_Name: SequenceNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 8d13ab0696965ca4297b28dfeb32b44f
+  position: {x: 220.37505, y: 532.7999}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  children:
+  - {fileID: 3224464128404318941}
+  - {fileID: -7097368935496057661}
+--- !u!114 &6860470663022966651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aba3b19ba8212749ad7e3419bb34bdd, type: 3}
+  m_Name: SelectorNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 9268339ff8c5322438edf5a9a0821d91
+  position: {x: 0.000048542744, y: 206.39998}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  children:
+  - {fileID: 6920972661303305033}
+  - {fileID: -2272794489515060441}
+  - {fileID: 5391884970093767842}
+  - {fileID: 3966180506042895855}
+--- !u!114 &6920972661303305033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
+  m_Name: SequenceNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c3102188bf84fc6448d60ad727fa521b
+  position: {x: -649.8025, y: 372.48422}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  children:
+  - {fileID: 2686675453337645057}
+  - {fileID: -2564976456631366636}
+--- !u!114 &8035025821198376022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf748445e3621b45a0057f35f318600, type: 3}
+  m_Name: AzazelFirstPatternNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 74ba470ad1729fc42a5c6288a16eaafc
+  position: {x: -143.6249, y: 688.7999}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  nextPatternCooldown: 20
+  goat: {fileID: 0}

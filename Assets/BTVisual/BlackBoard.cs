@@ -2,9 +2,10 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class BlackBoard
+public class Blackboard
 {
-    public Vector3 moveToPosition;
-    public Vector3 enemySpotPosition;
-    public LayerMask whatIsEnemy;
+    public LayerMask enemyLayer;
+    public Vector3 destination;
+    public int selectedPattern;
+    public float nextPatternCooldown;
 }

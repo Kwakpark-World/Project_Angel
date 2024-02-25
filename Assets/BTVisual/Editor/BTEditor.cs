@@ -84,7 +84,7 @@ public class BTEditor : EditorWindow
         {
             if (Selection.activeGameObject)
             {
-                var runner = Selection.activeGameObject.GetComponent<BehviourTreeRunner>();
+                var runner = Selection.activeGameObject.GetComponent<BehaviourTreeRunner>();
                 if (runner != null)
                 {
                     tree = runner.tree;

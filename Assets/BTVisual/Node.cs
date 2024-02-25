@@ -6,17 +6,18 @@ namespace BTVisual
     {
         public enum State
         {
-            RUNNING,
-            FAILURE,
-            SUCCESS
+            Running,
+            Failure,
+            Success
         }
 
-        [HideInInspector] public State state = State.RUNNING;
+        [HideInInspector] public State state = State.Running;
         [HideInInspector] public bool started = false;
         [HideInInspector] public string guid;
         [HideInInspector] public Vector2 position;
-        [HideInInspector] public BlackBoard blackboard;
+        [HideInInspector] public Blackboard blackboard;
         [HideInInspector] public Context context;
+        [HideInInspector] public BossBrain brain;
         [TextArea] public string description;
 
         public State Update()
@@ -29,7 +30,7 @@ namespace BTVisual
 
             state = OnUpdate();
 
-            if (state == State.FAILURE || state == State.SUCCESS)
+            if (state == State.Failure || state == State.Success)
             {
                 OnStop();
                 started = false;
@@ -42,7 +43,14 @@ namespace BTVisual
         {
             return Instantiate(this);
         }
-        
+
+        public void Break()
+        {
+            OnStop();
+            state = State.Success;
+            started = false;
+        }
+
         protected abstract void OnStart();
         protected abstract void OnStop();
         protected abstract State OnUpdate();
