@@ -78,6 +78,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
+        
         if(_enemyTypes == EnemyType.archer)
         {
             //gameObject.AddComponent<>
@@ -86,6 +87,8 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        timer += Time.deltaTime;
+
         if (Enemy_CurrentHp <= 0)
         {
             _BTRunner.Operate();
@@ -213,13 +216,13 @@ public class EnemyAI : MonoBehaviour
             if (isHit == false)
             {
                 OnAttackTrue();
-                if (_enemyTypes == EnemyType.archer)
+                if (_enemyTypes == EnemyType.archer && timer > 3f)
                 {
                     GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
 
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
                     EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
-                    Debug.Log("1");
+                    timer = 0;
                 }
             }
             else
