@@ -80,10 +80,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-        if (_enemyTypes == EnemyType.archer)
-        {
-            //gameObject.AddComponent<>
-        }
+        Attack1Particle.Stop();
     }
 
     private void Update()
@@ -213,12 +210,12 @@ public class EnemyAI : MonoBehaviour
     {
         if (_detectedPlayer != null)
         {
-            //이거
-
+            
             if (isHit == false)
             {
+   
                 OnAttackTrue();
-                if (_enemyTypes == EnemyType.archer && timer > 3f)
+                if (_enemyTypes == EnemyType.archer && timer > 1f)
                 {
                     GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
 
@@ -386,30 +383,31 @@ public class EnemyAI : MonoBehaviour
             SetAnimatorBools(false, false, false, false, false);
     }
 
+    private bool isSoundPlayed = false;
     private void OnAttackTrue()
     {
         if (isHit == false)
         {
             SetAnimatorBools(false, true, false, false, false);
-            
-            if(timer > 1.7f)
+
+            if (!isSoundPlayed)
             {
-                Attack1Particle.Play();
+                
                 timer = 0;
 
-                if(_enemyTypes == EnemyType.knight)
+                if (_enemyTypes == EnemyType.knight)
                 {
                     SoundManager.Instance.PlayAttackSound("Attack1");
                 }
-                else if(_enemyTypes == EnemyType.archer)
+                else if (_enemyTypes == EnemyType.archer)
                 {
                     SoundManager.Instance.PlayAttackSound("Attack2");
                 }
+                Attack1Particle.Play();
+                isSoundPlayed = true;
+                Invoke("ResetSoundPlayed", 1.3f); 
             }
 
-            //Attack1Particle.Stop();
-           
-            // 이동을 멈추도록 설정
             if (_navMeshAgent != null)
             {
                 _navMeshAgent.isStopped = true;
@@ -419,15 +417,21 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void ResetSoundPlayed()
+    {
+        isSoundPlayed = false;
+    }
+
     private void OnAttackFalse()
     {
         if (_enemyTypes == EnemyType.knight)
         {
             SoundManager.Instance.StopAttackSound("Attack1");
         }
-        else if (_enemyTypes == EnemyType.archer)
+        else if (_enemyTypes == EnemyType.archer )
         {
             SoundManager.Instance.StopAttackSound("Attack2");
+            timer = 0;
         }
         SetAnimatorBools(false, false, true, false, false);
 
