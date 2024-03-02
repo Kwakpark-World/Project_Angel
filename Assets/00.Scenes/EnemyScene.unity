@@ -1394,7 +1394,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 15.58, y: 2.54, z: 4.77}
+  m_LocalPosition: {x: 16.15, y: 2.54, z: 8.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8856,7 +8856,7 @@ Transform:
   m_GameObject: {fileID: 2094001110128337051}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 0.94, z: 4}
+  m_LocalPosition: {x: -0.2, y: 0.94, z: -7.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11033,7 +11033,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -73760,9 +73760,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609df6e340b50e64f887eb178025cbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyTypes: 1
+  _enemyTypes: 0
   _detectRange: 20
-  _meleeAttackRange: 15
+  _meleeAttackRange: 5
   _movementSpeed: 10
   Enemy_MaxHp: 0
   Enemy_CurrentHp: 0
