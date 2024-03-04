@@ -65,7 +65,7 @@ public class CharacterStat : ScriptableObject
 
     public int GetDamage()
     {
-        return 10;
+        return damage.GetValue();
     }
 
     public bool CanEvasion()
