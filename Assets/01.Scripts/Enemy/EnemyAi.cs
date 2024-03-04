@@ -18,10 +18,12 @@ public class EnemyAI : MonoBehaviour
     float _movementSpeed = 10f;
 
     [Header("EnemyHP")]
-    [SerializeField]
-    public float Enemy_MaxHp;
-    [SerializeField]
-    public float Enemy_CurrentHp;
+     [SerializeField]
+     public float Enemy_MaxHp;
+     [SerializeField]
+     public float Enemy_CurrentHp;
+    
+    public EnemyStat _enemyStat;
 
     [Header("Damage")]
     public float meleeAttackDamage = 10;
@@ -75,6 +77,7 @@ public class EnemyAI : MonoBehaviour
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
+        //_enemyStat = GetComponent<EnemyStat>();
         _previousHealth = Enemy_CurrentHp;
     }
 

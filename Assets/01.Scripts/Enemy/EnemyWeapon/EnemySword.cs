@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class EnemySword : MonoBehaviour
 {
-    public float meleeAttackDamage = 10f;
+    public EnemyStat _enemyStat;
     private bool canDamage = true;
     private float resetTime = 1.1f;
 
     public Player player;
-    public EnemyAI enemyAI;
+     EnemyAI enemyAI;
+
     private void Awake()
     {
         player.GetComponent<Player>();
         enemyAI = GetComponent<EnemyAI>();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,7 +26,7 @@ public class EnemySword : MonoBehaviour
             {
                 if (player != null)
                 {
-                    player.TakeDamage(meleeAttackDamage);
+                   player.TakeDamage(_enemyStat.GetDamage());
                 }
 
                 StartCoroutine(ResetDamageTimer());

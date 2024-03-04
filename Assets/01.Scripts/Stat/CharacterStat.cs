@@ -36,22 +36,11 @@ public class CharacterStat : ScriptableObject
     [Header("Defensive stats")]
     public Stat maxHealth; //체력
     public Stat armor; //방어도
-    public Stat evasion; //회피도
-    public Stat magicResistance; //마법방어
 
     [Header("Offensive stats")]
     public Stat damage;
     public Stat criticalChance;
     public Stat criticalDamage;
-
-
-    [Header("Magic stats")]
-    public Stat fireDamage;
-    public Stat ignitePercent;
-    public Stat iceDamage;
-    public Stat chillPercent;
-    public Stat lightingDamage;
-    public Stat shockPercent;
 
     protected Entity _owner;
 
@@ -76,7 +65,7 @@ public class CharacterStat : ScriptableObject
 
     public int GetDamage()
     {
-        return 0;
+        return 10;
     }
 
     public bool CanEvasion()
