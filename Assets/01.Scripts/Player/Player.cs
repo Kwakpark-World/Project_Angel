@@ -2,10 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : Entity
+public class Player : PlayerController
 {
     [Header("movement settings")]
     public float moveSpeed = 1f;
+    public float rotationSpeed = 1f;
     public float dashDuration = 0.4f;
     public float dashSpeed = 20f;
 
@@ -27,13 +28,15 @@ public class Player : Entity
     public PlayerStat PlayerStat { get; private set; }
 
     public bool IsAttack { get; set; }
+    public bool IsDefense { get; set; }
+    public bool IsDie { get; set; }
 
     protected override void Awake()
     {
         base.Awake();
 
         StateMachine = new PlayerStateMachine();
-        PlayerStat = CharStat as PlayerStat;
+        PlayerStat = CharStat as PlayerStat;    
         playerCurrnetHP = PlayerStat.GetStatByType(StatType.maxHealth).GetValue();
 
         foreach (PlayerStateEnum stateEnum in Enum.GetValues(typeof(PlayerStateEnum)))
@@ -54,7 +57,6 @@ public class Player : Entity
     private void Start()
     {
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
-
     }
 
     protected override void Update()
@@ -62,6 +64,22 @@ public class Player : Entity
         base.Update();
 
         StateMachine.CurrentState.UpdateState();
+
+        if (playerCurrnetHP <= 0)
+            StateMachine.ChangeState(PlayerStateEnum.Die);
+
+        if (PlayerInput.isDefense)
+        {
+            var curState = StateMachine.CurrentState;
+
+            if (curState == StateMachine.GetState(PlayerStateEnum.MeleeAttack)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.QSkill)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Dash)) return;
+
+            if (IsGroundDetected())
+                StateMachine.ChangeState(PlayerStateEnum.Defense);
+        }
 
         // น๖วม
         //if (Keyboard.current.pKey.wasPressedThisFrame)
@@ -79,6 +97,7 @@ public class Player : Entity
     private void HandleDashEvent()
     {
         if (dashCoolTime + dashPrevTime > Time.time) return;
+        if (StateMachine.CurrentState._actionTriggerCalled) return;
         dashPrevTime = Time.time;
         
         StateMachine.ChangeState(PlayerStateEnum.Dash);
@@ -101,9 +120,4 @@ public class Player : Entity
         playerCurrnetHP -= meleeAttackDamage;
     }
     #endregion
-
-    public void GetFocusEnemy()
-    {
-        
-    }
 }

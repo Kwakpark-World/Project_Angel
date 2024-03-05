@@ -53,11 +53,11 @@ public class CharacterStat : ScriptableObject
     public Stat lightingDamage;
     public Stat shockPercent;
 
-    protected Entity _owner;
+    protected PlayerController _owner;
 
     protected Dictionary<StatType, FieldInfo> _fieldInfoDictionary = new Dictionary<StatType, FieldInfo>();
 
-    public virtual void SetOwner(Entity owner)
+    public virtual void SetOwner(PlayerController owner)
     {
         _owner = owner;
     }

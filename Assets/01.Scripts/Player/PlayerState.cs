@@ -12,8 +12,8 @@ public class PlayerState
     protected int _animBoolHash; // 각 상태별 애니메이션 해시값
     protected readonly int _yVelocityHash = Animator.StringToHash("y_velocity");
 
-    protected bool _endTriggerCalled = false;
-    protected bool _actionTriggerCalled = false;
+    public bool _actionTriggerCalled { get; private set; } = false;
+    public bool _endTriggerCalled { get; private set; } = false;
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, string animBoolName)
     {

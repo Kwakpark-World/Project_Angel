@@ -11,15 +11,24 @@ public class PlayerDefenseState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.IsDefense = true;
+
     }
 
     public override void Exit()
     {
         base.Exit();
+        _player.IsDefense = false;
+
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        if (!_player.PlayerInput.isDefense)
+            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+        
+
     }
 }

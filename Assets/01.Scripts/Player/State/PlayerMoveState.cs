@@ -28,14 +28,15 @@ public class PlayerMoveState : PlayerGroundState
 
         Vector3 moveDir = new Vector3(xInput, 0, yInput).normalized;
 
-        Debug.Log("YValeu : " + GameManager.Instance.MainCam.transform.rotation.y);
-
         moveDir = Quaternion.Euler(0, 45, 0) * moveDir;
         moveDir *= _player.moveSpeed;
 
         if (moveDir.sqrMagnitude > 0)
-            _player.transform.rotation = Quaternion.LookRotation(moveDir);
-        
+        {
+            //_player.transform.rotation = Quaternion.LookRotation(moveDir);
+            _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * _player.rotationSpeed);
+        }
+
         moveDir.y = _rigidbody.velocity.y;
 
         _player.SetVelocity(moveDir);

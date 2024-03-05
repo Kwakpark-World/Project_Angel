@@ -12,7 +12,8 @@ public enum PlayerStateEnum
     MeleeAttack,
     QSkill,
     ESkill,
-    Defense
+    Defense,
+    Die
 }
 
 public class PlayerStateMachine
@@ -37,9 +38,20 @@ public class PlayerStateMachine
     public void ChangeState(PlayerStateEnum state)
     {
         // 플레이어가  맞고 있거나 뭔가 일이 있어서 상태 전환하지 못하는 경우
+        if (_player.IsDie)
+        {
+            Debug.Log("Player is Dead");
+            return;
+        }
 
         CurrentState.Exit();
         CurrentState = StateDictionary[state];
         CurrentState.Enter();
+        Debug.Log($"Change State {CurrentState}");
+    }
+
+    public PlayerState GetState(PlayerStateEnum state)
+    {
+        return StateDictionary[state];
     }
 }

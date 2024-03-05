@@ -33,8 +33,8 @@ public class PlayerDashState : PlayerState
         _dashDirection = _player.transform.forward;
 
         _player.SetVelocity(_dashDirection * _player.dashSpeed);
-
-        if (_dashStartTime + _player.dashDuration <= Time.time)
+        
+        if (_dashStartTime + _player.dashDuration <= Time.time && _endTriggerCalled)
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
