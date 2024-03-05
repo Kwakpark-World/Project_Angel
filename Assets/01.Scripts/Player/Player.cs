@@ -36,8 +36,10 @@ public class Player : PlayerController
         base.Awake();
 
         StateMachine = new PlayerStateMachine();
-        PlayerStat = CharStat as PlayerStat;    
-        playerCurrnetHP = PlayerStat.GetStatByType(StatType.maxHealth).GetValue();
+
+        PlayerStat = CharStat as PlayerStat;
+        playerCurrnetHP = PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue();
+
 
         foreach (PlayerStateEnum stateEnum in Enum.GetValues(typeof(PlayerStateEnum)))
         {

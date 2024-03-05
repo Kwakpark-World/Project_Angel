@@ -11,7 +11,7 @@ public class PlayerStat : CharacterStat
     {
         Type playerStatType = typeof(PlayerStat);
 
-        foreach (StatType statType in Enum.GetValues(typeof(StatType)))
+        foreach (PlayerStatType statType in Enum.GetValues(typeof(PlayerStatType)))
         {
             string statName = statType.ToString();
             FieldInfo statField = playerStatType.GetField(statName);
@@ -27,7 +27,7 @@ public class PlayerStat : CharacterStat
         }
     }
     //
-    public Stat GetStatByType(StatType statType)
+    public Stat GetStatByType(PlayerStatType statType)
     {
         return _fieldInfoDictionary[statType].GetValue(this) as Stat;
     }
