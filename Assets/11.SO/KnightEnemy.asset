@@ -9,33 +9,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cf0ba6f45209124fa8ddee3551bbf1f, type: 3}
-  m_Name: KnightEnemyStat
+  m_Script: {fileID: 11500000, guid: 66eb065be78cba847a29fb53bfc60eb0, type: 3}
+  m_Name: KnightEnemy
   m_EditorClassIdentifier: 
-  strength:
-    _baseValue: 0
-    modifiers: 
-  agility:
-    _baseValue: 0
-    modifiers: 
-  intelligence:
-    _baseValue: 0
-    modifiers: 
-  vitality:
-    _baseValue: 0
-    modifiers: 
   maxHealth:
     _baseValue: 0
     modifiers: 
   armor:
     _baseValue: 0
     modifiers: 
-  damage:
-    _baseValue: 10
-    modifiers: 
-  criticalChance:
+  speed:
     _baseValue: 0
     modifiers: 
-  criticalDamage:
+  detectRange:
+    _baseValue: 0
+    modifiers: 
+  damage:
+    _baseValue: 0
+    modifiers: 
+  attackRange:
+    _baseValue: 0
+    modifiers: 
+  attackDelay:
+    _baseValue: 0
+    modifiers: 
+  patternAmount:
+    _baseValue: 0
+    modifiers: 
+  initialPatternCooldown:
     _baseValue: 0
     modifiers: 

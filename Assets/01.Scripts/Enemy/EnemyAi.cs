@@ -4,29 +4,24 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : Entity
 {
     public EnemyType _enemyTypes;
     [Header("Range")]
-    [SerializeField]
-    float _detectRange = 10f;
-    [SerializeField]
-    float _meleeAttackRange = 5f;
+    float _detectRange;
+    float _meleeAttackRange;
 
     [Header("Movement")]
-    [SerializeField]
-    float _movementSpeed = 10f;
+    float _movementSpeed;
 
     [Header("EnemyHP")]
-     [SerializeField]
-     public float Enemy_MaxHp;
-     [SerializeField]
-     public float Enemy_CurrentHp;
+    public float Enemy_MaxHp;
+    public float Enemy_CurrentHp;
     
-    public EnemyStat _enemyStat;
+    public MonsterStat _enemyStat;
 
     [Header("Damage")]
-    public float meleeAttackDamage = 10;
+    public float meleeAttackDamage;
     [Header("Partical")]
     public ParticleSystem Attack1Particle;
 
@@ -35,14 +30,11 @@ public class EnemyAI : MonoBehaviour
     Transform _detectedPlayer = null;
     Animator _animator;
 
-    Player player;
     public Collider weaponCollider;
     public GameObject WeaponSpawn;
 
-    private bool Isstride;
     Vector3 _lastKnownPlayerPos = default;
     private float _rotationSpeed = 10;
-    float idleProbability = 0.1f;
     private Vector3 deathPosition;
 
     [Header("BoolValue")]
@@ -65,7 +57,7 @@ public class EnemyAI : MonoBehaviour
         archer
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         _animator = GetComponent<Animator>();
 
@@ -73,12 +65,19 @@ public class EnemyAI : MonoBehaviour
 
         _originPos = transform.position;
 
-        player = GetComponent<Player>();
-
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        //_enemyStat = GetComponent<EnemyStat>();
-        _previousHealth = Enemy_CurrentHp;
+        base.Awake();
+
+        _enemyStat = _enemyStat as MonsterStat;
+
+        Enemy_CurrentHp = _enemyStat.GetMaxHealthValue();
+        _detectRange = _enemyStat.GetDetectRange();
+        _meleeAttackRange = _enemyStat.GetAttackRange();
+        meleeAttackDamage = _enemyStat.GetDamage();
+        _movementSpeed = _enemyStat.GetMoveSpeed();
+
+
     }
 
     private void Start()
@@ -86,7 +85,7 @@ public class EnemyAI : MonoBehaviour
         Attack1Particle.Stop();
     }
 
-    private void Update()
+    protected override void Update()
     {
         timer += Time.deltaTime;
 

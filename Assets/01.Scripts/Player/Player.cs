@@ -34,7 +34,7 @@ public class Player : Entity
 
         StateMachine = new PlayerStateMachine();
         PlayerStat = CharStat as PlayerStat;
-        playerCurrnetHP = PlayerStat.GetStatByType(StatType.maxHealth).GetValue();
+        playerCurrnetHP = PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue();
 
         foreach (PlayerStateEnum stateEnum in Enum.GetValues(typeof(PlayerStateEnum)))
         {
