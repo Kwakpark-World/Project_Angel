@@ -40,4 +40,9 @@ public class Stat
     {
         _baseValue = value;
     }
+
+/*    public static explicit operator float(Stat v)
+    {
+        throw new NotImplementedException();
+    }*/
 }
