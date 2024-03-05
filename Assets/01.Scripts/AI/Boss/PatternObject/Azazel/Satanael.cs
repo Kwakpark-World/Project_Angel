@@ -21,13 +21,13 @@ public class Satanael : Grigori
 
     protected override void Debuff()
     {
-        if (player.playerCurrnetHP / player.PlayerStat.GetStatByType(StatType.maxHealth).GetValue() > _azazel.CurrentHitPoint / _azazel.hitPoint)
+        if (player.playerCurrnetHP / player.PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue() > _azazel.CurrentHitPoint / _azazel.hitPoint)
         {
-            player.playerCurrnetHP = player.PlayerStat.GetStatByType(StatType.maxHealth).GetValue() * _azazel.CurrentHitPoint / _azazel.hitPoint;
+            player.playerCurrnetHP = player.PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue() * _azazel.CurrentHitPoint / _azazel.hitPoint;
         }
         else
         {
-            _azazel.CurrentHitPoint = _azazel.hitPoint * player.playerCurrnetHP / player.PlayerStat.GetStatByType(StatType.maxHealth).GetValue();
+            _azazel.CurrentHitPoint = _azazel.hitPoint * player.playerCurrnetHP / player.PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue();
         }
     }
 }

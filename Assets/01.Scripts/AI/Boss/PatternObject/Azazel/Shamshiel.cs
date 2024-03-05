@@ -6,6 +6,8 @@ public class Shamshiel : Grigori
 {
     [SerializeField]
     private float _slownessMultiplier = 0.75f;
+    [SerializeField]
+    private float _slownessDuration = 5f;
 
     protected override void Attack()
     {
@@ -18,7 +20,6 @@ public class Shamshiel : Grigori
         // Debug
         player.moveSpeed *= _slownessMultiplier;
 
-        // Fix here.
         //player.CharStat.IncreaseStatBy(player.moveSpeed * slown)
     }
 }
