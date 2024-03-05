@@ -16,7 +16,6 @@ public class EnemyAI : Brain
 
     [Header("EnemyHP")]
     public float Enemy_MaxHp;
-    public float Enemy_CurrentHp;
     
     public MonsterStat _enemyStat;
 
@@ -65,16 +64,17 @@ public class EnemyAI : Brain
 
     protected override void Update()
     {
+        float _currentHP = _enemyStat.GetCurrentHealth();
         timer += Time.deltaTime;
 
-        if (Enemy_CurrentHp <= 0)
+        if (_currentHP <= 0)
         {
             _BTRunner.Operate();
             OnDieTrue();
             isDie = true;
         }
 
-        if (Enemy_CurrentHp < _previousHealth)
+        if (_currentHP < _previousHealth)
         {
             OnHitTrue();
             OnAttackFalse();
@@ -84,7 +84,13 @@ public class EnemyAI : Brain
 
         _BTRunner.Operate();
 
-        _previousHealth = Enemy_CurrentHp;
+        _previousHealth = _currentHP;
+
+        // Debug
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnHit(10f);
+        }
     }
 
     INode SettingBT()
@@ -156,7 +162,6 @@ public class EnemyAI : Brain
             }
             else
             {
-                OnDie();
                 transform.position = Vector3.MoveTowards(transform.position, randomPatrolPos, Time.deltaTime * _movementSpeed);
                 return INode.ENodeState.ENS_Running;
             }
@@ -209,8 +214,6 @@ public class EnemyAI : Brain
                 OnHitTrue();
                 isHit = false;
             }
-
-            OnDie();
 
 
             return INode.ENodeState.ENS_Success;
@@ -431,10 +434,7 @@ public class EnemyAI : Brain
 
     public void OnDieTrue()
     {
-        if (Enemy_CurrentHp <= 0)
-        {
-            SetAnimatorBools(false, false, false, false, true);
-        }
+        SetAnimatorBools(false, false, false, false, true);
     }
     #endregion
 
@@ -450,7 +450,7 @@ public class EnemyAI : Brain
 
         _enemyStat = _enemyStat as MonsterStat;
 
-        Enemy_CurrentHp = _enemyStat.GetMaxHealthValue();
+        Enemy_MaxHp = _enemyStat.GetMaxHealthValue();
         _detectRange = _enemyStat.GetDetectRange();
         _meleeAttackRange = _enemyStat.GetAttackRange();
         meleeAttackDamage = _enemyStat.GetDamage();
@@ -459,15 +459,17 @@ public class EnemyAI : Brain
 
     public override void OnHit(float damage)
     {
-        Enemy_CurrentHp -= damage;
+        _enemyStat.currentHealth.AddModifier(-damage);
+
+        if (_enemyStat.GetCurrentHealth() <= 0f)
+        {
+            OnDie();
+        }
     }
 
     public override void OnDie()
     {
-        if (Enemy_CurrentHp <= 0)
-        {
-            OnDieTrue();
-            deathPosition = transform.position;
-        }
+        OnDieTrue();
+        deathPosition = transform.position;
     }
 }

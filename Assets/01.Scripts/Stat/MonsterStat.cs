@@ -25,6 +25,8 @@ public class MonsterStat : EnemyStat
                 _fieldInfoDictionary.Add(statType, statField);
             }
         }
+
+        currentHealth.SetDefalutValue(GetMaxHealthValue());
     }
     //
     public Stat GetStatByType(EnemyStatType statType)

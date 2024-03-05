@@ -7,6 +7,7 @@ using UnityEngine;
 public enum EnemyStatType
 {
     maxHealth,
+    currentHealth,
     armor,
     speed,
     detectRange,
@@ -22,6 +23,7 @@ public class EnemyStat : ScriptableObject
 
     [Header("Defensive stats")]
     public Stat maxHealth; //체력
+    public Stat currentHealth;
     public Stat armor; //방어도
     public Stat speed;
     public Stat detectRange;
@@ -47,12 +49,12 @@ public class EnemyStat : ScriptableObject
         _owner = owner;
     }
 
-    public virtual void IncreaseStatBy(int modifyValue, float duration, Stat statToModify)
+    public virtual void IncreaseStatBy(float modifyValue, float duration, Stat statToModify)
     {
         _owner.StartCoroutine(StatModifyCoroutine(modifyValue, duration, statToModify));
     }
 
-    protected IEnumerator StatModifyCoroutine(int modifyValue, float duration, Stat statToModify)
+    protected IEnumerator StatModifyCoroutine(float modifyValue, float duration, Stat statToModify)
     {
         statToModify.AddModifier(modifyValue);
         yield return new WaitForSeconds(duration);
@@ -82,6 +84,11 @@ public class EnemyStat : ScriptableObject
     public float GetMaxHealthValue()
     {
         return maxHealth.GetValue();
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth.GetValue();
     }
 
     public float GetDetectRange()
