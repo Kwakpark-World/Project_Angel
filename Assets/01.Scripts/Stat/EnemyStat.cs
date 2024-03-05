@@ -38,11 +38,11 @@ public class EnemyStat : ScriptableObject
 
 
 
-    protected Entity _owner;
+    protected Brain _owner;
 
     protected Dictionary<EnemyStatType, FieldInfo> _fieldInfoDictionary = new Dictionary<EnemyStatType, FieldInfo>();
 
-    public virtual void SetOwner(Entity owner)
+    public virtual void SetOwner(Brain owner)
     {
         _owner = owner;
     }

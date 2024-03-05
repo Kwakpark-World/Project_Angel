@@ -7,6 +7,13 @@ public abstract class Brain : MonoBehaviour
 {
     public BehaviourTreeRunner treeRunner;
 
+    #region components
+    public Animator AnimatorCompo { get; private set; }
+    public Rigidbody RigidbodyCompo { get; private set; }
+
+    [field: SerializeField] public EnemyStat EnemyStatistic { get; private set; }
+    #endregion
+
     // Control statistics here or child brain, using scriptable object and so on.
     #region Debug
     [Header("Debug statistics")]
@@ -36,7 +43,15 @@ public abstract class Brain : MonoBehaviour
 
     protected abstract void Update();
 
-    protected abstract void Initialize();
+    protected virtual void Initialize()
+    {
+        Transform visualTrm = transform.Find("Visual");
+        AnimatorCompo = visualTrm.GetComponent<Animator>();
+        RigidbodyCompo = GetComponent<Rigidbody>();
+
+        EnemyStatistic = Instantiate(EnemyStatistic);
+        EnemyStatistic.SetOwner(this);
+    }
 
     public abstract void OnHit(float damage);
 

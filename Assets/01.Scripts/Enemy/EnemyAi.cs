@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
-public class EnemyAI : Entity
+public class EnemyAI : Brain
 {
     public EnemyType _enemyTypes;
     [Header("Range")]
@@ -28,7 +28,6 @@ public class EnemyAI : Entity
     Vector3 _originPos = default;
     BehaviorTreeRunner _BTRunner = null;
     Transform _detectedPlayer = null;
-    Animator _animator;
 
     public Collider weaponCollider;
     public GameObject WeaponSpawn;
@@ -57,31 +56,10 @@ public class EnemyAI : Entity
         archer
     }
 
-    protected override void Awake()
+    protected override void Start()
     {
-        _animator = GetComponent<Animator>();
+        base.Start();
 
-        _BTRunner = new BehaviorTreeRunner(SettingBT());
-
-        _originPos = transform.position;
-
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-
-        base.Awake();
-
-        _enemyStat = _enemyStat as MonsterStat;
-
-        Enemy_CurrentHp = _enemyStat.GetMaxHealthValue();
-        _detectRange = _enemyStat.GetDetectRange();
-        _meleeAttackRange = _enemyStat.GetAttackRange();
-        meleeAttackDamage = _enemyStat.GetDamage();
-        _movementSpeed = _enemyStat.GetMoveSpeed();
-
-
-    }
-
-    private void Start()
-    {
         Attack1Particle.Stop();
     }
 
@@ -348,15 +326,6 @@ public class EnemyAI : Entity
     }
     #endregion
 
-    private void OnDie()
-    {
-        if (Enemy_CurrentHp <= 0)
-        {
-            OnDieTrue();
-            deathPosition = transform.position;
-        }
-    }
-
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
@@ -372,11 +341,11 @@ public class EnemyAI : Entity
 
     private void SetAnimatorBools(bool isIdle, bool isAttack, bool isMove, bool isHit, bool isDie)
     {
-        _animator.SetBool("Idle", isIdle);
-        _animator.SetBool("Attack", isAttack);
-        _animator.SetBool("Move", isMove);
-        _animator.SetBool("Hit", isHit);
-        _animator.SetBool("Die", isDie);
+        AnimatorCompo.SetBool("Idle", isIdle);
+        AnimatorCompo.SetBool("Attack", isAttack);
+        AnimatorCompo.SetBool("Move", isMove);
+        AnimatorCompo.SetBool("Hit", isHit);
+        AnimatorCompo.SetBool("Die", isDie);
     }
 
     private void OnIdleTrue()
@@ -469,8 +438,36 @@ public class EnemyAI : Entity
     }
     #endregion
 
-    public void OnDamage(float damage)
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        _BTRunner = new BehaviorTreeRunner(SettingBT());
+
+        _originPos = transform.position;
+
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+
+        _enemyStat = _enemyStat as MonsterStat;
+
+        Enemy_CurrentHp = _enemyStat.GetMaxHealthValue();
+        _detectRange = _enemyStat.GetDetectRange();
+        _meleeAttackRange = _enemyStat.GetAttackRange();
+        meleeAttackDamage = _enemyStat.GetDamage();
+        _movementSpeed = _enemyStat.GetMoveSpeed();
+    }
+
+    public override void OnHit(float damage)
     {
         Enemy_CurrentHp -= damage;
+    }
+
+    public override void OnDie()
+    {
+        if (Enemy_CurrentHp <= 0)
+        {
+            OnDieTrue();
+            deathPosition = transform.position;
+        }
     }
 }
