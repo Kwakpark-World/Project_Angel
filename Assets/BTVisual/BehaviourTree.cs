@@ -169,7 +169,7 @@ namespace BTVisual
             return tree;
         }
 
-        public void Bind(Context context, BossBrain brain)
+        public void Bind(Context context, Brain brain)
         {
             Traverse(treeRoot, n =>
             {

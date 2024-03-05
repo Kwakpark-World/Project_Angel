@@ -6,7 +6,7 @@ namespace BTVisual
     public class BehaviourTreeRunner : MonoBehaviour
     {
         public BehaviourTree tree;
-        public BossBrain brain;
+        public Brain brain;
 
         private void Start()
         {

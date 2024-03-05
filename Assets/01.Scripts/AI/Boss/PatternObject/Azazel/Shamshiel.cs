@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Shamshiel : Grigori
 {
+    [SerializeField]
+    private float _slownessMultiplier = 0.75f;
+
     protected override void Attack()
     {
 
@@ -13,6 +16,9 @@ public class Shamshiel : Grigori
     {
         // Give slowness effect to player.
         // Debug
-        player.moveSpeed *= 0.75f;
+        player.moveSpeed *= _slownessMultiplier;
+
+        // Fix here.
+        //player.CharStat.IncreaseStatBy(player.moveSpeed * slown)
     }
 }

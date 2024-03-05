@@ -4,21 +4,26 @@ using UnityEngine;
 
 public abstract class Grigori : MonoBehaviour
 {
+    [HideInInspector]
+    public Player player = null;
+
+    #region Debug
+    [Header("Debug statistics")]
     [SerializeField]
     private float _hitPoint;
-    [SerializeField]
-    private float _attackDamage;
-    [SerializeField]
-    private float _attackDelay;
+    private float _currentHitPoint;
+
     [SerializeField]
     private float _attackRange;
-    public Player player;
-    private float _currentHitPoint;
+    [SerializeField]
+    private float _attackPower;
+    [SerializeField]
+    private float _attackDelay;
     private float _attackTimer;
+    #endregion
 
     protected virtual void OnEnable()
     {
-        player = FindAnyObjectByType<Player>();
         _attackTimer = Time.time;
     }
 
@@ -28,11 +33,6 @@ public abstract class Grigori : MonoBehaviour
         {
             Attack();
         }
-    }
-
-    public virtual void OnDie()
-    {
-        Debuff();
     }
 
     protected abstract void Attack();
@@ -50,5 +50,10 @@ public abstract class Grigori : MonoBehaviour
             // Set dead to grigori.
             OnDie();
         }
+    }
+
+    public virtual void OnDie()
+    {
+        Debuff();
     }
 }

@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class Goat : MonoBehaviour
 {
-    [SerializeField]
-    private float _chaseDuration;
+    [HideInInspector]
+    public Player player = null;
+
+    #region Debug
+    [Header("Debug statistics")]
     [SerializeField]
     private float _chaseSpeed;
-    private Player player;
+    [SerializeField]
+    private float _chaseDuration;
     private float _chaseTimer;
+
+    [SerializeField]
+    private float _attackPower;
+    #endregion
 
     private void OnEnable()
     {
-        player = FindAnyObjectByType<Player>();
         _chaseTimer = Time.time;
     }
 
@@ -34,7 +41,7 @@ public class Goat : MonoBehaviour
     {
         if (other.gameObject == player.gameObject)
         {
-            // Hit player.
+            player.TakeDamage(_attackPower);
         }
 
         // Push this object to pool.

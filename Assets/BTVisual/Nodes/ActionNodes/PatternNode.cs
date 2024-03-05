@@ -4,38 +4,33 @@ using UnityEngine;
 
 namespace BTVisual
 {
-    public class AzazelSecondPatternNode : ActionNode
+    public class PatternNode : ActionNode
     {
+        public Pattern pattern;
         public float nextPatternCooldown;
-
-        // Debug
-        public List<GameObject> grigoris;
 
         protected override void OnStart()
         {
+            if (pattern.node == null)
+            {
+                pattern.node = this;
+            }
 
+            pattern.OnStart();
         }
 
         protected override void OnStop()
         {
             blackboard.selectedPattern = 0;
+
+            pattern.OnStop();
         }
 
         protected override State OnUpdate()
         {
-            Debug.Log("Use second pattern.");
-            // Pop random grigori object from pool.
-            // Debug
-            int grigoriIndex = Random.Range(0, grigoris.Count);
-
-            if (grigoris.Count > 0)
-            {
-                Instantiate(grigoris[grigoriIndex]);
-            }
-
             blackboard.nextPatternCooldown = nextPatternCooldown;
 
-            return State.Success;
+            return pattern.OnUpdate();
         }
     }
 }

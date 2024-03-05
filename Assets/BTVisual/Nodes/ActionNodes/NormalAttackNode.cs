@@ -4,11 +4,16 @@ using UnityEngine;
 
 namespace BTVisual
 {
-    public class AzazelNormalAttackNode : ActionNode
+    public class NormalAttackNode : ActionNode
     {
+        private Player player = null;
+
         protected override void OnStart()
         {
-
+            if (player == null)
+            {
+                player = blackboard.target.GetComponent<Player>();
+            }
         }
 
         protected override void OnStop()
@@ -22,7 +27,7 @@ namespace BTVisual
             {
                 brain.NormalAttackTimer = Time.time;
 
-                Debug.Log("Attack.");
+                player.TakeDamage(brain.attackPower);
 
                 return State.Success;
             }

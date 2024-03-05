@@ -17,7 +17,7 @@ namespace BTVisual
         [HideInInspector] public Vector2 position;
         [HideInInspector] public Blackboard blackboard;
         [HideInInspector] public Context context;
-        [HideInInspector] public BossBrain brain;
+        [HideInInspector] public Brain brain;
         [TextArea] public string description;
 
         public State Update()

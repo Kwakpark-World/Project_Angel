@@ -10,6 +10,7 @@ public class Satanael : Grigori
     {
         base.OnEnable();
 
+        // Fix here.
         _azazel = GameObject.Find("Azazel").GetComponent<BossBrain>();
     }
 
