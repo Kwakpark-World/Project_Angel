@@ -6,7 +6,6 @@ using UnityEngine;
 public abstract class Brain : MonoBehaviour
 {
     public BehaviourTreeRunner treeRunner;
-
     #region components
     public Animator AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -45,8 +44,7 @@ public abstract class Brain : MonoBehaviour
 
     protected virtual void Initialize()
     {
-        Transform visualTrm = transform.Find("Visual");
-        AnimatorCompo = visualTrm.GetComponent<Animator>();
+        AnimatorCompo = GetComponent<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
 
         EnemyStatistic = Instantiate(EnemyStatistic);
