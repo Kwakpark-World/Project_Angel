@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
-public class EnemyAI : Brain
+public class EnemyAI : Brain 
 {
     public EnemyType _enemyTypes;
     [Header("Range")]
