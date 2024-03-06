@@ -67,21 +67,6 @@ public class EnemyAI : Brain
         float _currentHP = _enemyStat.GetCurrentHealth();
         timer += Time.deltaTime;
 
-        if (_currentHP <= 0)
-        {
-            _BTRunner.Operate();
-            OnDieTrue();
-            isDie = true;
-        }
-
-        if (_currentHP < _previousHealth)
-        {
-            OnHitTrue();
-            OnAttackFalse();
-            isHit = true;
-            _isMoving = false;
-        }
-
         _BTRunner.Operate();
 
         _previousHealth = _currentHP;
@@ -463,6 +448,7 @@ public class EnemyAI : Brain
 
         if (_enemyStat.GetCurrentHealth() <= 0f)
         {
+            Debug.Log("Á×À½");
             OnDie();
         }
     }
