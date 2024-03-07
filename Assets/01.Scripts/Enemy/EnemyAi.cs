@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +41,7 @@ public class EnemyAI : Brain
     private bool isHit = false;
     private bool isDie = false;
     private bool _isMoving = false;
+    private bool isReload = false;
 
     //임시
     private bool isReturningToOrigin = false;
@@ -67,24 +69,18 @@ public class EnemyAI : Brain
         float _currentHP = _enemyStat.GetCurrentHealth();
         timer += Time.deltaTime;
 
-        if (_currentHP <= 0)
-        {
-            _BTRunner.Operate();
-            OnDieTrue();
-            isDie = true;
-        }
-
-        if (_currentHP < _previousHealth)
-        {
-            OnHitTrue();
-            OnAttackFalse();
-            isHit = true;
-            _isMoving = false;
-        }
-
         _BTRunner.Operate();
 
         _previousHealth = _currentHP;
+
+        if (_enemyTypes == EnemyType.archer && timer > 1f)
+        {
+            if (isHit == false)
+            {
+                OnReload();
+               
+            }
+        }
 
         // Debug
         if (Input.GetKeyDown(KeyCode.Space))
@@ -92,6 +88,8 @@ public class EnemyAI : Brain
             OnHit(10f);
         }
     }
+
+   
 
     INode SettingBT()
     {
@@ -198,10 +196,11 @@ public class EnemyAI : Brain
             
             if (isHit == false)
             {
-   
+                if(_enemyTypes == EnemyType.knight)
                 OnAttackTrue();
-                if (_enemyTypes == EnemyType.archer && timer > 1f)
+                else if (_enemyTypes == EnemyType.archer && timer > 1f)
                 {
+                    OnReload();
                     GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
 
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
@@ -277,11 +276,21 @@ public class EnemyAI : Brain
         {
             _navMeshAgent.SetDestination(_detectedPlayer.position);
 
-           
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
+               /*Debug.Log("55");
                 OnAttackTrue();
-               
+                if(_enemyTypes == EnemyType.knight)
+                {
+                    OnAttackTrue();
+                    Debug.Log("2");
+                }
+                else
+                {
+                    OnReload();
+                    Debug.Log("2.5");
+                }*/
+
                 return INode.ENodeState.ENS_Success;
             }
 
@@ -342,27 +351,29 @@ public class EnemyAI : Brain
 
     #region Anmation
 
-    private void SetAnimatorBools(bool isIdle, bool isAttack, bool isMove, bool isHit, bool isDie)
+    private void SetAnimatorBools(bool isIdle, bool isAttack, bool isMove, bool isHit, bool isDie, bool isLoad)
     {
         AnimatorCompo.SetBool("Idle", isIdle);
         AnimatorCompo.SetBool("Attack", isAttack);
         AnimatorCompo.SetBool("Move", isMove);
         AnimatorCompo.SetBool("Hit", isHit);
         AnimatorCompo.SetBool("Die", isDie);
+        AnimatorCompo.SetBool("load", isLoad);
     }
 
     private void OnIdleTrue()
     {
         if (isDie == false)
-            SetAnimatorBools(false, false, false, false, false);
+            SetAnimatorBools(false, false, false, false, false, false);
     }
 
     private bool isSoundPlayed = false;
     private void OnAttackTrue()
     {
-        if (isHit == false)
+        
+        if (isHit == false )
         {
-            SetAnimatorBools(false, true, false, false, false);
+            SetAnimatorBools(false, true, false, false, false, false);
 
             if (!isSoundPlayed)
             {
@@ -388,12 +399,32 @@ public class EnemyAI : Brain
             }
 
             _isMoving = false;
+            isReload = false;
         }
     }
 
     private void ResetSoundPlayed()
     {
         isSoundPlayed = false;
+    }
+
+    private void OnReload()
+    {
+        if (isHit == false && isReload == false)
+        {
+            SetAnimatorBools(false, false, false, false, false, true); // 이동 애니메이션 재생
+            
+            _navMeshAgent.isStopped = true; // 장전 중에 움직임 중지
+
+            
+            isReload = true;
+            if(isReload == true)
+            {
+                OnAttackTrue();
+            }
+            isSoundPlayed = false; 
+            timer = 0; 
+        }
     }
 
     private void OnAttackFalse()
@@ -407,7 +438,7 @@ public class EnemyAI : Brain
             SoundManager.Instance.StopAttackSound("Attack2");
             timer = 0;
         }
-        SetAnimatorBools(false, false, true, false, false);
+        SetAnimatorBools(false, false, true, false, false, false);
 
         // 이동을 다시 시작하도록 설정
         if (_navMeshAgent != null)
@@ -420,21 +451,21 @@ public class EnemyAI : Brain
 
     private void OnMoveTrue()
     {
-        SetAnimatorBools(false, false, true, false, false);
+        SetAnimatorBools(false, false, true, false, false, false);
     }
 
     private void OnHitTrue()
     {
         if (isHit == true)
         {
-            SetAnimatorBools(false, false, false, true, false);
+            SetAnimatorBools(false, false, false, true, false, false);
             _isMoving = false;
         }
     }
 
     public void OnDieTrue()
     {
-        SetAnimatorBools(false, false, false, false, true);
+        SetAnimatorBools(false, false, false, false, true, false);
     }
     #endregion
 

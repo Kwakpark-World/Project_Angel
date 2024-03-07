@@ -23,7 +23,7 @@ public class EnemyArrow : MonoBehaviour
         // 플레이어를 향해 회전
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 100f);
 
         // 포물선 운동
         Vector3 initialVelocity = CalculateInitialVelocity(target.position, transform.position, speed);
@@ -36,7 +36,7 @@ public class EnemyArrow : MonoBehaviour
         float verticalSpeedCoefficient = 5f;
 
         float displacementY = targetPosition.y - currentPosition.y;
-        float displacementXZ = Mathf.Sqrt((targetPosition - currentPosition).sqrMagnitude - displacementY * displacementY);
+        float displacementXZ = Mathf.Sqrt((targetPosition - currentPosition).sqrMagnitude - displacementY * displacementY) ;
 
         // 수평 거리에 따른 시간 계산
         float time = displacementXZ / speed;
@@ -45,7 +45,7 @@ public class EnemyArrow : MonoBehaviour
         float initialVelocityY = -Mathf.Abs(displacementY) / time * verticalSpeedCoefficient + 0.5f * gravity * time;
 
         // 수평 속도 계산
-        Vector3 velocityXZ = (targetPosition - currentPosition).normalized * speed;
+        Vector3 velocityXZ = (targetPosition - currentPosition).normalized * speed ;
 
         return velocityXZ + Vector3.up * initialVelocityY; // 아래로 떨어지도록 Vector3.up 사용
     }
