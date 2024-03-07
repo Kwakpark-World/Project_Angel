@@ -14,9 +14,15 @@ public class Player : PlayerController
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
 
+    [Header("defense settings")]
+    public float defenseTime = 3f;
+
     [Header("coolTime Settings")]
     public float dashCoolTime = 0f;
     private float dashPrevTime = 0f;
+
+    public float defenseCoolTime = 1f;
+    private float defensePrevTime = 0f;
 
     [Header("Player HP")]
     public float playerCurrnetHP;
@@ -43,7 +49,6 @@ public class Player : PlayerController
         {
             string typeName = stateEnum.ToString();
             Type t = Type.GetType($"Player{typeName}State");
-            Debug.Log($"Player Get State : {t}");
             PlayerState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PlayerState;
             StateMachine.AddState(stateEnum, newState);
         }
@@ -76,9 +81,12 @@ public class Player : PlayerController
             if (curState == StateMachine.GetState(PlayerStateEnum.QSkill)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.Dash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Charge)) return;
 
             if (IsGroundDetected())
+            {
                 StateMachine.ChangeState(PlayerStateEnum.Defense);
+            }
         }
 
         // น๖วม
