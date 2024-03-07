@@ -62,6 +62,8 @@ public class EnemyAI : Brain
         base.Start();
 
         Attack1Particle.Stop();
+
+       
     }
 
     protected override void Update()
@@ -87,6 +89,8 @@ public class EnemyAI : Brain
         {
             OnHit(10f);
         }
+
+
     }
 
    
@@ -151,7 +155,7 @@ public class EnemyAI : Brain
 
             Vector3 patrolDirection = Vector3.zero;
             Vector3 randomPatrolPos = transform.position + patrolDirection.normalized * 10f;
-            //OnIdleTrue();
+            OnIdleTrue();
 
             if (Vector3.SqrMagnitude(randomPatrolPos - transform.position) < float.Epsilon * float.Epsilon)
             {
@@ -197,7 +201,10 @@ public class EnemyAI : Brain
             if (isHit == false)
             {
                 if(_enemyTypes == EnemyType.knight)
-                OnAttackTrue();
+                {
+                    OnAttackTrue();
+                }
+                
                 else if (_enemyTypes == EnemyType.archer && timer > 1f)
                 {
                     OnReload();
@@ -210,7 +217,7 @@ public class EnemyAI : Brain
             }
             else
             {
-                OnHitTrue();
+                //OnHitTrue();
                 isHit = false;
             }
 
@@ -413,18 +420,37 @@ public class EnemyAI : Brain
         if (isHit == false && isReload == false)
         {
             SetAnimatorBools(false, false, false, false, false, true); // 이동 애니메이션 재생
-            
+
             _navMeshAgent.isStopped = true; // 장전 중에 움직임 중지
 
-            
+            isSoundPlayed = false;
+            timer = 0;
             isReload = true;
-            if(isReload == true)
-            {
-                OnAttackTrue();
-            }
-            isSoundPlayed = false; 
-            timer = 0; 
         }
+
+        //isReload = false;
+
+        if (isReload == true)
+        {
+            // Reload 애니메이션의 길이를 알고 있다고 가정합니다. 만약 애니메이션 길이를 모르면 다른 방법을 사용해야 합니다.
+            float reloadAnimationLength = 1f; // 임의의 값으로 설정합니다. 실제 애니메이션의 길이를 사용하세요.
+
+            // Reload 애니메이션의 길이 이후에 Attack 후 Reload 메서드를 호출합니다.
+            StartCoroutine(WaitAndAttack(reloadAnimationLength));
+            isReload = false;
+        }
+    }
+
+    private IEnumerator WaitAndAttack(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        // 공격 실행
+        OnAttackTrue();
+
+        // 공격 후 재장전
+        yield return new WaitForSeconds(3); // 공격 애니메이션 길이를 고려하여 설정하세요.
+        OnReload();
     }
 
     private void OnAttackFalse()
