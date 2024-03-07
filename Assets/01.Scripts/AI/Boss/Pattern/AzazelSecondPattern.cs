@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class AzazelSecondPattern : Pattern
 {
-    #region Debug
-    [Header("Debug objects")]
-    public List<GameObject> grigoris;
-    #endregion
+    [SerializeField]
+    private List<PoolingType> grigoris;
 
     public override void OnStart()
     {
@@ -23,17 +21,15 @@ public class AzazelSecondPattern : Pattern
     public override Node.State OnUpdate()
     {
         Debug.Log("Use second pattern.");
-        // Pop random grigori object from pool.
-        // Debug
-        int grigoriIndex = Random.Range(0, grigoris.Count);
 
-        if (grigoris.Count > 0)
+        PoolingType grigoriType = grigoris[Random.Range(0, grigoris.Count)];
+
+        if (GameManager.Instance.pool.Pop(grigoriType).TryGetComponent(out Grigori grigori))
         {
-            Grigori grigori = Instantiate(grigoris[grigoriIndex]).GetComponent<Grigori>();
-
-            if (grigori.player == null)
+            if (grigori.player)
             {
-                grigori.player = node.blackboard.target.GetComponent<Player>();
+                grigori.player = GameManager.Instance.player;
+                grigori.owner = node.brain as BossBrain;
             }
         }
 

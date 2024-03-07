@@ -2,32 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Grigori : MonoBehaviour
+public abstract class Grigori : Brain
 {
+    [HideInInspector]
+    public BossBrain owner = null;
     [HideInInspector]
     public Player player = null;
 
-    #region Debug
-    [Header("Debug statistics")]
-    [SerializeField]
-    private float _hitPoint;
-    private float _currentHitPoint;
-
-    [SerializeField]
     private float _attackRange;
-    [SerializeField]
-    private float _attackPower;
-    [SerializeField]
     private float _attackDelay;
     private float _attackTimer;
-    #endregion
 
-    protected virtual void OnEnable()
-    {
-        _attackTimer = Time.time;
-    }
-
-    private void Update()
+    protected override void Update()
     {
         if (Vector3.Distance(player.transform.position, transform.position) <= _attackRange && Time.time > _attackTimer + _attackDelay)
         {
@@ -39,21 +25,32 @@ public abstract class Grigori : MonoBehaviour
 
     protected abstract void Debuff();
 
-    public void OnHit(float damage)
+    public override void InitializePoolingItem()
     {
-        _currentHitPoint -= damage;
+        base.InitializePoolingItem();
 
-        if (_currentHitPoint <= 0f)
+        _attackTimer = Time.time;
+    }
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        _attackRange = EnemyStatistic.GetAttackRange();
+        _attackDelay = EnemyStatistic.GetAttackDelay();
+    }
+
+    public override void OnHit()
+    {
+        if (EnemyStatistic.GetCurrentHealth() <= 0f)
         {
-            _currentHitPoint = 0f;
-
-            // Set dead to grigori.
             OnDie();
         }
     }
 
-    public virtual void OnDie()
+    public override void OnDie()
     {
         Debuff();
+        GameManager.Instance.pool.Push(this);
     }
 }

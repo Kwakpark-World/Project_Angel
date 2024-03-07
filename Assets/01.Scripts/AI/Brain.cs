@@ -2,38 +2,20 @@ using BTVisual;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public abstract class Brain : MonoBehaviour
+public abstract class Brain : PoolableMono
 {
     public BehaviourTreeRunner treeRunner;
-    #region components
+
+    #region Components
     public Animator AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
-
-    [field: SerializeField] public EnemyStat EnemyStatistic { get; private set; }
+    public NavMeshAgent NavMeshAgentCompo { get; private set; }
     #endregion
 
-    // Control statistics here or child brain, using scriptable object and so on.
-    #region Debug
-    [Header("Debug statistics")]
-    public float hitPoint;
-    protected float currentHitPoint;
-    public float CurrentHitPoint
-    {
-        get => currentHitPoint;
-        set => currentHitPoint = value;
-    }
-
-    public float attackPower;
-
-    public float normalAttackDelay = 3f;
-    protected float normalAttackTimer;
-    public float NormalAttackTimer
-    {
-        get => normalAttackTimer;
-        set => normalAttackTimer = value;
-    }
-    #endregion
+    [field: SerializeField] public MonsterStat EnemyStatistic { get; private set; }
+    public float NormalAttackTimer { get; set; }
 
     protected virtual void Start()
     {
@@ -42,16 +24,22 @@ public abstract class Brain : MonoBehaviour
 
     protected abstract void Update();
 
+    public override void InitializePoolingItem()
+    {
+        EnemyStatistic.InitializeAllModifiers();
+        NormalAttackTimer = Time.time;
+    }
+
     protected virtual void Initialize()
     {
         AnimatorCompo = GetComponent<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
-
         EnemyStatistic = Instantiate(EnemyStatistic);
+
         EnemyStatistic.SetOwner(this);
     }
 
-    public abstract void OnHit(float damage);
+    public abstract void OnHit();
 
     public abstract void OnDie();
 }

@@ -6,14 +6,9 @@ namespace BTVisual
 {
     public class NormalAttackNode : ActionNode
     {
-        private Player player = null;
-
         protected override void OnStart()
         {
-            if (player == null)
-            {
-                player = blackboard.target.GetComponent<Player>();
-            }
+
         }
 
         protected override void OnStop()
@@ -23,11 +18,11 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            if (Time.time > brain.NormalAttackTimer + brain.normalAttackDelay)
+            if (Time.time > brain.NormalAttackTimer + brain.NormalAttackTimer)
             {
                 brain.NormalAttackTimer = Time.time;
 
-                player.TakeDamage(brain.attackPower);
+                GameManager.Instance.player.PlayerStat.Hit(brain.EnemyStatistic.GetAttackPower());
 
                 return State.Success;
             }

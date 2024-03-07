@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
-public class EnemyAI : Brain 
+public class EnemyAI : Brain
 {
     public EnemyType _enemyTypes;
     [Header("Range")]
@@ -15,13 +15,11 @@ public class EnemyAI : Brain
     float _movementSpeed;
 
     [Header("EnemyHP")]
-    public float Enemy_MaxHp;
-    
-    public MonsterStat _enemyStat;
+    float _enemyMaxHealth;
 
     [Header("Damage")]
-    public float meleeAttackDamage;
-    [Header("Partical")]
+    float _meleeAttackDamage;
+    [Header("Particle")]
     public ParticleSystem Attack1Particle;
 
     Vector3 _originPos = default;
@@ -64,17 +62,17 @@ public class EnemyAI : Brain
 
     protected override void Update()
     {
-        float _currentHP = _enemyStat.GetCurrentHealth();
+        float currentHP = EnemyStatistic.GetCurrentHealth();
         timer += Time.deltaTime;
 
-        if (_currentHP <= 0)
+        if (currentHP <= 0)
         {
             _BTRunner.Operate();
             OnDieTrue();
             isDie = true;
         }
 
-        if (_currentHP < _previousHealth)
+        if (currentHP < _previousHealth)
         {
             OnHitTrue();
             OnAttackFalse();
@@ -84,12 +82,12 @@ public class EnemyAI : Brain
 
         _BTRunner.Operate();
 
-        _previousHealth = _currentHP;
+        _previousHealth = currentHP;
 
         // Debug
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            OnHit(10f);
+            //OnHit(10f);
         }
     }
 
@@ -202,7 +200,7 @@ public class EnemyAI : Brain
                 OnAttackTrue();
                 if (_enemyTypes == EnemyType.archer && timer > 1f)
                 {
-                    GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
+                    PoolableMono EnemyArrow = GameManager.Instance.pool.Pop(PoolingType.Arrow);
 
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
                     EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
@@ -438,30 +436,30 @@ public class EnemyAI : Brain
     }
     #endregion
 
+    public override void InitializePoolingItem()
+    {
+        base.InitializePoolingItem();
+
+        _originPos = transform.position;
+    }
+
     protected override void Initialize()
     {
         base.Initialize();
 
         _BTRunner = new BehaviorTreeRunner(SettingBT());
-
-        _originPos = transform.position;
-
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        _enemyStat = _enemyStat as MonsterStat;
-
-        Enemy_MaxHp = _enemyStat.GetMaxHealthValue();
-        _detectRange = _enemyStat.GetDetectRange();
-        _meleeAttackRange = _enemyStat.GetAttackRange();
-        meleeAttackDamage = _enemyStat.GetDamage();
-        _movementSpeed = _enemyStat.GetMoveSpeed();
+        _enemyMaxHealth = EnemyStatistic.GetMaxHealthValue();
+        _detectRange = EnemyStatistic.GetDetectRange();
+        _meleeAttackRange = EnemyStatistic.GetAttackRange();
+        _meleeAttackDamage = EnemyStatistic.GetAttackPower();
+        _movementSpeed = EnemyStatistic.GetMoveSpeed();
     }
 
-    public override void OnHit(float damage)
+    public override void OnHit()
     {
-        _enemyStat.currentHealth.AddModifier(-damage);
-
-        if (_enemyStat.GetCurrentHealth() <= 0f)
+        if (EnemyStatistic.GetCurrentHealth() <= 0f)
         {
             OnDie();
         }
@@ -469,7 +467,8 @@ public class EnemyAI : Brain
 
     public override void OnDie()
     {
-        OnDieTrue();
         deathPosition = transform.position;
+
+        OnDieTrue();
     }
 }

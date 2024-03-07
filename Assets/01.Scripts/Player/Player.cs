@@ -17,9 +17,6 @@ public class Player : Entity
     public float dashCoolTime = 0f;
     private float dashPrevTime = 0f;
 
-    [Header("Player HP")]
-    public float playerCurrnetHP;
-
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
 
     public PlayerStateMachine StateMachine { get; private set; }
@@ -34,7 +31,6 @@ public class Player : Entity
 
         StateMachine = new PlayerStateMachine();
         PlayerStat = CharStat as PlayerStat;
-        playerCurrnetHP = PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue();
 
         foreach (PlayerStateEnum stateEnum in Enum.GetValues(typeof(PlayerStateEnum)))
         {
@@ -54,7 +50,7 @@ public class Player : Entity
     private void Start()
     {
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
-
+        PlayerStat.InitializeAllModifiers();
     }
 
     protected override void Update()
@@ -96,9 +92,10 @@ public class Player : Entity
     #endregion
 
     #region PlayerSetting
+    [Obsolete("Use PlayerStat.Hit() instead.", true)]
     public void TakeDamage(float meleeAttackDamage)
     {
-        playerCurrnetHP -= meleeAttackDamage;
+        //playerCurrnetHP -= meleeAttackDamage;
     }
     #endregion
 

@@ -4,38 +4,37 @@ using UnityEngine;
 
 public class BossBrain : Brain
 {
-    #region Debug
-    [Header("Debug statistics")]
-    public int patternAmount;
-    public float initialPatternCooldown = 10f;
+    private int _patternAmount;
     private float _patternTimer;
-    #endregion
 
     protected override void Update()
     {
         if (Time.time > _patternTimer + treeRunner.tree.blackboard.nextPatternCooldown)
         {
             _patternTimer = Time.time;
-            treeRunner.tree.blackboard.selectedPattern = Random.Range(0, patternAmount) + 1;
+            treeRunner.tree.blackboard.selectedPattern = Random.Range(0, _patternAmount) + 1;
         }
+    }
+
+    public override void InitializePoolingItem()
+    {
+        base.InitializePoolingItem();
+
+        treeRunner.tree.blackboard.nextPatternCooldown = EnemyStatistic.GetInitialPatternCooldown();
+        _patternTimer = Time.time;
     }
 
     protected override void Initialize()
     {
-        currentHitPoint = hitPoint;
-        normalAttackTimer = Time.time;
-        treeRunner.tree.blackboard.nextPatternCooldown = initialPatternCooldown;
-        _patternTimer = Time.time;
+        base.Initialize();
+
+        _patternAmount = EnemyStatistic.GetPatternAmount();
     }
 
-    public override void OnHit(float damage)
+    public override void OnHit()
     {
-        currentHitPoint -= damage;
-
-        if (currentHitPoint <= 0f)
+        if (EnemyStatistic.GetCurrentHealth() <= 0f)
         {
-            currentHitPoint = 0f;
-
             // Set boss to dead.
             OnDie();
         }
