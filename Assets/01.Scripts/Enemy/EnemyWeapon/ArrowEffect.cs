@@ -6,24 +6,12 @@ public class ArrowEffect : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float rotationSpeed = 100f;
-
-    public float spinSpeed;
-    public float spinRadius;
-
-    float value;
+    public float rotateAmount;
 
     private void Update()
     {
-        value += Time.deltaTime * spinSpeed;
 
-        float spinX = Mathf.Sin(value) * spinRadius;
-        float spinY = Mathf.Cos(value) * spinRadius;
-
-
-        var dir = Vector3.forward + Vector3.right;
-
-
-        //Forward movement
+        var dir = Vector3.forward + Vector3.right * rotateAmount;
         transform.Translate(dir * moveSpeed * Time.deltaTime);
 
         float rotationAmount =  rotationSpeed * Time.deltaTime;
