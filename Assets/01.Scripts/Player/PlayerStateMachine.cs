@@ -41,7 +41,6 @@ public class PlayerStateMachine
     {
         if (_player.IsDie)
         {
-            Debug.Log("Player is Dead");
             return;
         }
 
