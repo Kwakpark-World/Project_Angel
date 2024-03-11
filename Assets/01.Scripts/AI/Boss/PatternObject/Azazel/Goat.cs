@@ -62,6 +62,6 @@ public class Goat : Brain
 
     public override void OnDie()
     {
-        GameManager.Instance.pool.Push(this, true);
+        PoolManager.instance.Push(this, true);
     }
 }

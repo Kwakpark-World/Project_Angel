@@ -19,7 +19,7 @@ public class AzazelFirstPattern : Pattern
     {
         Debug.Log("Use first pattern.");
 
-        if (GameManager.Instance.pool.Pop(PoolingType.Goat).TryGetComponent(out Goat goat))
+        if (PoolManager.instance.Pop(PoolingType.Goat).TryGetComponent(out Goat goat))
         {
             if (!goat.player)
             {

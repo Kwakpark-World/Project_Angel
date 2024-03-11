@@ -2,11 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager
+public class PoolManager : MonoBehaviour
 {
     public static PoolManager instance;
     private Dictionary<PoolingType, Pool<PoolableMono>> _pools = new Dictionary<PoolingType, Pool<PoolableMono>>();
+    [SerializeField]
+    private PoolingListSO _poolingList;
     private Transform _parent;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        
+        foreach (var poolingObject in _poolingList.poolingList)
+        {
+            CreatePool(poolingObject.prefab, poolingObject.type, poolingObject.itemAmount);
+        }
+    }
 
     public PoolManager(Transform parent)
     {
