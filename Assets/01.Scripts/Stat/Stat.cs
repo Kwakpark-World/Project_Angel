@@ -6,13 +6,13 @@ using UnityEngine;
 [Serializable]
 public class Stat
 {
-    [SerializeField] private int _baseValue;
+    [SerializeField] private float _baseValue;
 
-    public List<int> modifiers;
+    public List<float> modifiers;
 
-    public int GetValue()
+    public float GetValue()
     {
-        int finalValue = _baseValue;
+        float finalValue = _baseValue;
         for (int i = 0; i < modifiers.Count; ++i)
         {
             finalValue += modifiers[i];
@@ -20,7 +20,7 @@ public class Stat
         return finalValue;
     }
 
-    public void AddModifier(int value)
+    public void AddModifier(float value)
     {
         if (value != 0)
         {
@@ -28,7 +28,7 @@ public class Stat
         }
     }
 
-    public void RemoveModifier(int value)
+    public void RemoveModifier(float value)
     {
         if (value != 0)
         {
@@ -36,8 +36,13 @@ public class Stat
         }
     }
 
-    public void SetDefalutValue(int value)
+    public void SetDefalutValue(float value)
     {
         _baseValue = value;
     }
+
+/*    public static explicit operator float(Stat v)
+    {
+        throw new NotImplementedException();
+    }*/
 }

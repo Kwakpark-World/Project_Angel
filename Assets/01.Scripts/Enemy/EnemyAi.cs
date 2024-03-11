@@ -1,34 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : Brain 
 {
+    public EnemyType _enemyTypes;
     [Header("Range")]
-    [SerializeField]
-    float _detectRange = 10f;
-    [SerializeField]
-    float _meleeAttackRange = 5f;
+    float _detectRange;
+    float _meleeAttackRange;
 
-    [Header("Enemy Stats")]
-    public EnemyStats enemyStats;
+    [Header("Movement")]
+    float _movementSpeed;
 
-    private float timer;
+    [Header("EnemyHP")]
+    public float Enemy_MaxHp;
+    
+    public MonsterStat _enemyStat;
+
+    [Header("Damage")]
+    public float meleeAttackDamage;
+    [Header("Partical")]
+    public ParticleSystem Attack1Particle;
 
     Vector3 _originPos = default;
     BehaviorTreeRunner _BTRunner = null;
     Transform _detectedPlayer = null;
-    Animator _animator;
 
-    FakePlayer player;
     public Collider weaponCollider;
+    public GameObject WeaponSpawn;
 
-    private bool Isstride;
     Vector3 _lastKnownPlayerPos = default;
     private float _rotationSpeed = 10;
-    float idleProbability = 0.1f;
     private Vector3 deathPosition;
 
     [Header("BoolValue")]
@@ -36,6 +41,7 @@ public class EnemyAI : MonoBehaviour
     private bool isHit = false;
     private bool isDie = false;
     private bool _isMoving = false;
+    private bool isReload = false;
 
     //임시
     private bool isReturningToOrigin = false;
@@ -43,46 +49,47 @@ public class EnemyAI : MonoBehaviour
     NavMeshAgent _navMeshAgent;
     CharacterController _characterController;
 
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
+    private float timer = 0;
 
-        _BTRunner = new BehaviorTreeRunner(SettingBT());
-
-        _originPos = transform.position;
-
-        player = GetComponent<FakePlayer>();
-
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-
+    public enum EnemyType
+    { 
+        knight,
+        archer
     }
 
-    private void Start()
+    protected override void Start()
     {
-        timer = Time.deltaTime;
+        base.Start();
+
+        Attack1Particle.Stop();
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (enemyStats._currentHp <= 0)
-        {
-            _BTRunner.Operate();
-            OnDieTrue();
-            isDie = true;
-        }
-
-        if (enemyStats._currentHp < _previousHealth)
-        {
-            OnHitTrue();
-            OnAttackFalse();
-            isHit = true;
-            _isMoving = false;
-        }
+        float _currentHP = _enemyStat.GetCurrentHealth();
+        timer += Time.deltaTime;
 
         _BTRunner.Operate();
 
-        _previousHealth = enemyStats._currentHp;
+        _previousHealth = _currentHP;
+
+        if (_enemyTypes == EnemyType.archer && timer > 1f)
+        {
+            if (isHit == false)
+            {
+                OnReload();
+               
+            }
+        }
+
+        // Debug
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnHit(10f);
+        }
     }
+
+   
 
     INode SettingBT()
     {
@@ -153,8 +160,7 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                OnDie();
-                transform.position = Vector3.MoveTowards(transform.position, randomPatrolPos, Time.deltaTime * enemyStats._moveSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, randomPatrolPos, Time.deltaTime * _movementSpeed);
                 return INode.ENodeState.ENS_Running;
             }
         }
@@ -187,19 +193,26 @@ public class EnemyAI : MonoBehaviour
     {
         if (_detectedPlayer != null)
         {
-            //이거
-
+            
             if (isHit == false)
             {
+                if(_enemyTypes == EnemyType.knight)
                 OnAttackTrue();
+                else if (_enemyTypes == EnemyType.archer && timer > 1f)
+                {
+                    OnReload();
+                    GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
+
+                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
+                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
+                    timer = 0;
+                }
             }
             else
             {
                 OnHitTrue();
                 isHit = false;
             }
-
-            OnDie();
 
 
             return INode.ENodeState.ENS_Success;
@@ -263,10 +276,21 @@ public class EnemyAI : MonoBehaviour
         {
             _navMeshAgent.SetDestination(_detectedPlayer.position);
 
-           
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
+               /*Debug.Log("55");
                 OnAttackTrue();
+                if(_enemyTypes == EnemyType.knight)
+                {
+                    OnAttackTrue();
+                    Debug.Log("2");
+                }
+                else
+                {
+                    OnReload();
+                    Debug.Log("2.5");
+                }*/
+
                 return INode.ENodeState.ENS_Success;
             }
 
@@ -275,7 +299,6 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            
             return INode.ENodeState.ENS_Failure;
         }
     }
@@ -286,14 +309,21 @@ public class EnemyAI : MonoBehaviour
     {
         _navMeshAgent.SetDestination(_originPos);
 
-        if (_navMeshAgent.remainingDistance <= 0.1f)
+        if (_navMeshAgent.remainingDistance <= 0.1f && _isMoving)
         {
             OnIdleTrue();
             return INode.ENodeState.ENS_Success;
         }
-        OnMoveTrue();
+
+        if (_isMoving)
+        {
+            OnMoveTrue();
+        }
+
         return INode.ENodeState.ENS_Running;
     }
+
+
 
     INode.ENodeState MoveToLastKnownPlayerPos()
     {
@@ -308,15 +338,6 @@ public class EnemyAI : MonoBehaviour
     }
     #endregion
 
-    private void OnDie()
-    {
-        if (enemyStats._currentHp <= 0)
-        {
-            OnDieTrue();
-            deathPosition = transform.position;
-        }
-    }
-
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
@@ -330,46 +351,96 @@ public class EnemyAI : MonoBehaviour
 
     #region Anmation
 
-    private void SetAnimatorBools(bool isIdle, bool isAttack, bool isMove, bool isHit, bool isDie)
+    private void SetAnimatorBools(bool isIdle, bool isAttack, bool isMove, bool isHit, bool isDie, bool isLoad)
     {
-        _animator.SetBool("Idle", isIdle);
-        _animator.SetBool("Attack", isAttack);
-        _animator.SetBool("Move", isMove);
-        _animator.SetBool("Hit", isHit);
-        _animator.SetBool("Die", isDie);
+        AnimatorCompo.SetBool("Idle", isIdle);
+        AnimatorCompo.SetBool("Attack", isAttack);
+        AnimatorCompo.SetBool("Move", isMove);
+        AnimatorCompo.SetBool("Hit", isHit);
+        AnimatorCompo.SetBool("Die", isDie);
+        AnimatorCompo.SetBool("load", isLoad);
     }
 
     private void OnIdleTrue()
     {
         if (isDie == false)
-            SetAnimatorBools(false, false, false, false, false);
+            SetAnimatorBools(false, false, false, false, false, false);
     }
 
+    private bool isSoundPlayed = false;
     private void OnAttackTrue()
     {
-        if (isHit == false)
+        
+        if (isHit == false )
         {
-            // 이동을 멈추도록 설정
+            SetAnimatorBools(false, true, false, false, false, false);
+
+            if (!isSoundPlayed)
+            {
+                
+                timer = 0;
+
+                if (_enemyTypes == EnemyType.knight)
+                {
+                    SoundManager.Instance.PlayAttackSound("Attack1");
+                }
+                else if (_enemyTypes == EnemyType.archer)
+                {
+                    SoundManager.Instance.PlayAttackSound("Attack2");
+                }
+                Attack1Particle.Play();
+                isSoundPlayed = true;
+                Invoke("ResetSoundPlayed", 1.3f); 
+            }
+
             if (_navMeshAgent != null)
             {
                 _navMeshAgent.isStopped = true;
             }
 
             _isMoving = false;
-
-            SetAnimatorBools(false, true, false, false, false);
-            
+            isReload = false;
         }
     }
 
-    private void OnMoveTrue()
+    private void ResetSoundPlayed()
     {
-        SetAnimatorBools(false, false, true, false, false);
+        isSoundPlayed = false;
+    }
+
+    private void OnReload()
+    {
+        if (isHit == false && isReload == false)
+        {
+            SetAnimatorBools(false, false, false, false, false, true); // 이동 애니메이션 재생
+            
+            _navMeshAgent.isStopped = true; // 장전 중에 움직임 중지
+
+            
+            isReload = true;
+            if(isReload == true)
+            {
+                OnAttackTrue();
+            }
+            isSoundPlayed = false; 
+            timer = 0; 
+        }
     }
 
     private void OnAttackFalse()
     {
-        SetAnimatorBools(false, false, true, false, false);
+        if (_enemyTypes == EnemyType.knight)
+        {
+            SoundManager.Instance.StopAttackSound("Attack1");
+        }
+        else if (_enemyTypes == EnemyType.archer )
+        {
+            SoundManager.Instance.StopAttackSound("Attack2");
+            timer = 0;
+        }
+        SetAnimatorBools(false, false, true, false, false, false);
+
+        // 이동을 다시 시작하도록 설정
         if (_navMeshAgent != null)
         {
             _navMeshAgent.isStopped = false;
@@ -378,32 +449,58 @@ public class EnemyAI : MonoBehaviour
         _isMoving = true;
     }
 
+    private void OnMoveTrue()
+    {
+        SetAnimatorBools(false, false, true, false, false, false);
+    }
+
     private void OnHitTrue()
     {
         if (isHit == true)
         {
-            SetAnimatorBools(false, false, false, true, false);
+            SetAnimatorBools(false, false, false, true, false, false);
             _isMoving = false;
         }
     }
 
     public void OnDieTrue()
     {
-        if (enemyStats._currentHp <= 0)
-        {
-            SetAnimatorBools(false, false, false, false, true);
-        }
-        timer += Time.deltaTime;
-        if (timer > 2.5f)
-        {
-            gameObject.SetActive(false);
-        }
+        SetAnimatorBools(false, false, false, false, true, false);
     }
     #endregion
 
-    public void OnDamage(float damage)
+    protected override void Initialize()
     {
-        damage = enemyStats._damage;
-        enemyStats._currentHp -= damage;
+        base.Initialize();
+
+        _BTRunner = new BehaviorTreeRunner(SettingBT());
+
+        _originPos = transform.position;
+
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+
+        _enemyStat = _enemyStat as MonsterStat;
+
+        Enemy_MaxHp = _enemyStat.GetMaxHealthValue();
+        _detectRange = _enemyStat.GetDetectRange();
+        _meleeAttackRange = _enemyStat.GetAttackRange();
+        meleeAttackDamage = _enemyStat.GetDamage();
+        _movementSpeed = _enemyStat.GetMoveSpeed();
+    }
+
+    public override void OnHit(float damage)
+    {
+        _enemyStat.currentHealth.AddModifier(-damage);
+
+        if (_enemyStat.GetCurrentHealth() <= 0f)
+        {
+            OnDie();
+        }
+    }
+
+    public override void OnDie()
+    {
+        OnDieTrue();
+        deathPosition = transform.position;
     }
 }
