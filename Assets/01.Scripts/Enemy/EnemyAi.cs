@@ -92,7 +92,6 @@ public class EnemyAI : Brain
 
 
     }
-
    
 
     INode SettingBT()
@@ -207,7 +206,7 @@ public class EnemyAI : Brain
                 
                 else if (_enemyTypes == EnemyType.archer && timer > 1f)
                 {
-                    OnReload();
+                    OnAttackTrue();
                     GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
 
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
@@ -433,11 +432,12 @@ public class EnemyAI : Brain
         if (isReload == true)
         {
             // Reload 애니메이션의 길이를 알고 있다고 가정합니다. 만약 애니메이션 길이를 모르면 다른 방법을 사용해야 합니다.
-            float reloadAnimationLength = 1f; // 임의의 값으로 설정합니다. 실제 애니메이션의 길이를 사용하세요.
+            float reloadAnimationLength = 2f; // 임의의 값으로 설정합니다. 실제 애니메이션의 길이를 사용하세요.
 
             // Reload 애니메이션의 길이 이후에 Attack 후 Reload 메서드를 호출합니다.
             StartCoroutine(WaitAndAttack(reloadAnimationLength));
             isReload = false;
+            
         }
     }
 
@@ -447,7 +447,7 @@ public class EnemyAI : Brain
 
         // 공격 실행
         OnAttackTrue();
-
+        Debug.Log(isReload);
         // 공격 후 재장전
         yield return new WaitForSeconds(3); // 공격 애니메이션 길이를 고려하여 설정하세요.
         OnReload();

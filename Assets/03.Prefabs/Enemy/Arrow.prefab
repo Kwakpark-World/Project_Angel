@@ -11,12 +11,12 @@ PrefabInstance:
     - target: {fileID: 3459466411213268762, guid: 4f8f97ef92b16bd43914be0bad107f80,
         type: 3}
       propertyPath: moveSpeed
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3459466411213268762, guid: 4f8f97ef92b16bd43914be0bad107f80,
         type: 3}
       propertyPath: rotationSpeed
-      value: 500
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 3743669660004355382, guid: 4f8f97ef92b16bd43914be0bad107f80,
         type: 3}
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b890939dbf8e47c4389cd3a1e23c0ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 40
+  speed: 20
 --- !u!54 &-1446628892769409215
 Rigidbody:
   m_ObjectHideFlags: 0
