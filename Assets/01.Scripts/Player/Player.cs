@@ -61,7 +61,7 @@ public class Player : PlayerController
         PlayerInput.DashEvent += HandleDashEvent;
     }
 
-    private void Start()
+    protected override void Start()
     {
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
     }

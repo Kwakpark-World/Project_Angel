@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     #region components
     public Animator AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
-    public Collider ColliderCompo { get; private set; }
+    public CapsuleCollider ColliderCompo { get; private set; }
 
     [field: SerializeField] public CharacterStat CharStat { get; private set; }
 
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm.GetComponent<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
-        ColliderCompo = visualTrm.GetComponent<Collider>();
+        ColliderCompo = visualTrm.GetComponent<CapsuleCollider>();
 
         CharStat = Instantiate(CharStat);
         CharStat.SetOwner(this);
@@ -32,9 +32,7 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-        ColliderCompo.GetComponent<CapsuleCollider>().radius = 0.1456659f;
-        ColliderCompo.GetComponent<CapsuleCollider>().height = 1.794054f;
-        ColliderCompo.GetComponent<CapsuleCollider>().center = new Vector3(0, 0.95f, 0);
+        
     }
 
     protected virtual void Update()
