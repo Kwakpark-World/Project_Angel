@@ -22,7 +22,7 @@ public class Player : PlayerController
     private float dashPrevTime = 0f;
 
     public float defenseCoolTime = 1f;
-    private float defensePrevTime = 0f;
+    public float defensePrevTime = 0f;
 
     [Header("Player HP")]
     public float playerCurrnetHP;
@@ -85,6 +85,7 @@ public class Player : PlayerController
 
             if (IsGroundDetected())
             {
+                if (defenseCoolTime + defensePrevTime > Time.time) return;
                 StateMachine.ChangeState(PlayerStateEnum.Defense);
             }
         }

@@ -22,7 +22,6 @@ public class PlayerDefenseState : PlayerState
     {
         base.Exit();
         _player.IsDefense = false;
-        _defenseTimer = 0;
     }
 
     public override void UpdateState()
@@ -32,10 +31,12 @@ public class PlayerDefenseState : PlayerState
         Debug.Log(_defenseTimer);
         _defenseTimer += Time.deltaTime;
         
-        if (!_player.PlayerInput.isDefense)
+        if (!_player.PlayerInput.isDefense || _defenseTimer >= _player.defenseTime)
+        {
+            _defenseTimer = 0;
+            _player.defensePrevTime = Time.time;
+
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
-        
-        if (_defenseTimer >= _player.defenseTime)
-            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+        }
     }
 }
