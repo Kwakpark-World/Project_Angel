@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8681457086440925530
+--- !u!114 &-7445269404651864784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,111 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b6bfb9843b7224484993f2a3771df1, type: 3}
-  m_Name: ChaseNode
+  m_Script: {fileID: 11500000, guid: 9ec6c8849b3c40f40b689fe08f2c8ef6, type: 3}
+  m_Name: NormalAttackNode
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: d0fd7975e15cc71449a922cd03b1b377
-  position: {x: -497.97772, y: 575.9675}
+  guid: b0e915704d00bc844885ef01ddce2b6a
+  position: {x: 503.78906, y: 402.4}
   blackboard:
     enemyLayer:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  checkDelay: 0.2
-  chaseRange: 14
-  successRange: 6
---- !u!114 &-8560385964530550093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
-  m_Name: SequenceNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 34b91d145cdeb2e4bbc463a261b7bdb3
-  position: {x: -200.8976, y: 522.4}
-  blackboard:
-    enemyLayer:
-      serializedVersion: 2
-      m_Bits: 0
-    destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
-    selectedPattern: 0
-    nextPatternCooldown: 0
-  brain: {fileID: 0}
-  description: 
-  children:
-  - {fileID: 4900922312955760896}
-  - {fileID: -5302655251269867207}
---- !u!114 &-7999610663485876215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5f2692ec9bc03a449d2585a72177ec3, type: 3}
-  m_Name: PatternSelectedNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: c9b9d7d2cb63ade4697dd494801d36e6
-  position: {x: 114.30248, y: 678.4}
-  blackboard:
-    enemyLayer:
-      serializedVersion: 2
-      m_Bits: 0
-    destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
-    selectedPattern: 0
-    nextPatternCooldown: 0
-  brain: {fileID: 0}
-  description: 
-  conditioningPattern: 0
---- !u!114 &-7305929303687445225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
-  m_Name: SequenceNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 07b25448bf5d4484f8ff54660b405aef
-  position: {x: -573.1777, y: 427.16754}
-  blackboard:
-    enemyLayer:
-      serializedVersion: 2
-      m_Bits: 0
-    destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
-    selectedPattern: 0
-    nextPatternCooldown: 0
-  brain: {fileID: 0}
-  description: 
-  children:
-  - {fileID: 3074475431469989266}
-  - {fileID: -8681457086440925530}
 --- !u!114 &-7241013195727709932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,12 +46,11 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  child: {fileID: -2089178124872885214}
+  child: {fileID: 1121010762550037912}
 --- !u!114 &-7097368935496057661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,35 +77,6 @@ MonoBehaviour:
   brain: {fileID: 0}
   description: 
   nextPatternCooldown: 45
---- !u!114 &-6885380354428155453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
-  m_Name: SequenceNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 4ac724a8112564a4389495e5cca39436
-  position: {x: 213.5025, y: 523.2}
-  blackboard:
-    enemyLayer:
-      serializedVersion: 2
-      m_Bits: 0
-    destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
-    selectedPattern: 0
-    nextPatternCooldown: 0
-  brain: {fileID: 0}
-  description: 
-  children:
-  - {fileID: -7999610663485876215}
-  - {fileID: -352705644313980082}
 --- !u!114 &-5530754849855213273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,14 +98,13 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  pattern: {fileID: 0}
+  patternObject: {fileID: 0}
   nextPatternCooldown: 0
---- !u!114 &-5302655251269867207
+--- !u!114 &-4570708968608737971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,25 +113,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdf748445e3621b45a0057f35f318600, type: 3}
-  m_Name: PatternNode
+  m_Script: {fileID: 11500000, guid: d5f2692ec9bc03a449d2585a72177ec3, type: 3}
+  m_Name: PatternSelectedNode
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 17210f99cb2e0e0458be7a74017c6614
-  position: {x: -114.49752, y: 678.4}
+  guid: cf20d9fe164955e46aea068867b1b2b6
+  position: {x: 136.79999, y: 757.6}
   blackboard:
     enemyLayer:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  pattern: {fileID: 0}
-  nextPatternCooldown: 0
+  conditioningPattern: 0
 --- !u!114 &-2989378710378351037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,38 +151,11 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
   conditioningPattern: 1
---- !u!114 &-2957477579588247446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ec6c8849b3c40f40b689fe08f2c8ef6, type: 3}
-  m_Name: NormalAttackNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 64a9fb4395ff1a3489cfbc801323133b
-  position: {x: 502.22498, y: 419.20004}
-  blackboard:
-    enemyLayer:
-      serializedVersion: 2
-      m_Bits: 0
-    destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
-    selectedPattern: 0
-    nextPatternCooldown: 0
-  brain: {fileID: 0}
-  description: 
 --- !u!114 &-2564976456631366636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,14 +177,10 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  checkDelay: 0.2
-  chaseRange: 14
-  successRange: 6
 --- !u!114 &-2272794489515060441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,45 +202,13 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
   children:
   - {fileID: -2989378710378351037}
---- !u!114 &-2089178124872885214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aba3b19ba8212749ad7e3419bb34bdd, type: 3}
-  m_Name: SelectorNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 26bf635c96c743e48a423f8e64e23768
-  position: {x: 0, y: 206.4}
-  blackboard:
-    enemyLayer:
-      serializedVersion: 2
-      m_Bits: 0
-    destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
-    selectedPattern: 0
-    nextPatternCooldown: 0
-  brain: {fileID: 0}
-  description: 
-  children:
-  - {fileID: -7305929303687445225}
-  - {fileID: -8560385964530550093}
-  - {fileID: -6885380354428155453}
-  - {fileID: -2957477579588247446}
---- !u!114 &-352705644313980082
+--- !u!114 &-1642809161267915919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,20 +222,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 9e9a4e94e2ffcae4da3355c694d63c86
-  position: {x: 303.1025, y: 678.4}
+  guid: 9becec70f4912ad488fcac246c8c7698
+  position: {x: -127.090065, y: 756.39996}
   blackboard:
     enemyLayer:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  pattern: {fileID: 0}
+  patternObject: {fileID: 0}
   nextPatternCooldown: 0
+--- !u!114 &-1505768002213774379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
+  m_Name: SequenceNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 8e2de2abc3221264abe04ecc9ccb2aa9
+  position: {x: -218.29, y: 593.19995}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  children:
+  - {fileID: 1632380036158805779}
+  - {fileID: -1642809161267915919}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,26 +280,134 @@ MonoBehaviour:
   nodes:
   - {fileID: 3514451634953570198}
   - {fileID: -7241013195727709932}
-  - {fileID: -2089178124872885214}
-  - {fileID: -7305929303687445225}
-  - {fileID: -8681457086440925530}
-  - {fileID: -8560385964530550093}
-  - {fileID: 4900922312955760896}
-  - {fileID: -5302655251269867207}
-  - {fileID: -6885380354428155453}
-  - {fileID: -7999610663485876215}
-  - {fileID: -352705644313980082}
-  - {fileID: -2957477579588247446}
-  - {fileID: 3074475431469989266}
-  - {fileID: 6283068379550544337}
+  - {fileID: 1121010762550037912}
+  - {fileID: 6625403226092123920}
+  - {fileID: 4987246983069072979}
+  - {fileID: 1982704451196854589}
+  - {fileID: 4236475534747619835}
+  - {fileID: -1505768002213774379}
+  - {fileID: 1632380036158805779}
+  - {fileID: -1642809161267915919}
+  - {fileID: 4927918292645050574}
+  - {fileID: -4570708968608737971}
+  - {fileID: 2226739705829030407}
+  - {fileID: -7445269404651864784}
   blackboard:
     enemyLayer:
       serializedVersion: 2
       m_Bits: 64
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
+--- !u!114 &1121010762550037912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aba3b19ba8212749ad7e3419bb34bdd, type: 3}
+  m_Name: SelectorNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 1057dc7ce5faaea4083a21936af132b6
+  position: {x: 0.000015258789, y: 206.4}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  children:
+  - {fileID: 6625403226092123920}
+  - {fileID: -1505768002213774379}
+  - {fileID: 4927918292645050574}
+  - {fileID: -7445269404651864784}
+--- !u!114 &1632380036158805779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f2692ec9bc03a449d2585a72177ec3, type: 3}
+  m_Name: PatternSelectedNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ab1b0bdcf05076142bf3c26871d7b6b8
+  position: {x: -315.88995, y: 755.59985}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  conditioningPattern: 0
+--- !u!114 &1982704451196854589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901a731da74368f47a7e5cdac77dc3ca, type: 3}
+  m_Name: InRangeNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 2cb49d5a938f81b48a43ac4b3a331dc7
+  position: {x: -595.30115, y: 644.8}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  isDetect: 0
+--- !u!114 &2226739705829030407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf748445e3621b45a0057f35f318600, type: 3}
+  m_Name: PatternNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 2d77c858e2f9db7439ca55faf7c493ac
+  position: {x: 325.6, y: 756}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  patternObject: {fileID: 0}
+  nextPatternCooldown: 0
 --- !u!114 &2686675453337645057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,39 +429,11 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  range: 14
---- !u!114 &3074475431469989266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38904abe18f6bdd44b180da8ba615127, type: 3}
-  m_Name: InverterNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: cb95cac56cc81fb4c900fe752cb74645
-  position: {x: -647.19995, y: 575.19995}
-  blackboard:
-    enemyLayer:
-      serializedVersion: 2
-      m_Bits: 0
-    destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
-    selectedPattern: 0
-    nextPatternCooldown: 0
-  brain: {fileID: 0}
-  description: 
-  child: {fileID: 6283068379550544337}
+  isDetect: 0
 --- !u!114 &3224464128404318941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,7 +455,6 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
@@ -560,13 +481,12 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
   child: {fileID: -7241013195727709932}
---- !u!114 &4900922312955760896
+--- !u!114 &4236475534747619835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -575,24 +495,76 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5f2692ec9bc03a449d2585a72177ec3, type: 3}
-  m_Name: PatternSelectedNode
+  m_Script: {fileID: 11500000, guid: 48b6bfb9843b7224484993f2a3771df1, type: 3}
+  m_Name: ChaseNode
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 2ab5570efc5ca0c49a20e5e038d85280
-  position: {x: -303.29755, y: 678.4}
+  guid: 65d0d13358c7bbd43b4f960c1dad063a
+  position: {x: -444.90112, y: 541.6}
   blackboard:
     enemyLayer:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  conditioningPattern: 0
+--- !u!114 &4927918292645050574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
+  m_Name: SequenceNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: eb87c8a59f3392243b3f87441772e489
+  position: {x: 234.40007, y: 592.8}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  children:
+  - {fileID: -4570708968608737971}
+  - {fileID: 2226739705829030407}
+--- !u!114 &4987246983069072979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38904abe18f6bdd44b180da8ba615127, type: 3}
+  m_Name: InverterNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 57ff13164af6c864ca44e7fc90490ec6
+  position: {x: -595.30115, y: 541.6}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  child: {fileID: 1982704451196854589}
 --- !u!114 &5391884970093767842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,7 +586,6 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
@@ -622,7 +593,7 @@ MonoBehaviour:
   children:
   - {fileID: 3224464128404318941}
   - {fileID: 0}
---- !u!114 &6283068379550544337
+--- !u!114 &6625403226092123920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -631,24 +602,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 901a731da74368f47a7e5cdac77dc3ca, type: 3}
-  m_Name: InRangeNode
+  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
+  m_Name: SequenceNode
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 59308025ae9cf5d4898dc9b77884cb16
-  position: {x: -647.2, y: 678.4001}
+  guid: b5b3b06e8d49a154892e01039be975f7
+  position: {x: -519.30115, y: 378.4}
   blackboard:
     enemyLayer:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  range: 0
+  children:
+  - {fileID: 4987246983069072979}
+  - {fileID: 4236475534747619835}
 --- !u!114 &6860470663022966651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,7 +642,6 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}
@@ -704,7 +675,6 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     destination: {x: 0, y: 0, z: 0}
-    target: {fileID: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
   brain: {fileID: 0}

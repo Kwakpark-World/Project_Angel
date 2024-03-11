@@ -7,25 +7,25 @@ public enum PlayerStatType
 {
     maxHealth,
     currentHealth,
-    armor,
-    speed,
-    damage,
+    defensivePower,
+    moveSpeed,
+    attackPower,
     criticalChance,
-    criticalDamage,
+    criticalMultiplier,
 }
 
 public class CharacterStat : ScriptableObject
 {
     [Header("Defensive stats")]
-    public Stat maxHealth; //체력
-    public Stat currentHealth;
-    public Stat armor; //방어도
-    public Stat speed;
+    public Stat maxHealth; // 최대 체력
+    public Stat currentHealth; // 현재 체력
+    public Stat defensivePower; // 방어력
+    public Stat moveSpeed; // 이동 속도
 
     [Header("Offensive stats")]
-    public Stat damage;
-    public Stat criticalChance;
-    public Stat criticalDamage;
+    public Stat attackPower; // 공격력
+    public Stat criticalChance; // 치명타 확률
+    public Stat criticalMultiplier; // 치명타 배율 
 
     protected PlayerController _owner;
 
@@ -44,22 +44,39 @@ public class CharacterStat : ScriptableObject
     protected IEnumerator StatModifyCoroutine(float modifyValue, float duration, Stat statToModify)
     {
         statToModify.AddModifier(modifyValue);
+
         yield return new WaitForSeconds(duration);
+
         statToModify.RemoveModifier(modifyValue);
-    }
-
-    public float GetDamage()
-    {
-        return damage.GetValue();
-    }
-
-    public float ArmoredDamage(float incomingDamage, bool isChilled)
-    {
-        return 0;
     }
 
     public float GetMaxHealthValue()
     {
-        return 0;
+        return maxHealth.GetValue();
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth.GetValue();
+    }
+
+    public float GetDefensivePower()
+    {
+        return defensivePower.GetValue();
+    }
+
+    public float GetMoveSpeed()
+    {
+        return moveSpeed.GetValue();
+    }
+
+    public float GetAttackPower()
+    {
+        return attackPower.GetValue();
+    }
+
+    public void Hit(float incomingDamage)
+    {
+        currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
     }
 }

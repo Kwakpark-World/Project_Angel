@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class AzazelFirstPattern : Pattern
 {
-    #region Debug
-    [Header("Debug objects")]
-    public GameObject goat;
-    #endregion
-
     public override void OnStart()
     {
 
@@ -23,15 +18,12 @@ public class AzazelFirstPattern : Pattern
     public override Node.State OnUpdate()
     {
         Debug.Log("Use first pattern.");
-        // Pop goat object from pool.
-        // Debug
-        if (goat)
-        {
-            Goat goatInstance = Instantiate(goat).GetComponent<Goat>();
 
-            if (goatInstance == null)
+        if (GameManager.Instance.pool.Pop(PoolingType.Goat).TryGetComponent(out Goat goat))
+        {
+            if (!goat.player)
             {
-                goatInstance.player = node.blackboard.target.GetComponent<Player>();
+                goat.player = GameManager.Instance.player;
             }
         }
 

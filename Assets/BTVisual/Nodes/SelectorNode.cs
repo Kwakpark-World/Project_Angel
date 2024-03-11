@@ -10,7 +10,7 @@ namespace BTVisual
         
         protected override void OnStart()
         {
-            //_current = 0;
+
         }
 
         protected override void OnStop()
@@ -28,15 +28,16 @@ namespace BTVisual
                 {
                     case State.Running:
                         return State.Running;
+
                     case State.Failure:
-                        //실패하면 아무것도 안함. 다음노드로 바로 넘어간다.
                         break;
+
                     case State.Success:
                         return State.Success;
                 }
             }
             
-            return State.Failure; //다 돌아도 실패면 실패
+            return State.Failure;
         }
     }
 }

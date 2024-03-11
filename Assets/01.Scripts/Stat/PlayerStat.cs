@@ -18,15 +18,25 @@ public class PlayerStat : CharacterStat
 
             if (statField == null)
             {
-                Debug.LogError($"There are no stat! error : {statName}");
+                Debug.LogError($"{statName} stat doesn't exist.");
             }
             else
             {
                 _fieldInfoDictionary.Add(statType, statField);
             }
         }
+
+        currentHealth.SetDefalutValue(GetMaxHealthValue());
     }
-    //
+
+    public void InitializeAllModifiers()
+    {
+        foreach (PlayerStatType statType in Enum.GetValues(typeof(PlayerStatType)))
+        {
+            GetStatByType(statType).InitializeModifier();
+        }
+    }
+
     public Stat GetStatByType(PlayerStatType statType)
     {
         return _fieldInfoDictionary[statType].GetValue(this) as Stat;

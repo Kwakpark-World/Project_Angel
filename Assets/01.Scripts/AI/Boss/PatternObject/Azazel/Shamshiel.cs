@@ -16,10 +16,6 @@ public class Shamshiel : Grigori
 
     protected override void Debuff()
     {
-        // Give slowness effect to player.
-        // Debug
-        player.moveSpeed *= _slownessMultiplier;
-
-        //player.CharStat.IncreaseStatBy(player.moveSpeed * slown)
+        player.PlayerStat.IncreaseStatBy(player.PlayerStat.GetMoveSpeed() - player.PlayerStat.GetMoveSpeed() * _slownessMultiplier, _slownessDuration, player.PlayerStat.GetStatByType(PlayerStatType.moveSpeed));
     }
 }

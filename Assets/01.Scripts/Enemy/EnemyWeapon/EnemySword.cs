@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class EnemySword : MonoBehaviour
 {
-    public EnemyStat _enemyStat;
     private bool canDamage = true;
-    private float resetTime = 1.1f;
 
     public Player player;
-     EnemyAI enemyAI;
+    EnemyAI enemyAI;
 
     private void Awake()
     {
         player.GetComponent<Player>();
         enemyAI = GetComponent<EnemyAI>();
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,7 +23,7 @@ public class EnemySword : MonoBehaviour
             {
                 if (player != null)
                 {
-                   player.TakeDamage(_enemyStat.GetDamage());
+                   player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
                 }
 
                 StartCoroutine(ResetDamageTimer());
@@ -38,7 +35,7 @@ public class EnemySword : MonoBehaviour
     {
         canDamage = false;
 
-        yield return new WaitForSeconds(resetTime);
+        yield return new WaitForSeconds(enemyAI.EnemyStatistic.GetAttackDelay());
 
         canDamage = true;
     }
