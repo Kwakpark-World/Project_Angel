@@ -18,7 +18,7 @@ public class MonsterStat : EnemyStat
 
             if (statField == null)
             {
-                Debug.LogError($"There are no stat! error : {statName}");
+                Debug.LogError($"{statName} stat doesn't exist.");
             }
             else
             {
@@ -28,7 +28,15 @@ public class MonsterStat : EnemyStat
 
         currentHealth.SetDefalutValue(GetMaxHealthValue());
     }
-    //
+
+    public void InitializeAllModifiers()
+    {
+        foreach (EnemyStatType statType in Enum.GetValues(typeof(EnemyStatType)))
+        {
+            GetStatByType(statType).InitializeModifier();
+        }
+    }
+
     public Stat GetStatByType(EnemyStatType statType)
     {
         return _fieldInfoDictionary[statType].GetValue(this) as Stat;

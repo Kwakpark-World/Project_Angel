@@ -14,9 +14,15 @@ public class Player : PlayerController
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
 
+    [Header("defense settings")]
+    public float defenseTime = 3f;
+
     [Header("coolTime Settings")]
     public float dashCoolTime = 0f;
     private float dashPrevTime = 0f;
+
+    public float defenseCoolTime = 1f;
+    public float defensePrevTime = 0f;
 
     [Header("Player HP")]
     public float playerCurrnetHP;
@@ -38,14 +44,12 @@ public class Player : PlayerController
         StateMachine = new PlayerStateMachine();
 
         PlayerStat = CharStat as PlayerStat;
-        playerCurrnetHP = PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue();
 
 
         foreach (PlayerStateEnum stateEnum in Enum.GetValues(typeof(PlayerStateEnum)))
         {
             string typeName = stateEnum.ToString();
             Type t = Type.GetType($"Player{typeName}State");
-            Debug.Log($"Player Get State : {t}");
             PlayerState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PlayerState;
             StateMachine.AddState(stateEnum, newState);
         }
@@ -59,6 +63,7 @@ public class Player : PlayerController
     private void Start()
     {
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
+        PlayerStat.InitializeAllModifiers();
     }
 
     protected override void Update()
@@ -78,12 +83,16 @@ public class Player : PlayerController
             if (curState == StateMachine.GetState(PlayerStateEnum.QSkill)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.Dash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Charge)) return;
 
             if (IsGroundDetected())
+            {
+                if (defenseCoolTime + defensePrevTime > Time.time) return;
                 StateMachine.ChangeState(PlayerStateEnum.Defense);
+            }
         }
 
-        // ¹öÇÁ
+        // ï¿½ï¿½ï¿½ï¿½
         //if (Keyboard.current.pKey.wasPressedThisFrame)
         //{
         //    PlayerStat.IncreaseStatBy(10, 4f, PlayerStat.GetStatByType(StatType.strength));
@@ -113,13 +122,6 @@ public class Player : PlayerController
     public void AnimationActionTrigger()
     {
         StateMachine.CurrentState.AnimationActionTrigger();
-    }
-    #endregion
-
-    #region PlayerSetting
-    public void TakeDamage(float meleeAttackDamage)
-    {
-        playerCurrnetHP -= meleeAttackDamage;
     }
     #endregion
 }

@@ -36,7 +36,7 @@ public abstract class PlayerGroundState : PlayerState
     {
         if (_player.IsGroundDetected())
         {
-            _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack); 
+            _stateMachine.ChangeState(PlayerStateEnum.Charge);
         }
     }
 }

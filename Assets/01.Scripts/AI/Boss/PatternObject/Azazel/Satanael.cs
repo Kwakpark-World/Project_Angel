@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class Satanael : Grigori
 {
-    private BossBrain _azazel;
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-
-        // Fix here.
-        _azazel = GameObject.Find("Azazel").GetComponent<BossBrain>();
-    }
-
     protected override void Attack()
     {
 
@@ -21,13 +11,16 @@ public class Satanael : Grigori
 
     protected override void Debuff()
     {
-        if (player.playerCurrnetHP / player.PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue() > _azazel.CurrentHitPoint / _azazel.hitPoint)
+        float playerHitPointPercentage = player.PlayerStat.GetCurrentHealth() / player.PlayerStat.GetMaxHealthValue();
+        float azazelHitPointPercentage = owner.EnemyStatistic.GetCurrentHealth() / owner.EnemyStatistic.GetMaxHealthValue();
+
+        if (playerHitPointPercentage > azazelHitPointPercentage)
         {
-            player.playerCurrnetHP = player.PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue() * _azazel.CurrentHitPoint / _azazel.hitPoint;
+            player.PlayerStat.currentHealth.AddModifier(-(player.PlayerStat.GetMaxHealthValue() * (playerHitPointPercentage - azazelHitPointPercentage)));
         }
         else
         {
-            _azazel.CurrentHitPoint = _azazel.hitPoint * player.playerCurrnetHP / player.PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue();
+            owner.EnemyStatistic.currentHealth.AddModifier(-(owner.EnemyStatistic.GetMaxHealthValue() * (azazelHitPointPercentage - playerHitPointPercentage)));
         }
     }
 }

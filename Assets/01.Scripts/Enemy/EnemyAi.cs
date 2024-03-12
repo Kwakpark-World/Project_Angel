@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
-public class EnemyAI : Brain 
+public class EnemyAI : Brain
 {
     public EnemyType _enemyTypes;
     [Header("Range")]
@@ -15,13 +16,11 @@ public class EnemyAI : Brain
     float _movementSpeed;
 
     [Header("EnemyHP")]
-    public float Enemy_MaxHp;
-    
-    public MonsterStat _enemyStat;
+    float _enemyMaxHealth;
 
     [Header("Damage")]
-    public float meleeAttackDamage;
-    [Header("Partical")]
+    float _meleeAttackDamage;
+    [Header("Particle")]
     public ParticleSystem Attack1Particle;
 
     Vector3 _originPos = default;
@@ -40,8 +39,9 @@ public class EnemyAI : Brain
     private bool isHit = false;
     private bool isDie = false;
     private bool _isMoving = false;
+    private bool isReload = false;
 
-    //ÀÓ½Ã
+    //ï¿½Ó½ï¿½
     private bool isReturningToOrigin = false;
     private float elapsedTimeSinceReturn = 0f;
     NavMeshAgent _navMeshAgent;
@@ -60,38 +60,37 @@ public class EnemyAI : Brain
         base.Start();
 
         Attack1Particle.Stop();
+
+       
     }
 
     protected override void Update()
     {
-        float _currentHP = _enemyStat.GetCurrentHealth();
+        float currentHP = EnemyStatistic.GetCurrentHealth();
         timer += Time.deltaTime;
-
-        if (_currentHP <= 0)
-        {
-            _BTRunner.Operate();
-            OnDieTrue();
-            isDie = true;
-        }
-
-        if (_currentHP < _previousHealth)
-        {
-            OnHitTrue();
-            OnAttackFalse();
-            isHit = true;
-            _isMoving = false;
-        }
 
         _BTRunner.Operate();
 
-        _previousHealth = _currentHP;
+        _previousHealth = currentHP;
+
+        if (_enemyTypes == EnemyType.archer && timer > 1f)
+        {
+            if (isHit == false)
+            {
+                OnReload();
+               
+            }
+        }
 
         // Debug
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            OnHit(10f);
+            //OnHit(10f);
         }
+
+
     }
+   
 
     INode SettingBT()
     {
@@ -131,10 +130,10 @@ public class EnemyAI : Brain
 
     INode.ENodeState CheckPatrol()
     {
-        // ÇÃ·¹ÀÌ¾î°¡ °¨ÁöµÇÁö ¾Ê¾Ò´ÂÁö È®ÀÎ
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (_detectedPlayer == null && isDie == false)
         {
-            // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÑ ÈÄ 3ÃÊ µ¿¾È °¨ÁöµÇÁö ¾ÊÀ¸¸é ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡±â ½ÃÀÛ
+            // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (isReturningToOrigin)
             {
                 elapsedTimeSinceReturn += Time.deltaTime;
@@ -143,7 +142,7 @@ public class EnemyAI : Brain
                 {
                     isReturningToOrigin = false;
 
-                    // ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡´Â ·ÎÁ÷ Ãß°¡
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
                     //OnMoveTrue();
                     return MoveToOriginPosition();
 
@@ -153,7 +152,7 @@ public class EnemyAI : Brain
 
             Vector3 patrolDirection = Vector3.zero;
             Vector3 randomPatrolPos = transform.position + patrolDirection.normalized * 10f;
-            //OnIdleTrue();
+            OnIdleTrue();
 
             if (Vector3.SqrMagnitude(randomPatrolPos - transform.position) < float.Epsilon * float.Epsilon)
             {
@@ -168,7 +167,7 @@ public class EnemyAI : Brain
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î°¡ °¨ÁöµÆÀ¸¹Ç·Î ÀÌ ºÎºÐÀÇ µ¿ÀÛÀº ½ÇÆÐ·Î ¹ÝÈ¯
+            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð·ï¿½ ï¿½ï¿½È¯
             elapsedTimeSinceReturn = 0f;
             isReturningToOrigin = false;
             return INode.ENodeState.ENS_Failure;
@@ -198,12 +197,16 @@ public class EnemyAI : Brain
             
             if (isHit == false)
             {
-   
-                OnAttackTrue();
-                if (_enemyTypes == EnemyType.archer && timer > 1f)
+                if(_enemyTypes == EnemyType.knight)
                 {
-                    GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
+                    OnAttackTrue();
+                }
+                
+                else if (_enemyTypes == EnemyType.archer && timer > 1f)
+                {
+                    OnAttackTrue();
 
+                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow);
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
                     EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
                     timer = 0;
@@ -211,7 +214,7 @@ public class EnemyAI : Brain
             }
             else
             {
-                OnHitTrue();
+                //OnHitTrue();
                 isHit = false;
             }
 
@@ -237,7 +240,7 @@ public class EnemyAI : Brain
 
                     _lastKnownPlayerPos = _detectedPlayer.position;
 
-                    // ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡´Â Å¸ÀÌ¸Ó ¹× »óÅÂ ÃÊ±âÈ­
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
                     elapsedTimeSinceReturn = 0f;
                     isReturningToOrigin = false;
 
@@ -247,11 +250,11 @@ public class EnemyAI : Brain
             }
         }
 
-        // Player°¡ °¨ÁöµÇÁö ¾Ê¾ÒÀ» °æ¿ì
+        // Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         OnIdleTrue();
         _detectedPlayer = null;
 
-        // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÏÁö ¾Ê¾ÒÀ» ¶§, ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡´Â »óÅÂ ¼³Á¤
+        // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         return MoveToOriginPosition();
     }
 
@@ -277,11 +280,21 @@ public class EnemyAI : Brain
         {
             _navMeshAgent.SetDestination(_detectedPlayer.position);
 
-           
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
+               /*Debug.Log("55");
                 OnAttackTrue();
-               
+                if(_enemyTypes == EnemyType.knight)
+                {
+                    OnAttackTrue();
+                    Debug.Log("2");
+                }
+                else
+                {
+                    OnReload();
+                    Debug.Log("2.5");
+                }*/
+
                 return INode.ENodeState.ENS_Success;
             }
 
@@ -342,27 +355,29 @@ public class EnemyAI : Brain
 
     #region Anmation
 
-    private void SetAnimatorBools(bool isIdle, bool isAttack, bool isMove, bool isHit, bool isDie)
+    private void SetAnimatorBools(bool isIdle, bool isAttack, bool isMove, bool isHit, bool isDie, bool isLoad)
     {
         AnimatorCompo.SetBool("Idle", isIdle);
         AnimatorCompo.SetBool("Attack", isAttack);
         AnimatorCompo.SetBool("Move", isMove);
         AnimatorCompo.SetBool("Hit", isHit);
         AnimatorCompo.SetBool("Die", isDie);
+        AnimatorCompo.SetBool("load", isLoad);
     }
 
     private void OnIdleTrue()
     {
         if (isDie == false)
-            SetAnimatorBools(false, false, false, false, false);
+            SetAnimatorBools(false, false, false, false, false, false);
     }
 
     private bool isSoundPlayed = false;
     private void OnAttackTrue()
     {
-        if (isHit == false)
+        
+        if (isHit == false )
         {
-            SetAnimatorBools(false, true, false, false, false);
+            SetAnimatorBools(false, true, false, false, false, false);
 
             if (!isSoundPlayed)
             {
@@ -388,12 +403,52 @@ public class EnemyAI : Brain
             }
 
             _isMoving = false;
+            isReload = false;
         }
     }
 
     private void ResetSoundPlayed()
     {
         isSoundPlayed = false;
+    }
+
+    private void OnReload()
+    {
+        if (isHit == false && isReload == false)
+        {
+            SetAnimatorBools(false, false, false, false, false, true); // ï¿½Ìµï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
+
+            _navMeshAgent.isStopped = true; // ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+            isSoundPlayed = false;
+            timer = 0;
+            isReload = true;
+        }
+
+        //isReload = false;
+
+        if (isReload == true)
+        {
+            // Reload ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ë°ï¿½ ï¿½Ö´Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ð¸£¸ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.
+            float reloadAnimationLength = 2f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.
+
+            // Reload ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ Attack ï¿½ï¿½ Reload ï¿½Þ¼ï¿½ï¿½å¸¦ È£ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+            StartCoroutine(WaitAndAttack(reloadAnimationLength));
+            isReload = false;
+            
+        }
+    }
+
+    private IEnumerator WaitAndAttack(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        OnAttackTrue();
+        Debug.Log(isReload);
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        yield return new WaitForSeconds(3); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.
+        OnReload();
     }
 
     private void OnAttackFalse()
@@ -407,9 +462,9 @@ public class EnemyAI : Brain
             SoundManager.Instance.StopAttackSound("Attack2");
             timer = 0;
         }
-        SetAnimatorBools(false, false, true, false, false);
+        SetAnimatorBools(false, false, true, false, false, false);
 
-        // ÀÌµ¿À» ´Ù½Ã ½ÃÀÛÇÏµµ·Ï ¼³Á¤
+        // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (_navMeshAgent != null)
         {
             _navMeshAgent.isStopped = false;
@@ -420,48 +475,48 @@ public class EnemyAI : Brain
 
     private void OnMoveTrue()
     {
-        SetAnimatorBools(false, false, true, false, false);
+        SetAnimatorBools(false, false, true, false, false, false);
     }
 
     private void OnHitTrue()
     {
         if (isHit == true)
         {
-            SetAnimatorBools(false, false, false, true, false);
+            SetAnimatorBools(false, false, false, true, false, false);
             _isMoving = false;
         }
     }
 
     public void OnDieTrue()
     {
-        SetAnimatorBools(false, false, false, false, true);
+        SetAnimatorBools(false, false, false, false, true, false);
     }
     #endregion
+
+    public override void InitializePoolingItem()
+    {
+        base.InitializePoolingItem();
+
+        _originPos = transform.position;
+    }
 
     protected override void Initialize()
     {
         base.Initialize();
 
         _BTRunner = new BehaviorTreeRunner(SettingBT());
-
-        _originPos = transform.position;
-
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        _enemyStat = _enemyStat as MonsterStat;
-
-        Enemy_MaxHp = _enemyStat.GetMaxHealthValue();
-        _detectRange = _enemyStat.GetDetectRange();
-        _meleeAttackRange = _enemyStat.GetAttackRange();
-        meleeAttackDamage = _enemyStat.GetDamage();
-        _movementSpeed = _enemyStat.GetMoveSpeed();
+        _enemyMaxHealth = EnemyStatistic.GetMaxHealthValue();
+        _detectRange = EnemyStatistic.GetDetectRange();
+        _meleeAttackRange = EnemyStatistic.GetAttackRange();
+        _meleeAttackDamage = EnemyStatistic.GetAttackPower();
+        _movementSpeed = EnemyStatistic.GetMoveSpeed();
     }
 
-    public override void OnHit(float damage)
+    public override void OnHit()
     {
-        _enemyStat.currentHealth.AddModifier(-damage);
-
-        if (_enemyStat.GetCurrentHealth() <= 0f)
+        if (EnemyStatistic.GetCurrentHealth() <= 0f)
         {
             OnDie();
         }
@@ -469,7 +524,8 @@ public class EnemyAI : Brain
 
     public override void OnDie()
     {
-        OnDieTrue();
         deathPosition = transform.position;
+
+        OnDieTrue();
     }
 }

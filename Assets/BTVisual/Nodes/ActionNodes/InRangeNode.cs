@@ -6,11 +6,25 @@ namespace BTVisual
 {
     public class InRangeNode : ActionNode
     {
-        public float range;
+        public bool isDetect;
+        private Transform _target;
+        private float _range;
 
         protected override void OnStart()
         {
+            if (!_target)
+            {
+                _target = GameManager.Instance.player.transform;
+            }
 
+            if (isDetect)
+            {
+                _range = brain.EnemyStatistic.GetDetectRange();
+            }
+            else
+            {
+                _range = brain.EnemyStatistic.GetAttackRange();
+            }
         }
 
         protected override void OnStop()
@@ -20,18 +34,7 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            Collider[] results = new Collider[1];
-
-            var size = Physics.OverlapSphereNonAlloc(context.transform.position, range, results, blackboard.enemyLayer);
-
-            if (size >= 1)
-            {
-                blackboard.destination = results[0].transform.position;
-
-                return State.Success;
-            }
-
-            return State.Failure;
+            return (brain.transform.position - _target.position).sqrMagnitude <= _range * _range ? State.Success : State.Failure;
         }
     }
 }

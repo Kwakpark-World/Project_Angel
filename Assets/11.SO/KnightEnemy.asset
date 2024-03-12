@@ -14,28 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth:
     _baseValue: 30
-    modifiers: 
+    modifiers: []
+  currentHealth:
+    _baseValue: 30
+    modifiers:
+    - -10
+    - -10
+    - -10
   armor:
-    _baseValue: 0
-    modifiers: 
+    _baseValue: 20
+    modifiers: []
   speed:
-    _baseValue: 0
-    modifiers: 
+    _baseValue: 5
+    modifiers: []
   detectRange:
     _baseValue: 30
-    modifiers: 
+    modifiers: []
   damage:
-    _baseValue: 0
-    modifiers: 
+    _baseValue: 10
+    modifiers: []
   attackRange:
     _baseValue: 15
-    modifiers: 
+    modifiers: []
   attackDelay:
-    _baseValue: 0
-    modifiers: 
+    _baseValue: 1
+    modifiers: []
   patternAmount:
     _baseValue: 0
-    modifiers: 
+    modifiers: []
   initialPatternCooldown:
     _baseValue: 0
-    modifiers: 
+    modifiers: []

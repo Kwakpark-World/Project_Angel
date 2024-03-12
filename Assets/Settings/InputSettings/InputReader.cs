@@ -9,6 +9,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public float YInput { get; private set; }
 
     public bool isDefense { get; private set; }
+    public bool isCharge { get; private set; }
 
     public event Action DashEvent;
     public event Action MeleeAttackEvent;
@@ -46,6 +47,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
 
     public void OnMeleeAttack(InputAction.CallbackContext context)
     {
+        isCharge = context.performed;
         if (context.performed)
         {
             MeleeAttackEvent?.Invoke();
