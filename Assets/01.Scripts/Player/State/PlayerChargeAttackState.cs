@@ -22,8 +22,14 @@ public class PlayerChargeAttackState : PlayerState
     {
         base.UpdateState();
 
+        if (_actionTriggerCalled)
+        {
+            _player.SetAnimCollider(1f, 0.1f, 0.1f);
+        }
+
         if (_endTriggerCalled)
         {
+            _player.SetCollider();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
