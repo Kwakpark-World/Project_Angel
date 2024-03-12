@@ -19,7 +19,7 @@ public class EnemyArrow : PoolableMono
         // 플레이어를 향해 회전
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 11f); // 회전 속도를 고정값으로 설정
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 7); // 회전 속도를 고정값으로 설정
 
         // 일직선 운동
         Vector3 initialVelocity = CalculateInitialVelocity(target.position, transform.position, speed);

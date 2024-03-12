@@ -10,6 +10,7 @@ public enum PoolingType
     Shamshiel,
     Sariel,
     Satanael,
+    Porison
 }
 
 [Serializable]
