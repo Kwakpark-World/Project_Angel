@@ -60,7 +60,7 @@ public class Player : PlayerController
         PlayerInput.DashEvent += HandleDashEvent;
     }
 
-    private void Start()
+    protected override void Start()
     {
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStat.InitializeAllModifiers();
@@ -69,6 +69,9 @@ public class Player : PlayerController
     protected override void Update()
     {
         base.Update();
+
+        // Debug
+        playerCurrnetHP = PlayerStat.GetMaxHealthValue();
 
         StateMachine.CurrentState.UpdateState();
 

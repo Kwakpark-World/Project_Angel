@@ -43,6 +43,8 @@ namespace BTVisual
 
                 if (debug/* Use raycast here.*/)
                 {
+                    context.agent.isStopped = true;
+
                     return State.Success;
                 }
             }

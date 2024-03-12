@@ -7,6 +7,7 @@ public enum PoolingType
 {
     Arrow,
     Goat,
+    Azazel,
     Shamshiel,
     Sariel,
     Satanael,

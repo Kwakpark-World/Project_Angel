@@ -206,7 +206,7 @@ public class EnemyAI : Brain
                 {
                     OnAttackTrue();
 
-                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow);
+                    PoolableMono EnemyArrow = PoolManager.Instance.Pop(PoolingType.Arrow);
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
                     EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
                     timer = 0;

@@ -51,6 +51,6 @@ public abstract class Grigori : Brain
     public override void OnDie()
     {
         Debuff();
-        PoolManager.instance.Push(this);
+        PoolManager.Instance.Push(this);
     }
 }

@@ -34,6 +34,7 @@ public abstract class Brain : PoolableMono
     {
         AnimatorCompo = GetComponent<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
+        NavMeshAgentCompo = GetComponent<NavMeshAgent>();
         EnemyStatistic = Instantiate(EnemyStatistic);
 
         EnemyStatistic.SetOwner(this);
