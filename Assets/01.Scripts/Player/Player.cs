@@ -4,20 +4,20 @@ using UnityEngine.InputSystem;
 
 public class Player : PlayerController
 {
-    [Header("movement settings")]
+    [Header("Movement Settings")]
     public float moveSpeed = 1f;
     public float rotationSpeed = 1f;
     public float dashDuration = 0.4f;
     public float dashSpeed = 20f;
 
-    [Header("attack settings")]
+    [Header("Attack Settings")]
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
 
-    [Header("defense settings")]
+    [Header("Defense Settings")]
     public float defenseTime = 3f;
 
-    [Header("coolTime Settings")]
+    [Header("CoolTime Settings")]
     public float dashCoolTime = 0f;
     private float dashPrevTime = 0f;
 

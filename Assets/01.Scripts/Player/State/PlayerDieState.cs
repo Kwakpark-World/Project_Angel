@@ -30,18 +30,7 @@ public class PlayerDieState : PlayerState
         if (_actionTriggerCalled)
         {
             _isCollider = true;
-            _player.StartCoroutine(ColliderChange());
+            _player.SetAnimCollider(0.3f, 0.07f, 0.1f);
         }
-    }
-
-    private IEnumerator ColliderChange()
-    {
-        while (_player.ColliderCompo.height > 0)
-        {
-            _player.ColliderCompo.height -= 0.07f;
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        yield return null;
     }
 }
