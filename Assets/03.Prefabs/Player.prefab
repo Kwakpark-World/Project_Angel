@@ -24,14 +24,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 25500560523415551}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.36501256, y: 0.00000014901153, z: 0.00000030547363, w: 0.9310026}
-  m_LocalPosition: {x: 0.091, y: 0.086, z: 0.325}
+  m_LocalRotation: {x: -0.13706312, y: -0.056328837, z: 0.5719215, w: 0.8068126}
+  m_LocalPosition: {x: 0.152, y: -0.034, z: 0.351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8866886665756571627}
   m_Father: {fileID: 4297306151331542674}
-  m_LocalEulerAnglesHint: {x: -42.817, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -9.018, y: -14.523, z: 71.814}
 --- !u!1 &140642117242051658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1454,6 +1454,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2338870984919145231}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2658806579130257761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1661583353534164921}
+  m_Layer: 9
+  m_Name: StairChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1661583353534164921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2658806579130257761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7638903400144549948}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2660282947619473381
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,6 +1526,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7638903400144549948}
+  - component: {fileID: 8967625154095637305}
   - component: {fileID: 7004286244014393163}
   - component: {fileID: 8929839927594950403}
   m_Layer: 6
@@ -1519,8 +1551,32 @@ Transform:
   m_Children:
   - {fileID: 6086645587855809506}
   - {fileID: 5645196743569474536}
+  - {fileID: 1661583353534164921}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &8967625154095637305
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2735495784658434693}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.14566591
+  m_Height: 1.7940538
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.95, z: 0}
 --- !u!54 &7004286244014393163
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1565,18 +1621,26 @@ MonoBehaviour:
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  _stairChecker: {fileID: 1661583353534164921}
+  _stairCheckDistance: 0.3
+  _whatIsStair:
+    serializedVersion: 2
+    m_Bits: 512
   <CharStat>k__BackingField: {fileID: 11400000, guid: 2d8f987c0db816249b696fc32bb953cc,
     type: 2}
   _gravity: -9.8
   moveSpeed: 1
-  rotationSpeed: 5
+  rotationSpeed: 4
   dashDuration: 0.4
   dashSpeed: 5
   attackSpeed: 1
   attackMovement:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  defenseTime: 3
   dashCoolTime: 1
+  defenseCoolTime: 1
+  defensePrevTime: 0
   playerCurrnetHP: 0
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d771d326405705e4b9989f7211c9e6b3,
     type: 2}
@@ -2800,7 +2864,6 @@ GameObject:
   - component: {fileID: 6086645587855809506}
   - component: {fileID: 8996776210932947672}
   - component: {fileID: 1505379200696721437}
-  - component: {fileID: 1619509641170267773}
   - component: {fileID: 2154077915053216538}
   - component: {fileID: 3052235917268307605}
   m_Layer: 0
@@ -2861,29 +2924,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1954e786418713148840153cfd72eceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &1619509641170267773
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897615430802425043}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.14566591
-  m_Height: 1.7940538
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.95, z: 0}
 --- !u!114 &2154077915053216538
 MonoBehaviour:
   m_ObjectHideFlags: 0
