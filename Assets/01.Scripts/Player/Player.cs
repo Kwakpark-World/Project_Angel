@@ -59,6 +59,8 @@ public class Player : PlayerController
 
     protected override void Start()
     {
+        base.Start();
+
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStat.InitializeAllModifiers();
     }
