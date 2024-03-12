@@ -4,28 +4,25 @@ using UnityEngine.InputSystem;
 
 public class Player : PlayerController
 {
-    [Header("movement settings")]
+    [Header("Movement Settings")]
     public float moveSpeed = 1f;
     public float rotationSpeed = 1f;
     public float dashDuration = 0.4f;
     public float dashSpeed = 20f;
 
-    [Header("attack settings")]
+    [Header("Attack Settings")]
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
 
-    [Header("defense settings")]
+    [Header("Defense Settings")]
     public float defenseTime = 3f;
 
-    [Header("coolTime Settings")]
+    [Header("CoolTime Settings")]
     public float dashCoolTime = 0f;
     private float dashPrevTime = 0f;
 
     public float defenseCoolTime = 1f;
     public float defensePrevTime = 0f;
-
-    [Header("Player HP")]
-    public float playerCurrnetHP;
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
 
@@ -60,7 +57,7 @@ public class Player : PlayerController
         PlayerInput.DashEvent += HandleDashEvent;
     }
 
-    private void Start()
+    protected override void Start()
     {
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStat.InitializeAllModifiers();
@@ -72,7 +69,7 @@ public class Player : PlayerController
 
         StateMachine.CurrentState.UpdateState();
 
-        if (playerCurrnetHP <= 0)
+        if (PlayerStat.GetCurrentHealth() <= 0)
             StateMachine.ChangeState(PlayerStateEnum.Die);
 
         if (PlayerInput.isDefense)
