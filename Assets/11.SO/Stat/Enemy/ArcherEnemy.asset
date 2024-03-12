@@ -18,17 +18,20 @@ MonoBehaviour:
   currentHealth:
     _baseValue: 30
     modifiers: []
-  armor:
-    _baseValue: 20
+  lifetime:
+    _baseValue: 0
     modifiers: []
-  speed:
-    _baseValue: 5
+  defensivePower:
+    _baseValue: 0
+    modifiers: []
+  moveSpeed:
+    _baseValue: 0
     modifiers: []
   detectRange:
     _baseValue: 30
     modifiers: []
-  damage:
-    _baseValue: 10
+  attackPower:
+    _baseValue: 0
     modifiers: []
   attackRange:
     _baseValue: 15

@@ -24,9 +24,6 @@ public class Player : PlayerController
     public float defenseCoolTime = 1f;
     public float defensePrevTime = 0f;
 
-    [Header("Player HP")]
-    public float playerCurrnetHP;
-
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
 
     public PlayerStateMachine StateMachine { get; private set; }
@@ -75,7 +72,7 @@ public class Player : PlayerController
 
         StateMachine.CurrentState.UpdateState();
 
-        if (playerCurrnetHP <= 0)
+        if (PlayerStat.GetCurrentHealth() <= 0)
             StateMachine.ChangeState(PlayerStateEnum.Die);
 
         if (PlayerInput.isDefense)
