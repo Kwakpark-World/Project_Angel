@@ -1,4 +1,4 @@
-using System;
+ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -44,7 +44,6 @@ public class Player : PlayerController
         StateMachine = new PlayerStateMachine();
 
         PlayerStat = CharStat as PlayerStat;
-        playerCurrnetHP = PlayerStat.GetStatByType(PlayerStatType.maxHealth).GetValue();
 
 
         foreach (PlayerStateEnum stateEnum in Enum.GetValues(typeof(PlayerStateEnum)))
@@ -64,6 +63,7 @@ public class Player : PlayerController
     protected override void Start()
     {
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
+        PlayerStat.InitializeAllModifiers();
     }
 
     protected override void Update()
@@ -92,7 +92,7 @@ public class Player : PlayerController
             }
         }
 
-        // ¹öÇÁ
+        // ï¿½ï¿½ï¿½ï¿½
         //if (Keyboard.current.pKey.wasPressedThisFrame)
         //{
         //    PlayerStat.IncreaseStatBy(10, 4f, PlayerStat.GetStatByType(StatType.strength));
@@ -122,13 +122,6 @@ public class Player : PlayerController
     public void AnimationActionTrigger()
     {
         StateMachine.CurrentState.AnimationActionTrigger();
-    }
-    #endregion
-
-    #region PlayerSetting
-    public void TakeDamage(float meleeAttackDamage)
-    {
-        playerCurrnetHP -= meleeAttackDamage;
     }
     #endregion
 }

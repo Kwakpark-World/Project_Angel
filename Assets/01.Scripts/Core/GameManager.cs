@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance = null;
     public Player player;
-    public PoolManager pool;
     public static GameManager Instance
     {
         get
@@ -15,7 +14,7 @@ public class GameManager : MonoBehaviour
                 _instance = FindObjectOfType<GameManager>();
 
             if (_instance == null)
-                Debug.LogError("CameraManager Component is null");
+                Debug.LogError("GameManager Component is null");
 
             return _instance;
         }

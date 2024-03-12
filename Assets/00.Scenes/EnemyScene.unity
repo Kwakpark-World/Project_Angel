@@ -2443,7 +2443,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2078225000}
-  pool: {fileID: 826217763}
 --- !u!4 &567515868
 Transform:
   m_ObjectHideFlags: 0
@@ -3220,7 +3219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 826217764}
-  - component: {fileID: 826217763}
+  - component: {fileID: 826217765}
   m_Layer: 0
   m_Name: PoolManager
   m_TagString: Untagged
@@ -3228,20 +3227,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &826217763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 826217762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd2c44876f3b7c340ad14413cc133a8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyWeaponPrefabs:
-  - {fileID: 7690722401118377371, guid: 3ce30930107870b4f9d52bd3abbfa3a7, type: 3}
 --- !u!4 &826217764
 Transform:
   m_ObjectHideFlags: 0
@@ -3257,6 +3242,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &826217765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826217762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd2c44876f3b7c340ad14413cc133a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolingList: {fileID: 11400000, guid: 4e47418fa772af64fae2632180eb855e, type: 2}
 --- !u!1 &827688975
 GameObject:
   m_ObjectHideFlags: 0
@@ -8144,7 +8142,10 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  defenseTime: 3
   dashCoolTime: 0.5
+  defenseCoolTime: 1
+  defensePrevTime: 0
   playerCurrnetHP: 0
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d771d326405705e4b9989f7211c9e6b3,
     type: 2}
@@ -8975,16 +8976,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609df6e340b50e64f887eb178025cbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolingType: 0
   treeRunner: {fileID: 0}
   <EnemyStatistic>k__BackingField: {fileID: 11400000, guid: 46e50af425a1ebd4f987bfb17bcd6fcb,
     type: 2}
-  hitPoint: 0
-  attackPower: 0
-  normalAttackDelay: 3
   _enemyTypes: 1
-  Enemy_MaxHp: 0
-  _enemyStat: {fileID: 11400000, guid: 3f6896010401f6f4984bc063d48abf93, type: 2}
-  meleeAttackDamage: 0
   Attack1Particle: {fileID: 3967336811126872929}
   weaponCollider: {fileID: 0}
   WeaponSpawn: {fileID: 505876406}
@@ -75066,7 +75062,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d59521438f9fd746be3b1eec36c73db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyStat: {fileID: 11400000, guid: 4c5b72774bcc5b84f8822ea9dde4b0ff, type: 2}
   player: {fileID: 2078225000}
 --- !u!1 &4303865799974986404
 GameObject:
@@ -75282,16 +75277,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609df6e340b50e64f887eb178025cbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolingType: 0
   treeRunner: {fileID: 0}
   <EnemyStatistic>k__BackingField: {fileID: 11400000, guid: 3f6896010401f6f4984bc063d48abf93,
     type: 2}
-  hitPoint: 0
-  attackPower: 0
-  normalAttackDelay: 3
   _enemyTypes: 0
-  Enemy_MaxHp: 0
-  _enemyStat: {fileID: 11400000, guid: 3f6896010401f6f4984bc063d48abf93, type: 2}
-  meleeAttackDamage: 0
   Attack1Particle: {fileID: 3966832831728511363}
   weaponCollider: {fileID: 0}
   WeaponSpawn: {fileID: 2073484371}

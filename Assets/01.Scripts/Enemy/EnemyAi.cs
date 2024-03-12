@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
-public class EnemyAI : Brain 
+public class EnemyAI : Brain
 {
     public EnemyType _enemyTypes;
     [Header("Range")]
@@ -16,13 +16,11 @@ public class EnemyAI : Brain
     float _movementSpeed;
 
     [Header("EnemyHP")]
-    public float Enemy_MaxHp;
-    
-    public MonsterStat _enemyStat;
+    float _enemyMaxHealth;
 
     [Header("Damage")]
-    public float meleeAttackDamage;
-    [Header("Partical")]
+    float _meleeAttackDamage;
+    [Header("Particle")]
     public ParticleSystem Attack1Particle;
 
     Vector3 _originPos = default;
@@ -43,7 +41,7 @@ public class EnemyAI : Brain
     private bool _isMoving = false;
     private bool isReload = false;
 
-    //ÀÓ½Ã
+    //ï¿½Ó½ï¿½
     private bool isReturningToOrigin = false;
     private float elapsedTimeSinceReturn = 0f;
     NavMeshAgent _navMeshAgent;
@@ -68,12 +66,12 @@ public class EnemyAI : Brain
 
     protected override void Update()
     {
-        float _currentHP = _enemyStat.GetCurrentHealth();
+        float currentHP = EnemyStatistic.GetCurrentHealth();
         timer += Time.deltaTime;
 
         _BTRunner.Operate();
 
-        _previousHealth = _currentHP;
+        _previousHealth = currentHP;
 
         if (_enemyTypes == EnemyType.archer && timer > 1f)
         {
@@ -87,7 +85,7 @@ public class EnemyAI : Brain
         // Debug
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            OnHit(10f);
+            //OnHit(10f);
         }
 
 
@@ -132,10 +130,10 @@ public class EnemyAI : Brain
 
     INode.ENodeState CheckPatrol()
     {
-        // ÇÃ·¹ÀÌ¾î°¡ °¨ÁöµÇÁö ¾Ê¾Ò´ÂÁö È®ÀÎ
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (_detectedPlayer == null && isDie == false)
         {
-            // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÑ ÈÄ 3ÃÊ µ¿¾È °¨ÁöµÇÁö ¾ÊÀ¸¸é ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡±â ½ÃÀÛ
+            // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (isReturningToOrigin)
             {
                 elapsedTimeSinceReturn += Time.deltaTime;
@@ -144,7 +142,7 @@ public class EnemyAI : Brain
                 {
                     isReturningToOrigin = false;
 
-                    // ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡´Â ·ÎÁ÷ Ãß°¡
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
                     //OnMoveTrue();
                     return MoveToOriginPosition();
 
@@ -169,7 +167,7 @@ public class EnemyAI : Brain
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î°¡ °¨ÁöµÆÀ¸¹Ç·Î ÀÌ ºÎºÐÀÇ µ¿ÀÛÀº ½ÇÆÐ·Î ¹ÝÈ¯
+            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð·ï¿½ ï¿½ï¿½È¯
             elapsedTimeSinceReturn = 0f;
             isReturningToOrigin = false;
             return INode.ENodeState.ENS_Failure;
@@ -207,8 +205,8 @@ public class EnemyAI : Brain
                 else if (_enemyTypes == EnemyType.archer && timer > 1f)
                 {
                     OnAttackTrue();
-                    GameObject EnemyArrow = GameManager.Instance.pool.GetEnemyArrow(0);
 
+                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow);
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
                     EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
                     timer = 0;
@@ -242,7 +240,7 @@ public class EnemyAI : Brain
 
                     _lastKnownPlayerPos = _detectedPlayer.position;
 
-                    // ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡´Â Å¸ÀÌ¸Ó ¹× »óÅÂ ÃÊ±âÈ­
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
                     elapsedTimeSinceReturn = 0f;
                     isReturningToOrigin = false;
 
@@ -252,11 +250,11 @@ public class EnemyAI : Brain
             }
         }
 
-        // Player°¡ °¨ÁöµÇÁö ¾Ê¾ÒÀ» °æ¿ì
+        // Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         OnIdleTrue();
         _detectedPlayer = null;
 
-        // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÏÁö ¾Ê¾ÒÀ» ¶§, ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡´Â »óÅÂ ¼³Á¤
+        // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         return MoveToOriginPosition();
     }
 
@@ -418,9 +416,9 @@ public class EnemyAI : Brain
     {
         if (isHit == false && isReload == false)
         {
-            SetAnimatorBools(false, false, false, false, false, true); // ÀÌµ¿ ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+            SetAnimatorBools(false, false, false, false, false, true); // ï¿½Ìµï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
 
-            _navMeshAgent.isStopped = true; // ÀåÀü Áß¿¡ ¿òÁ÷ÀÓ ÁßÁö
+            _navMeshAgent.isStopped = true; // ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             isSoundPlayed = false;
             timer = 0;
@@ -431,10 +429,10 @@ public class EnemyAI : Brain
 
         if (isReload == true)
         {
-            // Reload ¾Ö´Ï¸ÞÀÌ¼ÇÀÇ ±æÀÌ¸¦ ¾Ë°í ÀÖ´Ù°í °¡Á¤ÇÕ´Ï´Ù. ¸¸¾à ¾Ö´Ï¸ÞÀÌ¼Ç ±æÀÌ¸¦ ¸ð¸£¸é ´Ù¸¥ ¹æ¹ýÀ» »ç¿ëÇØ¾ß ÇÕ´Ï´Ù.
-            float reloadAnimationLength = 2f; // ÀÓÀÇÀÇ °ªÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù. ½ÇÁ¦ ¾Ö´Ï¸ÞÀÌ¼ÇÀÇ ±æÀÌ¸¦ »ç¿ëÇÏ¼¼¿ä.
+            // Reload ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ë°ï¿½ ï¿½Ö´Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ð¸£¸ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.
+            float reloadAnimationLength = 2f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.
 
-            // Reload ¾Ö´Ï¸ÞÀÌ¼ÇÀÇ ±æÀÌ ÀÌÈÄ¿¡ Attack ÈÄ Reload ¸Þ¼­µå¸¦ È£ÃâÇÕ´Ï´Ù.
+            // Reload ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ Attack ï¿½ï¿½ Reload ï¿½Þ¼ï¿½ï¿½å¸¦ È£ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             StartCoroutine(WaitAndAttack(reloadAnimationLength));
             isReload = false;
             
@@ -445,11 +443,11 @@ public class EnemyAI : Brain
     {
         yield return new WaitForSeconds(seconds);
 
-        // °ø°Ý ½ÇÇà
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         OnAttackTrue();
         Debug.Log(isReload);
-        // °ø°Ý ÈÄ ÀçÀåÀü
-        yield return new WaitForSeconds(3); // °ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç ±æÀÌ¸¦ °í·ÁÇÏ¿© ¼³Á¤ÇÏ¼¼¿ä.
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        yield return new WaitForSeconds(3); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.
         OnReload();
     }
 
@@ -466,7 +464,7 @@ public class EnemyAI : Brain
         }
         SetAnimatorBools(false, false, true, false, false, false);
 
-        // ÀÌµ¿À» ´Ù½Ã ½ÃÀÛÇÏµµ·Ï ¼³Á¤
+        // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (_navMeshAgent != null)
         {
             _navMeshAgent.isStopped = false;
@@ -495,30 +493,30 @@ public class EnemyAI : Brain
     }
     #endregion
 
+    public override void InitializePoolingItem()
+    {
+        base.InitializePoolingItem();
+
+        _originPos = transform.position;
+    }
+
     protected override void Initialize()
     {
         base.Initialize();
 
         _BTRunner = new BehaviorTreeRunner(SettingBT());
-
-        _originPos = transform.position;
-
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        _enemyStat = _enemyStat as MonsterStat;
-
-        Enemy_MaxHp = _enemyStat.GetMaxHealthValue();
-        _detectRange = _enemyStat.GetDetectRange();
-        _meleeAttackRange = _enemyStat.GetAttackRange();
-        meleeAttackDamage = _enemyStat.GetDamage();
-        _movementSpeed = _enemyStat.GetMoveSpeed();
+        _enemyMaxHealth = EnemyStatistic.GetMaxHealthValue();
+        _detectRange = EnemyStatistic.GetDetectRange();
+        _meleeAttackRange = EnemyStatistic.GetAttackRange();
+        _meleeAttackDamage = EnemyStatistic.GetAttackPower();
+        _movementSpeed = EnemyStatistic.GetMoveSpeed();
     }
 
-    public override void OnHit(float damage)
+    public override void OnHit()
     {
-        _enemyStat.currentHealth.AddModifier(-damage);
-
-        if (_enemyStat.GetCurrentHealth() <= 0f)
+        if (EnemyStatistic.GetCurrentHealth() <= 0f)
         {
             OnDie();
         }
@@ -526,7 +524,8 @@ public class EnemyAI : Brain
 
     public override void OnDie()
     {
-        OnDieTrue();
         deathPosition = transform.position;
+
+        OnDieTrue();
     }
 }

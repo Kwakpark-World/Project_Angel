@@ -6,31 +6,38 @@ namespace BTVisual
 {
     public class PatternNode : ActionNode
     {
-        public Pattern pattern;
+        public GameObject patternObject;
+        private Pattern _pattern = null;
+
         public float nextPatternCooldown;
 
         protected override void OnStart()
         {
-            if (pattern.node == null)
+            if (_pattern == null)
             {
-                pattern.node = this;
+                _pattern = patternObject.GetComponent<Pattern>();
             }
 
-            pattern.OnStart();
+            if (_pattern.node == null)
+            {
+                _pattern.node = this;
+            }
+
+            _pattern.OnStart();
         }
 
         protected override void OnStop()
         {
             blackboard.selectedPattern = 0;
 
-            pattern.OnStop();
+            _pattern.OnStop();
         }
 
         protected override State OnUpdate()
         {
             blackboard.nextPatternCooldown = nextPatternCooldown;
 
-            return pattern.OnUpdate();
+            return _pattern.OnUpdate();
         }
     }
 }

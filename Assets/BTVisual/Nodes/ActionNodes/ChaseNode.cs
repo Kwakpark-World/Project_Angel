@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using BTVisual;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace BTVisual
 {
     public class ChaseNode : ActionNode
     {
-        public float checkDelay = 0.2f; //0.2초마다 체크
-        public float chaseRange = 14f;
-        public float successRange = 6f;
-        private float _timer = 0;
+        private Transform _target;
+        private float _attackRange;
 
         protected override void OnStart()
         {
-            context.agent.destination = blackboard.destination;
+            if (!_target)
+            {
+                _target = GameManager.Instance.player.transform;
+            }
+
+            if (_attackRange <= 0f)
+            {
+                _attackRange = brain.EnemyStatistic.GetAttackRange();
+            }
         }
 
         protected override void OnStop()
@@ -25,39 +32,22 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            if (Time.time > _timer + checkDelay)
+            if (context.agent.destination != _target.position)
             {
-                if (!InRange())
-                {
-                    return State.Failure;
-                }
-
-                context.agent.destination = blackboard.destination;
-                _timer = Time.time;
+                context.agent.destination = blackboard.destination = _target.position;
             }
 
-            if (context.agent.remainingDistance < successRange)
+            if ((brain.transform.position - _target.position).sqrMagnitude <= _attackRange * _attackRange)
             {
-                return State.Success;
+                bool debug = true;
+
+                if (debug/* Use raycast here.*/)
+                {
+                    return State.Success;
+                }
             }
 
             return State.Running;
-        }
-
-        private bool InRange()
-        {
-            Collider[] results = new Collider[1];
-
-            var size = Physics.OverlapSphereNonAlloc(context.transform.position, chaseRange, results, blackboard.enemyLayer);
-
-            if (size >= 1)
-            {
-                blackboard.destination = results[0].transform.position;
-
-                return true;
-            }
-
-            return false;
         }
     }
 }
