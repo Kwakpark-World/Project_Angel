@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +37,7 @@ public class EnemyAI : Brain
     private float _previousHealth;
     private bool isHit = false;
     private bool isDie = false;
+    private bool isAttack = false;
     private bool _isMoving = false;
     private bool isReload = false;
 
@@ -73,22 +73,20 @@ public class EnemyAI : Brain
 
         _previousHealth = currentHP;
 
-        if (_enemyTypes == EnemyType.archer && timer > 1f)
+/*        Debug.Log(isHit);
+        if (_enemyTypes == EnemyType.archer )
         {
-            if (isHit == false)
+            if (isHit == false && isReload == false && isAttack == false)
             {
                 OnReload();
-               
             }
-        }
+        }*/
 
         // Debug
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //OnHit(10f);
         }
-
-
     }
    
 
@@ -204,8 +202,9 @@ public class EnemyAI : Brain
                 
                 else if (_enemyTypes == EnemyType.archer && timer > 1f)
                 {
-                    OnAttackTrue();
-
+                    OnReload();
+                        
+                    //OnAttackTrue();
                     PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow);
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
                     EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
@@ -282,18 +281,6 @@ public class EnemyAI : Brain
 
             if (Vector3.SqrMagnitude(_detectedPlayer.position - transform.position) < (_meleeAttackRange * _meleeAttackRange))
             {
-               /*Debug.Log("55");
-                OnAttackTrue();
-                if(_enemyTypes == EnemyType.knight)
-                {
-                    OnAttackTrue();
-                    Debug.Log("2");
-                }
-                else
-                {
-                    OnReload();
-                    Debug.Log("2.5");
-                }*/
 
                 return INode.ENodeState.ENS_Success;
             }
@@ -369,13 +356,14 @@ public class EnemyAI : Brain
     {
         if (isDie == false)
             SetAnimatorBools(false, false, false, false, false, false);
+        _navMeshAgent.isStopped = true;
     }
 
     private bool isSoundPlayed = false;
     private void OnAttackTrue()
     {
         
-        if (isHit == false )
+        if (isHit == false)
         {
             SetAnimatorBools(false, true, false, false, false, false);
 
@@ -412,30 +400,33 @@ public class EnemyAI : Brain
         isSoundPlayed = false;
     }
 
+
     private void OnReload()
     {
         if (isHit == false && isReload == false)
         {
-            SetAnimatorBools(false, false, false, false, false, true); // �̵� �ִϸ��̼� ���
+            SetAnimatorBools(false, false, false, false, false, true); // 이동 애니메이션 제어
+            _navMeshAgent.isStopped = true; // 이동 중지 상태로 변경
 
-            _navMeshAgent.isStopped = true; // ���� �߿� ������ ����
-
-            isSoundPlayed = false;
-            timer = 0;
             isReload = true;
-        }
+            isSoundPlayed = false;
+/*            if (isReload == true)
+            {
+                Debug.Log("3");
+                // 장전이 완료되면 곧바로 공격 상태로 전환
+                OnAttackTrue();
+            }*/
 
-        //isReload = false;
+            timer = 0;
+        }
 
         if (isReload == true)
         {
-            // Reload �ִϸ��̼��� ���̸� �˰� �ִٰ� �����մϴ�. ���� �ִϸ��̼� ���̸� �𸣸� �ٸ� ����� ����ؾ� �մϴ�.
-            float reloadAnimationLength = 2f; // ������ ������ �����մϴ�. ���� �ִϸ��̼��� ���̸� ����ϼ���.
+            // 장전이 완료되면 Attack 메서드가 호출되어야 함
+            float reloadAnimationLength = 1f;
 
-            // Reload �ִϸ��̼��� ���� ���Ŀ� Attack �� Reload �޼��带 ȣ���մϴ�.
             StartCoroutine(WaitAndAttack(reloadAnimationLength));
             isReload = false;
-            
         }
     }
 
@@ -443,11 +434,11 @@ public class EnemyAI : Brain
     {
         yield return new WaitForSeconds(seconds);
 
-        // ���� ����
+        // 장전 완료 후 바로 공격 상태로 전환
         OnAttackTrue();
-        Debug.Log(isReload);
-        // ���� �� ������
-        yield return new WaitForSeconds(3); // ���� �ִϸ��̼� ���̸� �����Ͽ� �����ϼ���.
+
+        // 공격 후 재장전
+        yield return new WaitForSeconds(1f); // 재장전 애니메이션 시간동안 기다림
         OnReload();
     }
 

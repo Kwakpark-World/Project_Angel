@@ -30,7 +30,7 @@ public class EnemyArrow : PoolableMono
     // 포물선 운동을 위한 초기 속도 계산
     Vector3 CalculateInitialVelocity(Vector3 targetPosition, Vector3 currentPosition, float speed)
     {
-        float verticalSpeedCoefficient = 5f;
+        float verticalSpeedCoefficient = 0.01f;
 
         float displacementY = targetPosition.y - currentPosition.y;
         float displacementXZ = Mathf.Sqrt((targetPosition - currentPosition).sqrMagnitude - displacementY * displacementY) ;
@@ -51,7 +51,7 @@ public class EnemyArrow : PoolableMono
     {
         if (other.CompareTag("Player"))
         {
-            gameObject.SetActive(false);
+            PoolManager.instance.Push(this);
         }
     }
 
