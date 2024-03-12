@@ -73,15 +73,6 @@ public class EnemyAI : Brain
 
         _previousHealth = currentHP;
 
-/*        Debug.Log(isHit);
-        if (_enemyTypes == EnemyType.archer )
-        {
-            if (isHit == false && isReload == false && isAttack == false)
-            {
-                OnReload();
-            }
-        }*/
-
         // Debug
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -199,16 +190,12 @@ public class EnemyAI : Brain
                 {
                     OnAttackTrue();
                 }
-                
+
                 else if (_enemyTypes == EnemyType.archer && timer > 1f)
                 {
+                    // 장전 후에 공격 상태로 전환
                     OnReload();
-                        
-                    //OnAttackTrue();
-                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow);
-                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
-                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
-                    timer = 0;
+                    Debug.Log("54");
                 }
             }
             else
@@ -379,6 +366,12 @@ public class EnemyAI : Brain
                 else if (_enemyTypes == EnemyType.archer)
                 {
                     SoundManager.Instance.PlayAttackSound("Attack2");
+
+                    // 공격 전에 화살 생성
+                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow);
+                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
+                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
+
                 }
                 Attack1Particle.Play();
                 isSoundPlayed = true;
@@ -391,7 +384,6 @@ public class EnemyAI : Brain
             }
 
             _isMoving = false;
-            isReload = false;
         }
     }
 
@@ -409,13 +401,8 @@ public class EnemyAI : Brain
             _navMeshAgent.isStopped = true; // 이동 중지 상태로 변경
 
             isReload = true;
-            isSoundPlayed = false;
-/*            if (isReload == true)
-            {
-                Debug.Log("3");
-                // 장전이 완료되면 곧바로 공격 상태로 전환
-                OnAttackTrue();
-            }*/
+            Debug.Log("3");
+            //isSoundPlayed = false;
 
             timer = 0;
         }
@@ -423,7 +410,8 @@ public class EnemyAI : Brain
         if (isReload == true)
         {
             // 장전이 완료되면 Attack 메서드가 호출되어야 함
-            float reloadAnimationLength = 1f;
+            float reloadAnimationLength = 0.8f;
+            Debug.Log("99");
 
             StartCoroutine(WaitAndAttack(reloadAnimationLength));
             isReload = false;
@@ -438,7 +426,7 @@ public class EnemyAI : Brain
         OnAttackTrue();
 
         // 공격 후 재장전
-        yield return new WaitForSeconds(1f); // 재장전 애니메이션 시간동안 기다림
+        yield return new WaitForSeconds(0.65f); // 재장전 애니메이션 시간동안 기다림
         OnReload();
     }
 
