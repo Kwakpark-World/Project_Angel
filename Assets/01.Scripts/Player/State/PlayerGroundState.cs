@@ -26,10 +26,11 @@ public abstract class PlayerGroundState : PlayerState
     {
         base.UpdateState();
 
-        //if (!_player.IsGroundDetected())
-        //{
-        //    _stateMachine.ChangeState(PlayerStateEnum.Fall);
-        //}
+        if (!_player.IsGroundDetected())
+        {
+            
+            _stateMachine.ChangeState(PlayerStateEnum.Fall);
+        }
     }
 
     private void HandlePrimaryAttackEvent()

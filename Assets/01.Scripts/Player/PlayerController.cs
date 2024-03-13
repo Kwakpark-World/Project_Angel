@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
     {
         while (ColliderCompo.height > limitValue)
         {
-            SetCollider(default, ColliderCompo.height - changeValue);
+            SetCollider(DefaultCollider.radius, ColliderCompo.height - changeValue);
             yield return new WaitForSeconds(delay);
         }
 
