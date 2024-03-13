@@ -28,6 +28,7 @@ public abstract class PlayerGroundState : PlayerState
 
         if (!_player.IsGroundDetected())
         {
+            
             _stateMachine.ChangeState(PlayerStateEnum.Fall);
         }
     }

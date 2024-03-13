@@ -26,8 +26,6 @@ public class PlayerChargeState : PlayerState
     {
         base.UpdateState();
 
-        Debug.Log(_clickTimer);
-
         if (!_player.PlayerInput.isCharge)
         {
             if (_clickTimer < 0.7f)

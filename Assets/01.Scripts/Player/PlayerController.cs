@@ -10,9 +10,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected LayerMask _whatIsGround;
 
     [Header("Stair Checker")]
-    [SerializeField] protected Transform _stairChecker;
-    [SerializeField] protected float _stairCheckDistance;
-    [SerializeField] protected LayerMask _whatIsStair;
+    [SerializeField] protected Transform _stairUpperChecker;
+    [SerializeField] protected Transform _stairLowerChecker;
+    [SerializeField] protected float _stairUpperCheckDistance;
+    [SerializeField] protected float _stairLowerCheckDistance;
+
+    [Header("Stair Parameters")]
+    [SerializeField] private float _stairHeight;
+    [SerializeField] private float _stairMoveSmooth;
 
     #region components
     public Animator AnimatorCompo { get; private set; }
@@ -39,11 +44,9 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-        ColliderCompo.center = new Vector3(0f, 0.95f, 0f);
-        ColliderCompo.radius = 0.1456659f;
-        ColliderCompo.height = 1.794054f;
+        InitCollider();
 
-        DefaultCollider = new DefaultCollider(ColliderCompo.center, ColliderCompo.radius, ColliderCompo.height);
+        InitStairCheckPos();
     }
 
     protected virtual void Update()
@@ -53,6 +56,8 @@ public class PlayerController : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         RigidbodyCompo.velocity += new Vector3(0, _gravity, 0) * Time.deltaTime;
+
+        MoveOnStair();
     }
 
     #region collider control
@@ -71,11 +76,20 @@ public class PlayerController : MonoBehaviour
     {
         while (ColliderCompo.height > limitValue)
         {
-            SetCollider(default, ColliderCompo.height - changeValue);
+            SetCollider(DefaultCollider.radius, ColliderCompo.height - changeValue);
             yield return new WaitForSeconds(delay);
         }
 
         yield return null;
+    }
+
+    private void InitCollider()
+    {
+        ColliderCompo.center = new Vector3(0f, 0.95f, 0f);
+        ColliderCompo.radius = 0.1456659f;
+        ColliderCompo.height = 1.794054f;
+
+        DefaultCollider = new DefaultCollider(ColliderCompo.center, ColliderCompo.radius, ColliderCompo.height);
     }
     #endregion
 
@@ -98,9 +112,8 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region Collision Check loginc
+    #region Collision Check logic
     public virtual bool IsGroundDetected() => Physics.Raycast(_groundChecker.position, Vector3.down, _groundCheckDistance, _whatIsGround);
-    public virtual bool IsStairCheck() => Physics.Raycast(_stairChecker.position, Vector3.forward, _stairCheckDistance, _whatIsStair);
     #endregion
 
     #region delay coroutine logic
@@ -116,22 +129,53 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region stair logic
+    private void InitStairCheckPos()
+    {
+        Vector3 upperCheckPos = _stairUpperChecker.position;
+        upperCheckPos.y = _stairHeight;
 
+        _stairUpperChecker.position = upperCheckPos;
+    }
+
+    private void MoveOnStair()
+    {
+        RaycastHit hitLower;
+        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(Vector3.forward), out hitLower, _stairLowerCheckDistance))
+        {
+            RaycastHit hitUpper;
+            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(Vector3.forward), out hitUpper, _stairUpperCheckDistance))
+            {
+                RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+            }
+        }
+
+        RaycastHit hitLower45;
+        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(1.5f, 0, 1), out hitLower45, _stairLowerCheckDistance))
+        {
+            RaycastHit hitUpper45;
+            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(1.5f, 0, 1), out hitUpper45, _stairUpperCheckDistance))
+            {
+                RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+            }
+        }
+
+        RaycastHit hitLowerMinus45;
+        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(-1.5f, 0, 1), out hitLowerMinus45, _stairLowerCheckDistance))
+        {
+            RaycastHit hitUpperMinus45;
+            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(-1.5f, 0, 1), out hitUpperMinus45, _stairUpperCheckDistance))
+            {
+                RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+            }
+        }
+    }
+    #endregion
 #if UNITY_EDITOR
     protected virtual void OnDrawGizmos()
-    {
-        if (IsStairCheck())
-            Gizmos.color = Color.red;
-        else
-            Gizmos.color = Color.white;
-        
+    {      
         if (_groundChecker != null)
             Gizmos.DrawLine(_groundChecker.position, _groundChecker.position + new Vector3(0, -_groundCheckDistance, 0));
-        if (_stairChecker != null)
-            Gizmos.DrawLine(_stairChecker.position, _stairChecker.position + new Vector3(0, 0, _stairCheckDistance));
-
-        
-        
     }
 #endif
 }
