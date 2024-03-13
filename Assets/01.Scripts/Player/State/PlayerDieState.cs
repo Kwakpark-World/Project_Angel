@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerDieState : PlayerState
 {
+    private bool _isCollider;
+
     public PlayerDieState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -12,7 +14,7 @@ public class PlayerDieState : PlayerState
     {
         base.Enter();
         _player.IsDie = true;
-        _player.ColliderCompo.GetComponent<CapsuleCollider>().height = 0f; // 점점 줄여야 할듯
+        _isCollider = false;
     }
 
     public override void Exit()
@@ -23,5 +25,12 @@ public class PlayerDieState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
+
+        if (_isCollider) return;
+        if (_actionTriggerCalled)
+        {
+            _isCollider = true;
+            _player.SetAnimCollider(0.3f, 0.07f, 0.1f);
+        }
     }
 }
