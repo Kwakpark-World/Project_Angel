@@ -6,14 +6,7 @@ public class EnemySword : MonoBehaviour
 {
     private bool canDamage = true;
 
-    public Player player;
-    EnemyAI enemyAI;
-
-    private void Awake()
-    {
-        player.GetComponent<Player>();
-        enemyAI = GetComponent<EnemyAI>();
-    }
+    [SerializeField]EnemyAI enemyAI;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,9 +14,10 @@ public class EnemySword : MonoBehaviour
         {
             if (canDamage)
             {
-                if (player != null)
+                if (GameManager.Instance.player != null)
                 {
-                   player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
+                   GameManager.Instance.player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
+                    Debug.Log("3");
                 }
 
                 StartCoroutine(ResetDamageTimer());
