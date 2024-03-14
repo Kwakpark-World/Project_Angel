@@ -28,7 +28,8 @@ public abstract class PlayerGroundState : PlayerState
 
         if (!_player.IsGroundDetected())
         {
-            
+            if (_player.IsStair) return;
+
             _stateMachine.ChangeState(PlayerStateEnum.Fall);
         }
     }

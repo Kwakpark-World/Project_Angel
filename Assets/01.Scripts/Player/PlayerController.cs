@@ -138,37 +138,67 @@ public class PlayerController : MonoBehaviour
         _stairUpperChecker.position = upperCheckPos;
     }
 
-    private void MoveOnStair()
+    public bool CheckStair(Vector3 dir)
     {
         RaycastHit hitLower;
-        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(Vector3.forward), out hitLower, _stairLowerCheckDistance))
+        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(dir), out hitLower, _stairLowerCheckDistance))
         {
             RaycastHit hitUpper;
-            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(Vector3.forward), out hitUpper, _stairUpperCheckDistance))
+            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(dir), out hitUpper, _stairUpperCheckDistance))
             {
-                RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+                return true;
             }
+            return false;
+        }
+        return false;
+    }
+
+    private void MoveOnStair()
+    {
+        if (CheckStair(Vector3.forward))
+        {
+            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
         }
 
-        RaycastHit hitLower45;
-        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(1.5f, 0, 1), out hitLower45, _stairLowerCheckDistance))
+        if (CheckStair(new Vector3(1.5f, 0, 1)))
         {
-            RaycastHit hitUpper45;
-            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(1.5f, 0, 1), out hitUpper45, _stairUpperCheckDistance))
-            {
-                RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
-            }
+            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+        }
+        
+        if (CheckStair(new Vector3(-1.5f, 0, 1)))
+        {
+            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
         }
 
-        RaycastHit hitLowerMinus45;
-        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(-1.5f, 0, 1), out hitLowerMinus45, _stairLowerCheckDistance))
-        {
-            RaycastHit hitUpperMinus45;
-            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(-1.5f, 0, 1), out hitUpperMinus45, _stairUpperCheckDistance))
-            {
-                RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
-            }
-        }
+        //RaycastHit hitLower;
+        //if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(Vector3.forward), out hitLower, _stairLowerCheckDistance))
+        //{
+        //    RaycastHit hitUpper;
+        //    if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(Vector3.forward), out hitUpper, _stairUpperCheckDistance))
+        //    {
+        //        RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+        //    }
+        //}
+
+        //RaycastHit hitLower45;
+        //if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(1.5f, 0, 1), out hitLower45, _stairLowerCheckDistance))
+        //{
+        //    RaycastHit hitUpper45;
+        //    if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(1.5f, 0, 1), out hitUpper45, _stairUpperCheckDistance))
+        //    {
+        //        RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+        //    }
+        //}
+
+        //RaycastHit hitLowerMinus45;
+        //if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(-1.5f, 0, 1), out hitLowerMinus45, _stairLowerCheckDistance))
+        //{
+        //    RaycastHit hitUpperMinus45;
+        //    if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(-1.5f, 0, 1), out hitUpperMinus45, _stairUpperCheckDistance))
+        //    {
+        //        RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+        //    }
+        //}
     }
     #endregion
 #if UNITY_EDITOR
