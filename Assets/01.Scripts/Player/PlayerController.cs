@@ -74,10 +74,21 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ColliderChange(float limitValue, float changeValue, float delay)
     {
-        while (ColliderCompo.height > limitValue)
+        if (changeValue > 0)
         {
-            SetCollider(DefaultCollider.radius, ColliderCompo.height - changeValue);
-            yield return new WaitForSeconds(delay);
+            while (ColliderCompo.height > limitValue)
+            {
+                SetCollider(DefaultCollider.radius, ColliderCompo.height - changeValue);
+                yield return new WaitForSeconds(delay);
+            }
+        }
+        else
+        {
+            while (ColliderCompo.height < limitValue)
+            {
+                SetCollider(DefaultCollider.radius, ColliderCompo.height - changeValue);
+                yield return new WaitForSeconds(delay);
+            }
         }
 
         yield return null;
