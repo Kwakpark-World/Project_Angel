@@ -9,15 +9,11 @@ namespace BTVisual
 {
     public class ChaseNode : ActionNode
     {
-        private Transform _target;
         private float _attackRange;
 
         protected override void OnStart()
         {
-            if (!_target)
-            {
-                _target = GameManager.Instance.player.transform;
-            }
+            context.agent.isStopped = false;
 
             if (_attackRange <= 0f)
             {
@@ -32,24 +28,17 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            if (context.agent.destination != _target.position)
+            if (context.agent.destination != GameManager.Instance.playerTransform.position)
             {
-                context.agent.destination = blackboard.destination = _target.position;
+                context.agent.destination = GameManager.Instance.playerTransform.position;
             }
 
-            if ((brain.transform.position - _target.position).sqrMagnitude <= _attackRange * _attackRange)
+            if (context.agent.remainingDistance > _attackRange)
             {
-                bool debug = true;
-
-                if (debug/* Use raycast here.*/)
-                {
-                    context.agent.isStopped = true;
-
-                    return State.Success;
-                }
+                return State.Running;
             }
 
-            return State.Running;
+            return State.Success;
         }
     }
 }

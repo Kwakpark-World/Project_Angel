@@ -25,6 +25,7 @@ namespace BTVisual
             if (!started)
             {
                 OnStart();
+
                 started = true;
             }
 
@@ -33,6 +34,7 @@ namespace BTVisual
             if (state == State.Failure || state == State.Success)
             {
                 OnStop();
+
                 started = false;
             }
 
@@ -47,12 +49,15 @@ namespace BTVisual
         public void Break()
         {
             OnStop();
+
             state = State.Success;
             started = false;
         }
 
         protected abstract void OnStart();
+
         protected abstract void OnStop();
+
         protected abstract State OnUpdate();
     }
     

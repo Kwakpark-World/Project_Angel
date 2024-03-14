@@ -4,11 +4,16 @@ using UnityEngine;
 
 namespace BTVisual
 {
-    public class NormalAttackNode : ActionNode
+    public class MoveNode : ActionNode
     {
         protected override void OnStart()
         {
             context.agent.isStopped = true;
+
+            if (context.agent.destination != blackboard.destination)
+            {
+                context.agent.destination = blackboard.destination;
+            }
         }
 
         protected override void OnStop()
@@ -18,16 +23,12 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            if (Time.time > brain.NormalAttackTimer + brain.NormalAttackTimer)
+            if (context.agent.remainingDistance > Mathf.Epsilon)
             {
-                brain.NormalAttackTimer = Time.time;
-
-                GameManager.Instance.player.PlayerStat.Hit(brain.EnemyStatistic.GetAttackPower());
-
-                return State.Success;
+                return State.Running;
             }
 
-            return State.Failure;
+            return State.Success;
         }
     }
 }

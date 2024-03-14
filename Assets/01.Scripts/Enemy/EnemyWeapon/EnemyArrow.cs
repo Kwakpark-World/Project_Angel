@@ -4,26 +4,19 @@ using UnityEngine;
 
 public class EnemyArrow : PoolableMono
 {
-    private Transform target; // 플레이어의 위치
     public float speed = 10f; // 화살의 속도
-    private Rigidbody rb;
-
-    void Start()
-    {
-        target = GameManager.Instance.player.transform;
-        rb = GetComponent<Rigidbody>();
-    }
+    private Rigidbody _rb;
 
     void Update()
     {
         // 플레이어를 향해 회전
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (GameManager.Instance.playerTransform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 11f); // 회전 속도를 고정값으로 설정
 
         // 일직선 운동
-        Vector3 initialVelocity = CalculateInitialVelocity(target.position, transform.position, speed);
-        rb.velocity = initialVelocity;
+        Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.playerTransform.position, transform.position, speed);
+        _rb.velocity = initialVelocity;
     }
 
     // 일직선 운동을 위한 초기 속도 계산
@@ -45,12 +38,15 @@ public class EnemyArrow : PoolableMono
     {
         if (other.CompareTag("Player"))
         {
-            PoolManager.instance.Push(this);
+            PoolManager.Instance.Push(this);
         }
     }
 
     public override void InitializePoolingItem()
     {
-
+        if (!_rb)
+        {
+            _rb = GetComponent<Rigidbody>();
+        }
     }
 }

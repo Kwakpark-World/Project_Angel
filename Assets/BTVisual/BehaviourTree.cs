@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace BTVisual
 {
-    [CreateAssetMenu(menuName = "BehviourTree/Tree")]
+    [CreateAssetMenu(menuName = "BehaviourTree/Tree")]
     public class BehaviourTree : ScriptableObject
     {
         public Node treeRoot;
@@ -18,6 +18,7 @@ namespace BTVisual
             {
                 treeState = treeRoot.Update();
             }
+
             return treeState;
         }
 

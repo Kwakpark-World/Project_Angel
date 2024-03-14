@@ -7,16 +7,10 @@ namespace BTVisual
     public class InRangeNode : ActionNode
     {
         public bool isDetect;
-        private Transform _target;
         private float _range;
 
         protected override void OnStart()
         {
-            if (!_target)
-            {
-                _target = GameManager.Instance.player.transform;
-            }
-
             if (isDetect)
             {
                 _range = brain.EnemyStatistic.GetDetectRange();
@@ -34,7 +28,7 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            return (brain.transform.position - _target.position).sqrMagnitude <= _range * _range ? State.Success : State.Failure;
+            return (GameManager.Instance.playerTransform.position - brain.transform.position).sqrMagnitude <= _range * _range ? State.Success : State.Failure;
         }
     }
 }

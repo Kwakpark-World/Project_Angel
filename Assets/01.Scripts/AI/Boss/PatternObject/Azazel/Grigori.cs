@@ -6,8 +6,6 @@ public abstract class Grigori : Brain
 {
     [HideInInspector]
     public BossBrain owner = null;
-    [HideInInspector]
-    public Player player = null;
 
     private float _attackRange;
     private float _attackDelay;
@@ -15,7 +13,7 @@ public abstract class Grigori : Brain
 
     protected override void Update()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) <= _attackRange && Time.time > _attackTimer + _attackDelay)
+        if ((GameManager.Instance.playerTransform.position - transform.position).sqrMagnitude <= _attackRange * _attackRange && Time.time > _attackTimer + _attackDelay)
         {
             Attack();
         }

@@ -11,12 +11,12 @@ public class Satanael : Grigori
 
     protected override void Debuff()
     {
-        float playerHitPointPercentage = player.PlayerStat.GetCurrentHealth() / player.PlayerStat.GetMaxHealthValue();
+        float playerHitPointPercentage = GameManager.Instance.player.PlayerStat.GetCurrentHealth() / GameManager.Instance.player.PlayerStat.GetMaxHealthValue();
         float azazelHitPointPercentage = owner.EnemyStatistic.GetCurrentHealth() / owner.EnemyStatistic.GetMaxHealthValue();
 
         if (playerHitPointPercentage > azazelHitPointPercentage)
         {
-            player.PlayerStat.currentHealth.AddModifier(-(player.PlayerStat.GetMaxHealthValue() * (playerHitPointPercentage - azazelHitPointPercentage)));
+            GameManager.Instance.player.PlayerStat.currentHealth.AddModifier(-(GameManager.Instance.player.PlayerStat.GetMaxHealthValue() * (playerHitPointPercentage - azazelHitPointPercentage)));
         }
         else
         {

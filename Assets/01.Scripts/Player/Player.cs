@@ -63,12 +63,14 @@ public class Player : PlayerController
         PlayerStat.InitializeAllModifiers();
     }
 
+    public float playerCurrentHP;
+
     protected override void Update()
     {
         base.Update();
 
         // Debug
-        playerCurrnetHP = PlayerStat.GetMaxHealthValue();
+        playerCurrentHP = PlayerStat.GetCurrentHealth();
 
         StateMachine.CurrentState.UpdateState();
 

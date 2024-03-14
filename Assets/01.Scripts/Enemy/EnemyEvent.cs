@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class EnemyEvent : MonoBehaviour
 {
-    EnemyAI enemyAI;
+    EnemyBrain enemyAI;
 
     public void Awake()
     {
-        enemyAI = GetComponent<EnemyAI>();
+        enemyAI = GetComponent<EnemyBrain>();
     }
 
     public void OnDie()

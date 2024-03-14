@@ -7,12 +7,12 @@ public class EnemySword : MonoBehaviour
     private bool canDamage = true;
 
     public Player player;
-    EnemyAI enemyAI;
+    EnemyBrain enemyAI;
 
     private void Awake()
     {
         player.GetComponent<Player>();
-        enemyAI = GetComponent<EnemyAI>();
+        enemyAI = GetComponent<EnemyBrain>();
     }
 
     private void OnTriggerEnter(Collider other)

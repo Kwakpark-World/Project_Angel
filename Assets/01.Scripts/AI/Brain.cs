@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(NavMeshAgent))]
 public abstract class Brain : PoolableMono
 {
     public BehaviourTreeRunner treeRunner;

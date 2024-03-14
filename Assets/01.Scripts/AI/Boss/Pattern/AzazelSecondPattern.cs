@@ -26,9 +26,8 @@ public class AzazelSecondPattern : Pattern
 
         if (PoolManager.Instance.Pop(grigoriType).TryGetComponent(out Grigori grigori))
         {
-            if (grigori.player)
+            if (!grigori.owner)
             {
-                grigori.player = GameManager.Instance.player;
                 grigori.owner = node.brain as BossBrain;
             }
         }

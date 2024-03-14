@@ -1,14 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class Goat : Brain
 {
-    [HideInInspector]
-    public Player player = null;
-
     private bool _isLiving;
 
     private float _lifetime;
@@ -23,17 +18,17 @@ public class Goat : Brain
             OnDie();
         }
 
-        if (_isLiving && player != null)
+        if (_isLiving && !GameManager.Instance.player.IsDie)
         {
-            NavMeshAgentCompo.SetDestination(player.transform.position);
+            NavMeshAgentCompo.SetDestination(GameManager.Instance.playerTransform.position);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player.gameObject)
+        if (other.gameObject == GameManager.Instance.player.gameObject)
         {
-            player.PlayerStat.Hit(_attackPower);
+            GameManager.Instance.player.PlayerStat.Hit(_attackPower);
 
             // Give scapegoat debuff.
 
