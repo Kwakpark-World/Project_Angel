@@ -1,6 +1,7 @@
  using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -33,6 +34,7 @@ public class Player : PlayerController
     public bool IsAttack { get; set; }
     public bool IsDefense { get; set; }
     public bool IsDie { get; set; }
+    public bool IsStair { get; private set; }
 
     protected override void Awake()
     {
@@ -91,6 +93,10 @@ public class Player : PlayerController
             }
         }
 
+        if (IsStair)
+            if (IsGroundDetected())
+                IsStair = false;
+
         // ����
         //if (Keyboard.current.pKey.wasPressedThisFrame)
         //{
@@ -98,9 +104,25 @@ public class Player : PlayerController
         //}
     }
 
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        IsClimbStair();
+    }
+
     protected void OnDisable()
     {
         PlayerInput.DashEvent -= HandleDashEvent;
+    }
+
+    private void IsClimbStair()
+    {
+        if (CheckStair(Vector3.forward))
+            IsStair = true;
+        if (CheckStair(new Vector3(1.5f, 0, 1)))
+            IsStair = true;
+        if (CheckStair(new Vector3(-1.5f, 0, 1)))
+            IsStair = true;
     }
 
     #region handling input
