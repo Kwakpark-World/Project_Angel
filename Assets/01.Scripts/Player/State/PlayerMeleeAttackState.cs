@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,10 @@ public class PlayerMeleeAttackState : PlayerState
     
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
+    private GameObject _weapon;
+    private Brain[] _enemies;
+    private LayerMask _enemyLayer = LayerMask.GetMask("Enemy");
+
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -20,6 +25,8 @@ public class PlayerMeleeAttackState : PlayerState
     {
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
+
+        _weapon = GameObject.FindGameObjectWithTag("Weapon");
 
         _player.IsAttack = true;
         
@@ -55,6 +62,8 @@ public class PlayerMeleeAttackState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
+
+        //Physics.OverlapBox(_weapon.transform.position, );
 
         if (_endTriggerCalled)
         {

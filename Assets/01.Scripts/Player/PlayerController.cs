@@ -143,10 +143,10 @@ public class PlayerController : MonoBehaviour
     #region stair logic
     private void InitStairCheckPos()
     {
-        Vector3 upperCheckPos = _stairUpperChecker.position;
+        Vector3 upperCheckPos = _stairUpperChecker.localPosition;
         upperCheckPos.y = _stairHeight;
 
-        _stairUpperChecker.position = upperCheckPos;
+        _stairUpperChecker.localPosition = upperCheckPos;
     }
 
     public bool CheckStair(Vector3 dir)
