@@ -45,14 +45,14 @@ public class EnemyAI : Brain
     private bool isReturningToOrigin = false;
     private float elapsedTimeSinceReturn = 0f;
     NavMeshAgent _navMeshAgent;
-    CharacterController _characterController;
 
     private float timer = 0;
 
     public enum EnemyType
     { 
         knight,
-        archer
+        archer,
+        witcher
     }
 
     protected override void Start()
@@ -186,7 +186,7 @@ public class EnemyAI : Brain
             
             if (isHit == false)
             {
-                if(_enemyTypes == EnemyType.knight)
+                if(_enemyTypes == EnemyType.knight || _enemyTypes == EnemyType.witcher)
                 {
                     OnAttackTrue();
                 }
@@ -195,7 +195,6 @@ public class EnemyAI : Brain
                 {
                     // 장전 후에 공격 상태로 전환
                     OnReload();
-                    Debug.Log("54");
                 }
             }
             else
@@ -368,10 +367,21 @@ public class EnemyAI : Brain
                     SoundManager.Instance.PlayAttackSound("Attack2");
 
                     // 공격 전에 화살 생성
-                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow);
+                    EnemyArrow EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow) as EnemyArrow;
+                    EnemyArrow.enemyAI = this;
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
                     EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
 
+                }
+
+                else if(_enemyTypes == EnemyType.witcher)
+                {
+                    SoundManager.Instance.PlayAttackSound("Attack3");
+
+                    // 공격 전에 화살 생성
+                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Porison);
+                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
+                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
                 }
                 Attack1Particle.Play();
                 isSoundPlayed = true;
@@ -401,8 +411,7 @@ public class EnemyAI : Brain
             _navMeshAgent.isStopped = true; // 이동 중지 상태로 변경
 
             isReload = true;
-            Debug.Log("3");
-            //isSoundPlayed = false;
+            
 
             timer = 0;
         }
@@ -411,7 +420,6 @@ public class EnemyAI : Brain
         {
             // 장전이 완료되면 Attack 메서드가 호출되어야 함
             float reloadAnimationLength = 0.8f;
-            Debug.Log("99");
 
             StartCoroutine(WaitAndAttack(reloadAnimationLength));
             isReload = false;
@@ -439,6 +447,12 @@ public class EnemyAI : Brain
         else if (_enemyTypes == EnemyType.archer )
         {
             SoundManager.Instance.StopAttackSound("Attack2");
+            timer = 0;
+        }
+
+        else if (_enemyTypes == EnemyType.witcher)
+        {
+            SoundManager.Instance.StopAttackSound("Attack3");
             timer = 0;
         }
         SetAnimatorBools(false, false, true, false, false, false);
