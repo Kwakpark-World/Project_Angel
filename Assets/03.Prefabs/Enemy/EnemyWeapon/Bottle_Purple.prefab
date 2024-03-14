@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8147509125643687078
+--- !u!1 &8016883904071516072
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9148848987716504591}
-  - component: {fileID: 9206803169438220809}
-  - component: {fileID: 2923689396076892586}
-  - component: {fileID: 4087903369203053920}
-  - component: {fileID: 1520988365232509396}
+  - component: {fileID: 1846028724837829285}
+  - component: {fileID: 6271350061836397841}
+  - component: {fileID: 1396010177355680368}
+  - component: {fileID: 3602189362256836200}
+  - component: {fileID: 2903889562248606040}
   m_Layer: 0
-  m_Name: posionPortson
+  m_Name: Bottle_Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9148848987716504591
+--- !u!4 &1846028724837829285
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8147509125643687078}
+  m_GameObject: {fileID: 8016883904071516072}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8950691, y: 4.9, z: -0.56978464}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: 4.164181e-18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &9206803169438220809
+--- !u!33 &6271350061836397841
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8147509125643687078}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2923689396076892586
+  m_GameObject: {fileID: 8016883904071516072}
+  m_Mesh: {fileID: -2232952877369940510, guid: 9036045304cd7d24c987201f87f4967a, type: 3}
+--- !u!23 &1396010177355680368
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8147509125643687078}
+  m_GameObject: {fileID: 8016883904071516072}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a39dee2d2f448704ab8ab852338026ac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,13 +85,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4087903369203053920
-BoxCollider:
+--- !u!136 &3602189362256836200
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8147509125643687078}
+  m_GameObject: {fileID: 8016883904071516072}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -103,19 +103,22 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1520988365232509396
+  serializedVersion: 2
+  m_Radius: 0.18278782
+  m_Height: 0.1926929
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0.1897585}
+--- !u!114 &2903889562248606040
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8147509125643687078}
+  m_GameObject: {fileID: 8016883904071516072}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4553d20e6a3231f4c8c5a53a3ff6d6dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolingType: 5
   _debuffType: 1
