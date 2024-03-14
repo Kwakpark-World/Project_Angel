@@ -29,7 +29,7 @@ public class PlayerChargeAttackState : PlayerState
 
         if (_endTriggerCalled)
         {
-            _player.SetCollider();
+            _player.SetAnimCollider(_player.DefaultCollider.height, -0.1f, 0.01f);
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
