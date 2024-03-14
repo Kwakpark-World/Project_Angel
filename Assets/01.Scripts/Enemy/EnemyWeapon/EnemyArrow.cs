@@ -7,6 +7,9 @@ public class EnemyArrow : PoolableMono
     private Transform target; // 플레이어의 위치
     public float speed = 10f; // 화살의 속도
     private Rigidbody rb;
+    private bool canDamage = true;
+
+    public EnemyAI enemyAI;
 
     void Start()
     {
@@ -46,6 +49,15 @@ public class EnemyArrow : PoolableMono
         if (other.CompareTag("Player"))
         {
             PoolManager.instance.Push(this);
+            if(canDamage)
+            {
+                if(GameManager.Instance.player != null)
+                {
+                    GameManager.Instance.player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
+                }
+
+                
+            }
         }
     }
 

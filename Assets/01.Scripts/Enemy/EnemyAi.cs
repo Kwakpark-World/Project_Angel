@@ -367,7 +367,8 @@ public class EnemyAI : Brain
                     SoundManager.Instance.PlayAttackSound("Attack2");
 
                     // 공격 전에 화살 생성
-                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow);
+                    EnemyArrow EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow) as EnemyArrow;
+                    EnemyArrow.enemyAI = this;
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
                     EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
 
