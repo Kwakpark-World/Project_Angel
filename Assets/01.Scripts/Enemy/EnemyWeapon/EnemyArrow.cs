@@ -4,31 +4,33 @@ using UnityEngine;
 
 public class EnemyArrow : PoolableMono
 {
-    public float speed = 10f; // È­»ìÀÇ ¼Óµµ
+    public EnemyAI enemyAI;
+    public float speed = 10f; // È­ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½
     private Rigidbody _rb;
+    private bool _canDamage = true;
 
     void Update()
     {
-        // ÇÃ·¹ÀÌ¾î¸¦ ÇâÇØ È¸Àü
+        // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
         Vector3 direction = (GameManager.Instance.playerTransform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 11f); // È¸Àü ¼Óµµ¸¦ °íÁ¤°ªÀ¸·Î ¼³Á¤
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 7); // È¸ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // ÀÏÁ÷¼± ¿îµ¿
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½îµ¿
         Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.playerTransform.position, transform.position, speed);
         _rb.velocity = initialVelocity;
     }
 
-    // ÀÏÁ÷¼± ¿îµ¿À» À§ÇÑ ÃÊ±â ¼Óµµ °è»ê
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½îµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½
     Vector3 CalculateInitialVelocity(Vector3 targetPosition, Vector3 currentPosition, float speed)
     {
-        // ¼öÆò °Å¸® °è»ê
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
         Vector3 displacementXZ = new Vector3(targetPosition.x - currentPosition.x, 0, targetPosition.z - currentPosition.z);
 
-        // ¼öÆò ¼Óµµ °è»ê
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½
         Vector3 velocityXZ = displacementXZ.normalized * speed;
 
-        // ¼öÁ÷ ¼Óµµ´Â °í·ÁÇÏÁö ¾ÊÀ½ (ÀÏÁ÷¼± ¿îµ¿)
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½îµ¿)
         Vector3 initialVelocity = velocityXZ;
 
         return initialVelocity;
@@ -36,10 +38,18 @@ public class EnemyArrow : PoolableMono
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject == GameManager.Instance.player.gameObject)
         {
-            PoolManager.Instance.Push(this);
+            if(_canDamage)
+            {
+                if(GameManager.Instance.player != null)
+                {
+                    GameManager.Instance.player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
+                }
+            }
         }
+        
+        PoolManager.Instance.Push(this);
     }
 
     public override void InitializePoolingItem()
