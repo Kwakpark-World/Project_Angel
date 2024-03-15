@@ -8,7 +8,8 @@ public class ENemyDebuff : PoolableMono
 
     private float poisonDamage = 2f;
 
-    private float speed = 3f;
+    private float speed = 20f;
+    private bool canDamage = false;
     private Rigidbody rb;
     public DebuffType _debuffType;
 
@@ -19,12 +20,17 @@ public class ENemyDebuff : PoolableMono
         push
     }
 
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Update()
     {
         // 플레이어를 향해 회전
         Vector3 direction = (GameManager.Instance.player.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 7); // 회전 속도를 고정값으로 설정
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 4); // 회전 속도를 고정값으로 설정
 
         // 일직선 운동
         Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.player.transform.position, transform.position, speed);
@@ -48,12 +54,12 @@ public class ENemyDebuff : PoolableMono
 
     public void PoisonPortion()
     {   
-        StartCoroutine(PoisonDamage(2));   
+        StartCoroutine(PoisonDamage(1));   
     }
 
     public IEnumerator PoisonDamage(float time)
     {
-        while(time < 5)
+        while(time < 15)
         {
             PlayerStat.Hit(poisonDamage);
             yield return new WaitForSeconds(time);
@@ -74,21 +80,36 @@ public class ENemyDebuff : PoolableMono
 
     private void OnTriggerEnter(Collider other)
     {
-        if(_debuffType == DebuffType.poison)
+        if (other.CompareTag("Player"))
         {
-            PoisonPortion();
-        }
+            PoolManager.instance.Push(this);
+            if (canDamage)
+            {
+                if (GameManager.Instance.player != null)
+                {
+                    if (_debuffType == DebuffType.poison)
+                    {
+                        PoisonPortion();
+                    }
 
-        else if(_debuffType == DebuffType.push)
-        {
-            PushPortion();
-        }
+                    else if (_debuffType == DebuffType.push)
+                    {
+                        PushPortion();
+                    }
 
-        else if(_debuffType == DebuffType.Slow)
-        {
-            SlowPortion();
+                    else if (_debuffType == DebuffType.Slow)
+                    {
+                        SlowPortion();
+                    }
+
+                    
+                }
+            }
+            
         }
     }
+
+   
 
     public override void InitializePoolingItem()
     {
