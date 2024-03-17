@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour
     public Animator AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
     public CapsuleCollider ColliderCompo { get; private set; }
-
     public DefaultCollider DefaultCollider { get; private set; }
+
 
     [field: SerializeField] public CharacterStat CharStat { get; private set; }
 
@@ -152,10 +152,10 @@ public class PlayerController : MonoBehaviour
     public bool CheckStair(Vector3 dir)
     {
         RaycastHit hitLower;
-        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(dir), out hitLower, _stairLowerCheckDistance))
+        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(dir), out hitLower, _stairLowerCheckDistance, _whatIsGround))
         {
             RaycastHit hitUpper;
-            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(dir), out hitUpper, _stairUpperCheckDistance))
+            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(dir), out hitUpper, _stairUpperCheckDistance, _whatIsGround))
             {
                 return true;
             }

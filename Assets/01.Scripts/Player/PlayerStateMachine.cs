@@ -16,7 +16,8 @@ public enum PlayerStateEnum
     Charge,
     ChargeAttack,
     Die,
-    EDash
+    EDash,
+    EChargeAttack
 }
 
 public class PlayerStateMachine
