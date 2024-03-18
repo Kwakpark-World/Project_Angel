@@ -13,11 +13,15 @@ public abstract class PlayerGroundState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.PlayerInput.QSkillEvent += QSkillHandle;
+        _player.PlayerInput.ESkillEvent += ESkillHandle;
         _player.PlayerInput.MeleeAttackEvent += HandlePrimaryAttackEvent;
     }
 
     public override void Exit()
     {
+        _player.PlayerInput.QSkillEvent -= QSkillHandle;
+        _player.PlayerInput.ESkillEvent -= ESkillHandle;
         _player.PlayerInput.MeleeAttackEvent -= HandlePrimaryAttackEvent;
         base.Exit();
     }
@@ -40,5 +44,15 @@ public abstract class PlayerGroundState : PlayerState
         {
             _stateMachine.ChangeState(PlayerStateEnum.Charge);
         }
+    }
+
+    private void ESkillHandle()
+    {
+        _stateMachine.ChangeState(PlayerStateEnum.ESkill);
+    }
+
+    private void QSkillHandle()
+    {
+        _stateMachine.ChangeState(PlayerStateEnum.QSkill);
     }
 }
