@@ -2,26 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Grigori : Brain
+public class EnemyBrain : Brain
 {
-    [HideInInspector]
-    public BossBrain owner = null;
-
-    protected override void Update()
-    {
-        base.Update();
-    }
-
-    protected abstract void Debuff();
-
     public override void InitializePoolingItem()
     {
         base.InitializePoolingItem();
+
+        treeRunner.tree.blackboard.home = transform.position;
     }
 
     protected override void Initialize()
     {
         base.Initialize();
+
+        // Debug
+        treeRunner.tree.blackboard.home = transform.position;
     }
 
     public override void OnHit()
@@ -34,7 +29,6 @@ public abstract class Grigori : Brain
 
     public override void OnDie()
     {
-        Debuff();
-        PoolManager.Instance.Push(this);
+        AnimatorCompo.SetBoolEnable("isDie");
     }
 }

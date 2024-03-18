@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 813901998632357413}
   - component: {fileID: 3611147583658971138}
   - component: {fileID: 1357766962565016551}
+  - component: {fileID: 5122743462236743681}
   m_Layer: 0
   m_Name: Azazel
   m_TagString: Untagged
@@ -195,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingType: 2
+  enemyTypes: 0
   treeRunner: {fileID: 1357766962565016551}
   <EnemyStatistic>k__BackingField: {fileID: 11400000, guid: 39473a245042f3a4e87b3e047fdc72d9,
     type: 2}
@@ -212,3 +214,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: 443c62693d5e0a742b33c052c1686ff3, type: 2}
   brain: {fileID: 3611147583658971138}
+--- !u!114 &5122743462236743681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773203644098696749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f1a0956672030438566ce1d3216672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

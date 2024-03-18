@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4933063516796801606}
   - component: {fileID: 8797494071342838189}
   - component: {fileID: 6621959402141942133}
+  - component: {fileID: 7732521518289554839}
   m_Layer: 0
   m_Name: Goat
   m_TagString: Untagged
@@ -192,7 +193,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingType: 1
+  enemyTypes: 0
   treeRunner: {fileID: 0}
+  animator: {fileID: 7732521518289554839}
   <EnemyStatistic>k__BackingField: {fileID: 11400000, guid: 11f297fee80a6a5439682e80b62f5d72,
     type: 2}
-  player: {fileID: 0}
+--- !u!114 &7732521518289554839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2531117378498040023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f1a0956672030438566ce1d3216672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -6,12 +6,15 @@ using UnityEngine;
 public enum PoolingType
 {
     Arrow,
-    Goat,
+    KnightEnemy,
+    ArcherEnemy,
+    WitcherEnemy,
     Azazel,
+    Goat,
     Shamshiel,
     Sariel,
     Satanael,
-    Porison
+    Poison
 }
 
 [Serializable]

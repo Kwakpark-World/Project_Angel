@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Satanael : Grigori
 {
-    protected override void Attack()
-    {
-
-    }
-
     protected override void Debuff()
     {
         float playerHitPointPercentage = GameManager.Instance.player.PlayerStat.GetCurrentHealth() / GameManager.Instance.player.PlayerStat.GetMaxHealthValue();

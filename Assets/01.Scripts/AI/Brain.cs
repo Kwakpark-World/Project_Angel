@@ -4,15 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(NavMeshAgent))]
+public enum EnemyType
+{
+    Knight,
+    Archer,
+    Witch,
+    Sorcerer
+}
+
+[RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {
+    private static float _rotateSpeed = 10f;
+
+    public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
 
     #region Components
-    public Animator AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
     public NavMeshAgent NavMeshAgentCompo { get; private set; }
+    public EnemyAnimator AnimatorCompo { get; private set; }
     #endregion
 
     [field: SerializeField] public MonsterStat EnemyStatistic { get; private set; }
@@ -23,22 +34,32 @@ public abstract class Brain : PoolableMono
         Initialize();
     }
 
-    protected abstract void Update();
+    protected virtual void Update()
+    {
+        if (NavMeshAgentCompo.hasPath)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(NavMeshAgentCompo.steeringTarget - transform.position), _rotateSpeed * Time.deltaTime);
+        }
+    }
 
     public override void InitializePoolingItem()
     {
         EnemyStatistic.InitializeAllModifiers();
+
         NormalAttackTimer = Time.time;
     }
 
     protected virtual void Initialize()
     {
-        AnimatorCompo = GetComponent<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
         NavMeshAgentCompo = GetComponent<NavMeshAgent>();
+        AnimatorCompo = GetComponent<EnemyAnimator>();
         EnemyStatistic = Instantiate(EnemyStatistic);
 
         EnemyStatistic.SetOwner(this);
+
+        NavMeshAgentCompo.speed = EnemyStatistic.GetMoveSpeed();
+        NavMeshAgentCompo.updateRotation = false;
     }
 
     public abstract void OnHit();

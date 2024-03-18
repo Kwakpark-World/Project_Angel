@@ -4,37 +4,23 @@ using UnityEngine;
 
 public class EnemySword : MonoBehaviour
 {
-    [SerializeField] private EnemyAI enemyAI;
-    private bool canDamage = true;
+    [SerializeField]
+    private EnemyBrain _enemyBrain;
+    public Collider swordCollider;
 
     private void Awake()
     {
-        enemyAI = GetComponent<EnemyBrain>();
+        swordCollider = GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == GameManager.Instance.player.gameObject)
         {
-            if (canDamage)
+            if (!GameManager.Instance.player.IsDie)
             {
-                if (GameManager.Instance.player != null)
-                {
-                   GameManager.Instance.player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
-                    Debug.Log("3");
-                }
-
-                StartCoroutine(ResetDamageTimer());
+                GameManager.Instance.player.PlayerStat.Hit(_enemyBrain.EnemyStatistic.GetAttackPower());
             }
         }
-    }
-
-    private IEnumerator ResetDamageTimer()
-    {
-        canDamage = false;
-
-        yield return new WaitForSeconds(enemyAI.EnemyStatistic.GetAttackDelay());
-
-        canDamage = true;
     }
 }

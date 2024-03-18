@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyArrow : PoolableMono
 {
-    public EnemyAI enemyAI;
+    public EnemyBrain enemyBrain;
     public float speed = 10f; // ȭ���� �ӵ�
     private Rigidbody _rb;
     private bool _canDamage = true;
@@ -44,7 +44,7 @@ public class EnemyArrow : PoolableMono
             {
                 if(GameManager.Instance.player != null)
                 {
-                    GameManager.Instance.player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
+                    GameManager.Instance.player.PlayerStat.Hit(enemyBrain.EnemyStatistic.GetAttackPower());
                 }
             }
         }

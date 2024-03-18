@@ -13,14 +13,19 @@ public class Goat : Brain
 
     protected override void Update()
     {
-        if (_isLiving && (Time.time > _lifetimer + _lifetime))
-        {
-            OnDie();
-        }
+        base.Update();
 
-        if (_isLiving && !GameManager.Instance.player.IsDie)
+        if (_isLiving)
         {
-            NavMeshAgentCompo.SetDestination(GameManager.Instance.playerTransform.position);
+            if (Time.time > _lifetimer + _lifetime)
+            {
+                OnDie();
+            }
+
+            if (!GameManager.Instance.player.IsDie)
+            {
+                NavMeshAgentCompo.SetDestination(GameManager.Instance.playerTransform.position);
+            }
         }
     }
 
