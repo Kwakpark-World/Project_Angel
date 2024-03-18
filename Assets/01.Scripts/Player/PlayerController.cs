@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Collision Check logic
-    public virtual bool IsGroundDetected() => Physics.Raycast(_groundChecker.position, Vector3.down, _groundCheckDistance, _whatIsGround);
+    public virtual bool IsGroundDetected() => Physics.Raycast(_groundChecker.position, Vector3.down, _groundCheckDistance * transform.localScale.y, _whatIsGround);
     #endregion
 
     #region delay coroutine logic
