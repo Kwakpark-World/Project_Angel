@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum EnemyType
+{
+    knight,
+    archer,
+    witcher
+}
+
 [RequireComponent(typeof(Animator))]
 public class EnemyAI : Brain
 {
@@ -45,13 +52,6 @@ public class EnemyAI : Brain
     NavMeshAgent _navMeshAgent;
 
     private float timer = 0;
-
-    public enum EnemyType
-    { 
-        knight,
-        archer,
-        witcher
-    }
 
     protected override void Start()
     {
@@ -365,11 +365,11 @@ public class EnemyAI : Brain
 
                 else if(_enemyTypes == EnemyType.witcher)
                 {
-
+/*
                     // 공격 전에 화살 생성
                     PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Porison);
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
-                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
+                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;*/
                 }
                 
                 isSoundPlayed = true;

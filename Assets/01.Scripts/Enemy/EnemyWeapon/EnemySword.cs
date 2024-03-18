@@ -17,7 +17,6 @@ public class EnemySword : MonoBehaviour
                 if (GameManager.Instance.player != null)
                 {
                    GameManager.Instance.player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
-                    Debug.Log("3");
                 }
 
                 StartCoroutine(ResetDamageTimer());
