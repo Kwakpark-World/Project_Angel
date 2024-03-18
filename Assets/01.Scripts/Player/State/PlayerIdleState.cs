@@ -14,14 +14,11 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.Enter();
         _player.StopImmediately(false);
-        _player.PlayerInput.QSkillEvent += QSkillHandle;
-        _player.PlayerInput.ESkillEvent += ESkillHandle;
     }
 
     public override void Exit()
     {
-        _player.PlayerInput.QSkillEvent -= QSkillHandle;
-        _player.PlayerInput.ESkillEvent -= ESkillHandle;
+        
         base.Exit();
     }
 
@@ -40,15 +37,7 @@ public class PlayerIdleState : PlayerGroundState
 
     }
 
-    private void ESkillHandle()
-    {
-        _stateMachine.ChangeState(PlayerStateEnum.ESkill);
-    }
 
-    private void QSkillHandle()
-    {
-        _stateMachine.ChangeState(PlayerStateEnum.QSkill);
-    }
 
 
 }

@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour
     public Animator AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
     public CapsuleCollider ColliderCompo { get; private set; }
-
     public DefaultCollider DefaultCollider { get; private set; }
+
 
     [field: SerializeField] public CharacterStat CharStat { get; private set; }
 
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Collision Check logic
-    public virtual bool IsGroundDetected() => Physics.Raycast(_groundChecker.position, Vector3.down, _groundCheckDistance, _whatIsGround);
+    public virtual bool IsGroundDetected() => Physics.Raycast(_groundChecker.position, Vector3.down, _groundCheckDistance * transform.localScale.y, _whatIsGround);
     #endregion
 
     #region delay coroutine logic
@@ -143,19 +143,19 @@ public class PlayerController : MonoBehaviour
     #region stair logic
     private void InitStairCheckPos()
     {
-        Vector3 upperCheckPos = _stairUpperChecker.position;
+        Vector3 upperCheckPos = _stairUpperChecker.localPosition;
         upperCheckPos.y = _stairHeight;
 
-        _stairUpperChecker.position = upperCheckPos;
+        _stairUpperChecker.localPosition = upperCheckPos;
     }
 
     public bool CheckStair(Vector3 dir)
     {
         RaycastHit hitLower;
-        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(dir), out hitLower, _stairLowerCheckDistance))
+        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(dir), out hitLower, _stairLowerCheckDistance, _whatIsGround))
         {
             RaycastHit hitUpper;
-            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(dir), out hitUpper, _stairUpperCheckDistance))
+            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(dir), out hitUpper, _stairUpperCheckDistance, _whatIsGround))
             {
                 return true;
             }
