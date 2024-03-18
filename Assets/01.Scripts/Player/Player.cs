@@ -1,6 +1,7 @@
  using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -33,6 +34,8 @@ public class Player : PlayerController
     public bool IsAttack { get; set; }
     public bool IsDefense { get; set; }
     public bool IsDie { get; set; }
+    public bool IsStair { get; private set; }
+    public bool IsAwakening { get; set; }
 
     protected override void Awake()
     {
@@ -59,6 +62,8 @@ public class Player : PlayerController
 
     protected override void Start()
     {
+        base.Start();
+
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStat.InitializeAllModifiers();
     }
@@ -69,9 +74,48 @@ public class Player : PlayerController
 
         StateMachine.CurrentState.UpdateState();
 
+        PlayerDie();
+
+        PlayerDefense();
+
+        PlayerOnStair();
+
+        // ����
+        //if (Keyboard.current.pKey.wasPressedThisFrame)
+        //{
+        //    PlayerStat.IncreaseStatBy(10, 4f, PlayerStat.GetStatByType(StatType.strength));
+        //}
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        IsClimbStair();
+    }
+
+    protected void OnDisable()
+    {
+        PlayerInput.DashEvent -= HandleDashEvent;
+    }
+
+    private void IsClimbStair()
+    {
+        if (CheckStair(Vector3.forward))
+            IsStair = true;
+        if (CheckStair(new Vector3(1.5f, 0, 1)))
+            IsStair = true;
+        if (CheckStair(new Vector3(-1.5f, 0, 1)))
+            IsStair = true;
+    }
+
+    private void PlayerDie()
+    {
         if (PlayerStat.GetCurrentHealth() <= 0)
             StateMachine.ChangeState(PlayerStateEnum.Die);
+    }
 
+    private void PlayerDefense()
+    {
         if (PlayerInput.isDefense)
         {
             var curState = StateMachine.CurrentState;
@@ -80,6 +124,7 @@ public class Player : PlayerController
             if (curState == StateMachine.GetState(PlayerStateEnum.QSkill)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.Dash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.EDash)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.Charge)) return;
 
             if (IsGroundDetected())
@@ -89,17 +134,15 @@ public class Player : PlayerController
             }
         }
 
-        // ����
-        //if (Keyboard.current.pKey.wasPressedThisFrame)
-        //{
-        //    PlayerStat.IncreaseStatBy(10, 4f, PlayerStat.GetStatByType(StatType.strength));
-        //}
     }
 
-    protected void OnDisable()
+    private void PlayerOnStair()
     {
-        PlayerInput.DashEvent -= HandleDashEvent;
+        if (IsStair)
+            if (IsGroundDetected())
+                IsStair = false;
     }
+
 
     #region handling input
     private void HandleDashEvent()
@@ -108,7 +151,10 @@ public class Player : PlayerController
         if (StateMachine.CurrentState._actionTriggerCalled) return;
         dashPrevTime = Time.time;
         
-        StateMachine.ChangeState(PlayerStateEnum.Dash);
+        if (!IsAwakening)
+            StateMachine.ChangeState(PlayerStateEnum.Dash);
+        else
+            StateMachine.ChangeState(PlayerStateEnum.EDash);
     }
 
     public void AnimationEndTrigger()

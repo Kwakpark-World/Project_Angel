@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class EnemyArrow : PoolableMono
 {
-    private Transform target; // 플레이어의 위치
     public float speed = 10f; // 화살의 속도
     private Rigidbody rb;
+    private bool canDamage = true;
+
+    public EnemyAI enemyAI;
 
     void Start()
     {
-        target = GameManager.Instance.player.transform;
         rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         // 플레이어를 향해 회전
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (GameManager.Instance.player.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 11f); // 회전 속도를 고정값으로 설정
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 7); // 회전 속도를 고정값으로 설정
 
         // 일직선 운동
-        Vector3 initialVelocity = CalculateInitialVelocity(target.position, transform.position, speed);
+        Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.player.transform.position, transform.position, speed);
         rb.velocity = initialVelocity;
     }
 
@@ -46,6 +47,15 @@ public class EnemyArrow : PoolableMono
         if (other.CompareTag("Player"))
         {
             PoolManager.instance.Push(this);
+            if(canDamage)
+            {
+                if(GameManager.Instance.player != null)
+                {
+                    GameManager.Instance.player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
+                }
+
+                
+            }
         }
     }
 

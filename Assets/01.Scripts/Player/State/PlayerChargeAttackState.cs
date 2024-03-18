@@ -11,6 +11,9 @@ public class PlayerChargeAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        if (_player.IsAwakening)
+            Debug.Log("Effect");
     }
 
     public override void Exit()
@@ -29,7 +32,7 @@ public class PlayerChargeAttackState : PlayerState
 
         if (_endTriggerCalled)
         {
-            _player.SetCollider();
+            _player.SetAnimCollider(_player.DefaultCollider.height, -0.1f, 0.01f);
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerQSkillState : PlayerState
 {
-    private float _jumpForce = 12f;
-    private float _dropForce = 12f;
+    private float _jumpForce = 10f;
+    private float _dropForce = 18f;
     
     public PlayerQSkillState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -25,11 +25,18 @@ public class PlayerQSkillState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (!_player.IsGroundDetected()) 
+        
+        if (_actionTriggerCalled )
         {
             _player.SetVelocity(Vector3.down * _dropForce);
+        }
 
-
+        if (_endTriggerCalled )
+        {
+            if (_player.IsGroundDetected())
+            {
+                _stateMachine.ChangeState(PlayerStateEnum.Idle);
+            } 
         }
     }
 }
