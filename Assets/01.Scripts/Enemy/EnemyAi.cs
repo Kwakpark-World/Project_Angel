@@ -59,6 +59,7 @@ public class EnemyAI : Brain
     {
         base.Start();
 
+        if(_enemyTypes == EnemyType.knight)
         Attack1Particle.Stop();
 
        
@@ -361,6 +362,7 @@ public class EnemyAI : Brain
                 if (_enemyTypes == EnemyType.knight)
                 {
                     SoundManager.Instance.PlayAttackSound("Attack1");
+                    Attack1Particle.Play();
                 }
                 else if (_enemyTypes == EnemyType.archer)
                 {
@@ -383,7 +385,7 @@ public class EnemyAI : Brain
                     EnemyArrow.transform.position = WeaponSpawn.transform.position;
                     EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
                 }
-                Attack1Particle.Play();
+                
                 isSoundPlayed = true;
                 Invoke("ResetSoundPlayed", 1.3f); 
             }
