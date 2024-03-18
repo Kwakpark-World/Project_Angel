@@ -7,14 +7,22 @@ public class PlayerGhostTrail : MonoBehaviour
     public float activeTime = 2f;
 
     public float meshRefreshRate = 0.1f;
-    public Transform D;
+    public float meshDestroyDelay = 3f;
+
+    // root Position
+    public Transform positionToSpawn;
+
+    public Material mat;
+    public string shaderVarRef;
+    public float shaderVarRate = 0.1f;
+    public float shaderVarRefreshRate = 0.05f;
 
     private bool isTrailActive;
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isTrailActive)
+        if (Input.GetKeyDown(KeyCode.Space) )//&& !isTrailActive)
         {
             isTrailActive = true;
             StartCoroutine(GhostTrail(activeTime));
@@ -33,7 +41,11 @@ public class PlayerGhostTrail : MonoBehaviour
             for (int i = 0; i <  skinnedMeshRenderers.Length; i++)
             {
                 GameObject gObj = new GameObject();
-                //gObj.transform.SetPositionAndRotation();
+
+                Vector3 position = positionToSpawn.position;
+                Quaternion rotation = positionToSpawn.rotation;
+                
+                gObj.transform.SetPositionAndRotation(position, rotation);
 
                 MeshRenderer mr = gObj.AddComponent<MeshRenderer>();
                 MeshFilter mf = gObj.AddComponent<MeshFilter>();
@@ -41,10 +53,29 @@ public class PlayerGhostTrail : MonoBehaviour
                 Mesh mesh = new Mesh();
                 skinnedMeshRenderers[i].BakeMesh(mesh);
 
+                mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
                 mf.mesh = mesh;
+                mr.material = mat;
+
+                StartCoroutine(AnimateMaterialFloat(mr.material, 0, shaderVarRate, shaderVarRefreshRate));
+
+                Destroy(gObj, meshDestroyDelay); // Change Pool
             }
 
             yield return new WaitForSeconds(meshRefreshRate);
+        }
+    }
+
+    private IEnumerator AnimateMaterialFloat(Material mat, float goal, float rate, float refreshRate)
+    {
+        float valueToAnimate = mat.GetFloat(shaderVarRef);
+
+        while (valueToAnimate > goal)
+        {
+            valueToAnimate -= rate;
+            mat.SetFloat(shaderVarRef, valueToAnimate);
+            yield return new WaitForSeconds(refreshRate);
         }
     }
 }
