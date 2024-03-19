@@ -10,7 +10,9 @@ public enum PoolingType
     Shamshiel,
     Sariel,
     Satanael,
-    Porison
+    poison,
+    freeze,
+    knockBack
 }
 
 [Serializable]

@@ -4,21 +4,15 @@ using UnityEngine;
 
 public class ENemyDebuff : PoolableMono
 {
-    public PlayerStat PlayerStat { get; private set; }
-
     private float poisonDamage = 2f;
 
-    private float speed = 20f;
+    private float speed = 10f;
+
+    public EnemyAI enemyAI;
+
     private bool canDamage = false;
     private Rigidbody rb;
     public DebuffType _debuffType;
-
-    public enum DebuffType
-    {
-        Slow,
-        poison,
-        push
-    }
 
     void Start()
     {
@@ -35,6 +29,8 @@ public class ENemyDebuff : PoolableMono
         // 일직선 운동
         Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.player.transform.position, transform.position, speed);
         rb.velocity = initialVelocity;
+
+        
     }
 
     // 일직선 운동을 위한 초기 속도 계산
@@ -52,64 +48,35 @@ public class ENemyDebuff : PoolableMono
         return initialVelocity;
     }
 
-    public void PoisonPortion()
-    {   
-        StartCoroutine(PoisonDamage(1));   
-    }
-
-    public IEnumerator PoisonDamage(float time)
-    {
-        while(time < 15)
-        {
-            PlayerStat.Hit(poisonDamage);
-            yield return new WaitForSeconds(time);
-        }
-    }
-
-    public void SlowPortion()
-    {
-        float slowPos = 3f;
-        PlayerStat.IncreaseStatBy(-slowPos, 3f, PlayerStat.GetStatByType(PlayerStatType.moveSpeed));           
-    }
-
-    public void PushPortion()
-    {
-        float slowPower = 3f;
-        GameManager.Instance.player.RigidbodyCompo.AddForce(-GameManager.Instance.player.transform.forward * slowPower , ForceMode.Impulse);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
+        float KnockBackPower = 5f;
         if (other.CompareTag("Player"))
         {
-            PoolManager.instance.Push(this);
-            if (canDamage)
+            if (canDamage == false)
             {
                 if (GameManager.Instance.player != null)
                 {
-                    if (_debuffType == DebuffType.poison)
+                    if (_debuffType == DebuffType.Poison)
                     {
-                        PoisonPortion();
+                        GameManager.Instance.player.PlayerStat.Debuff(_debuffType,3);
                     }
 
-                    else if (_debuffType == DebuffType.push)
+                    else if (_debuffType == DebuffType.Knockback)
                     {
-                        PushPortion();
+                        GameManager.Instance.player.RigidbodyCompo.AddForce((other.bounds.ClosestPoint(transform.position) - enemyAI.transform.position).normalized * KnockBackPower, ForceMode.Impulse);
                     }
 
-                    else if (_debuffType == DebuffType.Slow)
+                    else if (_debuffType == DebuffType.Freeze)
                     {
-                        SlowPortion();
+                        GameManager.Instance.player.PlayerStat.Debuff(_debuffType, 3);
                     }
-
-                    
                 }
             }
-            
+            PoolManager.instance.Push(this);
+
         }
     }
-
-   
 
     public override void InitializePoolingItem()
     {

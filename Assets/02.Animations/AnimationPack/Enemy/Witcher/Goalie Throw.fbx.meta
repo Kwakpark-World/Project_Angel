@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
-      takeName: Take 001
+      name: Take1
+      takeName: mixamo.com
       internalID: 1827226128182048838
       firstFrame: 0
-      lastFrame: 100
+      lastFrame: 115
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -59,10 +59,18 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.20437954
+      - time: 0.43302733
         functionName: OnAttack
         data: 
-        objectReferenceParameter: {fileID: 919132149155446097, guid: a875328cfcb529e45a1c19b477f9991f,
+        objectReferenceParameter: {fileID: 1614760714596843899, guid: 523999d1a3d6f2148bb7a8ec253c628a,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4369878
+        functionName: OnWitcherSound
+        data: 
+        objectReferenceParameter: {fileID: 1614760714596843899, guid: 523999d1a3d6f2148bb7a8ec253c628a,
           type: 3}
         floatParameter: 0
         intParameter: 0

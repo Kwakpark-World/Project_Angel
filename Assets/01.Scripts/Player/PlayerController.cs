@@ -51,7 +51,10 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
+
     }
+
+    
 
     protected virtual void FixedUpdate()
     {

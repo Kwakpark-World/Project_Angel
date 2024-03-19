@@ -7,33 +7,39 @@ public class EnemyAnmation : MonoBehaviour
 {
     public EnemyType enemyType;
     public EnemyAI enemyAi;
-    public ParticleSystem knghtAttackParticle;
 
-    public GameObject WeaponSpawn;
+    public ParticleSystem knghtAttackParticle;
 
     public UnityEvent animationEndEvent;
 
     public void OnAttack()
     {
+
         if(enemyType == EnemyType.knight)
         {
             knghtAttackParticle.Play();
-            
+            SoundManager.Instance.PlayAttackSound("Attack1");
+        }
+
+        if(enemyType == EnemyType.archer)
+        {
+            EnemyArrow EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow) as EnemyArrow;
+            EnemyArrow.enemyAI = enemyAi;
+            EnemyArrow.transform.position = enemyAi.WeaponSpawn.transform.position;
+            EnemyArrow.transform.rotation = enemyAi.WeaponSpawn.transform.rotation;
+            SoundManager.Instance.PlayAttackSound("Attack2");
         }
 
         if (enemyType == EnemyType.witcher)
         {
-            PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Porison);
-            EnemyArrow.transform.position = WeaponSpawn.transform.position;
-            EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
-            Debug.Log("1");
+            
+            ENemyDebuff EnemyDebuff = PoolManager.instance.Pop(PoolingType.poison) as ENemyDebuff;
+            EnemyDebuff.enemyAI = enemyAi;
+            EnemyDebuff.transform.position = enemyAi.WeaponSpawn.transform.position;
+            EnemyDebuff.transform.rotation = enemyAi.WeaponSpawn.transform.rotation;
+            
         }
         
-    }
-
-    public void OnKnightSound()
-    {
-        SoundManager.Instance.PlayAttackSound("Attack1");
     }
 
     public void OnArcherSound()

@@ -351,26 +351,6 @@ public class EnemyAI : Brain
             {
                 
                 timer = 0;
-                if (_enemyTypes == EnemyType.archer)
-                {
-                    
-
-                    // 공격 전에 화살 생성
-                    EnemyArrow EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow) as EnemyArrow;
-                    EnemyArrow.enemyAI = this;
-                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
-                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
-
-                }
-
-                else if(_enemyTypes == EnemyType.witcher)
-                {
-/*
-                    // 공격 전에 화살 생성
-                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Porison);
-                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
-                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;*/
-                }
                 
                 isSoundPlayed = true;
                 Invoke("ResetSoundPlayed", 1.3f); 
