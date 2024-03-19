@@ -167,4 +167,9 @@ public class Player : PlayerController
         StateMachine.CurrentState.AnimationActionTrigger();
     }
     #endregion
+
+    public void SetPlayerStat(PlayerStatType stat, float value)
+    {
+        PlayerStat.GetStatByType(stat).AddModifier(value);
+    }
 }

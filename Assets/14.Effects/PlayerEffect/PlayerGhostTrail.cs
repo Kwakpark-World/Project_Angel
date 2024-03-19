@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerGhostTrail : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class PlayerGhostTrail : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) )//&& !isTrailActive)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)//&& !isTrailActive)
         {
             isTrailActive = true;
             StartCoroutine(GhostTrail(activeTime));
