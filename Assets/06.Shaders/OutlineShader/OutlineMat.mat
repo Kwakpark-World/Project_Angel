@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SilhouetteMat
-  m_Shader: {fileID: -6465566751694194690, guid: ff95cfc8318aa7148a47f70d96af1a44,
+  m_Name: OutlineMat
+  m_Shader: {fileID: -6465566751694194690, guid: 5d484a412ca7a544c88d61c0e946af03,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -37,11 +37,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _OutlineThickness: 0.01
+    - _QueueControl: 0
+    - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.025943398, g: 0.025943398, b: 0.025943398, a: 0}
+    - _Outline_Color: {r: 0.6011349, g: 1.2431204, b: 1.3350787, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &5149084453881392457
+--- !u!114 &5846870153211774712
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

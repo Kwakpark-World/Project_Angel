@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8778978051059874802}
   - component: {fileID: 2129689387900902369}
   - component: {fileID: 2834384972866530670}
+  - component: {fileID: 951220688711075722}
   m_Layer: 11
   m_Name: Barrier
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -5, y: 1, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 0.20000002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1063335428671271963}
@@ -106,6 +107,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 2, z: 10.000002}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &951220688711075722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4069800310344691131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c6989447624404988e2a15070c33c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolingType: 0
 --- !u!1 &8422088404062033446
 GameObject:
   m_ObjectHideFlags: 0
