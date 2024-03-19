@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2891859584831067675
 Transform:
   m_ObjectHideFlags: 0
@@ -25674,6 +25674,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4303cc05059e9c24baff25f18cffd57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
+  enemyAi: {fileID: 3793055883466862008}
   knghtAttackParticle: {fileID: 6646215923906079105}
   animationEndEvent:
     m_PersistentCalls:
