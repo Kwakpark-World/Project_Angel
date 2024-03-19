@@ -32,12 +32,28 @@ public class EnemyAnmation : MonoBehaviour
 
         if (enemyType == EnemyType.witcher)
         {
-            
-            ENemyDebuff EnemyDebuff = PoolManager.instance.Pop(PoolingType.poison) as ENemyDebuff;
-            EnemyDebuff.enemyAI = enemyAi;
-            EnemyDebuff.transform.position = enemyAi.WeaponSpawn.transform.position;
-            EnemyDebuff.transform.rotation = enemyAi.WeaponSpawn.transform.rotation;
-            
+            if(Random.Range(0,2) == 0)
+            {
+                ENemyDebuff EnemyDebuff = PoolManager.instance.Pop(PoolingType.poison) as ENemyDebuff;
+                EnemyDebuff.enemyAI = enemyAi;
+                EnemyDebuff.transform.position = enemyAi.WeaponSpawn.transform.position;
+                EnemyDebuff.transform.rotation = enemyAi.WeaponSpawn.transform.rotation;
+            }
+            else if (Random.Range(0,3) == 1)
+            {
+                ENemyDebuff EnemyDebuff = PoolManager.instance.Pop(PoolingType.knockBack) as ENemyDebuff;
+                EnemyDebuff.enemyAI = enemyAi;
+                EnemyDebuff.transform.position = enemyAi.WeaponSpawn.transform.position;
+                EnemyDebuff.transform.rotation = enemyAi.WeaponSpawn.transform.rotation;
+            }
+            else if (Random.Range(0, 3) == 2)
+            {
+                ENemyDebuff EnemyDebuff = PoolManager.instance.Pop(PoolingType.freeze) as ENemyDebuff;
+                EnemyDebuff.enemyAI = enemyAi;
+                EnemyDebuff.transform.position = enemyAi.WeaponSpawn.transform.position;
+                EnemyDebuff.transform.rotation = enemyAi.WeaponSpawn.transform.rotation;
+            }
+
         }
         
     }
