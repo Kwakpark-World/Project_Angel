@@ -11,6 +11,9 @@ public class PlayerChargeAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        if (_player.IsAwakening)
+            Debug.Log("Effect");
     }
 
     public override void Exit()

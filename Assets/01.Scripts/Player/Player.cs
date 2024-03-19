@@ -40,6 +40,7 @@ public class Player : PlayerController
     public bool IsDefense { get; set; }
     public bool IsDie { get; set; }
     public bool IsStair { get; private set; }
+    public bool IsAwakening { get; set; }
 
     private ParticleSystem poisonParticle;
 
@@ -87,29 +88,11 @@ public class Player : PlayerController
 
         StateMachine.CurrentState.UpdateState();
 
-        if (PlayerStat.GetCurrentHealth() <= 0)
-            StateMachine.ChangeState(PlayerStateEnum.Die);
+        PlayerDie();
 
-        if (PlayerInput.isDefense)
-        {
-            var curState = StateMachine.CurrentState;
-
-            if (curState == StateMachine.GetState(PlayerStateEnum.MeleeAttack)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.QSkill)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Dash)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Charge)) return;
-
-            if (IsGroundDetected())
-            {
-                if (defenseCoolTime + defensePrevTime > Time.time) return;
-                StateMachine.ChangeState(PlayerStateEnum.Defense);
-            }
-        }
-
-        if (IsStair)
-            if (IsGroundDetected())
-                IsStair = false;    
+        PlayerDefense();
+ 
+        PlayerOnStair();
 
         foreach (DebuffType type in Enum.GetValues(typeof(DebuffType)))
         {
@@ -161,6 +144,42 @@ public class Player : PlayerController
             IsStair = true;
     }
 
+    private void PlayerDie()
+    {
+        if (PlayerStat.GetCurrentHealth() <= 0)
+            StateMachine.ChangeState(PlayerStateEnum.Die);
+    }
+
+    private void PlayerDefense()
+    {
+        if (PlayerInput.isDefense)
+        {
+            var curState = StateMachine.CurrentState;
+
+            if (curState == StateMachine.GetState(PlayerStateEnum.MeleeAttack)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.QSkill)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Dash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.EDash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Charge)) return;
+
+            if (IsGroundDetected())
+            {
+                if (defenseCoolTime + defensePrevTime > Time.time) return;
+                StateMachine.ChangeState(PlayerStateEnum.Defense);
+            }
+        }
+
+    }
+
+    private void PlayerOnStair()
+    {
+        if (IsStair)
+            if (IsGroundDetected())
+                IsStair = false;
+    }
+
+
     #region handling input
     private void HandleDashEvent()
     {
@@ -168,7 +187,10 @@ public class Player : PlayerController
         if (StateMachine.CurrentState._actionTriggerCalled) return;
         dashPrevTime = Time.time;
         
-        StateMachine.ChangeState(PlayerStateEnum.Dash);
+        if (!IsAwakening)
+            StateMachine.ChangeState(PlayerStateEnum.Dash);
+        else
+            StateMachine.ChangeState(PlayerStateEnum.EDash);
     }
 
     public void AnimationEndTrigger()
@@ -181,4 +203,9 @@ public class Player : PlayerController
         StateMachine.CurrentState.AnimationActionTrigger();
     }
     #endregion
+
+    public void SetPlayerStat(PlayerStatType stat, float value)
+    {
+        PlayerStat.GetStatByType(stat).AddModifier(value);
+    }
 }

@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 6058785934024424178}
   m_Layer: 0
   m_Name: sword:RetopoGroup5
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1529,6 +1529,7 @@ GameObject:
   - component: {fileID: 8967625154095637305}
   - component: {fileID: 7004286244014393163}
   - component: {fileID: 8929839927594950403}
+  - component: {fileID: 5757320015000436667}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1546,7 +1547,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6086645587855809506}
@@ -1645,6 +1646,20 @@ MonoBehaviour:
   defensePrevTime: 0
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d771d326405705e4b9989f7211c9e6b3,
     type: 2}
+--- !u!114 &5757320015000436667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2735495784658434693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0280493c725a7134086acb9ced99d3f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeTime: 2
+  meshRefreshRate: 0.1
 --- !u!1 &2867572251234918126
 GameObject:
   m_ObjectHideFlags: 0
