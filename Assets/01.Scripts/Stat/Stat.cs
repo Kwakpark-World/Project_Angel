@@ -20,6 +20,8 @@ public class Stat
         return finalValue;
     }
 
+
+
     public void AddModifier(float value)
     {
         if (value != 0)

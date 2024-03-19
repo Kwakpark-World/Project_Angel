@@ -53,8 +53,6 @@ public class EnemyArrow : PoolableMono
                 {
                     GameManager.Instance.player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
                 }
-
-                
             }
         }
     }

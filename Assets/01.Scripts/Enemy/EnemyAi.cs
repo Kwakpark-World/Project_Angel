@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum EnemyType
+{
+    knight,
+    archer,
+    witcher
+}
+
 [RequireComponent(typeof(Animator))]
 public class EnemyAI : Brain
 {
@@ -19,8 +26,6 @@ public class EnemyAI : Brain
 
     [Header("Damage")]
     float _meleeAttackDamage;
-    [Header("Particle")]
-    public ParticleSystem Attack1Particle;
 
     Vector3 _originPos = default;
     BehaviorTreeRunner _BTRunner = null;
@@ -48,21 +53,9 @@ public class EnemyAI : Brain
 
     private float timer = 0;
 
-    public enum EnemyType
-    { 
-        knight,
-        archer,
-        witcher
-    }
-
     protected override void Start()
     {
         base.Start();
-
-        if(_enemyTypes == EnemyType.knight)
-        Attack1Particle.Stop();
-
-       
     }
 
     protected override void Update()
@@ -358,33 +351,6 @@ public class EnemyAI : Brain
             {
                 
                 timer = 0;
-
-                if (_enemyTypes == EnemyType.knight)
-                {
-                    SoundManager.Instance.PlayAttackSound("Attack1");
-                    Attack1Particle.Play();
-                }
-                else if (_enemyTypes == EnemyType.archer)
-                {
-                    SoundManager.Instance.PlayAttackSound("Attack2");
-
-                    // 공격 전에 화살 생성
-                    EnemyArrow EnemyArrow = PoolManager.instance.Pop(PoolingType.Arrow) as EnemyArrow;
-                    EnemyArrow.enemyAI = this;
-                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
-                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
-
-                }
-
-                else if(_enemyTypes == EnemyType.witcher)
-                {
-                    SoundManager.Instance.PlayAttackSound("Attack3");
-
-                    // 공격 전에 화살 생성
-                    PoolableMono EnemyArrow = PoolManager.instance.Pop(PoolingType.Porison);
-                    EnemyArrow.transform.position = WeaponSpawn.transform.position;
-                    EnemyArrow.transform.rotation = WeaponSpawn.transform.rotation;
-                }
                 
                 isSoundPlayed = true;
                 Invoke("ResetSoundPlayed", 1.3f); 
@@ -442,21 +408,6 @@ public class EnemyAI : Brain
 
     private void OnAttackFalse()
     {
-        if (_enemyTypes == EnemyType.knight)
-        {
-            SoundManager.Instance.StopAttackSound("Attack1");
-        }
-        else if (_enemyTypes == EnemyType.archer )
-        {
-            SoundManager.Instance.StopAttackSound("Attack2");
-            timer = 0;
-        }
-
-        else if (_enemyTypes == EnemyType.witcher)
-        {
-            SoundManager.Instance.StopAttackSound("Attack3");
-            timer = 0;
-        }
         SetAnimatorBools(false, false, true, false, false, false);
 
         // �̵��� �ٽ� �����ϵ��� ����

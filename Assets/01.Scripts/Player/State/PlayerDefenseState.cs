@@ -14,7 +14,7 @@ public class PlayerDefenseState : PlayerState
     {
         base.Enter();
         _player.IsDefense = true;
-
+        _player.StopImmediately(false);
 
     }
 
