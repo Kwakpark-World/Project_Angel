@@ -17,7 +17,10 @@ MonoBehaviour:
     modifiers: []
   currentHealth:
     _baseValue: 30
-    modifiers: []
+    modifiers:
+    - -10
+    - -10
+    - -10
   lifetime:
     _baseValue: 0
     modifiers: []
@@ -25,7 +28,7 @@ MonoBehaviour:
     _baseValue: 0
     modifiers: []
   moveSpeed:
-    _baseValue: 5
+    _baseValue: 0
     modifiers: []
   detectRange:
     _baseValue: 30
@@ -34,7 +37,7 @@ MonoBehaviour:
     _baseValue: 3
     modifiers: []
   attackRange:
-    _baseValue: 10
+    _baseValue: 2
     modifiers: []
   attackDelay:
     _baseValue: 1

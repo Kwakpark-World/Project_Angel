@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class ENemyDebuff : PoolableMono
 {
-    public PlayerStat PlayerStat { get; private set; }
-
     private float poisonDamage = 2f;
 
-    private float speed = 3f;
+    private float speed = 10f;
+
+    public EnemyAI enemyAI;
+
+    private bool canDamage = false;
     private Rigidbody rb;
     public DebuffType _debuffType;
 
-    public enum DebuffType
+    void Start()
     {
-        Slow,
-        poison,
-        push
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -24,11 +24,13 @@ public class ENemyDebuff : PoolableMono
         // 플레이어를 향해 회전
         Vector3 direction = (GameManager.Instance.player.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 7); // 회전 속도를 고정값으로 설정
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 4); // 회전 속도를 고정값으로 설정
 
         // 일직선 운동
         Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.player.transform.position, transform.position, speed);
         rb.velocity = initialVelocity;
+
+        
     }
 
     // 일직선 운동을 위한 초기 속도 계산
@@ -46,47 +48,33 @@ public class ENemyDebuff : PoolableMono
         return initialVelocity;
     }
 
-    public void PoisonPortion()
-    {   
-        StartCoroutine(PoisonDamage(2));   
-    }
-
-    public IEnumerator PoisonDamage(float time)
-    {
-        while(time < 5)
-        {
-            PlayerStat.Hit(poisonDamage);
-            yield return new WaitForSeconds(time);
-        }
-    }
-
-    public void SlowPortion()
-    {
-        float slowPos = 3f;
-        PlayerStat.IncreaseStatBy(-slowPos, 3f, PlayerStat.GetStatByType(PlayerStatType.moveSpeed));           
-    }
-
-    public void PushPortion()
-    {
-        float slowPower = 3f;
-        GameManager.Instance.player.RigidbodyCompo.AddForce(-GameManager.Instance.player.transform.forward * slowPower , ForceMode.Impulse);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if(_debuffType == DebuffType.poison)
+        float KnockBackPower = 5f;
+        if (other.CompareTag("Player"))
         {
-            PoisonPortion();
-        }
+            if (canDamage == false)
+            {
+                if (GameManager.Instance.player != null)
+                {
+                    if (_debuffType == DebuffType.Poison)
+                    {
+                        GameManager.Instance.player.PlayerStat.Debuff(_debuffType,3);
+                    }
 
-        else if(_debuffType == DebuffType.push)
-        {
-            PushPortion();
-        }
+                    else if (_debuffType == DebuffType.Knockback)
+                    {
+                        GameManager.Instance.player.RigidbodyCompo.AddForce((other.bounds.ClosestPoint(transform.position) - enemyAI.transform.position).normalized * KnockBackPower, ForceMode.Impulse);
+                    }
 
-        else if(_debuffType == DebuffType.Slow)
-        {
-            SlowPortion();
+                    else if (_debuffType == DebuffType.Freeze)
+                    {
+                        GameManager.Instance.player.PlayerStat.Debuff(_debuffType, 3);
+                    }
+                }
+            }
+            PoolManager.instance.Push(this);
+
         }
     }
 

@@ -11,6 +11,6 @@ public class Shamshiel : Grigori
 
     protected override void Debuff()
     {
-        GameManager.Instance.player.PlayerStat.IncreaseStatBy(GameManager.Instance.player.PlayerStat.GetMoveSpeed() - GameManager.Instance.player.PlayerStat.GetMoveSpeed() * _slownessMultiplier, _slownessDuration, GameManager.Instance.player.PlayerStat.GetStatByType(PlayerStatType.moveSpeed));
+        //GameManager.Instance.player.PlayerStat.IncreaseStatBy(GameManager.Instance.player.PlayerStat.GetMoveSpeed() - player.PlayerStat.GetMoveSpeed() * _slownessMultiplier, _slownessDuration, player.PlayerStat.GetStatByType(PlayerStatType.moveSpeed));
     }
 }
