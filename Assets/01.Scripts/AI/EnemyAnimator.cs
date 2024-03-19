@@ -40,8 +40,11 @@ public class EnemyAnimator : MonoBehaviour
 
     public void SetBoolDisable()
     {
-        _animator.SetBool(_parameterHashes[_previousParameter], false);
+        if (_previousParameter != "")
+        {
+            _animator.SetBool(_parameterHashes[_previousParameter], false);
 
-        _previousParameter = "";
+            _previousParameter = "";
+        }
     }
 }

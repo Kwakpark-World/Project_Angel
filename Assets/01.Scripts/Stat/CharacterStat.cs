@@ -77,6 +77,9 @@ public class CharacterStat : ScriptableObject
 
     public void Hit(float incomingDamage)
     {
-        currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
+        if (!(_owner as Player).IsDefense && !(_owner as Player).IsDie)
+        {
+            currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
+        }
     }
 }

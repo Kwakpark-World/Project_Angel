@@ -10,7 +10,6 @@ public class ArrowEffect : MonoBehaviour
 
     private void Update()
     {
-
         var dir = Vector3.forward + Vector3.right * rotateAmount;
         transform.Translate(dir * moveSpeed * Time.deltaTime);
 

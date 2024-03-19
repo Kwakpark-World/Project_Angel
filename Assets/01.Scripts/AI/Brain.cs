@@ -19,6 +19,8 @@ public abstract class Brain : PoolableMono
 
     public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
+    [HideInInspector]
+    public float normalAttackTimer;
 
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -27,7 +29,6 @@ public abstract class Brain : PoolableMono
     #endregion
 
     [field: SerializeField] public MonsterStat EnemyStatistic { get; private set; }
-    public float NormalAttackTimer { get; set; }
 
     protected virtual void Start()
     {
@@ -46,7 +47,7 @@ public abstract class Brain : PoolableMono
     {
         EnemyStatistic.InitializeAllModifiers();
 
-        NormalAttackTimer = Time.time;
+        normalAttackTimer = Time.time;
     }
 
     protected virtual void Initialize()
