@@ -1,48 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
 
 public class Goat : Brain
 {
-    [HideInInspector]
-    public Player player = null;
+    private bool _isLiving;
 
     private float _lifetime;
     private float _lifetimer;
-    private float _moveSpeed;
 
     private float _attackPower;
 
     protected override void Update()
     {
-        if (Time.time > _lifetimer + _lifetime)
-        {
-            OnDie();
-        }
+        base.Update();
 
-        if (player != null)
+        if (_isLiving)
         {
-            NavMeshAgentCompo.SetDestination(player.transform.position);
+            if (Time.time > _lifetimer + _lifetime)
+            {
+                OnDie();
+            }
+
+            if (!GameManager.Instance.player.IsDie)
+            {
+                NavMeshAgentCompo.SetDestination(GameManager.Instance.playerTransform.position);
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player.gameObject)
+        if (other.gameObject == GameManager.Instance.player.gameObject)
         {
-            player.PlayerStat.Hit(_attackPower);
+            GameManager.Instance.player.PlayerStat.Hit(_attackPower);
 
-            // Give scapegoat effect.
+            // Give scapegoat debuff.
+
+            OnDie();
         }
-
-        OnDie();
     }
 
     public override void InitializePoolingItem()
     {
         base.InitializePoolingItem();
 
+        _isLiving = true;
         _lifetimer = Time.time;
     }
 
@@ -50,8 +53,8 @@ public class Goat : Brain
     {
         base.Initialize();
 
+        NavMeshAgentCompo.speed = EnemyStatistic.GetMoveSpeed();
         _lifetime = EnemyStatistic.GetLifetime();
-        _moveSpeed = EnemyStatistic.GetMoveSpeed();
         _attackPower = EnemyStatistic.GetAttackPower();
     }
 
@@ -62,6 +65,8 @@ public class Goat : Brain
 
     public override void OnDie()
     {
-        PoolManager.instance.Push(this, true);
+        _isLiving = false;
+
+        PoolManager.Instance.Push(this, true);
     }
 }

@@ -19,12 +19,9 @@ public class AzazelFirstPattern : Pattern
     {
         Debug.Log("Use first pattern.");
 
-        if (PoolManager.instance.Pop(PoolingType.Goat).TryGetComponent(out Goat goat))
+        if (PoolManager.Instance.Pop(PoolingType.Goat).TryGetComponent(out Goat goat))
         {
-            if (!goat.player)
-            {
-                goat.player = GameManager.Instance.player;
-            }
+            goat.transform.position = node.brain.transform.position;
         }
 
         return Node.State.Success;

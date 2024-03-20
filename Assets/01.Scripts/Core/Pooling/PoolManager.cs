@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-    public static PoolManager instance;
+    private static PoolManager _instance = null;
+    public static PoolManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = FindObjectOfType<PoolManager>();
+
+            if (_instance == null)
+                Debug.LogError("PoolManager Component is null");
+
+            return _instance;
+        }
+    }
     private Dictionary<PoolingType, Pool<PoolableMono>> _pools = new Dictionary<PoolingType, Pool<PoolableMono>>();
     [SerializeField]
     private PoolingListSO _poolingList;
 
     private void Awake()
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        
         foreach (var poolingObject in _poolingList.poolingList)
         {
             CreatePool(poolingObject.prefab, poolingObject.type, poolingObject.itemAmount);
