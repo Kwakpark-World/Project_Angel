@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -12,6 +13,13 @@ public enum PlayerStatType
     attackPower,
     criticalChance,
     criticalMultiplier,
+}
+
+public enum DebuffType
+{
+    Poison,
+    Freeze,
+    Knockback
 }
 
 public class CharacterStat : ScriptableObject
@@ -29,7 +37,11 @@ public class CharacterStat : ScriptableObject
 
     protected PlayerController _owner;
 
+    private DebuffType _debuffType;
+
     protected Dictionary<PlayerStatType, FieldInfo> _fieldInfoDictionary = new Dictionary<PlayerStatType, FieldInfo>();
+    protected Dictionary<DebuffType, bool> debuffDictionary = new Dictionary<DebuffType, bool>();
+    protected List<Coroutine> _coroutines = new List<Coroutine>(Enum.GetValues(typeof(DebuffType)).Length);
 
     public virtual void SetOwner(PlayerController owner)
     {
@@ -77,6 +89,79 @@ public class CharacterStat : ScriptableObject
 
     public void Hit(float incomingDamage)
     {
-        currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
+        if (!(_owner as Player).IsDefense && !(_owner as Player).IsDie)
+        {
+            currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
+        }
+    }
+
+    public void Debuff(DebuffType type, float duration)
+    {
+        _coroutines[(int)type] = _owner.StartCoroutine(DebuffCoroutine(type, duration));
+    }
+
+    public bool GetDebuff(DebuffType type)
+    {
+        return debuffDictionary[type];
+    }
+
+    private IEnumerator DebuffCoroutine(DebuffType type, float duration)
+    {
+        debuffDictionary[type] = true;
+
+        yield return new WaitForSeconds(duration);
+
+        debuffDictionary[type] = false;
+        _coroutines[(int)type] = null;
+    }
+
+    private float poisonDamage = 2;
+    private float poisonDuration = 3f;
+    private float poisonDurationTimer = -1f;
+    private float poisonDelay = 1f;
+    private float poisonDelayTimer = -1f;
+
+    public void Poison()
+    {
+        if (poisonDurationTimer <= 0f)
+        {
+            poisonDurationTimer = Time.time;
+            poisonDelayTimer = Time.time - poisonDelay;
+        }
+
+        if (Time.time <= poisonDurationTimer + poisonDuration)
+        {
+            if (Time.time > poisonDelayTimer + poisonDelay)
+            {
+                GameManager.Instance.player.PlayerStat.Hit(poisonDamage);
+
+                poisonDelayTimer  = Time.time;
+            }
+        }
+        else
+        {
+            poisonDurationTimer = poisonDelayTimer = -1f;
+        }
+    }
+
+    private float freezeMoveSpeedModifier = -2f;
+    private float freezeDuration = 3f;
+    private float freezeDurationTimer = -1f;
+
+    public void Freeze()
+    {
+        if (freezeDurationTimer <= 0f)
+        {
+            freezeDurationTimer = Time.time;
+
+            moveSpeed.AddModifier(freezeMoveSpeedModifier);
+        }
+
+        if (Time.time > freezeDurationTimer + freezeDuration)
+        {
+            moveSpeed.RemoveModifier(freezeMoveSpeedModifier);
+
+            freezeDurationTimer = -1f;
+        }
     }
 }

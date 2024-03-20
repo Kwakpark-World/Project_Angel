@@ -1,66 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 public class EnemyArrow : PoolableMono
 {
-    public float speed = 10f; // 화살의 속도
-    private Rigidbody rb;
-    private bool canDamage = true;
+    [SerializeField]
+    private float _speed = 10f;
+    [SerializeField]
+    private float _rotateSpeed = 100f;
+    public EnemyBrain owner;
+    private Rigidbody _rigidbody;
 
-    public EnemyAI enemyAI;
-
-    void Start()
+    private void Update()
     {
-        rb = GetComponent<Rigidbody>();
-    }
+        Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.playerTransform.position, transform.position, _speed);
+        _rigidbody.velocity = initialVelocity;
 
-    void Update()
-    {
-        // 플레이어를 향해 회전
-        Vector3 direction = (GameManager.Instance.player.transform.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 7); // 회전 속도를 고정값으로 설정
-
-        // 일직선 운동
-        Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.player.transform.position, transform.position, speed);
-        rb.velocity = initialVelocity;
-    }
-
-    // 일직선 운동을 위한 초기 속도 계산
-    Vector3 CalculateInitialVelocity(Vector3 targetPosition, Vector3 currentPosition, float speed)
-    {
-        // 수평 거리 계산
-        Vector3 displacementXZ = new Vector3(targetPosition.x - currentPosition.x, 0, targetPosition.z - currentPosition.z);
-
-        // 수평 속도 계산
-        Vector3 velocityXZ = displacementXZ.normalized * speed;
-
-        // 수직 속도는 고려하지 않음 (일직선 운동)
-        Vector3 initialVelocity = velocityXZ;
-
-        return initialVelocity;
+        transform.Rotate(transform.forward, _rotateSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject == GameManager.Instance.player.gameObject)
         {
-            PoolManager.instance.Push(this);
-            if(canDamage)
-            {
-                if(GameManager.Instance.player != null)
-                {
-                    GameManager.Instance.player.PlayerStat.Hit(enemyAI.EnemyStatistic.GetAttackPower());
-                }
-
-                
-            }
+            GameManager.Instance.player.PlayerStat.Hit(owner.EnemyStatistic.GetAttackPower());
         }
+
+        PoolManager.Instance.Push(this);
     }
 
     public override void InitializePoolingItem()
     {
+        if (!_rigidbody)
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
 
+        Vector3 direction = (GameManager.Instance.playerTransform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = lookRotation;
+    }
+
+    private Vector3 CalculateInitialVelocity(Vector3 targetPosition, Vector3 currentPosition, float speed)
+    {
+        Vector3 displacementXZ = new Vector3(targetPosition.x - currentPosition.x, 0, targetPosition.z - currentPosition.z);
+
+        Vector3 velocityXZ = displacementXZ.normalized * speed;
+
+        Vector3 initialVelocity = velocityXZ;
+
+        return initialVelocity;
     }
 }

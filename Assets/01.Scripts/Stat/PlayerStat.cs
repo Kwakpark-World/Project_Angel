@@ -26,6 +26,12 @@ public class PlayerStat : CharacterStat
             }
         }
 
+        foreach (DebuffType debuffType in Enum.GetValues(typeof(DebuffType)))
+        {
+            debuffDictionary.Add(debuffType, false);
+            _coroutines.Add(null);
+        }
+
         currentHealth.SetDefalutValue(GetMaxHealthValue());
     }
 

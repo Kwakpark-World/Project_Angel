@@ -34,10 +34,5 @@ public class PlayerIdleState : PlayerGroundState
         {
             _stateMachine.ChangeState(PlayerStateEnum.Move);
         }
-
     }
-
-
-
-
 }
