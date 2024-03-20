@@ -17,6 +17,8 @@ public class KnightNormalAttack : Pattern
         _enemySword.swordCollider.enabled = true;
 
         node.brain.AnimatorCompo.SetBoolEnable("isAttack");
+
+        Debug.Log("Debug");
     }
 
     public override void OnStop()

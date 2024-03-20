@@ -7,24 +7,33 @@ public class EnemySpawn : MonoBehaviour
     public Vector3 MinSpawnValue;
     public Vector3 MaxSpawnValue;
 
+    //private 
+
     private float SpawnWave = 3f;
-    private float EnemySpawnCount = 15;
+    private int EnemySpawnCount = 0;
 
     public void Update()
     {
-        // 최소값과 최대값 사이의 랜덤한 값을 생성합니다.
-        Vector3 spawnValue = new Vector3(
-            Random.Range(MinSpawnValue.x, MaxSpawnValue.x),
-            Random.Range(MinSpawnValue.y, MaxSpawnValue.y),
-            Random.Range(MinSpawnValue.z, MaxSpawnValue.z)
-        );
-
-        Debug.Log(spawnValue);
+        knightEnemySpawn();
     }
 
-    private void knightEnemySpawn()
+    public void knightEnemySpawn()
     {
-        //EnemyAI enemyAI = PoolManager.instance.Pop()
+        if (EnemySpawnCount < 15) 
+        {
+            // 무작위 소환 위치 계산
+            Vector3 spawnPosition = new Vector3(
+                Random.Range(MinSpawnValue.x, MaxSpawnValue.x),
+                Random.Range(MinSpawnValue.y, MaxSpawnValue.y),
+                Random.Range(MinSpawnValue.z, MaxSpawnValue.z)
+            );
+
+            EnemyBrain enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy) as EnemyBrain; 
+
+            enemy.transform.position = spawnPosition;
+            EnemySpawnCount++;
+        }
+
     }
 
     public void ArcherEnemySpawn()
