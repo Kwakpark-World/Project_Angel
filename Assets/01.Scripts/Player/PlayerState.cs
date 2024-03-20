@@ -32,6 +32,11 @@ public class PlayerState
 
     public virtual void UpdateState()
     {
+        if (_player.IsPlayerStop)
+        {
+            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+        }
+
         _player.AnimatorCompo.SetFloat(_yVelocityHash, _rigidbody.velocity.y);
     }
 

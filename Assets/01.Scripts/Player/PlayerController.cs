@@ -10,10 +10,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected LayerMask _whatIsGround;
 
     [Header("Stair Checker")]
-    [SerializeField] protected Transform _stairUpperChecker;
-    [SerializeField] protected Transform _stairLowerChecker;
-    [SerializeField] protected float _stairUpperCheckDistance;
-    [SerializeField] protected float _stairLowerCheckDistance;
+    [SerializeField] private Transform _stairUpperChecker;
+    [SerializeField] private Transform _stairLowerChecker;
+    [SerializeField] private float _stairUpperCheckDistance;
+    [SerializeField] private float _stairLowerCheckDistance;
 
     [Header("Stair Parameters")]
     [SerializeField] private float _stairHeight;
@@ -28,8 +28,8 @@ public class PlayerController : MonoBehaviour
 
     [field: SerializeField] public CharacterStat CharStat { get; private set; }
 
-    [SerializeField] protected float _gravity = -9.8f;
     #endregion
+    [SerializeField] protected float _gravity = -9.8f;
 
     protected virtual void Awake()
     {
