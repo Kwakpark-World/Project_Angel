@@ -36,6 +36,7 @@ public class Player : PlayerController
     public bool IsDie { get; set; }
     public bool IsStair { get; private set; }
     public bool IsAwakening { get; set; }
+    public bool IsPlayerStop { get; set; }
 
     private ParticleSystem _poisonParticle;
 
