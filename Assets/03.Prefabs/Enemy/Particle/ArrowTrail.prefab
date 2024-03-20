@@ -275,9 +275,8 @@ GameObject:
   - component: {fileID: 3991279602832165212}
   - component: {fileID: 8937871513206070851}
   - component: {fileID: 8758486552732765017}
-  - component: {fileID: 3459466411213268762}
   m_Layer: 11
-  m_Name: Trail_Energy
+  m_Name: ArrowTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -314,7 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 3743669660004355382}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 1124
+  m_shaderPropertyID: 1148
   m_materialData:
   - m_trailRenderer: {fileID: 835547673386966938}
     m_uvTiling: {x: 0.06, y: 0.4}
@@ -5126,18 +5125,3 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &3459466411213268762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7451235807570548798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6818118436299c7448057d0a4b9265d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0
-  rotationSpeed: 100
-  rotateAmount: 0

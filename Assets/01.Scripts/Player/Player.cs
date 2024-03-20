@@ -1,4 +1,6 @@
- using System;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class Player : PlayerController
@@ -23,13 +25,10 @@ public class Player : PlayerController
     public float defenseCoolTime = 1f;
     public float defensePrevTime = 0f;
 
-    Dictionary<DebuffType, bool> defense = new Dictionary<DebuffType, bool>();
-
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
-
     public PlayerStateMachine StateMachine { get; private set; }
-
     public PlayerStat PlayerStat { get; private set; }
+
     public Dictionary<DebuffType, MethodInfo> methodInfos = new Dictionary<DebuffType, MethodInfo>();
 
     public bool IsAttack { get; set; }
@@ -38,7 +37,7 @@ public class Player : PlayerController
     public bool IsStair { get; private set; }
     public bool IsAwakening { get; set; }
 
-    private ParticleSystem poisonParticle;
+    private ParticleSystem _poisonParticle;
 
     protected override void Awake()
     {
@@ -61,7 +60,7 @@ public class Player : PlayerController
             methodInfos.Add(type, PlayerStat.GetType().GetMethod(type.ToString()));
         }
 
-        poisonParticle = transform.Find("PoisonParticle").GetComponent<ParticleSystem>();
+        _poisonParticle = transform.Find("PoisonParticle").GetComponent<ParticleSystem>();
     }
 
     protected void OnEnable()
@@ -82,35 +81,17 @@ public class Player : PlayerController
     {
         base.Update();
 
+        moveSpeed = PlayerStat.GetMoveSpeed();
+
         StateMachine.CurrentState.UpdateState();
 
         PlayerDie();
 
         PlayerDefense();
- 
+
         PlayerOnStair();
 
-        foreach (DebuffType type in Enum.GetValues(typeof(DebuffType)))
-        {
-            if (PlayerStat.GetDebuff(type))
-            {
-                if (type == DebuffType.Poison)
-                {
-                    poisonParticle.Play();
-                }
-
-                methodInfos[type].Invoke(PlayerStat, null);
-            }
-            else
-            {
-                if (type == DebuffType.Poison)
-                {
-                    poisonParticle.Stop();
-                }
-            }
-        }
-
-        moveSpeed = PlayerStat.GetMoveSpeed();
+        PlayerDebuff();
         // ����
         //if (Keyboard.current.pKey.wasPressedThisFrame)
         //{
@@ -128,7 +109,7 @@ public class Player : PlayerController
     {
         PlayerInput.DashEvent -= HandleDashEvent;
     }
-   
+
 
     private void IsClimbStair()
     {
@@ -175,6 +156,29 @@ public class Player : PlayerController
                 IsStair = false;
     }
 
+    private void PlayerDebuff()
+    {
+        foreach (DebuffType type in Enum.GetValues(typeof(DebuffType)))
+        {
+            if (PlayerStat.GetDebuff(type))
+            {
+                if (type == DebuffType.Poison)
+                {
+                    _poisonParticle.Play();
+                }
+
+                methodInfos[type].Invoke(PlayerStat, null);
+            }
+            else
+            {
+                if (type == DebuffType.Poison)
+                {
+                    _poisonParticle.Stop();
+                }
+            }
+        }
+    }
+
 
     #region handling input
     private void HandleDashEvent()
@@ -182,7 +186,7 @@ public class Player : PlayerController
         if (dashCoolTime + dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
         dashPrevTime = Time.time;
-        
+
         if (!IsAwakening)
             StateMachine.ChangeState(PlayerStateEnum.Dash);
         else

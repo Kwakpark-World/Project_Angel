@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySword : MonoBehaviour
 {
     [SerializeField]
-    private EnemyBrain _enemyBrain;
+    private EnemyBrain _owner;
     public Collider swordCollider;
 
     private void Awake()
@@ -17,7 +17,7 @@ public class EnemySword : MonoBehaviour
     {
         if (other.gameObject == GameManager.Instance.player.gameObject)
         {
-            GameManager.Instance.player.PlayerStat.Hit(_enemyBrain.EnemyStatistic.GetAttackPower());
+            GameManager.Instance.player.PlayerStat.Hit(_owner.EnemyStatistic.GetAttackPower());
         }
     }
 }

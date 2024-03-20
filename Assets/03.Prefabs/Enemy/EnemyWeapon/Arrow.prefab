@@ -68,12 +68,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3991279602832165212, guid: 4f8f97ef92b16bd43914be0bad107f80,
+        type: 3}
+      propertyPath: m_shaderPropertyID
+      value: 1148
+      objectReference: {fileID: 0}
     - target: {fileID: 7451235807570548798, guid: 4f8f97ef92b16bd43914be0bad107f80,
         type: 3}
       propertyPath: m_Name
       value: Trail_Energy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3459466411213268762, guid: 4f8f97ef92b16bd43914be0bad107f80, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -192,9 +198,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b890939dbf8e47c4389cd3a1e23c0ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolingType: 0
-  speed: 20
-  enemyAI: {fileID: 0}
+  poolingType: 9
+  _speed: 10
+  _rotateSpeed: 130
+  owner: {fileID: 0}
 --- !u!54 &-1446628892769409215
 Rigidbody:
   m_ObjectHideFlags: 0

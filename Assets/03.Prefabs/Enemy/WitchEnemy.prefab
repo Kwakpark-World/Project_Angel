@@ -400,17 +400,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2632167124312192695}
-  - component: {fileID: 1327590941787455746}
-  - component: {fileID: 7092474217215256077}
-  - component: {fileID: 7009443748951247432}
-  - component: {fileID: 3966618577297723766}
   - component: {fileID: 3352882641525066605}
   - component: {fileID: 5791947628954815157}
-  - component: {fileID: 7292604149426864318}
+  - component: {fileID: 1327590941787455746}
+  - component: {fileID: 3966618577297723766}
   - component: {fileID: 6851661156031202800}
+  - component: {fileID: 7009443748951247432}
+  - component: {fileID: 7092474217215256077}
+  - component: {fileID: 7685313126988761920}
   - component: {fileID: 5739361414544577206}
   m_Layer: 7
-  m_Name: WitcherEnemy
+  m_Name: WitchEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -433,80 +433,6 @@ Transform:
   - {fileID: 749799148613844234}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1327590941787455746
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614760714596843899}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 205f9ec323689ae46a0bb7b04d4e0a18, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3e7b98703979e0e43b0fc74e546a1b24, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7092474217215256077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614760714596843899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 609df6e340b50e64f887eb178025cbad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poolingType: 5
-  treeRunner: {fileID: 0}
-  <EnemyStatistic>k__BackingField: {fileID: 11400000, guid: 6d1bfd057cbbddb4888586eb66a822a8,
-    type: 2}
-  _enemyTypes: 2
-  weaponCollider: {fileID: 0}
-  WeaponSpawn: {fileID: 7457132339840715944}
---- !u!114 &7009443748951247432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614760714596843899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b72d15d0b3c463646af565e51eaee830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!195 &3966618577297723766
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614760714596843899}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!136 &3352882641525066605
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -557,18 +483,49 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7292604149426864318
-MonoBehaviour:
+--- !u!95 &1327590941787455746
+Animator:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614760714596843899}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c9e23673ef77bf489b8ca007a8a4139, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Avatar: {fileID: 9000000, guid: 205f9ec323689ae46a0bb7b04d4e0a18, type: 3}
+  m_Controller: {fileID: 9100000, guid: 3e7b98703979e0e43b0fc74e546a1b24, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!195 &3966618577297723766
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614760714596843899}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &6851661156031202800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,6 +601,50 @@ MonoBehaviour:
   - {fileID: 7001738303377808436}
   - {fileID: 8536499619909696235}
   - {fileID: 3136955883320290681}
+--- !u!114 &7009443748951247432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614760714596843899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9f15a09f32fd243bedc9c1a77b2958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tree: {fileID: 11400000, guid: 01990108a821ef240aecee84a8a8f482, type: 2}
+  brain: {fileID: 7092474217215256077}
+--- !u!114 &7092474217215256077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614760714596843899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609df6e340b50e64f887eb178025cbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolingType: 3
+  enemyTypes: 2
+  treeRunner: {fileID: 7009443748951247432}
+  normalAttackTimer: 0
+  <EnemyStatistic>k__BackingField: {fileID: 11400000, guid: 6d1bfd057cbbddb4888586eb66a822a8,
+    type: 2}
+--- !u!114 &7685313126988761920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614760714596843899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f1a0956672030438566ce1d3216672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5739361414544577206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,9 +658,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 2
-  enemyAi: {fileID: 7092474217215256077}
+  enemyBrain: {fileID: 0}
   knghtAttackParticle: {fileID: 0}
-  WeaponSpawn: {fileID: 7457132339840715944}
   animationEndEvent:
     m_PersistentCalls:
       m_Calls: []

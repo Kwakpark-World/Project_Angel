@@ -8,7 +8,7 @@ public enum PoolingType
     None,
     KnightEnemy,
     ArcherEnemy,
-    WitcherEnemy,
+    WitchEnemy,
     Azazel,
     Goat,
     Shamshiel,

@@ -1,21 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 public class EnemyArrow : PoolableMono
 {
+    [SerializeField]
+    private float _speed = 10f;
+    [SerializeField]
+    private float _rotateSpeed = 100f;
     public EnemyBrain owner;
-    public float speed = 10f;
-    private Rigidbody _rb;
+    private Rigidbody _rigidbody;
 
     private void Update()
     {
-        Vector3 direction = (GameManager.Instance.playerTransform.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 7);
+        Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.playerTransform.position, transform.position, _speed);
+        _rigidbody.velocity = initialVelocity;
 
-        Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.playerTransform.position, transform.position, speed);
-        _rb.velocity = initialVelocity;
+        transform.Rotate(transform.forward, _rotateSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,10 +32,14 @@ public class EnemyArrow : PoolableMono
 
     public override void InitializePoolingItem()
     {
-        if (!_rb)
+        if (!_rigidbody)
         {
-            _rb = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
+
+        Vector3 direction = (GameManager.Instance.playerTransform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = lookRotation;
     }
 
     private Vector3 CalculateInitialVelocity(Vector3 targetPosition, Vector3 currentPosition, float speed)
