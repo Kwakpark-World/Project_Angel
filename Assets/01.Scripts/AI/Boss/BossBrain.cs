@@ -9,6 +9,8 @@ public class BossBrain : Brain
 
     protected override void Update()
     {
+        base.Update();
+
         if (Time.time > _patternTimer + treeRunner.tree.blackboard.nextPatternCooldown)
         {
             _patternTimer = Time.time;
@@ -42,6 +44,6 @@ public class BossBrain : Brain
 
     public override void OnDie()
     {
-
+        AnimatorCompo.SetBoolEnable("isDie");
     }
 }

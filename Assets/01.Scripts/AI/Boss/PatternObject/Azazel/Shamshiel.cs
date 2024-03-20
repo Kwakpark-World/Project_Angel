@@ -9,13 +9,8 @@ public class Shamshiel : Grigori
     [SerializeField]
     private float _slownessDuration = 5f;
 
-    protected override void Attack()
-    {
-
-    }
-
     protected override void Debuff()
     {
-        //player.PlayerStat.IncreaseStatBy(player.PlayerStat.GetMoveSpeed() - player.PlayerStat.GetMoveSpeed() * _slownessMultiplier, _slownessDuration, player.PlayerStat.GetStatByType(PlayerStatType.moveSpeed));
+        //GameManager.Instance.player.PlayerStat.IncreaseStatBy(GameManager.Instance.player.PlayerStat.GetMoveSpeed() - player.PlayerStat.GetMoveSpeed() * _slownessMultiplier, _slownessDuration, player.PlayerStat.GetStatByType(PlayerStatType.moveSpeed));
     }
 }
