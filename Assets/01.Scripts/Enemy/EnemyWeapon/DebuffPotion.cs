@@ -9,8 +9,6 @@ public class DebuffPotion : PoolableMono
     [SerializeField]
     private float _speed = 10f;
     [SerializeField]
-    private float _rotateSpeed = 4f;
-    [SerializeField]
     private float _poisonDuration = 3f;
     [SerializeField]
     private float _freezeDuration = 3f;
