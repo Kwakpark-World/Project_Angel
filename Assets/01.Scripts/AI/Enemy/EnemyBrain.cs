@@ -30,5 +30,11 @@ public class EnemyBrain : Brain
     public override void OnDie()
     {
         AnimatorCompo.SetBoolEnable("isDie");
+        GameManager.Instance.DieEnemyCount++;
+
+        if(GameManager.Instance.DieEnemyCount < 10)
+        {
+            GameManager.Instance.SpawnWave++;
+        }
     }
 }
