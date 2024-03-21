@@ -19,6 +19,7 @@ public abstract class Brain : PoolableMono
 
     public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
+    public ParticleSystem HitParticle;
     [HideInInspector]
     public float normalAttackTimer;
 
