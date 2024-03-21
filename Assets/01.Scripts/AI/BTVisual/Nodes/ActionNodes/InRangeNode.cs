@@ -13,11 +13,11 @@ namespace BTVisual
         {
             if (isDetect)
             {
-                _range = brain.EnemyStatistic.GetDetectRange();
+                _range = brain.EnemyStatData.GetDetectRange();
             }
             else
             {
-                _range = brain.EnemyStatistic.GetAttackRange();
+                _range = brain.EnemyStatData.GetAttackRange();
             }
         }
 

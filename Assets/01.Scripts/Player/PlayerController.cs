@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public abstract class PlayerController : MonoBehaviour
 {
     [Header("Ground Checker")]
     [SerializeField] protected Transform _groundChecker;
@@ -24,9 +24,10 @@ public class PlayerController : MonoBehaviour
     public Rigidbody RigidbodyCompo { get; private set; }
     public CapsuleCollider ColliderCompo { get; private set; }
     public DefaultCollider DefaultCollider { get; private set; }
+    public Debuff DebuffCompo { get; private set; }
 
 
-    [field: SerializeField] public CharacterStat CharStat { get; private set; }
+    [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
 
     #endregion
     [SerializeField] protected float _gravity = -9.8f;
@@ -37,9 +38,11 @@ public class PlayerController : MonoBehaviour
         AnimatorCompo = visualTrm.GetComponent<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
         ColliderCompo = GetComponent<CapsuleCollider>();
+        DebuffCompo =  GetComponent<Debuff>();
+        DebuffCompo.SetOwner(this);
 
-        CharStat = Instantiate(CharStat);
-        CharStat.SetOwner(this);
+        PlayerStatData = Instantiate(PlayerStatData);
+        PlayerStatData.SetOwner(this);
     }
 
     protected virtual void Start()
@@ -53,8 +56,6 @@ public class PlayerController : MonoBehaviour
     {
 
     }
-
-    
 
     protected virtual void FixedUpdate()
     {
@@ -236,5 +237,4 @@ public struct DefaultCollider
         this.radius = radius;
         this.height = height;
     }
-
 }

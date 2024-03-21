@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -38,27 +37,13 @@ public class EnemyStat : ScriptableObject
     public Stat patternAmount; // 패턴 개수
     public Stat initialPatternCooldown; // 초기 패턴 쿨다운
 
-    protected Brain _owner;
+    protected Brain owner;
 
-    protected Dictionary<EnemyStatType, FieldInfo> _fieldInfoDictionary = new Dictionary<EnemyStatType, FieldInfo>();
+    protected Dictionary<EnemyStatType, FieldInfo> fieldInfoDictionary = new Dictionary<EnemyStatType, FieldInfo>();
 
     public virtual void SetOwner(Brain owner)
     {
-        _owner = owner;
-    }
-
-    public virtual void IncreaseStatBy(float modifyValue, float duration, Stat statToModify)
-    {
-        _owner.StartCoroutine(StatModifyCoroutine(modifyValue, duration, statToModify));
-    }
-
-    protected IEnumerator StatModifyCoroutine(float modifyValue, float duration, Stat statToModify)
-    {
-        statToModify.AddModifier(modifyValue);
-
-        yield return new WaitForSeconds(duration);
-
-        statToModify.RemoveModifier(modifyValue);
+        this.owner = owner;
     }
 
     public float GetMaxHealthValue()
@@ -119,6 +104,6 @@ public class EnemyStat : ScriptableObject
     public void Hit(float incomingDamage)
     {
         currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
-        _owner.OnHit();
+        owner.OnHit();
     }
 }

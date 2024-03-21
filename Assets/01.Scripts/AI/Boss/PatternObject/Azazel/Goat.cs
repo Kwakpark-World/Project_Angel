@@ -33,7 +33,7 @@ public class Goat : Brain
     {
         if (other.gameObject == GameManager.Instance.player.gameObject)
         {
-            GameManager.Instance.player.PlayerStat.Hit(_attackPower);
+            GameManager.Instance.player.PlayerStatData.Hit(_attackPower);
 
             // Give scapegoat debuff.
 
@@ -53,9 +53,9 @@ public class Goat : Brain
     {
         base.Initialize();
 
-        NavMeshAgentCompo.speed = EnemyStatistic.GetMoveSpeed();
-        _lifetime = EnemyStatistic.GetLifetime();
-        _attackPower = EnemyStatistic.GetAttackPower();
+        NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
+        _lifetime = EnemyStatData.GetLifetime();
+        _attackPower = EnemyStatData.GetAttackPower();
     }
 
     public override void OnHit()

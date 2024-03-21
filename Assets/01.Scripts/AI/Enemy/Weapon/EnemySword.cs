@@ -17,7 +17,7 @@ public class EnemySword : MonoBehaviour
     {
         if (other.gameObject == GameManager.Instance.player.gameObject)
         {
-            GameManager.Instance.player.PlayerStat.Hit(_owner.EnemyStatistic.GetAttackPower());
+            GameManager.Instance.player.PlayerStatData.Hit(_owner.EnemyStatData.GetAttackPower());
         }
     }
 }

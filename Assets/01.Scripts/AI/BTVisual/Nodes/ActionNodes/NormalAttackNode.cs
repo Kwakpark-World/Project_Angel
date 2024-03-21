@@ -33,7 +33,7 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            if (Time.time > brain.normalAttackTimer + brain.EnemyStatistic.GetAttackDelay())
+            if (Time.time > brain.normalAttackTimer + brain.EnemyStatData.GetAttackDelay())
             {
                 brain.normalAttackTimer = Time.time;
 

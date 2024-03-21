@@ -9,10 +9,12 @@ public enum EnemyType
     Knight,
     Archer,
     Witch,
-    Sorcerer
+    Sorcerer,
+    Azazel
 }
 
-[RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent), typeof(EnemyAnimator))]
+[RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
+[RequireComponent(typeof(Debuff), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {
     private static float _rotateSpeed = 10f;
@@ -26,10 +28,12 @@ public abstract class Brain : PoolableMono
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
     public NavMeshAgent NavMeshAgentCompo { get; private set; }
+    public Debuff DebuffCompo { get; private set; }
     public EnemyAnimator AnimatorCompo { get; private set; }
     #endregion
 
-    [field: SerializeField] public MonsterStat EnemyStatistic { get; private set; }
+    [field: SerializeField]
+    public MonsterStat EnemyStatData { get; private set; }
 
     protected virtual void Start()
     {
@@ -46,7 +50,7 @@ public abstract class Brain : PoolableMono
 
     public override void InitializePoolingItem()
     {
-        EnemyStatistic.InitializeAllModifiers();
+        EnemyStatData.InitializeAllModifiers();
 
         normalAttackTimer = Time.time;
     }
@@ -55,13 +59,20 @@ public abstract class Brain : PoolableMono
     {
         RigidbodyCompo = GetComponent<Rigidbody>();
         NavMeshAgentCompo = GetComponent<NavMeshAgent>();
-        AnimatorCompo = GetComponent<EnemyAnimator>();
-        EnemyStatistic = Instantiate(EnemyStatistic);
-
-        EnemyStatistic.SetOwner(this);
-
-        NavMeshAgentCompo.speed = EnemyStatistic.GetMoveSpeed();
         NavMeshAgentCompo.updateRotation = false;
+        DebuffCompo =  GetComponent<Debuff>();
+
+        DebuffCompo.SetOwner(this);
+
+        AnimatorCompo = GetComponent<EnemyAnimator>();
+
+        AnimatorCompo.SetOwner(this);
+
+        EnemyStatData = Instantiate(EnemyStatData);
+
+        EnemyStatData.SetOwner(this);
+
+        NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
     }
 
     public abstract void OnHit();

@@ -22,7 +22,7 @@ namespace BTVisual
 
             if (_detectRange <= 0f)
             {
-                _detectRange = brain.EnemyStatistic.GetDetectRange();
+                _detectRange = brain.EnemyStatData.GetDetectRange();
             }
 
             brain.AnimatorCompo.SetBoolEnable("isMove");
