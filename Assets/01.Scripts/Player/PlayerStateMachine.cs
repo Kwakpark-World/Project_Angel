@@ -41,9 +41,10 @@ public class PlayerStateMachine
     public void ChangeState(PlayerStateEnum state)
     {
         if (_player.IsDie)
-        {
             return;
-        }
+        if (_player.IsPlayerStop)
+            return;
+        
 
         CurrentState.Exit();
         CurrentState = StateDictionary[state];

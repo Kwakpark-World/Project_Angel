@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3323527588068434784}
   - component: {fileID: 3323527588077456512}
   - component: {fileID: 3323527588088477632}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MDungenons_StoneFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,20 +25,21 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3323527588067950400}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 43.835907, y: 0.087534234, z: 27.130877}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3323527588068434786}
   - {fileID: 3323527588068434788}
   - {fileID: 3323527588068434790}
   - {fileID: 7011187670862520916}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3323527588077456512
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -51,10 +52,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!205 &3323527588088477632
 LODGroup:
   m_ObjectHideFlags: 0
@@ -93,7 +96,7 @@ GameObject:
   - component: {fileID: 3323527588068434786}
   - component: {fileID: 3323527588071334720}
   - component: {fileID: 3323527588070203776}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MDungenon_StoneFloor_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,12 +110,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3323527588067950402}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.000000059604645, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.0047748005, y: 0, z: -0.005077321}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3323527588068434784}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3323527588071334720
 MeshFilter:
@@ -133,6 +137,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -174,7 +179,7 @@ GameObject:
   - component: {fileID: 3323527588068434788}
   - component: {fileID: 3323527588071334722}
   - component: {fileID: 3323527588070203778}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MDungenon_StoneFloor_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,12 +193,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3323527588067950404}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.000000059604645, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.0013417518, y: 0, z: -0.005077321}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3323527588068434784}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3323527588071334722
 MeshFilter:
@@ -214,6 +220,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -255,7 +262,7 @@ GameObject:
   - component: {fileID: 3323527588068434790}
   - component: {fileID: 3323527588071334724}
   - component: {fileID: 3323527588070203780}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MDungenon_StoneFloor_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,12 +276,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3323527588067950406}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.000000059604645, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.0066959774, y: 0, z: -0.005077321}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3323527588068434784}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3323527588071334724
 MeshFilter:
@@ -295,6 +303,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -335,7 +344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3370433150697021913}
   - component: {fileID: 4835527314776884670}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MDungenon_StoneFloor_Collision_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,12 +358,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3933170326279448748}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.9774, y: 0.306, z: -2.959}
   m_LocalScale: {x: 6.0088925, y: 0.7450825, z: 5.9458914}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7011187670862520916}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4835527314776884670
 BoxCollider:
@@ -364,9 +374,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3933170326279448748}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9168446415152034840
@@ -378,7 +396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7011187670862520916}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MDungenon_StoneFloor_Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,11 +410,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9168446415152034840}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3370433150697021913}
   m_Father: {fileID: 3323527588068434784}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

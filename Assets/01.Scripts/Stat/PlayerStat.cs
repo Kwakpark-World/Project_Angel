@@ -41,4 +41,5 @@ public class PlayerStat : CharacterStat
     {
         return fieldInfoDictionary[statType].GetValue(this) as Stat;
     }
+
 }

@@ -28,7 +28,7 @@ public class PlayerMoveState : PlayerGroundState
 
         Vector3 moveDir = new Vector3(xInput, 0, yInput).normalized;
 
-        moveDir = Quaternion.Euler(0, Define.CmVCam.transform.eulerAngles.y, 0) * moveDir;
+        moveDir = (Quaternion.Euler(0, Define.CmVCam.transform.eulerAngles.y, 0) * moveDir).normalized;
         moveDir *= _player.moveSpeed;
 
         if (moveDir.sqrMagnitude > 0)
