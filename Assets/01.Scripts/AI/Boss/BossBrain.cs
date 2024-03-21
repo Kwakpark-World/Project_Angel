@@ -22,7 +22,7 @@ public class BossBrain : Brain
     {
         base.InitializePoolingItem();
 
-        treeRunner.tree.blackboard.nextPatternCooldown = EnemyStatistic.GetInitialPatternCooldown();
+        treeRunner.tree.blackboard.nextPatternCooldown = EnemyStatData.GetInitialPatternCooldown();
         _patternTimer = Time.time;
     }
 
@@ -30,12 +30,12 @@ public class BossBrain : Brain
     {
         base.Initialize();
 
-        _patternAmount = EnemyStatistic.GetPatternAmount();
+        _patternAmount = EnemyStatData.GetPatternAmount();
     }
 
     public override void OnHit()
     {
-        if (EnemyStatistic.GetCurrentHealth() <= 0f)
+        if (EnemyStatData.GetCurrentHealth() <= 0f)
         {
             // Set boss to dead.
             OnDie();

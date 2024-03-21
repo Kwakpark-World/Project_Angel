@@ -15,13 +15,6 @@ public enum PlayerStatType
     criticalMultiplier,
 }
 
-public enum DebuffType
-{
-    Poison,
-    Freeze,
-    Knockback
-}
-
 public class CharacterStat : ScriptableObject
 {
     [Header("Defensive stats")]
@@ -35,22 +28,18 @@ public class CharacterStat : ScriptableObject
     public Stat criticalChance; // 치명타 확률
     public Stat criticalMultiplier; // 치명타 배율 
 
-    protected PlayerController _owner;
+    protected PlayerController owner;
 
-    private DebuffType _debuffType;
-
-    protected Dictionary<PlayerStatType, FieldInfo> _fieldInfoDictionary = new Dictionary<PlayerStatType, FieldInfo>();
-    protected Dictionary<DebuffType, bool> debuffDictionary = new Dictionary<DebuffType, bool>();
-    protected List<Coroutine> _coroutines = new List<Coroutine>(Enum.GetValues(typeof(DebuffType)).Length);
+    protected Dictionary<PlayerStatType, FieldInfo> fieldInfoDictionary = new Dictionary<PlayerStatType, FieldInfo>();
 
     public virtual void SetOwner(PlayerController owner)
     {
-        _owner = owner;
+        this.owner = owner;
     }
 
     public virtual void IncreaseStatBy(float modifyValue, float duration, Stat statToModify)
     {
-        _owner.StartCoroutine(StatModifyCoroutine(modifyValue, duration, statToModify));
+        owner.StartCoroutine(StatModifyCoroutine(modifyValue, duration, statToModify));
     }
 
     protected IEnumerator StatModifyCoroutine(float modifyValue, float duration, Stat statToModify)
@@ -89,79 +78,9 @@ public class CharacterStat : ScriptableObject
 
     public void Hit(float incomingDamage)
     {
-        if (!(_owner as Player).IsDefense && !(_owner as Player).IsDie)
+        if (!(owner as Player).IsDefense && !(owner as Player).IsDie)
         {
             currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
-        }
-    }
-
-    public void Debuff(DebuffType type, float duration)
-    {
-        _coroutines[(int)type] = _owner.StartCoroutine(DebuffCoroutine(type, duration));
-    }
-
-    public bool GetDebuff(DebuffType type)
-    {
-        return debuffDictionary[type];
-    }
-
-    private IEnumerator DebuffCoroutine(DebuffType type, float duration)
-    {
-        debuffDictionary[type] = true;
-
-        yield return new WaitForSeconds(duration);
-
-        debuffDictionary[type] = false;
-        _coroutines[(int)type] = null;
-    }
-
-    private float poisonDamage = 2;
-    private float poisonDuration = 3f;
-    private float poisonDurationTimer = -1f;
-    private float poisonDelay = 1f;
-    private float poisonDelayTimer = -1f;
-
-    public void Poison()
-    {
-        if (poisonDurationTimer <= 0f)
-        {
-            poisonDurationTimer = Time.time;
-            poisonDelayTimer = Time.time - poisonDelay;
-        }
-
-        if (Time.time <= poisonDurationTimer + poisonDuration)
-        {
-            if (Time.time > poisonDelayTimer + poisonDelay)
-            {
-                GameManager.Instance.player.PlayerStat.Hit(poisonDamage);
-
-                poisonDelayTimer  = Time.time;
-            }
-        }
-        else
-        {
-            poisonDurationTimer = poisonDelayTimer = -1f;
-        }
-    }
-
-    private float freezeMoveSpeedModifier = -2f;
-    private float freezeDuration = 3f;
-    private float freezeDurationTimer = -1f;
-
-    public void Freeze()
-    {
-        if (freezeDurationTimer <= 0f)
-        {
-            freezeDurationTimer = Time.time;
-
-            moveSpeed.AddModifier(freezeMoveSpeedModifier);
-        }
-
-        if (Time.time > freezeDurationTimer + freezeDuration)
-        {
-            moveSpeed.RemoveModifier(freezeMoveSpeedModifier);
-
-            freezeDurationTimer = -1f;
         }
     }
 }

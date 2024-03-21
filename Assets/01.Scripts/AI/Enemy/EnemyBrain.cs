@@ -21,7 +21,7 @@ public class EnemyBrain : Brain
 
     public override void OnHit()
     {
-        if (EnemyStatistic.GetCurrentHealth() <= 0f)
+        if (EnemyStatData.GetCurrentHealth() <= 0f)
         {
             OnDie();
         }
