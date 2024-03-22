@@ -28,7 +28,7 @@ public class AzazelSecondPattern : Pattern
         {
             if (!grigori.owner)
             {
-                grigori.owner = node.brain as BossBrain;
+                grigori.owner = OwnerNode.brain as BossBrain;
             }
         }
 

@@ -9,8 +9,6 @@ public class Goat : Brain
     private float _lifetime;
     private float _lifetimer;
 
-    private float _attackPower;
-
     protected override void Update()
     {
         base.Update();
@@ -33,7 +31,7 @@ public class Goat : Brain
     {
         if (other.gameObject == GameManager.Instance.player.gameObject)
         {
-            GameManager.Instance.player.PlayerStatData.Hit(_attackPower);
+            GameManager.Instance.player.OnHit(EnemyStatData.GetAttackPower());
 
             // Give scapegoat debuff.
 
@@ -55,10 +53,9 @@ public class Goat : Brain
 
         NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
         _lifetime = EnemyStatData.GetLifetime();
-        _attackPower = EnemyStatData.GetAttackPower();
     }
 
-    public override void OnHit()
+    public override void OnHit(float incomingDamage)
     {
         // Do nothing.
     }

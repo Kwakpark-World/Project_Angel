@@ -406,9 +406,9 @@ GameObject:
   - component: {fileID: 3966618577297723766}
   - component: {fileID: 6851661156031202800}
   - component: {fileID: 7009443748951247432}
+  - component: {fileID: 7633365129897122518}
   - component: {fileID: 7092474217215256077}
   - component: {fileID: 7685313126988761920}
-  - component: {fileID: 7633365129897122518}
   m_Layer: 7
   m_Name: WitchEnemy
   m_TagString: Untagged
@@ -481,7 +481,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 16
   m_CollisionDetection: 0
 --- !u!95 &1327590941787455746
 Animator:
@@ -613,8 +613,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9f15a09f32fd243bedc9c1a77b2958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 11400000, guid: 01990108a821ef240aecee84a8a8f482, type: 2}
+  tree: {fileID: 11400000, guid: 3351bf73a3a710f458defda2e5b62ef6, type: 2}
   brain: {fileID: 7092474217215256077}
+--- !u!114 &7633365129897122518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614760714596843899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007e9285b573e1f4a9c9e3d8b139c844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DebuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
+    type: 2}
 --- !u!114 &7092474217215256077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,10 +644,9 @@ MonoBehaviour:
   poolingType: 3
   enemyTypes: 2
   treeRunner: {fileID: 7009443748951247432}
-  HitParticle: {fileID: 0}
-  normalAttackTimer: 0
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 6d1bfd057cbbddb4888586eb66a822a8,
     type: 2}
+  <CurrentHealth>k__BackingField: 0
 --- !u!114 &7685313126988761920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,22 +659,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f1a0956672030438566ce1d3216672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTriggers: []
+  animationTriggers:
+  - parameterName: isAttack
+    onAnimationBegin:
+      m_PersistentCalls:
+        m_Calls: []
+    onAnimationPlaying:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7685313126988761920}
+          m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
+          m_MethodName: WitchNormalAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onAnimationEnd:
+      m_PersistentCalls:
+        m_Calls: []
   _weaponTransform: {fileID: 5691855160772613240}
---- !u!114 &7633365129897122518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614760714596843899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007e9285b573e1f4a9c9e3d8b139c844, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <DebuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
-    type: 2}
 --- !u!1 &1975816956394973120
 GameObject:
   m_ObjectHideFlags: 0

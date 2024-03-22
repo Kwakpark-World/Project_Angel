@@ -7,26 +7,38 @@ using UnityEngine;
 public enum PlayerStatType
 {
     maxHealth,
-    currentHealth,
     defensivePower,
-    moveSpeed,
+    defenseCooldown,
     attackPower,
+    attackSpeed,
     criticalChance,
     criticalMultiplier,
+    moveSpeed,
+    rotateSpeed,
+    dashSpeed,
+    dashDuration,
+    dashCooldown,
 }
 
 public class CharacterStat : ScriptableObject
 {
     [Header("Defensive stats")]
     public Stat maxHealth; // 최대 체력
-    public Stat currentHealth; // 현재 체력
     public Stat defensivePower; // 방어력
-    public Stat moveSpeed; // 이동 속도
+    public Stat defenseCooldown; // 방어 쿨다운
 
     [Header("Offensive stats")]
     public Stat attackPower; // 공격력
+    public Stat attackSpeed; // 공격 속도
     public Stat criticalChance; // 치명타 확률
     public Stat criticalMultiplier; // 치명타 배율 
+
+    [Header("Move stats")]
+    public Stat moveSpeed; // 이동 속도
+    public Stat rotateSpeed; // 회전 속도
+    public Stat dashSpeed; // 대시 속도
+    public Stat dashDuration; // 대시 지속시간
+    public Stat dashCooldown; // 대시 쿨다운
 
     protected PlayerController owner;
 
@@ -37,28 +49,9 @@ public class CharacterStat : ScriptableObject
         this.owner = owner;
     }
 
-    public virtual void IncreaseStatBy(float modifyValue, float duration, Stat statToModify)
-    {
-        owner.StartCoroutine(StatModifyCoroutine(modifyValue, duration, statToModify));
-    }
-
-    protected IEnumerator StatModifyCoroutine(float modifyValue, float duration, Stat statToModify)
-    {
-        statToModify.AddModifier(modifyValue);
-
-        yield return new WaitForSeconds(duration);
-
-        statToModify.RemoveModifier(modifyValue);
-    }
-
-    public float GetMaxHealthValue()
+    public float GetMaxHealth()
     {
         return maxHealth.GetValue();
-    }
-
-    public float GetCurrentHealth()
-    {
-        return currentHealth.GetValue();
     }
 
     public float GetDefensivePower()
@@ -66,9 +59,9 @@ public class CharacterStat : ScriptableObject
         return defensivePower.GetValue();
     }
 
-    public float GetMoveSpeed()
+    public float GetDefenseCooldown()
     {
-        return moveSpeed.GetValue();
+        return defenseCooldown.GetValue();
     }
 
     public float GetAttackPower()
@@ -76,11 +69,43 @@ public class CharacterStat : ScriptableObject
         return attackPower.GetValue();
     }
 
-    public void Hit(float incomingDamage)
+    public float GetAttackSpeed()
     {
-        if (!(owner as Player).IsDefense && !(owner as Player).IsDie)
-        {
-            currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
-        }
+        return attackSpeed.GetValue();
+    }
+
+    public float GetCriticalChance()
+    {
+        return criticalChance.GetValue();
+    }
+
+    public float GetCriticalMultiplier()
+    {
+        return criticalMultiplier.GetValue();
+    }
+
+    public float GetMoveSpeed()
+    {
+        return moveSpeed.GetValue();
+    }
+
+    public float GetRotateSpeed()
+    {
+        return rotateSpeed.GetValue();
+    }
+
+    public float GetDashSpeed()
+    {
+        return dashSpeed.GetValue();
+    }
+
+    public float GetDashDuration()
+    {
+        return dashDuration.GetValue();
+    }
+
+    public float GetDashCooldown()
+    {
+        return dashCooldown.GetValue();
     }
 }

@@ -24,17 +24,10 @@ public abstract class Grigori : Brain
         base.Initialize();
     }
 
-    public override void OnHit()
-    {
-        if (EnemyStatData.GetCurrentHealth() <= 0f)
-        {
-            OnDie();
-        }
-    }
-
     public override void OnDie()
     {
         Debuff();
-        PoolManager.Instance.Push(this);
+
+        base.OnDie();
     }
 }

@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 5922006522989361344}
   - component: {fileID: 3065152127993048378}
   - component: {fileID: 813901998632357413}
-  - component: {fileID: 3611147583658971138}
   - component: {fileID: 1357766962565016551}
+  - component: {fileID: 3611147583658971138}
   - component: {fileID: 5122743462236743681}
+  - component: {fileID: 986500152788366408}
   m_Layer: 0
   m_Name: Azazel
   m_TagString: Untagged
@@ -183,6 +184,20 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1357766962565016551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773203644098696749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9f15a09f32fd243bedc9c1a77b2958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tree: {fileID: 11400000, guid: 443c62693d5e0a742b33c052c1686ff3, type: 2}
+  brain: {fileID: 3611147583658971138}
 --- !u!114 &3611147583658971138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,22 +213,9 @@ MonoBehaviour:
   poolingType: 2
   enemyTypes: 0
   treeRunner: {fileID: 1357766962565016551}
-  <EnemyStatistic>k__BackingField: {fileID: 11400000, guid: 39473a245042f3a4e87b3e047fdc72d9,
+  normalAttackTimer: 0
+  <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 39473a245042f3a4e87b3e047fdc72d9,
     type: 2}
---- !u!114 &1357766962565016551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1773203644098696749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f9f15a09f32fd243bedc9c1a77b2958, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tree: {fileID: 11400000, guid: 443c62693d5e0a742b33c052c1686ff3, type: 2}
-  brain: {fileID: 3611147583658971138}
 --- !u!114 &5122743462236743681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,3 +228,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f1a0956672030438566ce1d3216672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationTriggers: []
+  _weaponTransform: {fileID: 0}
+--- !u!114 &986500152788366408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773203644098696749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007e9285b573e1f4a9c9e3d8b139c844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DebuffStatData>k__BackingField: {fileID: 0}

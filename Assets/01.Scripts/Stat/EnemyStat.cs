@@ -6,14 +6,14 @@ using UnityEngine;
 public enum EnemyStatType
 {
     maxHealth,
-    currentHealth,
     lifetime,
     defensivePower,
-    moveSpeed,
     detectRange,
     attackPower,
     attackRange,
     attackDelay,
+    moveSpeed,
+    rotateSpeed,
     patternAmount,
     initialPatternCooldown,
 }
@@ -22,16 +22,18 @@ public class EnemyStat : ScriptableObject
 {
     [Header("Defensive stats")]
     public Stat maxHealth; // 최대 체력
-    public Stat currentHealth; // 현재 체력
     public Stat lifetime; // 수명
     public Stat defensivePower; // 방어력
-    public Stat moveSpeed; // 이동 속도
 
     [Header("Offensive stats")]
     public Stat detectRange; // 탐지 범위
     public Stat attackPower; // 공격력
     public Stat attackRange; // 공격 범위
     public Stat attackDelay; // 공격 딜레이
+
+    [Header("Move stats")]
+    public Stat moveSpeed; // 이동 속도
+    public Stat rotateSpeed; // 회전 속도
 
     [Header("Boss stats")]
     public Stat patternAmount; // 패턴 개수
@@ -46,14 +48,9 @@ public class EnemyStat : ScriptableObject
         this.owner = owner;
     }
 
-    public float GetMaxHealthValue()
+    public float GetMaxHealth()
     {
         return maxHealth.GetValue();
-    }
-
-    public float GetCurrentHealth()
-    {
-        return currentHealth.GetValue();
     }
 
     public float GetLifetime()
@@ -64,11 +61,6 @@ public class EnemyStat : ScriptableObject
     public float GetDefensivePower()
     {
         return defensivePower.GetValue();
-    }
-
-    public float GetMoveSpeed()
-    {
-        return moveSpeed.GetValue();
     }
 
     public float GetDetectRange()
@@ -91,6 +83,16 @@ public class EnemyStat : ScriptableObject
         return attackDelay.GetValue();
     }
 
+    public float GetMoveSpeed()
+    {
+        return moveSpeed.GetValue();
+    }
+
+    public float GetRotateSpeed()
+    {
+        return rotateSpeed.GetValue();
+    }
+
     public int GetPatternAmount()
     {
         return (int)patternAmount.GetValue();
@@ -99,11 +101,5 @@ public class EnemyStat : ScriptableObject
     public float GetInitialPatternCooldown()
     {
         return initialPatternCooldown.GetValue();
-    }
-
-    public void Hit(float incomingDamage)
-    {
-        currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
-        owner.OnHit();
     }
 }

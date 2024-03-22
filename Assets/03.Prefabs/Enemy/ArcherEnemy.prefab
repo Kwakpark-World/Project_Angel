@@ -174,8 +174,8 @@ GameObject:
   - component: {fileID: 2422218292379021275}
   - component: {fileID: 2239701676978896079}
   - component: {fileID: 7547514060666891137}
-  - component: {fileID: 622666673205443404}
   - component: {fileID: 5267810193293831848}
+  - component: {fileID: 622666673205443404}
   m_Layer: 7
   m_Name: ArcherEnemy
   m_TagString: Untagged
@@ -248,7 +248,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 16
   m_CollisionDetection: 0
 --- !u!95 &7163240455178090164
 Animator:
@@ -260,7 +260,7 @@ Animator:
   m_GameObject: {fileID: 1018224002886869823}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 205f9ec323689ae46a0bb7b04d4e0a18, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1bd48d36d3280cc4f966198224c78b9c, type: 2}
+  m_Controller: {fileID: 9100000, guid: e4b2dea5a6a08724b9ebf44a5a7a6999, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -380,7 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9f15a09f32fd243bedc9c1a77b2958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 11400000, guid: 01990108a821ef240aecee84a8a8f482, type: 2}
+  tree: {fileID: 11400000, guid: 576870bf9edbe764b8971edb0aa2ba95, type: 2}
   brain: {fileID: 7547514060666891137}
 --- !u!114 &7547514060666891137
 MonoBehaviour:
@@ -397,24 +397,9 @@ MonoBehaviour:
   poolingType: 2
   enemyTypes: 1
   treeRunner: {fileID: 2239701676978896079}
-  HitParticle: {fileID: 0}
-  normalAttackTimer: 0
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 46e50af425a1ebd4f987bfb17bcd6fcb,
     type: 2}
---- !u!114 &622666673205443404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018224002886869823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7f1a0956672030438566ce1d3216672, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationTriggers: []
-  _weaponTransform: {fileID: 1190311309381994702}
+  <CurrentHealth>k__BackingField: 0
 --- !u!114 &5267810193293831848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +413,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <DebuffStatData>k__BackingField: {fileID: 0}
+--- !u!114 &622666673205443404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018224002886869823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f1a0956672030438566ce1d3216672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationTriggers:
+  - parameterName: isReload
+    onAnimationBegin:
+      m_PersistentCalls:
+        m_Calls: []
+    onAnimationPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onAnimationEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 622666673205443404}
+          m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
+          m_MethodName: SetParameterEnable
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: isAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - parameterName: isAttack
+    onAnimationBegin:
+      m_PersistentCalls:
+        m_Calls: []
+    onAnimationPlaying:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 622666673205443404}
+          m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
+          m_MethodName: ArcherNormalAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onAnimationEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  _weaponTransform: {fileID: 1190311309381994702}
 --- !u!1 &1110273334419338988
 GameObject:
   m_ObjectHideFlags: 0

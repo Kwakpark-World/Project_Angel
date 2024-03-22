@@ -7,16 +7,22 @@ public class ArcherNormalAttack : Pattern
 {
     public override void OnStart()
     {
-
+        OwnerNode.brain.AnimatorCompo.SetParameterEnable("isReload");
     }
 
     public override void OnStop()
     {
-
+        OwnerNode.brain.AnimatorCompo.SetParameterDisable();
+        OwnerNode.brain.AnimatorCompo.OnAnimationEnd();
     }
 
     public override Node.State OnUpdate()
     {
+        if (OwnerNode.brain.AnimatorCompo.GetParameterState("isReload") || OwnerNode.brain.AnimatorCompo.GetParameterState("isAttack"))
+        {
+            return Node.State.Running;
+        }
+
         return Node.State.Success;
     }
 }

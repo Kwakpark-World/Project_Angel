@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PoolManager : MonoBehaviour
@@ -47,6 +48,19 @@ public class PoolManager : MonoBehaviour
         _pools[item.poolingType].Push(item);
     }
 
+    public async void Push(PoolableMono item, int secondsDelay, bool resetParent = false)
+    {
+        await Task.Delay(secondsDelay * 1000);
+
+        if (resetParent)
+        {
+            item.transform.parent = transform;
+        }
+
+        _pools[item.poolingType].Push(item);
+    }
+
+
     public PoolableMono Pop(PoolingType poolingType)
     {
         if (!_pools.ContainsKey(poolingType))
@@ -57,6 +71,23 @@ public class PoolManager : MonoBehaviour
         }
 
         PoolableMono item = _pools[poolingType].Pop();
+
+        item.InitializePoolingItem();
+
+        return item;
+    }
+
+    public PoolableMono Pop(PoolingType poolingType, Vector3 position)
+    {
+        if (!_pools.ContainsKey(poolingType))
+        {
+            Debug.LogError("Pooling object doesn't exist on pool.");
+
+            return null;
+        }
+
+        PoolableMono item = _pools[poolingType].Pop();
+        item.transform.position = position;
 
         item.InitializePoolingItem();
 

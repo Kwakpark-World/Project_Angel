@@ -11,11 +11,14 @@ public class DebuffPotion : PoolableMono
     public EnemyBrain owner;
     private Rigidbody _rigidbody;
 
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
     private void Update()
     {
-        // 일직선 운동
-        Vector3 initialVelocity = CalculateInitialVelocity(GameManager.Instance.playerTransform.position, transform.position, _speed);
-        _rigidbody.velocity = initialVelocity;
+        _rigidbody.velocity = transform.forward * _speed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,24 +49,8 @@ public class DebuffPotion : PoolableMono
 
     public override void InitializePoolingItem()
     {
-        if (!_rigidbody)
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-        }
-    }
-
-    // 일직선 운동을 위한 초기 속도 계산
-    private Vector3 CalculateInitialVelocity(Vector3 targetPosition, Vector3 currentPosition, float speed)
-    {
-        // 수평 거리 계산
-        Vector3 displacementXZ = new Vector3(targetPosition.x - currentPosition.x, 0, targetPosition.z - currentPosition.z);
-
-        // 수평 속도 계산
-        Vector3 velocityXZ = displacementXZ.normalized * speed;
-
-        // 수직 속도는 고려하지 않음 (일직선 운동)
-        Vector3 initialVelocity = velocityXZ;
-
-        return initialVelocity;
+        Vector3 direction = new Vector3(GameManager.Instance.playerTransform.position.x - transform.position.x, 0f, GameManager.Instance.playerTransform.position.z - transform.position.z).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = lookRotation;
     }
 }
