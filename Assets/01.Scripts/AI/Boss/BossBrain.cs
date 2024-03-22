@@ -33,17 +33,10 @@ public class BossBrain : Brain
         _patternAmount = EnemyStatData.GetPatternAmount();
     }
 
-    public override void OnHit()
-    {
-        if (EnemyStatData.GetCurrentHealth() <= 0f)
-        {
-            // Set boss to dead.
-            OnDie();
-        }
-    }
-
     public override void OnDie()
     {
-        AnimatorCompo.SetBoolEnable("isDie");
+        AnimatorCompo.SetParameterEnable("isDie");
+
+        base.OnDie();
     }
 }

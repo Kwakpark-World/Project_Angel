@@ -21,7 +21,7 @@ public class Debuff : MonoBehaviour
     private Dictionary<DebuffType, bool> _debuffStates = new Dictionary<DebuffType, bool>();
     private Dictionary<DebuffType, Coroutine> _coroutines = new Dictionary<DebuffType, Coroutine>();
 
-    private PlayerController _ownerController;
+    private Player _ownerController;
     private Brain _ownerBrain;
 
     private float _poisonDelayTimer = -1f;
@@ -59,7 +59,7 @@ public class Debuff : MonoBehaviour
         }
     }
 
-    public void SetOwner(PlayerController owner)
+    public void SetOwner(Player owner)
     {
         _ownerController = owner;
     }
@@ -113,7 +113,7 @@ public class Debuff : MonoBehaviour
 
             if (Time.time > _poisonDelayTimer + attacker.DebuffCompo.DebuffStatData.poisonDelay)
             {
-                _ownerController.PlayerStatData.Hit(attacker.DebuffCompo.DebuffStatData.poisonDamage);
+                _ownerController.OnHit(attacker.DebuffCompo.DebuffStatData.poisonDamage);
 
                 _poisonDelayTimer = Time.time;
             }
@@ -126,7 +126,7 @@ public class Debuff : MonoBehaviour
 
             if (Time.time > _poisonDelayTimer + attacker.DebuffCompo.DebuffStatData.poisonDelay)
             {
-                _ownerBrain.EnemyStatData.Hit(attacker.DebuffCompo.DebuffStatData.poisonDamage);
+                _ownerBrain.OnHit(attacker.DebuffCompo.DebuffStatData.poisonDamage);
 
                 _poisonDelayTimer = Time.time;
             }

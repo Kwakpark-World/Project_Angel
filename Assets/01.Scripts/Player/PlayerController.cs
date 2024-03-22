@@ -28,7 +28,7 @@ public abstract class PlayerController : MonoBehaviour
 
 
     [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
-
+    [field: SerializeField] public float CurrentHealth { get; set; }
     #endregion
     [SerializeField] protected float _gravity = -9.8f;
 
@@ -38,8 +38,7 @@ public abstract class PlayerController : MonoBehaviour
         AnimatorCompo = visualTrm.GetComponent<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
         ColliderCompo = GetComponent<CapsuleCollider>();
-        DebuffCompo =  GetComponent<Debuff>();
-        DebuffCompo.SetOwner(this);
+        DebuffCompo = GetComponent<Debuff>();
 
         PlayerStatData = Instantiate(PlayerStatData);
         PlayerStatData.SetOwner(this);
@@ -179,7 +178,7 @@ public abstract class PlayerController : MonoBehaviour
         {
             RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
         }
-        
+
         if (CheckStair(new Vector3(-1.5f, 0, 1)))
         {
             RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
@@ -218,14 +217,14 @@ public abstract class PlayerController : MonoBehaviour
     #endregion
 #if UNITY_EDITOR
     protected virtual void OnDrawGizmos()
-    {      
+    {
         if (_groundChecker != null)
             Gizmos.DrawLine(_groundChecker.position, _groundChecker.position + new Vector3(0, -_groundCheckDistance, 0));
     }
 #endif
 }
 
-public struct DefaultCollider 
+public struct DefaultCollider
 {
     public Vector3 center;
     public float radius;

@@ -45821,8 +45821,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d59521438f9fd746be3b1eec36c73db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _owner: {fileID: 0}
   swordCollider: {fileID: 0}
+  _owner: {fileID: 8686414580623993656}
 --- !u!1 &3859533867823841577
 GameObject:
   m_ObjectHideFlags: 0
@@ -66911,9 +66911,9 @@ GameObject:
   - component: {fileID: 8039043342022445720}
   - component: {fileID: 6442635990931029244}
   - component: {fileID: 8372497710401528090}
+  - component: {fileID: 6134610981525680677}
   - component: {fileID: 8686414580623993656}
   - component: {fileID: 2675724404306327908}
-  - component: {fileID: 5860287084608182580}
   m_Layer: 7
   m_Name: KnightEnemy
   m_TagString: Untagged
@@ -66929,7 +66929,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7826194653490089348}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -66994,7 +66994,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 16
   m_CollisionDetection: 0
 --- !u!95 &8039043342022445720
 Animator:
@@ -67053,6 +67053,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: 01990108a821ef240aecee84a8a8f482, type: 2}
   brain: {fileID: 8686414580623993656}
+--- !u!114 &6134610981525680677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7826194653490089348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007e9285b573e1f4a9c9e3d8b139c844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DebuffStatData>k__BackingField: {fileID: 0}
 --- !u!114 &8686414580623993656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67068,9 +67081,9 @@ MonoBehaviour:
   poolingType: 1
   enemyTypes: 0
   treeRunner: {fileID: 8372497710401528090}
-  normalAttackTimer: 0
-  <EnemyStatistic>k__BackingField: {fileID: 11400000, guid: 3f6896010401f6f4984bc063d48abf93,
+  <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 3f6896010401f6f4984bc063d48abf93,
     type: 2}
+  <CurrentHealth>k__BackingField: 0
 --- !u!114 &2675724404306327908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67083,24 +67096,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f1a0956672030438566ce1d3216672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5860287084608182580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7826194653490089348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4303cc05059e9c24baff25f18cffd57e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  enemyBrain: {fileID: 0}
-  knghtAttackParticle: {fileID: 4062222479473005237}
-  animationEndEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  animationTriggers:
+  - parameterName: isAttack
+    onAnimationBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4418340852163757850}
+          m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    onAnimationPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onAnimationEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4418340852163757850}
+          m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _weaponTransform: {fileID: 0}
 --- !u!1 &7945950438161889326
 GameObject:
   m_ObjectHideFlags: 0

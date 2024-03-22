@@ -25,8 +25,6 @@ public class PlayerStat : CharacterStat
                 fieldInfoDictionary.Add(statType, statField);
             }
         }
-
-        currentHealth.SetDefalutValue(GetMaxHealthValue());
     }
 
     public void InitializeAllModifiers()
