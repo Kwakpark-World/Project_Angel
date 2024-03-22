@@ -55,7 +55,7 @@ public class EnemySpawn : MonoBehaviour
                 {
                     enemy.transform.position = spawnPosition;
                     GameManager.Instance.EnemySpawnCount++;
-                    Debug.Log(GameManager.Instance.EnemySpawnCount);
+                    //Debug.Log(GameManager.Instance.EnemySpawnCount);
                 }
             }
         }

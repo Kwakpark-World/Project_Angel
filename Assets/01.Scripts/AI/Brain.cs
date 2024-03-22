@@ -41,6 +41,8 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
+        float damage = 10;
+
         if ((GameManager.Instance.playerTransform.position - transform.position).sqrMagnitude <= EnemyStatData.GetAttackRange() * EnemyStatData.GetAttackRange())
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GameManager.Instance.playerTransform.position - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
@@ -48,6 +50,11 @@ public abstract class Brain : PoolableMono
         else if (NavMeshAgentCompo.hasPath)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(NavMeshAgentCompo.steeringTarget - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            OnHit(damage);
         }
     }
 
@@ -82,11 +89,14 @@ public abstract class Brain : PoolableMono
     public virtual void OnHit(float incomingDamage)
     {
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
+        HitParticle.Play();
 
         if (CurrentHealth <= 0f)
         {
             OnDie();
+            
         }
+
     }
 
     public virtual void OnDie()
