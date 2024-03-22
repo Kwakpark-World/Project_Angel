@@ -11,10 +11,16 @@ public class Player : PlayerController
     public float dashSpeed = 20f;
 
     [Header("Attack Settings")]
+    public float attackPower;
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
 
+    [Header("Critical Settings")]
+    public float criticalChance;
+    public float criticalMultiplier;
+
     [Header("Defense Settings")]
+    public float defensivePower;
     public float defenseTime = 3f;
 
     [Header("CoolTime Settings")]
@@ -38,6 +44,8 @@ public class Player : PlayerController
     {
         base.Awake();
 
+        DebuffCompo.SetOwner(this);
+
         StateMachine = new PlayerStateMachine();
 
         foreach (PlayerStateEnum stateEnum in Enum.GetValues(typeof(PlayerStateEnum)))
@@ -60,6 +68,7 @@ public class Player : PlayerController
 
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
+        PlayerStatInitialize();
     }
 
 
@@ -70,8 +79,6 @@ public class Player : PlayerController
         moveSpeed = PlayerStatData.GetMoveSpeed();
 
         StateMachine.CurrentState.UpdateState();
-
-        PlayerDie();
 
         PlayerDefense();
 
@@ -95,7 +102,6 @@ public class Player : PlayerController
         PlayerInput.DashEvent -= HandleDashEvent;
     }
 
-
     private void IsClimbStair()
     {
         if (CheckStair(Vector3.forward))
@@ -106,10 +112,38 @@ public class Player : PlayerController
             IsStair = true;
     }
 
-    private void PlayerDie()
+    public void OnHit(float incomingDamage)
     {
-        if (PlayerStatData.GetCurrentHealth() <= 0)
-            StateMachine.ChangeState(PlayerStateEnum.Die);
+        if (IsDefense || IsDie)
+            return;
+
+        CurrentHealth -= Mathf.Max(incomingDamage - defensivePower, 0f);
+
+        if (CurrentHealth <= 0f)
+        {
+            OnDie();
+        }
+    }
+
+    private void OnDie()
+    {
+        StateMachine.ChangeState(PlayerStateEnum.Die);
+    }
+
+    private void PlayerStatInitialize()
+    {
+        CurrentHealth = PlayerStatData.GetMaxHealth();
+        defensivePower = PlayerStatData.GetDefensivePower();
+        defenseCoolTime = PlayerStatData.GetDefenseCooldown();
+        attackPower = PlayerStatData.GetAttackPower();
+        attackSpeed = PlayerStatData.GetAttackSpeed();
+        criticalChance = PlayerStatData.GetCriticalChance();
+        criticalMultiplier = PlayerStatData.GetCriticalMultiplier();
+        moveSpeed = PlayerStatData.GetMoveSpeed();
+        rotationSpeed = PlayerStatData.GetRotateSpeed();
+        dashSpeed = PlayerStatData.GetDashSpeed();
+        dashDuration = PlayerStatData.GetDashDuration();
+        dashCoolTime = PlayerStatData.GetDashCooldown();
     }
 
     private void PlayerDefense()
@@ -131,7 +165,6 @@ public class Player : PlayerController
                 StateMachine.ChangeState(PlayerStateEnum.Defense);
             }
         }
-
     }
 
     private void PlayerOnStair()

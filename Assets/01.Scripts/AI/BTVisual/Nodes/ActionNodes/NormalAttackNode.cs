@@ -18,9 +18,9 @@ namespace BTVisual
                 _normalAttack = normalAttackObject.GetComponent<Pattern>();
             }
 
-            if (_normalAttack.node == null)
+            if (_normalAttack.OwnerNode == null)
             {
-                _normalAttack.node = this;
+                _normalAttack.OwnerNode = this;
             }
 
             _normalAttack.OnStart();
@@ -33,14 +33,14 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            if (Time.time > brain.normalAttackTimer + brain.EnemyStatData.GetAttackDelay())
+            if (Time.time <= brain.NormalAttackTimer + brain.EnemyStatData.GetAttackDelay())
             {
-                brain.normalAttackTimer = Time.time;
-
-                return _normalAttack.OnUpdate();
+                return State.Running;
             }
 
-            return State.Failure;
+            brain.NormalAttackTimer = Time.time;
+
+            return _normalAttack.OnUpdate();
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,13 +25,13 @@ public class EnemyAnimator : MonoBehaviour
 
     [SerializeField]
     private Transform _weaponTransform;
-    [HideInInspector]
     private Brain _owner;
 
     private Dictionary<string, AnimationTrigger> _animationTriggersByParameter = new Dictionary<string, AnimationTrigger>();
+    private Dictionary<string, bool> _animationStates = new Dictionary<string, bool>();
     private Dictionary<string, int> _parameterHashes = new Dictionary<string, int>();
     private Animator _animator;
-    private string _previousParameter = "isIdle";
+    private string _enabledParameter = "isIdle";
 
     private void Awake()
     {
@@ -40,9 +41,18 @@ public class EnemyAnimator : MonoBehaviour
         {
             _animationTriggersByParameter.Add(animationTrigger.parameterName, animationTrigger);
         }
+    }
 
+    private void Start()
+    {
         foreach (AnimatorControllerParameter parameter in _animator.parameters)
         {
+            if (!_animationTriggersByParameter.ContainsKey(parameter.name))
+            {
+                _animationTriggersByParameter.Add(parameter.name, new AnimationTrigger());
+            }
+
+            _animationStates.Add(parameter.name, false);
             _parameterHashes.Add(parameter.name, parameter.nameHash);
         }
     }
@@ -52,57 +62,75 @@ public class EnemyAnimator : MonoBehaviour
         _owner = owner;
     }
 
-    public void SetBoolEnable(string parameterName)
+    public void SetParameterEnable(string parameterName = "isIdle")
     {
         if (parameterName == "isIdle")
         {
-            SetBoolDisable();
+            SetParameterDisable();
 
             return;
         }
 
         _animator.SetBool(_parameterHashes[parameterName], true);
 
-        if (_previousParameter != "isIdle")
+        _animationStates[parameterName] = true;
+
+        if (_enabledParameter != "isIdle")
         {
-            _animator.SetBool(_parameterHashes[_previousParameter], false);
+            _animator.SetBool(_parameterHashes[_enabledParameter], false);
+
+            _animationStates[_enabledParameter] = false;
         }
 
-        _previousParameter = parameterName;
+        _enabledParameter = parameterName;
     }
 
-    public void SetBoolDisable()
+    public void SetParameterDisable()
     {
-        if (_previousParameter != "isIdle")
+        if (_enabledParameter != "isIdle")
         {
-            _animator.SetBool(_parameterHashes[_previousParameter], false);
+            _animator.SetBool(_parameterHashes[_enabledParameter], false);
 
-            _previousParameter = "isIdle";
+            _animationStates[_enabledParameter] = false;
+            _enabledParameter = "isIdle";
         }
+    }
+
+    public string GetEnabledParameter()
+    {
+        return _enabledParameter;
+    }
+
+    public bool GetParameterState(string parameterName)
+    {
+        return _animationStates[parameterName];
     }
 
     public void OnAnimationBegin()
     {
-        _animationTriggersByParameter[_previousParameter].onAnimationBegin?.Invoke();
+        _animationTriggersByParameter[_enabledParameter].onAnimationBegin?.Invoke();
     }
 
     public void OnAnimationPlaying()
     {
-        _animationTriggersByParameter[_previousParameter].onAnimationPlaying?.Invoke();
+        _animationTriggersByParameter[_enabledParameter].onAnimationPlaying?.Invoke();
     }
 
-    public void OnAnimationEnd()
+    public void OnAnimationEnd(int isEndOfClip = 0)
     {
-        _animationTriggersByParameter[_previousParameter].onAnimationEnd?.Invoke();
+        _animationTriggersByParameter[_enabledParameter].onAnimationEnd?.Invoke();
+
+        if (isEndOfClip == 1)
+        {
+            SetParameterDisable();
+        }
     }
 
     #region Enemy Normal Attack Functions
     public void ArcherNormalAttack()
     {
-        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Arrow) as EnemyArrow;
+        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Arrow, _weaponTransform.position) as EnemyArrow;
         arrow.owner = _owner as EnemyBrain;
-        arrow.transform.position = _weaponTransform.position;
-        arrow.transform.rotation = _weaponTransform.rotation;
     }
 
     public void WitchNormalAttack()
@@ -127,10 +155,8 @@ public class EnemyAnimator : MonoBehaviour
                 break;
         }
 
-        DebuffPotion potion = PoolManager.Instance.Pop(potionType) as DebuffPotion;
-        potion.owner = _owner as EnemyBrain;
-        potion.transform.position = _weaponTransform.position;
-        potion.transform.rotation = _weaponTransform.rotation;
+        DebuffPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as DebuffPotion;
+        debuffPotion.owner = _owner as EnemyBrain;
     }
     #endregion
 }

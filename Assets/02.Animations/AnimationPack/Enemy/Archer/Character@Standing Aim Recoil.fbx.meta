@@ -55,7 +55,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 0
@@ -69,11 +69,20 @@ ModelImporter:
       curves: []
       events:
       - time: 0.22262773
-        functionName: OnAttack
+        functionName: OnAnimationPlaying
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 1018224002886869823, guid: fb096304ebc8b0f4bbd0b3115798bd75,
+          type: 3}
         floatParameter: 0
         intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OnAnimationEnd
+        data: 
+        objectReferenceParameter: {fileID: 1018224002886869823, guid: fb096304ebc8b0f4bbd0b3115798bd75,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
         messageOptions: 0
       transformMask: []
       maskType: 3

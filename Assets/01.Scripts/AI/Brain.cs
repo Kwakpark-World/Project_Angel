@@ -17,12 +17,8 @@ public enum EnemyType
 [RequireComponent(typeof(Debuff), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {
-    private static float _rotateSpeed = 10f;
-
     public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
-    [HideInInspector]
-    public float normalAttackTimer;
 
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -33,6 +29,9 @@ public abstract class Brain : PoolableMono
 
     [field: SerializeField]
     public MonsterStat EnemyStatData { get; private set; }
+    [field: SerializeField]
+    public float CurrentHealth { get; set; }
+    public float NormalAttackTimer { get; set; }
 
     protected virtual void Start()
     {
@@ -41,9 +40,13 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
-        if (NavMeshAgentCompo.hasPath)
+        if ((GameManager.Instance.playerTransform.position - transform.position).sqrMagnitude <= EnemyStatData.GetAttackRange() * EnemyStatData.GetAttackRange())
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(NavMeshAgentCompo.steeringTarget - transform.position), _rotateSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GameManager.Instance.playerTransform.position - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
+        }
+        else if (NavMeshAgentCompo.hasPath)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(NavMeshAgentCompo.steeringTarget - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
         }
     }
 
@@ -51,7 +54,8 @@ public abstract class Brain : PoolableMono
     {
         EnemyStatData.InitializeAllModifiers();
 
-        normalAttackTimer = Time.time;
+        CurrentHealth = EnemyStatData.GetMaxHealth();
+        NormalAttackTimer = Time.time;
     }
 
     protected virtual void Initialize()
@@ -59,7 +63,7 @@ public abstract class Brain : PoolableMono
         RigidbodyCompo = GetComponent<Rigidbody>();
         NavMeshAgentCompo = GetComponent<NavMeshAgent>();
         NavMeshAgentCompo.updateRotation = false;
-        DebuffCompo =  GetComponent<Debuff>();
+        DebuffCompo = GetComponent<Debuff>();
 
         DebuffCompo.SetOwner(this);
 
@@ -74,7 +78,18 @@ public abstract class Brain : PoolableMono
         NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
     }
 
-    public abstract void OnHit();
+    public virtual void OnHit(float incomingDamage)
+    {
+        CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
 
-    public abstract void OnDie();
+        if (CurrentHealth <= 0f)
+        {
+            OnDie();
+        }
+    }
+
+    public virtual void OnDie()
+    {
+        PoolManager.Instance.Push(this);
+    }
 }
