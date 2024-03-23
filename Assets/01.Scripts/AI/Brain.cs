@@ -90,7 +90,7 @@ public abstract class Brain : PoolableMono
     {
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
         HitParticle.Play();
-
+        
         if (CurrentHealth <= 0f)
         {
             OnDie();
