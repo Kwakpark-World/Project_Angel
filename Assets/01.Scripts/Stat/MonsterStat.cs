@@ -22,11 +22,9 @@ public class MonsterStat : EnemyStat
             }
             else
             {
-                _fieldInfoDictionary.Add(statType, statField);
+                fieldInfoDictionary.Add(statType, statField);
             }
         }
-
-        currentHealth.SetDefalutValue(GetMaxHealthValue());
     }
 
     public void InitializeAllModifiers()
@@ -39,6 +37,6 @@ public class MonsterStat : EnemyStat
 
     public Stat GetStatByType(EnemyStatType statType)
     {
-        return _fieldInfoDictionary[statType].GetValue(this) as Stat;
+        return fieldInfoDictionary[statType].GetValue(this) as Stat;
     }
 }

@@ -19,16 +19,16 @@ public class EnemyBrain : Brain
         treeRunner.tree.blackboard.home = transform.position;
     }
 
-    public override void OnHit()
-    {
-        if (EnemyStatistic.GetCurrentHealth() <= 0f)
-        {
-            OnDie();
-        }
-    }
-
     public override void OnDie()
     {
-        AnimatorCompo.SetBoolEnable("isDie");
+        AnimatorCompo.SetParameterEnable("isDie");
+        GameManager.Instance.DieEnemyCount++;
+
+        if(GameManager.Instance.DieEnemyCount < 10)
+        {
+            GameManager.Instance.SpawnWave++;
+        }
+
+        base.OnDie();
     }
 }

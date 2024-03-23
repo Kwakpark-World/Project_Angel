@@ -21,7 +21,7 @@ public class AzazelFirstPattern : Pattern
 
         if (PoolManager.Instance.Pop(PoolingType.Goat).TryGetComponent(out Goat goat))
         {
-            goat.transform.position = node.brain.transform.position;
+            goat.transform.position = OwnerNode.brain.transform.position;
         }
 
         return Node.State.Success;

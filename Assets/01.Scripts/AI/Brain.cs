@@ -9,26 +9,30 @@ public enum EnemyType
     Knight,
     Archer,
     Witch,
-    Sorcerer
+    Sorcerer,
+    Azazel
 }
 
-[RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent), typeof(EnemyAnimator))]
+[RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
+[RequireComponent(typeof(Debuff), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {
-    private static float _rotateSpeed = 10f;
-
     public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
-    [HideInInspector]
-    public float normalAttackTimer;
+    public ParticleSystem HitParticle;
 
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
     public NavMeshAgent NavMeshAgentCompo { get; private set; }
+    public Debuff DebuffCompo { get; private set; }
     public EnemyAnimator AnimatorCompo { get; private set; }
     #endregion
 
-    [field: SerializeField] public MonsterStat EnemyStatistic { get; private set; }
+    [field: SerializeField]
+    public MonsterStat EnemyStatData { get; private set; }
+    [field: SerializeField]
+    public float CurrentHealth { get; set; }
+    public float NormalAttackTimer { get; set; }
 
     protected virtual void Start()
     {
@@ -37,33 +41,66 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
-        if (NavMeshAgentCompo.hasPath)
+        float damage = 10;
+
+        if ((GameManager.Instance.playerTransform.position - transform.position).sqrMagnitude <= EnemyStatData.GetAttackRange() * EnemyStatData.GetAttackRange())
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(NavMeshAgentCompo.steeringTarget - transform.position), _rotateSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GameManager.Instance.playerTransform.position - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
+        }
+        else if (NavMeshAgentCompo.hasPath)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(NavMeshAgentCompo.steeringTarget - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            OnHit(damage);
         }
     }
 
     public override void InitializePoolingItem()
     {
-        EnemyStatistic.InitializeAllModifiers();
+        EnemyStatData.InitializeAllModifiers();
 
-        normalAttackTimer = Time.time;
+        CurrentHealth = EnemyStatData.GetMaxHealth();
+        NormalAttackTimer = Time.time;
     }
 
     protected virtual void Initialize()
     {
         RigidbodyCompo = GetComponent<Rigidbody>();
         NavMeshAgentCompo = GetComponent<NavMeshAgent>();
-        AnimatorCompo = GetComponent<EnemyAnimator>();
-        EnemyStatistic = Instantiate(EnemyStatistic);
-
-        EnemyStatistic.SetOwner(this);
-
-        NavMeshAgentCompo.speed = EnemyStatistic.GetMoveSpeed();
         NavMeshAgentCompo.updateRotation = false;
+        DebuffCompo = GetComponent<Debuff>();
+
+        DebuffCompo.SetOwner(this);
+
+        AnimatorCompo = GetComponent<EnemyAnimator>();
+
+        AnimatorCompo.SetOwner(this);
+
+        EnemyStatData = Instantiate(EnemyStatData);
+
+        EnemyStatData.SetOwner(this);
+
+        NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
     }
 
-    public abstract void OnHit();
+    public virtual void OnHit(float incomingDamage)
+    {
+        CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
+        HitParticle.Play();
 
-    public abstract void OnDie();
+        if (CurrentHealth <= 0f)
+        {
+            OnDie();
+            
+        }
+
+    }
+
+    public virtual void OnDie()
+    {
+        PoolManager.Instance.Push(this);
+    }
 }

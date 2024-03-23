@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 public class Player : PlayerController
@@ -12,10 +11,16 @@ public class Player : PlayerController
     public float dashSpeed = 20f;
 
     [Header("Attack Settings")]
+    public float attackPower;
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
 
+    [Header("Critical Settings")]
+    public float criticalChance;
+    public float criticalMultiplier;
+
     [Header("Defense Settings")]
+    public float defensivePower;
     public float defenseTime = 3f;
 
     [Header("CoolTime Settings")]
@@ -27,9 +32,6 @@ public class Player : PlayerController
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
     public PlayerStateMachine StateMachine { get; private set; }
-    public PlayerStat PlayerStat { get; private set; }
-
-    public Dictionary<DebuffType, MethodInfo> methodInfos = new Dictionary<DebuffType, MethodInfo>();
 
     public bool IsAttack { get; set; }
     public bool IsDefense { get; set; }
@@ -38,15 +40,13 @@ public class Player : PlayerController
     public bool IsAwakening { get; set; }
     public bool IsPlayerStop { get; set; }
 
-    private ParticleSystem _poisonParticle;
-
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new PlayerStateMachine();
+        DebuffCompo.SetOwner(this);
 
-        PlayerStat = CharStat as PlayerStat;
+        StateMachine = new PlayerStateMachine();
 
         foreach (PlayerStateEnum stateEnum in Enum.GetValues(typeof(PlayerStateEnum)))
         {
@@ -55,13 +55,6 @@ public class Player : PlayerController
             PlayerState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PlayerState;
             StateMachine.AddState(stateEnum, newState);
         }
-
-        foreach (DebuffType type in Enum.GetValues(typeof(DebuffType)))
-        {
-            methodInfos.Add(type, PlayerStat.GetType().GetMethod(type.ToString()));
-        }
-
-        _poisonParticle = transform.Find("PoisonParticle").GetComponent<ParticleSystem>();
     }
 
     protected void OnEnable()
@@ -74,7 +67,8 @@ public class Player : PlayerController
         base.Start();
 
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
-        PlayerStat.InitializeAllModifiers();
+        PlayerStatData.InitializeAllModifiers();
+        PlayerStatInitialize();
     }
 
 
@@ -82,17 +76,14 @@ public class Player : PlayerController
     {
         base.Update();
 
-        moveSpeed = PlayerStat.GetMoveSpeed();
+        moveSpeed = PlayerStatData.GetMoveSpeed();
 
         StateMachine.CurrentState.UpdateState();
-
-        PlayerDie();
 
         PlayerDefense();
 
         PlayerOnStair();
 
-        PlayerDebuff();
         // ����
         //if (Keyboard.current.pKey.wasPressedThisFrame)
         //{
@@ -111,7 +102,6 @@ public class Player : PlayerController
         PlayerInput.DashEvent -= HandleDashEvent;
     }
 
-
     private void IsClimbStair()
     {
         if (CheckStair(Vector3.forward))
@@ -122,10 +112,38 @@ public class Player : PlayerController
             IsStair = true;
     }
 
-    private void PlayerDie()
+    public void OnHit(float incomingDamage)
     {
-        if (PlayerStat.GetCurrentHealth() <= 0)
-            StateMachine.ChangeState(PlayerStateEnum.Die);
+        if (IsDefense || IsDie)
+            return;
+
+        CurrentHealth -= Mathf.Max(incomingDamage - defensivePower, 0f);
+
+        if (CurrentHealth <= 0f)
+        {
+            OnDie();
+        }
+    }
+
+    private void OnDie()
+    {
+        StateMachine.ChangeState(PlayerStateEnum.Die);
+    }
+
+    private void PlayerStatInitialize()
+    {
+        CurrentHealth = PlayerStatData.GetMaxHealth();
+        defensivePower = PlayerStatData.GetDefensivePower();
+        defenseCoolTime = PlayerStatData.GetDefenseCooldown();
+        attackPower = PlayerStatData.GetAttackPower();
+        attackSpeed = PlayerStatData.GetAttackSpeed();
+        criticalChance = PlayerStatData.GetCriticalChance();
+        criticalMultiplier = PlayerStatData.GetCriticalMultiplier();
+        moveSpeed = PlayerStatData.GetMoveSpeed();
+        rotationSpeed = PlayerStatData.GetRotateSpeed();
+        dashSpeed = PlayerStatData.GetDashSpeed();
+        dashDuration = PlayerStatData.GetDashDuration();
+        dashCoolTime = PlayerStatData.GetDashCooldown();
     }
 
     private void PlayerDefense()
@@ -147,7 +165,6 @@ public class Player : PlayerController
                 StateMachine.ChangeState(PlayerStateEnum.Defense);
             }
         }
-
     }
 
     private void PlayerOnStair()
@@ -155,29 +172,6 @@ public class Player : PlayerController
         if (IsStair)
             if (IsGroundDetected())
                 IsStair = false;
-    }
-
-    private void PlayerDebuff()
-    {
-        foreach (DebuffType type in Enum.GetValues(typeof(DebuffType)))
-        {
-            if (PlayerStat.GetDebuff(type))
-            {
-                if (type == DebuffType.Poison)
-                {
-                    _poisonParticle.Play();
-                }
-
-                methodInfos[type].Invoke(PlayerStat, null);
-            }
-            else
-            {
-                if (type == DebuffType.Poison)
-                {
-                    _poisonParticle.Stop();
-                }
-            }
-        }
     }
 
 
@@ -211,6 +205,6 @@ public class Player : PlayerController
 
     public void SetPlayerStat(PlayerStatType stat, float value)
     {
-        PlayerStat.GetStatByType(stat).AddModifier(value);
+        PlayerStatData.GetStatByType(stat).AddModifier(value);
     }
 }
