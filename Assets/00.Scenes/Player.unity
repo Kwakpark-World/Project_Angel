@@ -168,6 +168,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  playerTransform: {fileID: 0}
+  SpawnWave: 0
+  EnemySpawnCount: 0
+  DieEnemyCount: 0
 --- !u!4 &653600536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2655006095838629543, guid: 88f2c36fffd664048bb6f8ef5fc93a63,
@@ -511,18 +515,22 @@ MonoBehaviour:
   _stairLowerCheckDistance: 0
   _stairHeight: 0
   _stairMoveSmooth: 0
-  <CharStat>k__BackingField: {fileID: 11400000, guid: 2d8f987c0db816249b696fc32bb953cc,
-    type: 2}
+  <PlayerStatData>k__BackingField: {fileID: 0}
+  <CurrentHealth>k__BackingField: 0
   _gravity: -9.8
   moveSpeed: 5
   rotationSpeed: 1
   dashDuration: 0.4
   dashSpeed: 20
+  attackPower: 0
   attackSpeed: 10
   attackMovement:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  criticalChance: 0
+  criticalMultiplier: 0
+  defensivePower: 0
   defenseTime: 3
   dashCoolTime: 0.5
   defenseCoolTime: 1
