@@ -180,10 +180,14 @@ public class Player : PlayerController
     {
         if (dashCoolTime + dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
+
         dashPrevTime = Time.time;
 
         if (!IsAwakening)
+        {
+            if (!IsGroundDetected()) return;
             StateMachine.ChangeState(PlayerStateEnum.Dash);
+        }
         else
             StateMachine.ChangeState(PlayerStateEnum.EDash);
     }

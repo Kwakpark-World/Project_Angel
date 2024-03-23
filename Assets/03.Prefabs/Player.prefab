@@ -1635,7 +1635,7 @@ MonoBehaviour:
     type: 2}
   <CurrentHealth>k__BackingField: 0
   _gravity: -9.8
-  moveSpeed: 1
+  moveSpeed: 5.5
   rotationSpeed: 4
   dashDuration: 0.4
   dashSpeed: 5
@@ -1666,11 +1666,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeTime: 2
-  meshRefreshRate: 0.1
+  meshRefreshRate: 0.2
   meshDestroyDelay: 3
-  positionToSpawn: {fileID: 0}
-  mat: {fileID: 0}
-  shaderVarRef: 
+  positionToSpawn: {fileID: 2655006095838629543}
+  mat: {fileID: 2100000, guid: 621d535c862c25747a85ce1f0f4b49d9, type: 2}
+  shaderVarRef: _Alpha
   shaderVarRate: 0.1
   shaderVarRefreshRate: 0.05
 --- !u!114 &7138639191607923319
@@ -1739,6 +1739,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 215fc7c8e2d87c8438088b27a1600878, type: 2}
+  - {fileID: 2100000, guid: 7b34644260d996a42963d1af02704da0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1825,6 +1826,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3de4d0b74e6a35c4eb1d6331940920e3, type: 2}
+  - {fileID: 2100000, guid: 7b34644260d996a42963d1af02704da0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3139,6 +3141,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 215fc7c8e2d87c8438088b27a1600878, type: 2}
+  - {fileID: 2100000, guid: 7b34644260d996a42963d1af02704da0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4149,6 +4152,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 215fc7c8e2d87c8438088b27a1600878, type: 2}
+  - {fileID: 2100000, guid: 7b34644260d996a42963d1af02704da0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4388,6 +4392,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3de4d0b74e6a35c4eb1d6331940920e3, type: 2}
+  - {fileID: 2100000, guid: 7b34644260d996a42963d1af02704da0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4550,6 +4555,11 @@ PrefabInstance:
     - target: {fileID: 1984341958551712117, guid: d166abea10c0c484a94f84edc66f685a,
         type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133560688841594186, guid: d166abea10c0c484a94f84edc66f685a,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7146721985110681482, guid: d166abea10c0c484a94f84edc66f685a,

@@ -28,7 +28,6 @@ public class PlayerDefenseState : PlayerState
     {
         base.UpdateState();
 
-        Debug.Log(_defenseTimer);
         _defenseTimer += Time.deltaTime;
         
         if (!_player.PlayerInput.isDefense || _defenseTimer >= _player.defenseTime)
