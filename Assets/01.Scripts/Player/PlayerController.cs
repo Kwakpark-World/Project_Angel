@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
-
-public class PlayerController : MonoBehaviour
+public abstract class PlayerController : MonoBehaviour  
 {
     [Header("Ground Checker")]
     [SerializeField] protected Transform _groundChecker;
@@ -23,7 +23,10 @@ public class PlayerController : MonoBehaviour
     public Animator AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
     public CapsuleCollider ColliderCompo { get; private set; }
-    [field: SerializeField] public CharacterStat CharStat { get; private set; }
+
+    public Debuff DebuffCompo { get; private set; }
+    [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
+    [field: SerializeField] public float CurrentHealth { get; set; }
 
     #endregion
     [SerializeField] protected float _gravity = -9.8f;
@@ -35,8 +38,10 @@ public class PlayerController : MonoBehaviour
         RigidbodyCompo = GetComponent<Rigidbody>();
         ColliderCompo = GetComponent<CapsuleCollider>();
 
-        CharStat = Instantiate(CharStat);
-        CharStat.SetOwner(this);
+        DebuffCompo = GetComponent<Debuff>();
+
+        PlayerStatData = Instantiate(PlayerStatData);
+        PlayerStatData.SetOwner(this);
     }
 
     protected virtual void Start()
