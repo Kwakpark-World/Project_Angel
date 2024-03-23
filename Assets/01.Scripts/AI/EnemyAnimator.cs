@@ -98,7 +98,6 @@ public class EnemyAnimator : MonoBehaviour
 
             _animationStates[_enabledParameter] = false;
             _enabledParameter = "isIdle";
-            Debug.Log("3");
         }
     }
 

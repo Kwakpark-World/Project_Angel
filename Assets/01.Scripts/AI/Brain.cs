@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.VFX;
 
 public enum EnemyType
 {
@@ -20,6 +21,7 @@ public abstract class Brain : PoolableMono
     public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
     public ParticleSystem HitParticle;
+    public VisualEffect HitvisalEffect;
 
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -89,7 +91,9 @@ public abstract class Brain : PoolableMono
     public virtual void OnHit(float incomingDamage)
     {
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
-        HitParticle.Play();
+        //HitParticle.Play();
+        HitvisalEffect.Play();
+        
         
         if (CurrentHealth <= 0f)
         {
