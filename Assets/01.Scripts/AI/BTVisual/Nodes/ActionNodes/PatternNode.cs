@@ -20,9 +20,9 @@ namespace BTVisual
                 _pattern = patternObject.GetComponent<Pattern>();
             }
 
-            if (_pattern.node == null)
+            if (_pattern.OwnerNode == null)
             {
-                _pattern.node = this;
+                _pattern.OwnerNode = this;
             }
 
             _pattern.OnStart();

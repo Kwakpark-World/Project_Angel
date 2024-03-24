@@ -40,10 +40,7 @@ public abstract class PlayerGroundState : PlayerState
 
     private void HandlePrimaryAttackEvent()
     {
-        if (_player.IsGroundDetected())
-        {
-            _stateMachine.ChangeState(PlayerStateEnum.Charge);
-        }
+        _stateMachine.ChangeState(PlayerStateEnum.Charge);
     }
 
     private void ESkillHandle()

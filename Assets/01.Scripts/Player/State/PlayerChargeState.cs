@@ -14,6 +14,7 @@ public class PlayerChargeState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.StopImmediately(false);
         _clickTimer = 0;
     }
 

@@ -60,26 +60,34 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.16237624
-        functionName: OnKnightSound
+      - time: 0
+        functionName: OnAnimationBegin
         data: 
-        objectReferenceParameter: {fileID: 7069966074031279832, guid: f2fe8b0ba54850d4d9e8bbe0fb61e3b3,
+        objectReferenceParameter: {fileID: 7826194653490089348, guid: 539253f608b473947ac31bd2e4afb126,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.16435643
-        functionName: OnAttack
+        functionName: OnAnimationPlaying
         data: 
-        objectReferenceParameter: {fileID: 7069966074031279832, guid: f2fe8b0ba54850d4d9e8bbe0fb61e3b3,
+        objectReferenceParameter: {fileID: 7826194653490089348, guid: 539253f608b473947ac31bd2e4afb126,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 1
+        functionName: OnAnimationEnd
+        data: 
+        objectReferenceParameter: {fileID: 7826194653490089348, guid: 539253f608b473947ac31bd2e4afb126,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0.96
+      additiveReferencePoseFrame: 1
     isReadable: 0
   meshes:
     lODScreenPercentages: []

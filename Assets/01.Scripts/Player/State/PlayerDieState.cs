@@ -30,7 +30,6 @@ public class PlayerDieState : PlayerState
         if (_actionTriggerCalled)
         {
             _isCollider = true;
-            _player.SetAnimCollider(0.3f, 0.07f, 0.1f);
         }
 
         if (!_player.IsDie)

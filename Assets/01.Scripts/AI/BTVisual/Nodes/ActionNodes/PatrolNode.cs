@@ -22,15 +22,16 @@ namespace BTVisual
 
             if (_detectRange <= 0f)
             {
-                _detectRange = brain.EnemyStatistic.GetDetectRange();
+                _detectRange = brain.EnemyStatData.GetDetectRange();
             }
 
-            brain.AnimatorCompo.SetBoolEnable("isMove");
+            brain.AnimatorCompo.SetParameterEnable("isMove");
         }
 
         protected override void OnStop()
         {
-            brain.AnimatorCompo.SetBoolDisable();
+            brain.AnimatorCompo.SetParameterDisable();
+            brain.AnimatorCompo.OnAnimationEnd();
         }
 
         protected override State OnUpdate()

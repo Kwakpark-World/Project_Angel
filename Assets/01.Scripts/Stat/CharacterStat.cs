@@ -7,69 +7,51 @@ using UnityEngine;
 public enum PlayerStatType
 {
     maxHealth,
-    currentHealth,
     defensivePower,
-    moveSpeed,
+    defenseCooldown,
     attackPower,
+    attackSpeed,
     criticalChance,
     criticalMultiplier,
-}
-
-public enum DebuffType
-{
-    Poison,
-    Freeze,
-    Knockback
+    moveSpeed,
+    rotateSpeed,
+    dashSpeed,
+    dashDuration,
+    dashCooldown,
 }
 
 public class CharacterStat : ScriptableObject
 {
     [Header("Defensive stats")]
     public Stat maxHealth; // 최대 체력
-    public Stat currentHealth; // 현재 체력
     public Stat defensivePower; // 방어력
-    public Stat moveSpeed; // 이동 속도
+    public Stat defenseCooldown; // 방어 쿨다운
 
     [Header("Offensive stats")]
     public Stat attackPower; // 공격력
+    public Stat attackSpeed; // 공격 속도
     public Stat criticalChance; // 치명타 확률
     public Stat criticalMultiplier; // 치명타 배율 
 
-    protected PlayerController _owner;
+    [Header("Move stats")]
+    public Stat moveSpeed; // 이동 속도
+    public Stat rotateSpeed; // 회전 속도
+    public Stat dashSpeed; // 대시 속도
+    public Stat dashDuration; // 대시 지속시간
+    public Stat dashCooldown; // 대시 쿨다운
 
-    private DebuffType _debuffType;
+    protected PlayerController owner;
 
-    protected Dictionary<PlayerStatType, FieldInfo> _fieldInfoDictionary = new Dictionary<PlayerStatType, FieldInfo>();
-    protected Dictionary<DebuffType, bool> debuffDictionary = new Dictionary<DebuffType, bool>();
-    protected List<Coroutine> _coroutines = new List<Coroutine>(Enum.GetValues(typeof(DebuffType)).Length);
+    protected Dictionary<PlayerStatType, FieldInfo> fieldInfoDictionary = new Dictionary<PlayerStatType, FieldInfo>();
 
     public virtual void SetOwner(PlayerController owner)
     {
-        _owner = owner;
+        this.owner = owner;
     }
 
-    public virtual void IncreaseStatBy(float modifyValue, float duration, Stat statToModify)
-    {
-        _owner.StartCoroutine(StatModifyCoroutine(modifyValue, duration, statToModify));
-    }
-
-    protected IEnumerator StatModifyCoroutine(float modifyValue, float duration, Stat statToModify)
-    {
-        statToModify.AddModifier(modifyValue);
-
-        yield return new WaitForSeconds(duration);
-
-        statToModify.RemoveModifier(modifyValue);
-    }
-
-    public float GetMaxHealthValue()
+    public float GetMaxHealth()
     {
         return maxHealth.GetValue();
-    }
-
-    public float GetCurrentHealth()
-    {
-        return currentHealth.GetValue();
     }
 
     public float GetDefensivePower()
@@ -77,9 +59,9 @@ public class CharacterStat : ScriptableObject
         return defensivePower.GetValue();
     }
 
-    public float GetMoveSpeed()
+    public float GetDefenseCooldown()
     {
-        return moveSpeed.GetValue();
+        return defenseCooldown.GetValue();
     }
 
     public float GetAttackPower()
@@ -87,81 +69,43 @@ public class CharacterStat : ScriptableObject
         return attackPower.GetValue();
     }
 
-    public void Hit(float incomingDamage)
+    public float GetAttackSpeed()
     {
-        if (!(_owner as Player).IsDefense && !(_owner as Player).IsDie)
-        {
-            currentHealth.AddModifier(-Mathf.Max(incomingDamage - GetDefensivePower(), 0f));
-        }
+        return attackSpeed.GetValue();
     }
 
-    public void Debuff(DebuffType type, float duration)
+    public float GetCriticalChance()
     {
-        _coroutines[(int)type] = _owner.StartCoroutine(DebuffCoroutine(type, duration));
+        return criticalChance.GetValue();
     }
 
-    public bool GetDebuff(DebuffType type)
+    public float GetCriticalMultiplier()
     {
-        return debuffDictionary[type];
+        return criticalMultiplier.GetValue();
     }
 
-    private IEnumerator DebuffCoroutine(DebuffType type, float duration)
+    public float GetMoveSpeed()
     {
-        debuffDictionary[type] = true;
-
-        yield return new WaitForSeconds(duration);
-
-        debuffDictionary[type] = false;
-        _coroutines[(int)type] = null;
+        return moveSpeed.GetValue();
     }
 
-    private float poisonDamage = 2;
-    private float poisonDuration = 3f;
-    private float poisonDurationTimer = -1f;
-    private float poisonDelay = 1f;
-    private float poisonDelayTimer = -1f;
-
-    public void Poison()
+    public float GetRotateSpeed()
     {
-        if (poisonDurationTimer <= 0f)
-        {
-            poisonDurationTimer = Time.time;
-            poisonDelayTimer = Time.time - poisonDelay;
-        }
-
-        if (Time.time <= poisonDurationTimer + poisonDuration)
-        {
-            if (Time.time > poisonDelayTimer + poisonDelay)
-            {
-                GameManager.Instance.player.PlayerStat.Hit(poisonDamage);
-
-                poisonDelayTimer  = Time.time;
-            }
-        }
-        else
-        {
-            poisonDurationTimer = poisonDelayTimer = -1f;
-        }
+        return rotateSpeed.GetValue();
     }
 
-    private float freezeMoveSpeedModifier = -2f;
-    private float freezeDuration = 3f;
-    private float freezeDurationTimer = -1f;
-
-    public void Freeze()
+    public float GetDashSpeed()
     {
-        if (freezeDurationTimer <= 0f)
-        {
-            freezeDurationTimer = Time.time;
+        return dashSpeed.GetValue();
+    }
 
-            moveSpeed.AddModifier(freezeMoveSpeedModifier);
-        }
+    public float GetDashDuration()
+    {
+        return dashDuration.GetValue();
+    }
 
-        if (Time.time > freezeDurationTimer + freezeDuration)
-        {
-            moveSpeed.RemoveModifier(freezeMoveSpeedModifier);
-
-            freezeDurationTimer = -1f;
-        }
+    public float GetDashCooldown()
+    {
+        return dashCooldown.GetValue();
     }
 }
