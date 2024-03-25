@@ -55,8 +55,6 @@ public abstract class PlayerController : MonoBehaviour
 
     }
 
-    
-
     protected virtual void FixedUpdate()
     {
         RigidbodyCompo.velocity += new Vector3(0, _gravity, 0) * Time.deltaTime;
