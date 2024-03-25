@@ -26,7 +26,7 @@ public class EnemyAnimator : MonoBehaviour
     private Transform _weaponTransform;
     private Brain _owner;
 
-    private Dictionary<string, AnimationTrigger> _animationTriggersByParameter = new Dictionary<string, AnimationTrigger>();
+    public Dictionary<string, AnimationTrigger> AnimationTriggersByParameter = new Dictionary<string, AnimationTrigger>();
     private Dictionary<string, bool> _animationStates = new Dictionary<string, bool>();
     private Dictionary<string, int> _parameterHashes = new Dictionary<string, int>();
     private Animator _animator;
@@ -38,7 +38,7 @@ public class EnemyAnimator : MonoBehaviour
 
         foreach (AnimationTrigger animationTrigger in animationTriggers)
         {
-            _animationTriggersByParameter.Add(animationTrigger.parameterName, animationTrigger);
+            AnimationTriggersByParameter.Add(animationTrigger.parameterName, animationTrigger);
         }
     }
 
@@ -46,9 +46,9 @@ public class EnemyAnimator : MonoBehaviour
     {
         foreach (AnimatorControllerParameter parameter in _animator.parameters)
         {
-            if (!_animationTriggersByParameter.ContainsKey(parameter.name))
+            if (!AnimationTriggersByParameter.ContainsKey(parameter.name))
             {
-                _animationTriggersByParameter.Add(parameter.name, new AnimationTrigger());
+                AnimationTriggersByParameter.Add(parameter.name, new AnimationTrigger());
             }
 
             _animationStates.Add(parameter.name, false);
@@ -107,17 +107,17 @@ public class EnemyAnimator : MonoBehaviour
 
     public void OnAnimationBegin()
     {
-        _animationTriggersByParameter[_enabledParameter].onAnimationBegin?.Invoke();
+        AnimationTriggersByParameter[_enabledParameter].onAnimationBegin?.Invoke();
     }
 
     public void OnAnimationPlaying()
     {
-        _animationTriggersByParameter[_enabledParameter].onAnimationPlaying?.Invoke();
+        AnimationTriggersByParameter[_enabledParameter].onAnimationPlaying?.Invoke();
     }
 
     public void OnAnimationEnd(int isEndOfClip = 0)
     {
-        _animationTriggersByParameter[_enabledParameter].onAnimationEnd?.Invoke();
+        AnimationTriggersByParameter[_enabledParameter].onAnimationEnd?.Invoke();
 
         if (isEndOfClip == 1)
         {
@@ -156,6 +156,13 @@ public class EnemyAnimator : MonoBehaviour
 
         DebuffPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as DebuffPotion;
         debuffPotion.owner = _owner as EnemyBrain;
+    }
+    #endregion
+
+    #region Enemy Die Function
+    public void EnemyDie()
+    {
+        PoolManager.Instance.Push(_owner, 3);
     }
     #endregion
 }
