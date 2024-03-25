@@ -88,8 +88,6 @@ public class Player : PlayerController
 
         SetMousePosInWorld();
 
-        Debug.Log(MousePosInWorld);
-
         // ����
         //if (Keyboard.current.pKey.wasPressedThisFrame)
         //{
