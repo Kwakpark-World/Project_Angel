@@ -67,10 +67,12 @@ public class Player : PlayerController
     protected override void Start()
     {
         base.Start();
+        SetPlayerModelAndAnim();
 
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
         PlayerStatInitialize();
+
     }
 
 
@@ -87,6 +89,8 @@ public class Player : PlayerController
         PlayerOnStair();
 
         SetMousePosInWorld();
+
+        Debug.Log(StateMachine.CurrentState);
 
         // ����
         //if (Keyboard.current.pKey.wasPressedThisFrame)
@@ -216,12 +220,23 @@ public class Player : PlayerController
     }
     #endregion
 
+
+    public void SetPlayerModelAndAnim()
+    {
+        _defaultVisual.SetActive(!IsAwakening);
+        _awakenVisual.SetActive(IsAwakening);
+
+        if (!IsAwakening)
+            UsingAnimatorCompo = DefaultAnimatorCompo;
+        else
+            UsingAnimatorCompo = AwakenAnimatorCompo;
+    }
+
     public void RotateToMousePos()
     {
         Vector3 dir = (MousePosInWorld - transform.position).normalized;
 
         transform.transform.rotation = Quaternion.LookRotation(dir);
-
     }
 
     private void SetMousePosInWorld()

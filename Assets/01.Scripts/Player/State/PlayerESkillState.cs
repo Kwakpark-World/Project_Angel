@@ -16,6 +16,7 @@ public class PlayerESkillState : PlayerState
         _player.StopImmediately(true);
 
         _player.StartCoroutine(PlayerAwakening());
+
     }
 
     public override void Exit()
@@ -29,6 +30,7 @@ public class PlayerESkillState : PlayerState
 
         if (_endTriggerCalled)
         {
+            _player.SetPlayerModelAndAnim();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
@@ -38,5 +40,6 @@ public class PlayerESkillState : PlayerState
         _player.IsAwakening = true;
         yield return new WaitForSeconds(_awakeningTime);
         _player.IsAwakening = false;
+        _player.SetPlayerModelAndAnim();
     }
 }

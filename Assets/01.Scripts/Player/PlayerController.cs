@@ -19,10 +19,14 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField] private float _stairHeight;
     [SerializeField] private float _stairMoveSmooth;
 
+    [Header("Awaken Parameters")]
+    [SerializeField] protected GameObject _defaultVisual;
+    [SerializeField] protected GameObject _awakenVisual;
+
     #region components
-    public Animator UsingAnimatorCompo { get; private set; }
-    private Animator DefaultAnimatorCompo;
-    private Animator AwakenAnimatorCompo;
+    public Animator UsingAnimatorCompo { get; set; }
+    protected Animator DefaultAnimatorCompo;
+    protected Animator AwakenAnimatorCompo;
 
     public Rigidbody RigidbodyCompo { get; private set; }
     public CapsuleCollider ColliderCompo { get; private set; }
@@ -60,18 +64,7 @@ public abstract class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (UsingAnimatorCompo == DefaultAnimatorCompo)
-            {
-                UsingAnimatorCompo = AwakenAnimatorCompo;
-            }
-            else
-            {
-                UsingAnimatorCompo = DefaultAnimatorCompo;
-            }
-            
-        }
+        
     }
 
     
