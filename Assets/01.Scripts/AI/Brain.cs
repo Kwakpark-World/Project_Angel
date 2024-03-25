@@ -97,6 +97,7 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnDie()
     {
-        PoolManager.Instance.Push(this);
+        AnimatorCompo.SetParameterEnable("isDie");
+        Debug.Log("3");
     }
 }

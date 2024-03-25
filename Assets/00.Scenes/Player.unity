@@ -248,6 +248,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerTransform: {fileID: 0}
+  SpawnWave: 0
+  EnemySpawnCount: 0
+  DieEnemyCount: 0
 --- !u!1 &522827361
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,18 +688,22 @@ MonoBehaviour:
   _stairLowerCheckDistance: 0
   _stairHeight: 0
   _stairMoveSmooth: 0
-  <CharStat>k__BackingField: {fileID: 11400000, guid: 2d8f987c0db816249b696fc32bb953cc,
-    type: 2}
+  <PlayerStatData>k__BackingField: {fileID: 0}
+  <CurrentHealth>k__BackingField: 0
   _gravity: -9.8
   moveSpeed: 5
   rotationSpeed: 1
   dashDuration: 0.4
   dashSpeed: 20
+  attackPower: 0
   attackSpeed: 10
   attackMovement:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  criticalChance: 0
+  criticalMultiplier: 0
+  defensivePower: 0
   defenseTime: 3
   dashCoolTime: 0.5
   defenseCoolTime: 1
@@ -19042,6 +19049,7 @@ GameObject:
   - component: {fileID: 8150357299733098843}
   - component: {fileID: 8150357299733098844}
   - component: {fileID: 8150357299733098845}
+  - component: {fileID: 8150357299733098846}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -19122,17 +19130,22 @@ MonoBehaviour:
   _stairLowerCheckDistance: 0.3
   _stairHeight: 0.6
   _stairMoveSmooth: 0.1
-  <CharStat>k__BackingField: {fileID: 11400000, guid: 2d8f987c0db816249b696fc32bb953cc,
+  <PlayerStatData>k__BackingField: {fileID: 11400000, guid: 2d8f987c0db816249b696fc32bb953cc,
     type: 2}
+  <CurrentHealth>k__BackingField: 0
   _gravity: -9.8
   moveSpeed: 5.5
   rotationSpeed: 4
   dashDuration: 0.4
   dashSpeed: 5
+  attackPower: 0
   attackSpeed: 1
   attackMovement:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  criticalChance: 0
+  criticalMultiplier: 0
+  defensivePower: 0
   defenseTime: 3
   dashCoolTime: 1
   defenseCoolTime: 1
@@ -19159,6 +19172,19 @@ MonoBehaviour:
   shaderVarRef: _Alpha
   shaderVarRate: 0.1
   shaderVarRefreshRate: 0.05
+--- !u!114 &8150357299733098846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8150357299733098841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007e9285b573e1f4a9c9e3d8b139c844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DebuffStatData>k__BackingField: {fileID: 0}
 --- !u!4 &8183323866686868730
 Transform:
   m_ObjectHideFlags: 0
