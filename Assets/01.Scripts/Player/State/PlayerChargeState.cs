@@ -15,6 +15,8 @@ public class PlayerChargeState : PlayerState
     {
         base.Enter();
         _player.StopImmediately(false);
+        _player.RotateToMousePos();
+
         _clickTimer = 0;
     }
 

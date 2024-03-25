@@ -40,6 +40,8 @@ public class Player : PlayerController
     public bool IsAwakening { get; set; }
     public bool IsPlayerStop { get; set; }
 
+    public Vector3 MousePosInWorld { get; private set; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -84,11 +86,16 @@ public class Player : PlayerController
 
         PlayerOnStair();
 
+        SetMousePosInWorld();
+
+        Debug.Log(MousePosInWorld);
+
         // ����
         //if (Keyboard.current.pKey.wasPressedThisFrame)
         //{
         //    PlayerStat.IncreaseStatBy(10, 4f, PlayerStat.GetStatByType(StatType.strength));
         //}
+
     }
 
     protected override void FixedUpdate()
@@ -125,11 +132,7 @@ public class Player : PlayerController
         }
     }
 
-    private void OnDie()
-    {
-        StateMachine.ChangeState(PlayerStateEnum.Die);
-    }
-
+    #region Player Stat Func
     private void PlayerStatInitialize()
     {
         CurrentHealth = PlayerStatData.GetMaxHealth();
@@ -146,6 +149,27 @@ public class Player : PlayerController
         dashCoolTime = PlayerStatData.GetDashCooldown();
     }
 
+    public void SetPlayerStat(PlayerStatType stat, float value)
+    {
+        PlayerStatData.GetStatByType(stat).AddModifier(value);
+    }
+    #endregion
+
+    #region Player State Func
+    private void OnDie()
+    {
+        StateMachine.ChangeState(PlayerStateEnum.Die);
+    }
+
+    private void PlayerOnStair()
+    {
+        if (IsStair)
+            if (IsGroundDetected())
+                IsStair = false;
+    }
+#endregion
+
+    #region handling input
     private void PlayerDefense()
     {
         if (PlayerInput.isDefense)
@@ -167,15 +191,6 @@ public class Player : PlayerController
         }
     }
 
-    private void PlayerOnStair()
-    {
-        if (IsStair)
-            if (IsGroundDetected())
-                IsStair = false;
-    }
-
-
-    #region handling input
     private void HandleDashEvent()
     {
         if (dashCoolTime + dashPrevTime > Time.time) return;
@@ -203,8 +218,24 @@ public class Player : PlayerController
     }
     #endregion
 
-    public void SetPlayerStat(PlayerStatType stat, float value)
+    public void RotateToMousePos()
     {
-        PlayerStatData.GetStatByType(stat).AddModifier(value);
+        Vector3 dir = (MousePosInWorld - transform.position).normalized;
+
+        transform.transform.rotation = Quaternion.LookRotation(dir);
+
+    }
+
+    private void SetMousePosInWorld()
+    {
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(PlayerInput.MousePos);
+
+        RaycastHit hit;
+        if (Physics.Raycast(worldPos, Camera.main.transform.forward, out hit, 3000f, _whatIsGround))
+        {
+            MousePosInWorld = hit.point;
+        }
+
+        Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
 }

@@ -46,7 +46,6 @@ public abstract class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-
         InitStairCheckPos();
     }
 

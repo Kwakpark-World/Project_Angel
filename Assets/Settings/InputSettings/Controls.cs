@@ -89,6 +89,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePos"",
+                    ""type"": ""Value"",
+                    ""id"": ""4c2b6f11-a8f4-4857-b3ca-0cd748a3716b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -212,6 +221,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""ESkill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""386392b4-c7a1-43fd-9eaf-2b2163893cf9"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -244,6 +264,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Defense = m_Player.FindAction("Defense", throwIfNotFound: true);
         m_Player_QSkill = m_Player.FindAction("QSkill", throwIfNotFound: true);
         m_Player_ESkill = m_Player.FindAction("ESkill", throwIfNotFound: true);
+        m_Player_MousePos = m_Player.FindAction("MousePos", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -312,6 +333,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Defense;
     private readonly InputAction m_Player_QSkill;
     private readonly InputAction m_Player_ESkill;
+    private readonly InputAction m_Player_MousePos;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -323,6 +345,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Defense => m_Wrapper.m_Player_Defense;
         public InputAction @QSkill => m_Wrapper.m_Player_QSkill;
         public InputAction @ESkill => m_Wrapper.m_Player_ESkill;
+        public InputAction @MousePos => m_Wrapper.m_Player_MousePos;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -353,6 +376,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ESkill.started += instance.OnESkill;
             @ESkill.performed += instance.OnESkill;
             @ESkill.canceled += instance.OnESkill;
+            @MousePos.started += instance.OnMousePos;
+            @MousePos.performed += instance.OnMousePos;
+            @MousePos.canceled += instance.OnMousePos;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -378,6 +404,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ESkill.started -= instance.OnESkill;
             @ESkill.performed -= instance.OnESkill;
             @ESkill.canceled -= instance.OnESkill;
+            @MousePos.started -= instance.OnMousePos;
+            @MousePos.performed -= instance.OnMousePos;
+            @MousePos.canceled -= instance.OnMousePos;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -413,5 +442,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDefense(InputAction.CallbackContext context);
         void OnQSkill(InputAction.CallbackContext context);
         void OnESkill(InputAction.CallbackContext context);
+        void OnMousePos(InputAction.CallbackContext context);
     }
 }

@@ -16,6 +16,7 @@ public class PlayerDefenseState : PlayerState
         _player.IsDefense = true;
         _player.StopImmediately(false);
 
+        _player.RotateToMousePos();
     }
 
     public override void Exit()
