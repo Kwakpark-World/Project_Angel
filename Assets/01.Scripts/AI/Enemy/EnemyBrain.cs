@@ -28,6 +28,7 @@ public class EnemyBrain : Brain
     public override void OnDie()
     {
         AnimatorCompo.SetParameterEnable("isDie");
+
         GameManager.Instance.DieEnemyCount++;
 
         if(GameManager.Instance.DieEnemyCount < 10)

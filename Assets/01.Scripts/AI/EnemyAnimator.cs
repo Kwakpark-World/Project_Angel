@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,14 +15,11 @@ public struct AnimationTrigger
     public UnityEvent onAnimationPlaying;
     [Space(10)]
     public UnityEvent onAnimationEnd;
-    [Space(10)] 
-    public UnityEvent onHitAnimation;
 }
 
 [RequireComponent(typeof(Animator))]
 public class EnemyAnimator : MonoBehaviour
 {
-    private AnimationTrigger hitAnimationTrigger;
     public List<AnimationTrigger> animationTriggers = new List<AnimationTrigger>();
 
     [SerializeField]
@@ -98,7 +94,6 @@ public class EnemyAnimator : MonoBehaviour
 
             _animationStates[_enabledParameter] = false;
             _enabledParameter = "isIdle";
-            Debug.Log("3");
         }
     }
 

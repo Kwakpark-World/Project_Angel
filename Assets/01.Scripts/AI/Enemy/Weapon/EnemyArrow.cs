@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyArrow : PoolableMono
 {
     [SerializeField]
+    private int _lifetime = 5;
+    [SerializeField]
     private float _speed = 10f;
     [SerializeField]
     private float _rotateSpeed = 100f;
@@ -40,5 +42,7 @@ public class EnemyArrow : PoolableMono
         Vector3 direction = new Vector3(GameManager.Instance.playerTransform.position.x - transform.position.x, 0f, GameManager.Instance.playerTransform.position.z - transform.position.z).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = lookRotation;
+
+        PoolManager.Instance.Push(this, _lifetime);
     }
 }
