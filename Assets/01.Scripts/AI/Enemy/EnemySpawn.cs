@@ -50,11 +50,10 @@ public class EnemySpawn : MonoBehaviour
                     enemy = PoolManager.Instance.Pop(PoolingType.WitchEnemy) as EnemyBrain;
                 }*/
 
-                enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy) as EnemyBrain;
+                enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy, spawnPosition) as EnemyBrain;
 
                 if (enemy != null)
                 {
-                    enemy.transform.position = spawnPosition;
                     GameManager.Instance.EnemySpawnCount++;
                     //Debug.Log(GameManager.Instance.EnemySpawnCount);
                 }

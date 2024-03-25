@@ -70,10 +70,6 @@ public class EnemyAnimator : MonoBehaviour
             return;
         }
 
-        _animator.SetBool(_parameterHashes[parameterName], true);
-
-        _animationStates[parameterName] = true;
-
         if (_enabledParameter != "isIdle")
         {
             _animator.SetBool(_parameterHashes[_enabledParameter], false);
@@ -82,6 +78,10 @@ public class EnemyAnimator : MonoBehaviour
         }
 
         _enabledParameter = parameterName;
+
+        _animator.SetBool(_parameterHashes[parameterName], true);
+
+        _animationStates[parameterName] = true;
     }
 
     public void SetParameterDisable()
