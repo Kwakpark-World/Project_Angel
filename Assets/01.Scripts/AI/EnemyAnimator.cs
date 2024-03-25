@@ -82,8 +82,6 @@ public class EnemyAnimator : MonoBehaviour
         }
 
         _enabledParameter = parameterName;
-
-        
     }
 
     public void SetParameterDisable()

@@ -19,7 +19,6 @@ public abstract class Brain : PoolableMono
 {
     public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
-    public ParticleSystem HitParticle;
 
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -89,14 +88,11 @@ public abstract class Brain : PoolableMono
     public virtual void OnHit(float incomingDamage)
     {
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
-        HitParticle.Play();
         
         if (CurrentHealth <= 0f)
         {
             OnDie();
-            
         }
-
     }
 
     public virtual void OnDie()
