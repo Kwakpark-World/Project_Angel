@@ -27,7 +27,7 @@ public class PlayerState
     {
         _endTriggerCalled = false;
         _actionTriggerCalled = false;
-        _player.AnimatorCompo.SetBool(_animBoolHash, true);
+        _player.UsingAnimatorCompo.SetBool(_animBoolHash, true);
     }
 
     public virtual void UpdateState()
@@ -37,12 +37,12 @@ public class PlayerState
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
 
-        _player.AnimatorCompo.SetFloat(_yVelocityHash, _rigidbody.velocity.y);
+        _player.UsingAnimatorCompo.SetFloat(_yVelocityHash, _rigidbody.velocity.y);
     }
 
     public virtual void Exit()
     {
-        _player.AnimatorCompo.SetBool(_animBoolHash, false);
+        _player.UsingAnimatorCompo.SetBool(_animBoolHash, false);
     }
 
     public void AnimationEndTrigger()

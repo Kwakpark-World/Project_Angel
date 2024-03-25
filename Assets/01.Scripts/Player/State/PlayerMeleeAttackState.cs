@@ -33,9 +33,9 @@ public class PlayerMeleeAttackState : PlayerState
         if (_comboCounter >= 2 || Time.time >= _lastAttackTime + _comboWindow)
             _comboCounter = 0; // ÄÞº¸ ÃÊ±âÈ­
 
-        _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
+        _player.UsingAnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
 
-        _player.AnimatorCompo.speed = _player.attackSpeed;
+        _player.UsingAnimatorCompo.speed = _player.attackSpeed;
 
         float xInput = _player.PlayerInput.XInput;
 
@@ -55,7 +55,7 @@ public class PlayerMeleeAttackState : PlayerState
         _player.IsAttack = false;
         ++_comboCounter;
         _lastAttackTime = Time.time;
-        _player.AnimatorCompo.speed = 1f;
+        _player.UsingAnimatorCompo.speed = 1f;
         base.Exit();
     }
 

@@ -20,7 +20,10 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField] private float _stairMoveSmooth;
 
     #region components
-    public Animator AnimatorCompo { get; private set; }
+    public Animator UsingAnimatorCompo { get; private set; }
+    private Animator DefaultAnimatorCompo;
+    private Animator AwakenAnimatorCompo;
+
     public Rigidbody RigidbodyCompo { get; private set; }
     public CapsuleCollider ColliderCompo { get; private set; }
 
@@ -34,7 +37,11 @@ public abstract class PlayerController : MonoBehaviour
     protected virtual void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
-        AnimatorCompo = visualTrm.GetComponent<Animator>();
+        Transform awakenvisualTrm = transform.Find("AwakenVisual");
+        DefaultAnimatorCompo = visualTrm.GetComponent<Animator>();
+        AwakenAnimatorCompo = awakenvisualTrm.GetComponent <Animator>();
+
+
         RigidbodyCompo = GetComponent<Rigidbody>();
         ColliderCompo = GetComponent<CapsuleCollider>();
 
@@ -46,12 +53,25 @@ public abstract class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
+        UsingAnimatorCompo = DefaultAnimatorCompo;
+
         InitStairCheckPos();
     }
 
     protected virtual void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (UsingAnimatorCompo == DefaultAnimatorCompo)
+            {
+                UsingAnimatorCompo = AwakenAnimatorCompo;
+            }
+            else
+            {
+                UsingAnimatorCompo = DefaultAnimatorCompo;
+            }
+            
+        }
     }
 
     
