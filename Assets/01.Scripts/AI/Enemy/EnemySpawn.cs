@@ -37,7 +37,7 @@ public class EnemySpawn : MonoBehaviour
                 EnemyBrain enemy = null;
 
 
-                if (randomValue < 0.35f) // 30% 확률로 기사
+                /*if (randomValue < 0.35f) // 30% 확률로 기사
                 {
                     enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy) as EnemyBrain;
                 }
@@ -48,8 +48,9 @@ public class EnemySpawn : MonoBehaviour
                 else // 나머지 확률로 마법사
                 {
                     enemy = PoolManager.Instance.Pop(PoolingType.WitchEnemy) as EnemyBrain;
-                }
+                }*/
 
+                enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy) as EnemyBrain;
 
                 if (enemy != null)
                 {

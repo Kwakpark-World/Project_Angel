@@ -23,7 +23,6 @@ public struct AnimationTrigger
 [RequireComponent(typeof(Animator))]
 public class EnemyAnimator : MonoBehaviour
 {
-    private AnimationTrigger hitAnimationTrigger;
     public List<AnimationTrigger> animationTriggers = new List<AnimationTrigger>();
 
     [SerializeField]
@@ -86,8 +85,6 @@ public class EnemyAnimator : MonoBehaviour
         }
 
         _enabledParameter = parameterName;
-
-        
     }
 
     public void SetParameterDisable()
@@ -98,7 +95,6 @@ public class EnemyAnimator : MonoBehaviour
 
             _animationStates[_enabledParameter] = false;
             _enabledParameter = "isIdle";
-            Debug.Log("3");
         }
     }
 

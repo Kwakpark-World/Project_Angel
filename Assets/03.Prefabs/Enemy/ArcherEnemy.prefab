@@ -398,7 +398,6 @@ MonoBehaviour:
   poolingType: 2
   enemyTypes: 1
   treeRunner: {fileID: 2239701676978896079}
-  HitParticle: {fileID: 892486337794296865}
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 46e50af425a1ebd4f987bfb17bcd6fcb,
     type: 2}
   <CurrentHealth>k__BackingField: 0
@@ -450,6 +449,9 @@ MonoBehaviour:
             m_StringArgument: isAttack
             m_BoolArgument: 0
           m_CallState: 2
+    onHitAnimation:
+      m_PersistentCalls:
+        m_Calls: []
   - parameterName: isAttack
     onAnimationBegin:
       m_PersistentCalls:
@@ -472,26 +474,20 @@ MonoBehaviour:
     onAnimationEnd:
       m_PersistentCalls:
         m_Calls: []
+    onHitAnimation:
+      m_PersistentCalls:
+        m_Calls: []
   - parameterName: isHit
     onAnimationBegin:
       m_PersistentCalls:
         m_Calls: []
     onAnimationPlaying:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 622666673205443404}
-          m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
-          m_MethodName: OnAnimatorHit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
     onAnimationEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    onHitAnimation:
       m_PersistentCalls:
         m_Calls: []
   _weaponTransform: {fileID: 1190311309381994702}
@@ -2515,12 +2511,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cf2a41e55fe2bf4cb4aa3c71a210e2c, type: 3}
---- !u!198 &892486337794296865 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8430974243682601175, guid: 1cf2a41e55fe2bf4cb4aa3c71a210e2c,
-    type: 3}
-  m_PrefabInstance: {fileID: 8746669973234320630}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1409293632926168987 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7704736369448170349, guid: 1cf2a41e55fe2bf4cb4aa3c71a210e2c,
