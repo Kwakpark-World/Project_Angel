@@ -14,7 +14,7 @@ public class PlayerMeleeAttackState : PlayerState
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
     private HashSet<RaycastHit> _enemyDuplicateCheck = new HashSet<RaycastHit>();
-    private LayerMask _enemyLayer = LayerMask.GetMask("Enemy");
+    private float _hitDistance = 2.8f; // 2.4가 검크기.
 
     private Transform _weaponRayPoint;
     
@@ -66,18 +66,22 @@ public class PlayerMeleeAttackState : PlayerState
     {
         base.UpdateState();
 
+
         Vector3 dir = (_weaponRayPoint.position - _player._currentWeapon.transform.position).normalized;
 
-        Debug.DrawRay(_player._currentWeapon.transform.position, dir * 2.4f, Color.blue);
-        RaycastHit[] enemies = Physics.RaycastAll(_player._currentWeapon.transform.position, dir, 2.4f, _enemyLayer);
-
-        foreach(var enemy in enemies)
+        Debug.DrawRay(_player._currentWeapon.transform.position, dir * _hitDistance, Color.blue);
+        if (_isHitAbleCalled)
         {
-            if (_enemyDuplicateCheck.Add(enemy))
+            RaycastHit[] enemies = Physics.RaycastAll(_player._currentWeapon.transform.position, dir, _hitDistance, _player._enemyLayer);
+    
+            foreach(var enemy in enemies)
             {
-                if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
+                if (_enemyDuplicateCheck.Add(enemy))
                 {
-                    brain.OnHit(_player.attackPower);
+                    if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
+                    {
+                        brain.OnHit(_player.attackPower);
+                    }
                 }
             }
         }

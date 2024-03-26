@@ -15,6 +15,8 @@ public class Player : PlayerController
     private GameObject[] _weapons;
     public GameObject _currentWeapon;
 
+    public LayerMask _enemyLayer;
+
     public float attackPower;
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
@@ -229,6 +231,11 @@ public class Player : PlayerController
     public void AnimationActionTrigger()
     {
         StateMachine.CurrentState.AnimationActionTrigger();
+    }
+
+    public void AnimationHitAbleTrigger()
+    {
+        StateMachine.CurrentState.AnimationHitAbleTrigger();
     }
     #endregion
 

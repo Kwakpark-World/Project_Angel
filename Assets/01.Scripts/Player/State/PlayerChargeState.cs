@@ -29,6 +29,8 @@ public class PlayerChargeState : PlayerState
     {
         base.UpdateState();
 
+        _clickTimer = Mathf.Clamp01(_clickTimer);
+        
         if (!_player.PlayerInput.isCharge)
         {
             if (_clickTimer < 0.7f)
@@ -37,7 +39,14 @@ public class PlayerChargeState : PlayerState
                 _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
         }
         else
+        {
             _clickTimer += Time.deltaTime;
+
+            if (_clickTimer >= 1)
+            {
+                _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
+            }
+        }
 
     }
 }
