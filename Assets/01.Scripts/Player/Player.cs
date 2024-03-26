@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -11,6 +12,9 @@ public class Player : PlayerController
     public float dashSpeed = 20f;
 
     [Header("Attack Settings")]
+    private GameObject[] _weapons;
+    public GameObject _currentWeapon;
+
     public float attackPower;
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
@@ -57,6 +61,8 @@ public class Player : PlayerController
             PlayerState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PlayerState;
             StateMachine.AddState(stateEnum, newState);
         }
+
+        _weapons = GameObject.FindGameObjectsWithTag("Weapon");
     }
 
     protected void OnEnable()
@@ -73,6 +79,8 @@ public class Player : PlayerController
         PlayerStatData.InitializeAllModifiers();
         PlayerStatInitialize();
 
+
+        
     }
 
 
@@ -90,7 +98,11 @@ public class Player : PlayerController
 
         SetMousePosInWorld();
 
-        Debug.Log(StateMachine.CurrentState);
+        // ¹Ù´Ú¿¡ ´¯´Â°Å ¹æÁöÀÓ;; ´¯´Â ÀÌÀ¯ ¾Ë¸é µð¿¥Á»..
+        if (transform.rotation.x > 0.707 && transform.rotation.x < 0.709)
+        {
+            transform.rotation = Quaternion.LookRotation(Vector3.zero);
+        }
 
         // ï¿½ï¿½ï¿½ï¿½
         //if (Keyboard.current.pKey.wasPressedThisFrame)
@@ -226,10 +238,18 @@ public class Player : PlayerController
         _defaultVisual.SetActive(!IsAwakening);
         _awakenVisual.SetActive(IsAwakening);
 
+        //StateMachine.ChangeState(PlayerStateEnum.Idle);
+
         if (!IsAwakening)
+        {
             UsingAnimatorCompo = DefaultAnimatorCompo;
+            _currentWeapon = _weapons[1];
+        }
         else
+        {
             UsingAnimatorCompo = AwakenAnimatorCompo;
+            _currentWeapon = _weapons[0];
+        }
     }
 
     public void RotateToMousePos()
@@ -251,4 +271,5 @@ public class Player : PlayerController
 
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
+
 }
