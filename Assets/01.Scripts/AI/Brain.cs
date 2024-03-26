@@ -88,7 +88,9 @@ public abstract class Brain : PoolableMono
     public virtual void OnHit(float incomingDamage)
     {
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
-        
+
+        AnimatorCompo.SetParameterEnable("isHit");
+
         if (CurrentHealth <= 0f)
         {
             OnDie();

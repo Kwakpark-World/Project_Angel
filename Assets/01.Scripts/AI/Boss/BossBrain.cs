@@ -32,11 +32,4 @@ public class BossBrain : Brain
 
         _patternAmount = EnemyStatData.GetPatternAmount();
     }
-
-    public override void OnDie()
-    {
-        AnimatorCompo.SetParameterEnable("isDie");
-
-        base.OnDie();
-    }
 }

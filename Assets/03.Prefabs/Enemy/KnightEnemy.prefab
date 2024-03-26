@@ -67174,9 +67174,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onAnimationEnd:
-      m_PersistentCalls:
-        m_Calls:
         - m_Target: {fileID: 2675724404306327908}
           m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
           m_MethodName: EnemyDie
@@ -67189,6 +67186,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    onAnimationEnd:
+      m_PersistentCalls:
+        m_Calls: []
   _weaponTransform: {fileID: 0}
 --- !u!1 &7945950438161889326
 GameObject:

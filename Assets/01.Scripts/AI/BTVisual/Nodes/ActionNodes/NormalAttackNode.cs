@@ -11,6 +11,11 @@ namespace BTVisual
 
         protected override void OnStart()
         {
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
+            {
+                return;
+            }
+
             if (_normalAttack == null)
             {
                 normalAttackObject = Instantiate(normalAttackObject, brain.transform);
@@ -27,11 +32,21 @@ namespace BTVisual
 
         protected override void OnStop()
         {
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
+            {
+                return;
+            }
+
             _normalAttack.OnStop();
         }
 
         protected override State OnUpdate()
         {
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
+            {
+                return State.Failure;
+            }
+
             if (!brain.NavMeshAgentCompo.isStopped)
             {
                 brain.NavMeshAgentCompo.isStopped = true;

@@ -513,12 +513,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onAnimationEnd:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7547514060666891137}
-          m_TargetAssemblyTypeName: EnemyBrain, Assembly-CSharp
-          m_MethodName: OnDie
+        - m_Target: {fileID: 622666673205443404}
+          m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
+          m_MethodName: EnemyDie
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -528,6 +525,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    onAnimationEnd:
+      m_PersistentCalls:
+        m_Calls: []
   _weaponTransform: {fileID: 1190311309381994702}
 --- !u!1 &1110273334419338988
 GameObject:
@@ -2542,6 +2542,16 @@ PrefabInstance:
     - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549429806326240002, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656187644127726508, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
