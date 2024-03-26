@@ -16,40 +16,56 @@ namespace BTVisual
         protected override void OnStart()
         {
             _patrolDestination = Vector3.zero;
-            context.agent.isStopped = false;
-            context.agent.destination = blackboard.home;
+            brain.NavMeshAgentCompo.destination = blackboard.home;
             _isReturnHome = true;
 
             if (_detectRange <= 0f)
             {
                 _detectRange = brain.EnemyStatData.GetDetectRange();
             }
-
-            brain.AnimatorCompo.SetParameterEnable("isMove");
         }
 
         protected override void OnStop()
         {
-            brain.AnimatorCompo.SetParameterDisable();
-            brain.AnimatorCompo.OnAnimationEnd();
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
+            {
+                return;
+            }
+
+            brain.AnimatorCompo.OnAnimationEnd(1);
         }
 
         protected override State OnUpdate()
         {
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
+            {
+                return State.Failure;
+            }
+
+            if (brain.NavMeshAgentCompo.isStopped)
+            {
+                brain.NavMeshAgentCompo.isStopped = false;
+            }
+
+            if (!brain.AnimatorCompo.GetParameterState("isMove"))
+            {
+                brain.AnimatorCompo.SetParameterEnable("isMove");
+            }
+
             if ((GameManager.Instance.playerTransform.position - brain.transform.position).sqrMagnitude > _detectRange * _detectRange)
             {
-                if (context.agent.remainingDistance <= Mathf.Epsilon)
+                if (brain.NavMeshAgentCompo.remainingDistance <= Mathf.Epsilon)
                 {
                     _isReturnHome = !_isReturnHome;
 
                     if (_isReturnHome)
                     {
-                        context.agent.destination = blackboard.home;
+                        brain.NavMeshAgentCompo.destination = blackboard.home;
                     }
                     else
                     {
                         _patrolDestination = Random.insideUnitCircle.normalized * _patrolRange;
-                        context.agent.destination = blackboard.home + new Vector3(_patrolDestination.x, 0f, _patrolDestination.y);
+                        brain.NavMeshAgentCompo.destination = blackboard.home + new Vector3(_patrolDestination.x, 0f, _patrolDestination.y);
                     }
                 }
 

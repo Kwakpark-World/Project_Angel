@@ -11,10 +11,14 @@ namespace BTVisual
 
         protected override void OnStart()
         {
-            context.agent.isStopped = true;
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
+            {
+                return;
+            }
 
             if (_normalAttack == null)
             {
+                normalAttackObject = Instantiate(normalAttackObject, brain.transform);
                 _normalAttack = normalAttackObject.GetComponent<Pattern>();
             }
 
@@ -28,11 +32,26 @@ namespace BTVisual
 
         protected override void OnStop()
         {
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
+            {
+                return;
+            }
+
             _normalAttack.OnStop();
         }
 
         protected override State OnUpdate()
         {
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
+            {
+                return State.Failure;
+            }
+
+            if (!brain.NavMeshAgentCompo.isStopped)
+            {
+                brain.NavMeshAgentCompo.isStopped = true;
+            }
+
             if (Time.time <= brain.NormalAttackTimer + brain.EnemyStatData.GetAttackDelay())
             {
                 return State.Running;

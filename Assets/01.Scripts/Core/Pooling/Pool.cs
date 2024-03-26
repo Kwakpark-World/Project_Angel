@@ -27,6 +27,11 @@ public class Pool<T> where T : PoolableMono
 
     public void Push(T item)
     {
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+
         item.gameObject.SetActive(false);
         _pool.Push(item);
     }

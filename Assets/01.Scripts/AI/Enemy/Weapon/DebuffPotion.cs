@@ -7,6 +7,8 @@ public class DebuffPotion : PoolableMono
     [SerializeField]
     private DebuffType _debuffType;
     [SerializeField]
+    private int _lifetime = 5;
+    [SerializeField]
     private float _speed = 10f;
     public EnemyBrain owner;
     private Rigidbody _rigidbody;
@@ -52,5 +54,7 @@ public class DebuffPotion : PoolableMono
         Vector3 direction = new Vector3(GameManager.Instance.playerTransform.position.x - transform.position.x, 0f, GameManager.Instance.playerTransform.position.z - transform.position.z).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = lookRotation;
+
+        PoolManager.Instance.Push(this, _lifetime);
     }
 }

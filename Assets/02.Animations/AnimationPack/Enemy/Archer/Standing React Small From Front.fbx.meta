@@ -46,10 +46,10 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -57,8 +57,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.46484375
+      - time: 0.43009472
         functionName: OnAnimationPlaying
+        data: 
+        objectReferenceParameter: {fileID: 1018224002886869823, guid: fb096304ebc8b0f4bbd0b3115798bd75,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OnAnimationEnd
         data: 
         objectReferenceParameter: {fileID: 1018224002886869823, guid: fb096304ebc8b0f4bbd0b3115798bd75,
           type: 3}

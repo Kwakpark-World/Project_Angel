@@ -10,31 +10,45 @@ namespace BTVisual
 
         protected override void OnStart()
         {
-            context.agent.isStopped = false;
-
             if (_attackRange <= 0f)
             {
                 _attackRange = brain.EnemyStatData.GetAttackRange();
             }
-
-            brain.AnimatorCompo.SetParameterEnable("isMove");
         }
 
         protected override void OnStop()
         {
-            brain.AnimatorCompo.SetParameterDisable();
-            brain.AnimatorCompo.OnAnimationEnd();
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
+            {
+                return;
+            }
+
+            brain.AnimatorCompo.OnAnimationEnd(1);
         }
 
         protected override State OnUpdate()
         {
-            if (context.agent.destination != GameManager.Instance.playerTransform.position)
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
             {
-                context.agent.destination = GameManager.Instance.playerTransform.position;
+                return State.Failure;
             }
 
-            if (context.agent.remainingDistance > _attackRange)
+            if (brain.NavMeshAgentCompo.isStopped)
             {
+                brain.NavMeshAgentCompo.isStopped = false;
+            }
+
+            brain.NavMeshAgentCompo.destination = GameManager.Instance.playerTransform.position;
+
+            if (!brain.AnimatorCompo.GetParameterState("isMove"))
+            {
+                brain.AnimatorCompo.SetParameterEnable("isMove");
+            }
+
+            if (brain.NavMeshAgentCompo.remainingDistance > _attackRange)
+            {
+
+                Debug.Log(brain.NavMeshAgentCompo.isStopped);
                 return State.Running;
             }
 
