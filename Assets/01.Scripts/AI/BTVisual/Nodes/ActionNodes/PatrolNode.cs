@@ -27,21 +27,11 @@ namespace BTVisual
 
         protected override void OnStop()
         {
-            if (brain.AnimatorCompo.GetParameterState("isDie"))
-            {
-                return;
-            }
-
-            brain.AnimatorCompo.OnAnimationEnd(1);
+            brain.AnimatorCompo.OnAnimationEnd();
         }
 
         protected override State OnUpdate()
         {
-            if (brain.AnimatorCompo.GetParameterState("isDie"))
-            {
-                return State.Failure;
-            }
-
             if (brain.NavMeshAgentCompo.isStopped)
             {
                 brain.NavMeshAgentCompo.isStopped = false;

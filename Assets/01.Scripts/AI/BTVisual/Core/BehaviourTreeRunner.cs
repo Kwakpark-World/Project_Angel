@@ -16,6 +16,11 @@ namespace BTVisual
 
         private void Update()
         {
+            if (brain.CurrentHealth <= 0f)
+            {
+                return;
+            }
+
             tree.Update();
         }
     }

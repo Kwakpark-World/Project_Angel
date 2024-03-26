@@ -59,6 +59,12 @@ public abstract class Brain : PoolableMono
 
     public override void InitializePoolingItem()
     {
+        if (NavMeshAgentCompo)
+        {
+            NavMeshAgentCompo.isStopped = false;
+        }
+
+        AnimatorCompo?.SetParameterDisable();
         EnemyStatData.InitializeAllModifiers();
 
         CurrentHealth = EnemyStatData.GetMaxHealth();
@@ -87,19 +93,25 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage)
     {
+        if (CurrentHealth <= 0f)
+        {
+            return;
+        }
+
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
 
         AnimatorCompo.SetParameterEnable("isHit");
-
-        if (CurrentHealth <= 0f)
-        {
-            OnDie();
-        }
     }
 
     public virtual void OnDie()
     {
+        if (CurrentHealth > 0f)
+        {
+            return;
+        }
+
+        NavMeshAgentCompo.isStopped = true;
+
         AnimatorCompo.SetParameterEnable("isDie");
-        Debug.Log("3");
     }
 }
