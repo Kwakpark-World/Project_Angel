@@ -432,6 +432,7 @@ Transform:
   - {fileID: 7222544832600234641}
   - {fileID: 749799148613844234}
   - {fileID: 6389101404939370608}
+  - {fileID: 1461864454144538840}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &3352882641525066605
@@ -692,7 +693,31 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 8974455026280469752}
           m_TargetAssemblyTypeName: UnityEngine.VFX.VisualEffect, UnityEngine
-          m_MethodName: Play
+          m_MethodName: Reinit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 8974455026280469752}
+          m_TargetAssemblyTypeName: UnityEngine.Component, UnityEngine
+          m_MethodName: BroadcastMessage
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 7092474217215256077}
+          m_TargetAssemblyTypeName: EnemyBrain, Assembly-CSharp
+          m_MethodName: OnDie
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -712,8 +737,7 @@ MonoBehaviour:
     onAnimationPlaying:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8656187644127726508, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
-            type: 3}
+        - m_Target: {fileID: 5692719403678464599}
           m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
           m_MethodName: Play
           m_Mode: 1
@@ -727,7 +751,7 @@ MonoBehaviour:
           m_CallState: 2
         - m_Target: {fileID: 7685313126988761920}
           m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
-          m_MethodName: EnemyDie
+          m_MethodName: EnemyDieProcess
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2376,6 +2400,86 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4374814530320386435}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3972296840415654395
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2632167124312192695}
+    m_Modifications:
+    - target: {fileID: 2225297037483996674, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyBlood
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d6ab9e35bc49b7e46a4c122307a1e3e9, type: 3}
+--- !u!4 &1461864454144538840 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 3972296840415654395}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5692719403678464599 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8656187644127726508, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 3972296840415654395}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8204585901791012882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2392,7 +2496,7 @@ PrefabInstance:
     - target: {fileID: 2987626564829718626, guid: 31c6eb1786edef943a2ddab1392caeaf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.72
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2987626564829718626, guid: 31c6eb1786edef943a2ddab1392caeaf,
         type: 3}
@@ -2437,7 +2541,7 @@ PrefabInstance:
     - target: {fileID: 8168778160163678316, guid: 31c6eb1786edef943a2ddab1392caeaf,
         type: 3}
       propertyPath: m_Name
-      value: vfxgraph_Hit07(knight
+      value: EnemyHitKnight_02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

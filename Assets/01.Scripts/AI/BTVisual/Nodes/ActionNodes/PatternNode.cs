@@ -35,11 +35,6 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            if (brain.AnimatorCompo.GetParameterState("isDie"))
-            {
-                return State.Failure;
-            }
-
             if (!brain.NavMeshAgentCompo.isStopped)
             {
                 brain.NavMeshAgentCompo.isStopped = true;

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2e412d9cc5dedae458caacb375abd89b
+guid: 454c9334c52f04740ae5f7616d06077c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -23,14 +23,15 @@ ModelImporter:
       might lower retargeting quality:\n\t'Bip001 Spine3' is inbetween humanoid transforms
       and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: "\nRetargeting quality report for clip 'mixamo.com':\n\tLeftUpperArm
-      average position error 4.7 mm and maximum position error 5.0 mm at time 1:
-      1 (20.3%) Frame 31\n\tLeftLowerArm average position error 4.7 mm and maximum
-      position error 5.0 mm at time 1: 1 (20.3%) Frame 31\n\tLeftHand average position
-      error 4.5 mm and maximum position error 4.9 mm at time 3:18 (70.6%) Frame 108\n\tRightUpperArm
-      average position error 4.2 mm and maximum position error 4.6 mm at time 3:19
-      (71.2%) Frame 109\n\tRightLowerArm average position error 4.3 mm and maximum
-      position error 4.6 mm at time 3:18 (70.6%) Frame 108\n\tRightHand average position
-      error 4.3 mm and maximum position error 4.6 mm at time 1: 0 (19.6%) Frame 30\n"
+      average position error 11.0 mm and maximum position error 22.4 mm at time 0:10
+      (62.5%) Frame 10\n\tLeftLowerArm average position error 11.0 mm and maximum
+      position error 22.4 mm at time 0:10 (62.5%) Frame 10\n\tLeftHand average position
+      error 11.0 mm and maximum position error 22.4 mm at time 0:10 (62.5%) Frame
+      10\n\tRightUpperArm average position error 10.5 mm and maximum position error
+      21.3 mm at time 0: 2 (12.5%) Frame 2\n\tRightLowerArm average position error
+      10.5 mm and maximum position error 21.3 mm at time 0: 2 (12.5%) Frame 2\n\tRightHand
+      average position error 10.5 mm and maximum position error 21.3 mm at time 0:
+      2 (12.5%) Frame 2\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -43,11 +44,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unarmed Idle 01
+      name: ArcherMove
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 153
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -56,7 +57,7 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
+      loopBlendOrientation: 1
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
@@ -71,7 +72,7 @@ ModelImporter:
       - path: 
         weight: 1
       - path: Bip001
-        weight: 0
+        weight: 1
       - path: Bip001/Bip001 Footsteps
         weight: 0
       - path: Bip001/Bip001 Pelvis
@@ -656,15 +657,15 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Character@Unarmed Idle 01(Clone)
+    - name: Character@Fast Run(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: -0.000049783102, z: 0, w: 1}
+      rotation: {x: -0.1608267, y: -0.117849335, z: -0.011788506, w: 0.9798507}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001
-      parentName: Character@Unarmed Idle 01(Clone)
-      position: {x: 0.002181507, y: 2.6878269, z: -0.046723913}
-      rotation: {x: 0.5130482, y: -0.48914188, z: -0.51056045, w: -0.4866723}
+      parentName: Character@Fast Run(Clone)
+      position: {x: -0.017325452, y: 2.4813325, z: -0.08129379}
+      rotation: {x: -0.3562286, y: 0.46234137, z: 0.6352996, w: 0.5057035}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001 Footsteps
       parentName: Bip001
@@ -673,7 +674,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001 Pelvis
       parentName: Bip001
-      position: {x: -0.00088574446, y: -0.008540466, z: 0.17853656}
+      position: {x: -0.85338587, y: 0.15301052, z: 0.5465792}
       rotation: {x: 0.5, y: -0.5, z: -0.5, w: -0.5}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001 Spine
