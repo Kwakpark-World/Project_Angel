@@ -12,7 +12,7 @@ public class ArcherNormalAttack : Pattern
 
     public override void OnStop()
     {
-        OwnerNode.brain.AnimatorCompo.OnAnimationEnd(1);
+        OwnerNode.brain.AnimatorCompo.OnAnimationEnd();
     }
 
     public override Node.State OnUpdate()

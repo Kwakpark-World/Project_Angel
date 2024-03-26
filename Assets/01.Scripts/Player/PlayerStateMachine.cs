@@ -50,6 +50,7 @@ public class PlayerStateMachine
         CurrentState = StateDictionary[state];
         CurrentState.Enter();
         Debug.Log($"Change State : {CurrentState}");
+        
     }
 
     public PlayerState GetState(PlayerStateEnum state)

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerDefenseState : PlayerState
 {
     private float _defenseTimer;
+    private bool _isDefenseRotatable;
 
     public PlayerDefenseState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -16,6 +17,11 @@ public class PlayerDefenseState : PlayerState
         _player.IsDefense = true;
         _player.StopImmediately(false);
 
+        if (!_isDefenseRotatable)
+        {
+            _isDefenseRotatable = true;
+            _player.RotateToMousePos();
+        }
     }
 
     public override void Exit()
@@ -35,6 +41,7 @@ public class PlayerDefenseState : PlayerState
             _defenseTimer = 0;
             _player.defensePrevTime = Time.time;
 
+            _isDefenseRotatable = false;
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }

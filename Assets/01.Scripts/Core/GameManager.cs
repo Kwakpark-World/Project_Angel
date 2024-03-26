@@ -42,4 +42,5 @@ public class GameManager : MonoBehaviour
     public int EnemySpawnCount = 0;
     [HideInInspector]
     public int DieEnemyCount = 0;
+
 }
