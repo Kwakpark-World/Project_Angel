@@ -70,7 +70,7 @@ public class PlayerMeleeAttackState : PlayerState
         Vector3 dir = (_weaponRayPoint.position - _player._currentWeapon.transform.position).normalized;
 
         Debug.DrawRay(_player._currentWeapon.transform.position, dir * _hitDistance, Color.blue);
-        if (_isHitAbleCalled)
+        if (_isHitAbleTriggerCalled)
         {
             RaycastHit[] enemies = Physics.RaycastAll(_player._currentWeapon.transform.position, dir, _hitDistance, _player._enemyLayer);
     

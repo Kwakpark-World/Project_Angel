@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26539124f88dfbd4e9812d36a08552b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinSpawnValue: {x: -6, y: 2, z: -30}
-  MaxSpawnValue: {x: 48, y: 2, z: 24}
+  enemySpawnRange: {fileID: 0}
+  maxSpawnWave: 3
+  maxEnemyCount: 7
 --- !u!4 &345700856
 Transform:
   m_ObjectHideFlags: 0
