@@ -27,12 +27,6 @@ public class EnemyBrain : Brain
         }
 
         base.OnDie();
-
-        GameManager.Instance.DieEnemyCount++;
-
-        if (GameManager.Instance.DieEnemyCount < 10)
-        {
-            GameManager.Instance.SpawnWave++;
-        }
+        GameManager.Instance.EnemyDieCount++;
     }
 }
