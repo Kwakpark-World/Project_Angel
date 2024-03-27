@@ -10,24 +10,29 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField]
     private int maxEnemyCount = 7;
 
+    public WaveFont waveFont;
+
     private void Start()
     {
         EnemySpawner();
+        waveFont.WavePrint();
     }
 
     private void Update()
     {
         if(GameManager.Instance.EnemyDieCount == maxEnemyCount)
         {
+            GameManager.Instance.SpawnWave++;
             EnemySpawner();
             GameManager.Instance.EnemyDieCount = 0;
+            waveFont.WavePrint();
         }
     }
 
     public void EnemySpawner()
     {
         
-        while(GameManager.Instance.EnemySpawnCount < maxEnemyCount)
+        while(GameManager.Instance.EnemySpawnCount < maxEnemyCount || GameManager.Instance.SpawnWave == 3)
         {
             Vector3 spawnPosition = new Vector3(
             Random.Range(enemySpawnRange.minimumSpawnRange.x, enemySpawnRange.maximumSpawnRange.x),
