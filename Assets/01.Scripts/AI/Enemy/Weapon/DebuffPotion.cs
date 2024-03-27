@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class DebuffPotion : PoolableMono
 {
+    [HideInInspector]
+    public EnemyBrain owner;
     [SerializeField]
     private DebuffType _debuffType;
     [SerializeField]
     private int _lifetime = 5;
     [SerializeField]
     private float _speed = 10f;
-    public EnemyBrain owner;
     private Rigidbody _rigidbody;
 
     private void Awake()

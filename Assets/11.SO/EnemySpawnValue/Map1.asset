@@ -14,3 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimumSpawnRange: {x: -6, y: 2, z: -30}
   maximumSpawnRange: {x: 48, y: 2, z: 24}
+  enemiesToSpawn:
+  - enemyType: 1
+    canSpawn: 0
+    spawnRatio: 1
+  - enemyType: 2
+    canSpawn: 1
+    spawnRatio: 1
+  - enemyType: 3
+    canSpawn: 0
+    spawnRatio: 1

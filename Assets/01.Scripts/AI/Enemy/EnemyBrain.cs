@@ -21,11 +21,6 @@ public class EnemyBrain : Brain
 
     public override void OnDie()
     {
-        if (CurrentHealth > 0f)
-        {
-            return;
-        }
-
         base.OnDie();
         GameManager.Instance.EnemyDieCount++;
     }

@@ -644,7 +644,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingType: 3
-  enemyTypes: 2
   treeRunner: {fileID: 7009443748951247432}
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 6d1bfd057cbbddb4888586eb66a822a8,
     type: 2}
@@ -687,9 +686,6 @@ MonoBehaviour:
   - parameterName: isHit
     onAnimationBegin:
       m_PersistentCalls:
-        m_Calls: []
-    onAnimationPlaying:
-      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 8974455026280469752}
           m_TargetAssemblyTypeName: UnityEngine.VFX.VisualEffect, UnityEngine
@@ -715,18 +711,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7092474217215256077}
-          m_TargetAssemblyTypeName: EnemyBrain, Assembly-CSharp
-          m_MethodName: OnDie
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+    onAnimationPlaying:
+      m_PersistentCalls:
+        m_Calls: []
     onAnimationEnd:
       m_PersistentCalls:
         m_Calls: []
@@ -2496,12 +2483,12 @@ PrefabInstance:
     - target: {fileID: 2987626564829718626, guid: 31c6eb1786edef943a2ddab1392caeaf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.18
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2987626564829718626, guid: 31c6eb1786edef943a2ddab1392caeaf,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.91
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2987626564829718626, guid: 31c6eb1786edef943a2ddab1392caeaf,
         type: 3}

@@ -1,63 +1,93 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
     [SerializeField]
-    private EnemySpawnRangeSO enemySpawnRange;
+    private EnemySpawnValueSO enemySpawnValue;
     [SerializeField]
     private int maxEnemyCount = 7;
+    private float ratioSum;
+
+    private void Awake()
+    {
+        InitializeSpawner();
+    }
 
     public WaveFont waveFont;
 
     private void Start()
     {
-        EnemySpawner();
+        SpawnEnemy();
         waveFont.WavePrint();
     }
 
     private void Update()
     {
-        if(GameManager.Instance.EnemyDieCount == maxEnemyCount)
+        if (GameManager.Instance.EnemyDieCount == maxEnemyCount)
         {
             GameManager.Instance.SpawnWave++;
-            EnemySpawner();
+            SpawnEnemy();
             GameManager.Instance.EnemyDieCount = 0;
             waveFont.WavePrint();
         }
     }
 
-    public void EnemySpawner()
+    public void InitializeSpawner()
     {
-        
+        enemySpawnValue = Instantiate(enemySpawnValue, transform);
+
+        foreach (EnemyToSpawn enemy in enemySpawnValue.enemiesToSpawn)
+        {
+            if (!enemy.canSpawn)
+            {
+                continue;
+            }
+
+            ratioSum += enemy.spawnRatio;
+            enemy.spawnRatio = ratioSum;
+        }
+
+        foreach (EnemyToSpawn enemy in enemySpawnValue.enemiesToSpawn)
+        {
+            if (!enemy.canSpawn)
+            {
+                continue;
+            }
+
+            enemy.spawnRatio = enemy.spawnRatio / ratioSum;
+        }
+    }
+
+    public void SpawnEnemy()
+    {
         while(GameManager.Instance.EnemySpawnCount < maxEnemyCount || GameManager.Instance.SpawnWave == 3)
         {
             Vector3 spawnPosition = new Vector3(
-            Random.Range(enemySpawnRange.minimumSpawnRange.x, enemySpawnRange.maximumSpawnRange.x),
-            Random.Range(enemySpawnRange.minimumSpawnRange.y, enemySpawnRange.maximumSpawnRange.y),
-            Random.Range(enemySpawnRange.minimumSpawnRange.z, enemySpawnRange.maximumSpawnRange.z));
-
-            // 랜덤으로 적의 종류 선택
+                Random.Range(enemySpawnValue.minimumSpawnRange.x, enemySpawnValue.maximumSpawnRange.x),
+                Random.Range(enemySpawnValue.minimumSpawnRange.y, enemySpawnValue.maximumSpawnRange.y),
+                Random.Range(enemySpawnValue.minimumSpawnRange.z, enemySpawnValue.maximumSpawnRange.z)
+            );
+            
             float randomValue = Random.value;
-
-            EnemyBrain enemy;
-
-            if (randomValue < 0.35f)
+            
+            foreach (EnemyToSpawn enemy in enemySpawnValue.enemiesToSpawn)
             {
-                enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy, spawnPosition) as EnemyBrain;
-            }
-            else if (randomValue < 0.65f)
-            {
-                enemy = PoolManager.Instance.Pop(PoolingType.ArcherEnemy, spawnPosition) as EnemyBrain;
-            }
-            else
-            {
-                enemy = PoolManager.Instance.Pop(PoolingType.WitchEnemy, spawnPosition) as EnemyBrain;
-            }
+                if (!enemy.canSpawn)
+                {
+                    continue;
+                }
 
-            GameManager.Instance.EnemySpawnCount++;
+                if (enemy.spawnRatio >= randomValue)
+                {
+                    PoolManager.Instance.Pop(enemy.enemyType, spawnPosition);
+
+                    GameManager.Instance.EnemySpawnCount++;
+
+                    break;
+                }
+            }
         }
 
         if (GameManager.Instance.EnemySpawnCount == maxEnemyCount)
