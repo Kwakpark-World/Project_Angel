@@ -27,13 +27,20 @@ public class SoundManager : MonoBehaviour
     private Dictionary<string, AudioSource> attackSoundsDictionary = new Dictionary<string, AudioSource>();
 
     public AudioSource[] attackSounds;
+    public AudioSource[] DieSound;
 
     private void Start()
     {
         for (int i = 0; i < attackSounds.Length; i++)
         {
-            string identifier = "Attack" + (i + 1);
-            AddAttackSound(identifier, attackSounds[i]);
+            string identifierAttack = "Attack" + (i + 1);
+            AddAttackSound(identifierAttack, attackSounds[i]);
+        }
+
+        for(int i =0; i < DieSound.Length; i++)
+        {
+            string identifierDie = "Die" + (i + 1);
+            AddAttackSound(identifierDie, DieSound[i]);
         }
     }
 

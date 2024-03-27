@@ -13,8 +13,6 @@ namespace BTVisual
 
         protected override void OnStart()
         {
-            context.agent.isStopped = true;
-
             if (_pattern == null)
             {
                 _pattern = patternObject.GetComponent<Pattern>();
@@ -37,6 +35,11 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
+            if (!brain.NavMeshAgentCompo.isStopped)
+            {
+                brain.NavMeshAgentCompo.isStopped = true;
+            }
+
             blackboard.nextPatternCooldown = nextPatternCooldown;
 
             return _pattern.OnUpdate();

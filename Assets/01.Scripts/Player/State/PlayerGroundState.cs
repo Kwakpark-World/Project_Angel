@@ -45,6 +45,8 @@ public abstract class PlayerGroundState : PlayerState
 
     private void ESkillHandle()
     {
+        if (_player.IsAwakening) return;
+
         _stateMachine.ChangeState(PlayerStateEnum.ESkill);
     }
 

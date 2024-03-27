@@ -1,68 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
-    public Vector3 MinSpawnValue;
-    public Vector3 MaxSpawnValue;
+    [SerializeField]
+    private EnemySpawnRangeSO enemySpawnRange;
+    [SerializeField]
+    private int maxSpawnWave = 3;
+    [SerializeField]
+    private int maxEnemyCount = 7;
 
-    //private 
-
-    public void Update()
+    private void Update()
     {
         EnemySpawner();
     }
 
-    public void Start()
-    {
-        
-    }
-
     public void EnemySpawner()
     {
-        if(GameManager.Instance.SpawnWave < 3)
+        if(GameManager.Instance.SpawnWave < maxSpawnWave)
         {
-            if (GameManager.Instance.EnemySpawnCount < 7)
+            if (GameManager.Instance.EnemySpawnCount < maxEnemyCount)
             {
                 Vector3 spawnPosition = new Vector3(
-                    Random.Range(MinSpawnValue.x, MaxSpawnValue.x),
-                    Random.Range(MinSpawnValue.y, MaxSpawnValue.y),
-                    Random.Range(MinSpawnValue.z, MaxSpawnValue.z)
+                    Random.Range(enemySpawnRange.minimumSpawnRange.x, enemySpawnRange.maximumSpawnRange.x),
+                    Random.Range(enemySpawnRange.minimumSpawnRange.y, enemySpawnRange.maximumSpawnRange.y),
+                    Random.Range(enemySpawnRange.minimumSpawnRange.z, enemySpawnRange.maximumSpawnRange.z)
                 );
 
                 // 랜덤으로 적의 종류 선택
                 float randomValue = Random.value;  // 0: 기사, 1: 궁수, 2: 마법사
 
-                EnemyBrain enemy = null;
-
+                EnemyBrain enemy;
 
                 if (randomValue < 0.35f) // 30% 확률로 기사
                 {
-                    enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy) as EnemyBrain;
+                    enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy, spawnPosition) as EnemyBrain;
                 }
                 else if (randomValue < 0.65f) // 30% 확률로 궁수
                 {
-                    enemy = PoolManager.Instance.Pop(PoolingType.ArcherEnemy) as EnemyBrain;
+                    enemy = PoolManager.Instance.Pop(PoolingType.ArcherEnemy, spawnPosition) as EnemyBrain;
                 }
                 else // 나머지 확률로 마법사
                 {
-                    enemy = PoolManager.Instance.Pop(PoolingType.WitchEnemy) as EnemyBrain;
+                    enemy = PoolManager.Instance.Pop(PoolingType.WitchEnemy, spawnPosition) as EnemyBrain;
                 }
-
 
                 if (enemy != null)
                 {
-                    enemy.transform.position = spawnPosition;
                     GameManager.Instance.EnemySpawnCount++;
-                    //Debug.Log(GameManager.Instance.EnemySpawnCount);
                 }
             }
         }
-    }
-
-    public void ArcherEnemySpawn()
-    {
-
     }
 }

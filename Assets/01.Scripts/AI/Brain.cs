@@ -19,7 +19,6 @@ public abstract class Brain : PoolableMono
 {
     public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
-    public ParticleSystem HitParticle;
 
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -41,7 +40,7 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
-        float damage = 10;
+        float damage = 5;
 
         if ((GameManager.Instance.playerTransform.position - transform.position).sqrMagnitude <= EnemyStatData.GetAttackRange() * EnemyStatData.GetAttackRange())
         {
@@ -60,6 +59,12 @@ public abstract class Brain : PoolableMono
 
     public override void InitializePoolingItem()
     {
+        if (NavMeshAgentCompo)
+        {
+            NavMeshAgentCompo.isStopped = false;
+        }
+
+        AnimatorCompo?.SetParameterDisable();
         EnemyStatData.InitializeAllModifiers();
 
         CurrentHealth = EnemyStatData.GetMaxHealth();
@@ -88,19 +93,25 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage)
     {
-        CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
-        HitParticle.Play();
-        
         if (CurrentHealth <= 0f)
         {
-            OnDie();
-            
+            return;
         }
 
+        CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
+
+        AnimatorCompo.SetParameterEnable("isHit");
     }
 
     public virtual void OnDie()
     {
-        PoolManager.Instance.Push(this);
+        if (CurrentHealth > 0f)
+        {
+            return;
+        }
+
+        NavMeshAgentCompo.isStopped = true;
+
+        AnimatorCompo.SetParameterEnable("isDie");
     }
 }
