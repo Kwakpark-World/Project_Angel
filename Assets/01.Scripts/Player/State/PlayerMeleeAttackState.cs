@@ -14,7 +14,7 @@ public class PlayerMeleeAttackState : PlayerState
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
     private HashSet<RaycastHit> _enemyDuplicateCheck = new HashSet<RaycastHit>();
-    private float _hitDistance = 2.8f; // 2.4가 검크기.
+    private float _hitDistance = 5f; // 2.4가 검크기.
 
     private Transform _weaponRayPoint;
     
@@ -76,6 +76,7 @@ public class PlayerMeleeAttackState : PlayerState
     
             foreach(var enemy in enemies)
             {
+                Debug.Log("1");
                 if (_enemyDuplicateCheck.Add(enemy))
                 {
                     if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
