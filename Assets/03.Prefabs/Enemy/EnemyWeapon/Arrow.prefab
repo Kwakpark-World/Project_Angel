@@ -71,12 +71,12 @@ PrefabInstance:
     - target: {fileID: 3991279602832165212, guid: 4f8f97ef92b16bd43914be0bad107f80,
         type: 3}
       propertyPath: m_shaderPropertyID
-      value: 1190
+      value: 1313
       objectReference: {fileID: 0}
     - target: {fileID: 3991279602832165212, guid: 4f8f97ef92b16bd43914be0bad107f80,
         type: 3}
       propertyPath: m_materialData.Array.data[0].m_move
-      value: 0.0011873746
+      value: 0.025528582
       objectReference: {fileID: 0}
     - target: {fileID: 7451235807570548798, guid: 4f8f97ef92b16bd43914be0bad107f80,
         type: 3}
@@ -209,10 +209,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingType: 9
+  _lifetime: 5
   _speed: 10
   _rotateSpeed: 130
   owner: {fileID: 0}
-  _spawn: {fileID: 0}
 --- !u!54 &-1446628892769409215
 Rigidbody:
   m_ObjectHideFlags: 0
