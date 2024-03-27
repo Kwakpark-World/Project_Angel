@@ -42,15 +42,24 @@ VisualEffect:
   m_GameObject: {fileID: 1756417077826639783}
   m_Enabled: 1
   m_Asset: {fileID: 8926484042661614526, guid: df65f4d46c3b2ae438e78ad5f46462cd, type: 3}
-  m_InitialEventName: OnPlay
-  m_InitialEventNameOverriden: 0
+  m_InitialEventName: 
+  m_InitialEventNameOverriden: 1
   m_StartSeed: 0
   m_ResetSeedOnPlay: 0
   m_AllowInstancing: 1
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 0.5
+        m_Name: ParticlesSize
+        m_Overridden: 1
+      - m_Value: 5
+        m_Name: FlashSize
+        m_Overridden: 1
+      - m_Value: 5
+        m_Name: DecalLifetime
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:

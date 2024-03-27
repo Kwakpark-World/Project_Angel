@@ -20,12 +20,12 @@ public class PlayerChargeAttackState : PlayerState
     {
         base.Exit();
     }
-
+                                                                                                 
     public override void UpdateState()
     {
-        base.UpdateState();
+        base.UpdateState();                
 
-        if (_endTriggerCalled)
+        if (_endTriggerCalled)                                                                                
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }

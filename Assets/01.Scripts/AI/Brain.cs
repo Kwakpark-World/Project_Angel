@@ -30,7 +30,7 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
-        float damage = 10;
+        float damage = 5;
 
         if ((GameManager.Instance.playerTransform.position - transform.position).sqrMagnitude <= EnemyStatData.GetAttackRange() * EnemyStatData.GetAttackRange())
         {

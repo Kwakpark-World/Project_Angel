@@ -1,15 +1,11 @@
-using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
     [SerializeField]
     private EnemySpawnValueSO enemySpawnValue;
-    [SerializeField]
-    private int maxSpawnWave = 3;
     [SerializeField]
     private int maxEnemyCount = 7;
     private float ratioSum;
@@ -19,7 +15,7 @@ public class EnemySpawn : MonoBehaviour
         InitializeSpawner();
     }
 
-    private void Update()
+    private void Start()
     {
         SpawnEnemy();
     }
@@ -50,37 +46,48 @@ public class EnemySpawn : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(GameManager.Instance.EnemyDieCount == maxEnemyCount)
+        {
+            EnemySpawner();
+            GameManager.Instance.EnemyDieCount = 0;
+        }
+    }
+
     public void SpawnEnemy()
     {
-        if (GameManager.Instance.SpawnWave < maxSpawnWave)
+        while(GameManager.Instance.EnemySpawnCount < maxEnemyCount)
         {
-            if (GameManager.Instance.EnemySpawnCount < maxEnemyCount)
+            Vector3 spawnPosition = new Vector3(
+                Random.Range(enemySpawnValue.minimumSpawnRange.x, enemySpawnValue.maximumSpawnRange.x),
+                Random.Range(enemySpawnValue.minimumSpawnRange.y, enemySpawnValue.maximumSpawnRange.y),
+                Random.Range(enemySpawnValue.minimumSpawnRange.z, enemySpawnValue.maximumSpawnRange.z)
+            );
+            
+            float randomValue = Random.value;
+            
+            foreach (EnemyToSpawn enemy in enemySpawnValue.enemiesToSpawn)
             {
-                Vector3 spawnPosition = new Vector3(
-                    Random.Range(enemySpawnValue.minimumSpawnRange.x, enemySpawnValue.maximumSpawnRange.x),
-                    Random.Range(enemySpawnValue.minimumSpawnRange.y, enemySpawnValue.maximumSpawnRange.y),
-                    Random.Range(enemySpawnValue.minimumSpawnRange.z, enemySpawnValue.maximumSpawnRange.z)
-                );
-
-                float randomValue = Random.value;
-
-                foreach (EnemyToSpawn enemy in enemySpawnValue.enemiesToSpawn)
+                if (!enemy.canSpawn)
                 {
-                    if (!enemy.canSpawn)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    if (enemy.spawnRatio >= randomValue)
-                    {
-                        PoolManager.Instance.Pop(enemy.enemyType, spawnPosition);
+                if (enemy.spawnRatio >= randomValue)
+                {
+                    PoolManager.Instance.Pop(enemy.enemyType, spawnPosition);
 
-                        GameManager.Instance.EnemySpawnCount++;
+                    GameManager.Instance.EnemySpawnCount++;
 
-                        break;
-                    }
+                    break;
                 }
             }
+        }
+
+        if (GameManager.Instance.EnemySpawnCount == maxEnemyCount)
+        {
+            GameManager.Instance.EnemySpawnCount = 0;
         }
     }
 }
