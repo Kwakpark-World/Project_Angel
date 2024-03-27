@@ -20,6 +20,15 @@ public class EnemySpawn : MonoBehaviour
         SpawnEnemy();
     }
 
+    private void Update()
+    {
+        if (GameManager.Instance.EnemyDieCount == maxEnemyCount)
+        {
+            SpawnEnemy();
+            GameManager.Instance.EnemyDieCount = 0;
+        }
+    }
+
     public void InitializeSpawner()
     {
         enemySpawnValue = Instantiate(enemySpawnValue, transform);
@@ -43,15 +52,6 @@ public class EnemySpawn : MonoBehaviour
             }
 
             enemy.spawnRatio = enemy.spawnRatio / ratioSum;
-        }
-    }
-
-    private void Update()
-    {
-        if(GameManager.Instance.EnemyDieCount == maxEnemyCount)
-        {
-            EnemySpawner();
-            GameManager.Instance.EnemyDieCount = 0;
         }
     }
 
