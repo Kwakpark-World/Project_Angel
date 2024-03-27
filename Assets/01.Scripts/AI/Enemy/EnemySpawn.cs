@@ -8,50 +8,56 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField]
     private EnemySpawnRangeSO enemySpawnRange;
     [SerializeField]
-    private int maxSpawnWave = 3;
-    [SerializeField]
     private int maxEnemyCount = 7;
 
-    private void Update()
+    private void Start()
     {
         EnemySpawner();
     }
 
+    private void Update()
+    {
+        if(GameManager.Instance.EnemyDieCount == maxEnemyCount)
+        {
+            EnemySpawner();
+            GameManager.Instance.EnemyDieCount = 0;
+        }
+    }
+
     public void EnemySpawner()
     {
-        if(GameManager.Instance.SpawnWave < maxSpawnWave)
+        
+        while(GameManager.Instance.EnemySpawnCount < maxEnemyCount)
         {
-            if (GameManager.Instance.EnemySpawnCount < maxEnemyCount)
+            Vector3 spawnPosition = new Vector3(
+            Random.Range(enemySpawnRange.minimumSpawnRange.x, enemySpawnRange.maximumSpawnRange.x),
+            Random.Range(enemySpawnRange.minimumSpawnRange.y, enemySpawnRange.maximumSpawnRange.y),
+            Random.Range(enemySpawnRange.minimumSpawnRange.z, enemySpawnRange.maximumSpawnRange.z));
+
+            // 랜덤으로 적의 종류 선택
+            float randomValue = Random.value;
+
+            EnemyBrain enemy;
+
+            if (randomValue < 0.35f)
             {
-                Vector3 spawnPosition = new Vector3(
-                    Random.Range(enemySpawnRange.minimumSpawnRange.x, enemySpawnRange.maximumSpawnRange.x),
-                    Random.Range(enemySpawnRange.minimumSpawnRange.y, enemySpawnRange.maximumSpawnRange.y),
-                    Random.Range(enemySpawnRange.minimumSpawnRange.z, enemySpawnRange.maximumSpawnRange.z)
-                );
-
-                // 랜덤으로 적의 종류 선택
-                float randomValue = Random.value;  // 0: 기사, 1: 궁수, 2: 마법사
-
-                EnemyBrain enemy;
-
-                if (randomValue < 0.35f) // 30% 확률로 기사
-                {
-                    enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy, spawnPosition) as EnemyBrain;
-                }
-                else if (randomValue < 0.65f) // 30% 확률로 궁수
-                {
-                    enemy = PoolManager.Instance.Pop(PoolingType.ArcherEnemy, spawnPosition) as EnemyBrain;
-                }
-                else // 나머지 확률로 마법사
-                {
-                    enemy = PoolManager.Instance.Pop(PoolingType.WitchEnemy, spawnPosition) as EnemyBrain;
-                }
-
-                if (enemy != null)
-                {
-                    GameManager.Instance.EnemySpawnCount++;
-                }
+                enemy = PoolManager.Instance.Pop(PoolingType.KnightEnemy, spawnPosition) as EnemyBrain;
             }
+            else if (randomValue < 0.65f)
+            {
+                enemy = PoolManager.Instance.Pop(PoolingType.ArcherEnemy, spawnPosition) as EnemyBrain;
+            }
+            else
+            {
+                enemy = PoolManager.Instance.Pop(PoolingType.WitchEnemy, spawnPosition) as EnemyBrain;
+            }
+
+            GameManager.Instance.EnemySpawnCount++;
+        }
+
+        if (GameManager.Instance.EnemySpawnCount == maxEnemyCount)
+        {
+            GameManager.Instance.EnemySpawnCount = 0;
         }
     }
 }
