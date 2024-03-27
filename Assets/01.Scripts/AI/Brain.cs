@@ -30,7 +30,10 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
-        float damage = 5;
+        if (AnimatorCompo.GetParameterState("isDie"))
+        {
+            return;
+        }
 
         if ((GameManager.Instance.playerTransform.position - transform.position).sqrMagnitude <= EnemyStatData.GetAttackRange() * EnemyStatData.GetAttackRange())
         {
@@ -43,7 +46,7 @@ public abstract class Brain : PoolableMono
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            OnHit(damage);
+            OnHit(5f);
         }
     }
 
@@ -83,7 +86,7 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage)
     {
-        if (CurrentHealth <= 0f)
+        if (AnimatorCompo.GetParameterState("isDie"))
         {
             return;
         }
@@ -91,15 +94,15 @@ public abstract class Brain : PoolableMono
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
 
         AnimatorCompo.SetParameterEnable("isHit");
+
+        if (CurrentHealth <= 0f)
+        {
+            OnDie();
+        }
     }
 
     public virtual void OnDie()
     {
-        if (CurrentHealth > 0f)
-        {
-            return;
-        }
-
         NavMeshAgentCompo.isStopped = true;
 
         AnimatorCompo.SetParameterEnable("isDie");
