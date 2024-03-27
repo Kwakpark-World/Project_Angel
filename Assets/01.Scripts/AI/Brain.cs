@@ -4,20 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyType
-{
-    Knight,
-    Archer,
-    Witch,
-    Sorcerer,
-    Azazel
-}
-
 [RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
 [RequireComponent(typeof(Debuff), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {
-    public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
 
     #region Components
