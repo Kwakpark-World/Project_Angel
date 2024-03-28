@@ -66974,9 +66974,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1.5994368
+  m_Height: 2.5055563
   m_Direction: 1
-  m_Center: {x: 0, y: 0.29971838, z: 0}
+  m_Center: {x: 0, y: 0.75277674, z: 0}
 --- !u!54 &5577560613469341251
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -67179,7 +67179,7 @@ MonoBehaviour:
     onAnimationPlaying:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4829262591501144574}
+        - m_Target: {fileID: 5584926904360601936}
           m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
           m_MethodName: Play
           m_Mode: 1
@@ -67486,12 +67486,12 @@ PrefabInstance:
     - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 1.491
       objectReference: {fileID: 0}
     - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.275
       objectReference: {fileID: 0}
     - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
         type: 3}
@@ -67539,9 +67539,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3864459707791196924}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &4829262591501144574 stripped
+--- !u!198 &5584926904360601936 stripped
 ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8549429806326240002, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
+  m_CorrespondingSourceObject: {fileID: 8656187644127726508, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
     type: 3}
   m_PrefabInstance: {fileID: 3864459707791196924}
   m_PrefabAsset: {fileID: 0}

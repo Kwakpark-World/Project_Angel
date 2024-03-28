@@ -62,7 +62,7 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        while(GameManager.Instance.EnemySpawnCount < maxEnemyCount || GameManager.Instance.SpawnWave == 3)
+        while(GameManager.Instance.EnemySpawnCount < maxEnemyCount)
         {
             Vector3 spawnPosition = new Vector3(
                 Random.Range(enemySpawnValue.minimumSpawnRange.x, enemySpawnValue.maximumSpawnRange.x),
