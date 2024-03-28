@@ -12,7 +12,6 @@ public class WitchNormalAttack : Pattern
 
     public override void OnStop()
     {
-        OwnerNode.brain.AnimatorCompo.SetParameterDisable();
         OwnerNode.brain.AnimatorCompo.OnAnimationEnd();
     }
 

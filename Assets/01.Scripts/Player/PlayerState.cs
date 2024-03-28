@@ -14,6 +14,7 @@ public class PlayerState
 
     public bool _actionTriggerCalled { get; private set; } = false;
     public bool _endTriggerCalled { get; private set; } = false;
+    public bool _isHitAbleTriggerCalled { get; private set; } = false;
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, string animBoolName)
     {
@@ -27,7 +28,8 @@ public class PlayerState
     {
         _endTriggerCalled = false;
         _actionTriggerCalled = false;
-        _player.AnimatorCompo.SetBool(_animBoolHash, true);
+        _isHitAbleTriggerCalled = false;
+        _player.UsingAnimatorCompo.SetBool(_animBoolHash, true);
     }
 
     public virtual void UpdateState()
@@ -37,12 +39,12 @@ public class PlayerState
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
 
-        _player.AnimatorCompo.SetFloat(_yVelocityHash, _rigidbody.velocity.y);
+        _player.UsingAnimatorCompo.SetFloat(_yVelocityHash, _rigidbody.velocity.y);
     }
 
     public virtual void Exit()
     {
-        _player.AnimatorCompo.SetBool(_animBoolHash, false);
+        _player.UsingAnimatorCompo.SetBool(_animBoolHash, false);
     }
 
     public void AnimationEndTrigger()
@@ -53,5 +55,10 @@ public class PlayerState
     public void AnimationActionTrigger()
     {
         _actionTriggerCalled = true;
+    }
+
+    public void AnimationHitAbleTrigger()
+    {
+        _isHitAbleTriggerCalled = true;
     }
 }

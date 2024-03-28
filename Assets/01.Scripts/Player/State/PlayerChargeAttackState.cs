@@ -6,6 +6,7 @@ public class PlayerChargeAttackState : PlayerState
 {
     public PlayerChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
+
     }
 
     public override void Enter()
@@ -20,12 +21,12 @@ public class PlayerChargeAttackState : PlayerState
     {
         base.Exit();
     }
-
+                                                                                                 
     public override void UpdateState()
     {
-        base.UpdateState();
+        base.UpdateState();                
 
-        if (_endTriggerCalled)
+        if (_endTriggerCalled)                                                                                
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }

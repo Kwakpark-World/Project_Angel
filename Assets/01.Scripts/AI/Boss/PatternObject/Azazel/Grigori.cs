@@ -26,8 +26,8 @@ public abstract class Grigori : Brain
 
     public override void OnDie()
     {
-        Debuff();
-
         base.OnDie();
+
+        Debuff();
     }
 }

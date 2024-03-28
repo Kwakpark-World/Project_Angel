@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class EnemyArrow : PoolableMono
 {
+    [HideInInspector]
+    public EnemyBrain owner;
+    [SerializeField]
+    private int _lifetime = 5;
     [SerializeField]
     private float _speed = 10f;
     [SerializeField]
     private float _rotateSpeed = 100f;
-    public EnemyBrain owner;
     private Transform _particleTransform;
     private Rigidbody _rigidbody;
 
@@ -20,9 +23,9 @@ public class EnemyArrow : PoolableMono
 
     private void Update()
     {
-        _rigidbody.velocity = transform.forward * _speed;
+        _rigidbody.velocity = -transform.forward * _speed;
 
-        _particleTransform.Rotate(_particleTransform.forward, _rotateSpeed * Time.deltaTime);
+        _particleTransform.Rotate(-_particleTransform.forward, _rotateSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,7 +41,9 @@ public class EnemyArrow : PoolableMono
     public override void InitializePoolingItem()
     {
         Vector3 direction = new Vector3(GameManager.Instance.playerTransform.position.x - transform.position.x, 0f, GameManager.Instance.playerTransform.position.z - transform.position.z).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        Quaternion lookRotation = Quaternion.LookRotation(-direction);
         transform.rotation = lookRotation;
+
+        PoolManager.Instance.Push(this, _lifetime);
     }
 }

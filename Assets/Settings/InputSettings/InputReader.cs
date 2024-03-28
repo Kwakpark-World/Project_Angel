@@ -10,11 +10,13 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
 
     public bool isDefense { get; private set; }
     public bool isCharge { get; private set; }
+    public Vector2 MousePos;
 
     public event Action DashEvent;
     public event Action MeleeAttackEvent;
     public event Action QSkillEvent;
     public event Action ESkillEvent;
+
 
     private Controls _controls;
     private void OnEnable()
@@ -73,5 +75,10 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
         {
             ESkillEvent?.Invoke();
         }
+    }
+
+    public void OnMousePos(InputAction.CallbackContext context)
+    {
+        MousePos = context.ReadValue<Vector2>();
     }
 }

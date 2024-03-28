@@ -19,12 +19,8 @@ public class ParticleScaler : EditorWindow {
 
 	public static void ShowWindow() {
 		EditorWindow win = EditorWindow.GetWindow(typeof(ParticleScaler));
-#if UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9 || UNITY_6
-		win.titleContent = new GUIContent("Simple Particle Scaler");
-#else
-			win.title = "Simple Particle Scaler";	
-#endif
-		win.minSize = new Vector2(200.0f, 130.0f);
+        win.titleContent = new GUIContent("Simple Particle Scaler");
+        win.minSize = new Vector2(200.0f, 130.0f);
 		win.maxSize = new Vector2(200.0f, 130.0f);
 	}
 
@@ -143,8 +139,7 @@ public class ParticleScaler : EditorWindow {
 	}
 
 	public static void CreateNew(GameObject obj, string localPath) {
-		Object prefab = PrefabUtility.CreateEmptyPrefab(localPath);
-		PrefabUtility.ReplacePrefab(obj, prefab, ReplacePrefabOptions.ConnectToPrefab);
+		PrefabUtility.SaveAsPrefabAssetAndConnect(obj, localPath, InteractionMode.AutomatedAction);
 	}
 
 	public void UpdateParticles() {

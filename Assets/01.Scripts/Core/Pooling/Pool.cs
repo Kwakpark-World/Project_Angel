@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pool<T> where T : PoolableMono
 {
-    private Stack<T> _pool = new Stack<T>();
+    private Queue<T> _pool = new Queue<T>();
     private T _prefab;
     private PoolingType _poolingType;
     private Transform _parent;
@@ -27,8 +27,13 @@ public class Pool<T> where T : PoolableMono
 
     public void Push(T item)
     {
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+
         item.gameObject.SetActive(false);
-        _pool.Push(item);
+        _pool.Enqueue(item);
     }
 
     public T Pop()
@@ -43,7 +48,7 @@ public class Pool<T> where T : PoolableMono
         }
         else
         {
-            item = _pool.Pop();
+            item = _pool.Dequeue();
 
             item.gameObject.SetActive(true);
         }

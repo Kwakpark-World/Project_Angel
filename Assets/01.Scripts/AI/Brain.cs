@@ -4,22 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyType
-{
-    Knight,
-    Archer,
-    Witch,
-    Sorcerer,
-    Azazel
-}
-
 [RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
 [RequireComponent(typeof(Debuff), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {
-    public EnemyType enemyTypes;
     public BehaviourTreeRunner treeRunner;
-    public ParticleSystem HitParticle;
 
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -41,7 +30,10 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
-        float damage = 10;
+        if (AnimatorCompo.GetParameterState("isDie"))
+        {
+            return;
+        }
 
         if ((GameManager.Instance.playerTransform.position - transform.position).sqrMagnitude <= EnemyStatData.GetAttackRange() * EnemyStatData.GetAttackRange())
         {
@@ -54,12 +46,18 @@ public abstract class Brain : PoolableMono
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            OnHit(damage);
+            OnHit(5f);
         }
     }
 
     public override void InitializePoolingItem()
     {
+        if (NavMeshAgentCompo)
+        {
+            NavMeshAgentCompo.isStopped = false;
+        }
+
+        AnimatorCompo?.SetParameterDisable();
         EnemyStatData.InitializeAllModifiers();
 
         CurrentHealth = EnemyStatData.GetMaxHealth();
@@ -88,19 +86,25 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage)
     {
+        if (AnimatorCompo.GetParameterState("isDie"))
+        {
+            return;
+        }
+
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
-        HitParticle.Play();
-        
+
+        AnimatorCompo.SetParameterEnable("isHit");
+
         if (CurrentHealth <= 0f)
         {
             OnDie();
-            
         }
-
     }
 
     public virtual void OnDie()
     {
-        PoolManager.Instance.Push(this);
+        NavMeshAgentCompo.isStopped = true;
+
+        AnimatorCompo.SetParameterEnable("isDie");
     }
 }
