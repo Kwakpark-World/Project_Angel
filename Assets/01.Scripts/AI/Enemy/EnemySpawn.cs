@@ -5,9 +5,12 @@ using UnityEngine;
 public class EnemySpawn : MonoBehaviour
 {
     [SerializeField]
-    private EnemySpawnValueSO enemySpawnValue;
+    public EnemySpawnValueSO enemySpawnValue;
     [SerializeField]
-    private int maxEnemyCount = 7;
+    public int SpawnWave = 0;
+    public int EnemySpawnCount = 0;
+    public int EnemyDieCount = 0;
+    
     private float ratioSum;                                           
 
     private void Awake()
@@ -25,11 +28,12 @@ public class EnemySpawn : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.EnemyDieCount == maxEnemyCount)
+        if (EnemyDieCount == enemySpawnValue.maxEnemyCount)
         {
-            GameManager.Instance.SpawnWave++;
+            EnemyDieCount = 0;
+            SpawnWave++;
             SpawnEnemy();
-            GameManager.Instance.EnemyDieCount = 0;
+            EnemySpawnCount = 0;
             waveFont.WavePrint();
         }
     }
@@ -62,7 +66,7 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        while(GameManager.Instance.EnemySpawnCount < maxEnemyCount)
+        while(EnemySpawnCount < enemySpawnValue.maxEnemyCount)
         {
             Vector3 spawnPosition = new Vector3(
                 Random.Range(enemySpawnValue.minimumSpawnRange.x, enemySpawnValue.maximumSpawnRange.x),
@@ -81,18 +85,15 @@ public class EnemySpawn : MonoBehaviour
 
                 if (enemy.spawnRatio >= randomValue)
                 {
-                    PoolManager.Instance.Pop(enemy.enemyType, spawnPosition);
-
-                    GameManager.Instance.EnemySpawnCount++;
+                    Brain brain = PoolManager.Instance.Pop(enemy.enemyType, spawnPosition) as Brain;
+                    brain.enemySpawn = this;
+                    EnemySpawnCount++;
 
                     break;
                 }
             }
         }
-
-        if (GameManager.Instance.EnemySpawnCount == maxEnemyCount)
-        {
-            GameManager.Instance.EnemySpawnCount = 0;
-        }
     }
+
+
 }
