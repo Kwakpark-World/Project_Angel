@@ -22,6 +22,7 @@ public abstract class Brain : PoolableMono
     [field: SerializeField]
     public float CurrentHealth { get; set; }
     public float NormalAttackTimer { get; set; }
+    public EnemySpawn enemySpawn;
 
     protected virtual void Start()
     {
@@ -82,6 +83,8 @@ public abstract class Brain : PoolableMono
         EnemyStatData.SetOwner(this);
 
         NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
+
+        
     }
 
     public virtual void OnHit(float incomingDamage)

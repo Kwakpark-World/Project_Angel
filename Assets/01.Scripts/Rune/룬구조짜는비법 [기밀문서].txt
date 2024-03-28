@@ -1,0 +1,19 @@
+실제 게임오브젝트 Rune => Rune : MonoBehaviour
+
+Rune의 발동 효과 메서드 작성할 부모
+=> RuneEffectSO : ScriptableObject
+- abstract void UseEffect();
+
+스탯 업글용 클래스 StatIncrementEffectSO : RuneEffectSO
+- 선한쌤 프로젝트 참고
+
+스킬 업글용 클래스 UpgradeSkillEffectSO : RuneEffectSO
+- 선한쌤 프로젝트 참고
+- 필드 리스트 제외 가져오면 될 듯
+- 메소드는 플레이어 State들에서 Upgrade 함수 찾아오기
+
+PlayerSkill 열거형 만들기
+- State중 이름들 골라오기, QSkill, MeleeAttack 등등
+- Player"???"State
+- 선한쌤이 알려준 방식으로 PlayerState 상속받는 놈들 다 찾아서 그중 찾기
+- 실제 적용할 PlayerState 인스턴스는 StateMachine에서 GetState하기

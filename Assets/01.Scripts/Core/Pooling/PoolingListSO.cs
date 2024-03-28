@@ -17,7 +17,9 @@ public enum PoolingType
     EnemyArrow,
     PoisonPotion,
     FreezePotion,
-    KnockbackPotion
+    KnockbackPotion,
+    PlayerMeleeAttack,
+    Rune
 }
 
 [Serializable]

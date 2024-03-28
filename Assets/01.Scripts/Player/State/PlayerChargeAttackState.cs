@@ -6,6 +6,7 @@ public class PlayerChargeAttackState : PlayerState
 {
     public PlayerChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
+
     }
 
     public override void Enter()
