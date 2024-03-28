@@ -8,6 +8,7 @@ namespace BTVisual
     {
         public GameObject normalAttackObject;
         private Pattern _normalAttack = null;
+        private float _attackRange;
 
         protected override void OnStart()
         {
@@ -20,6 +21,11 @@ namespace BTVisual
             if (_normalAttack.OwnerNode == null)
             {
                 _normalAttack.OwnerNode = this;
+            }
+
+            if (_attackRange <= 0f)
+            {
+                _attackRange = brain.EnemyStatData.GetAttackRange();
             }
 
             _normalAttack.OnStart();
@@ -37,12 +43,14 @@ namespace BTVisual
                 brain.NavMeshAgentCompo.isStopped = true;
             }
 
-            if (Time.time <= brain.NormalAttackTimer + brain.EnemyStatData.GetAttackDelay())
+            if ((GameManager.Instance.playerTransform.position - brain.transform.position).sqrMagnitude > _attackRange * _attackRange)
+            {
+                return State.Failure;
+            }
+            else if (Time.time <= brain.NormalAttackTimer + brain.EnemyStatData.GetAttackDelay())
             {
                 return State.Running;
             }
-
-            brain.NormalAttackTimer = Time.time;
 
             return _normalAttack.OnUpdate();
         }
