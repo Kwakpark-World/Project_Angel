@@ -1,8 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Reflection;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public enum DebuffType
 {
@@ -13,12 +17,27 @@ public enum DebuffType
     // Fill here.
 }
 
+[Serializable]
+public struct DebuffTrigger
+{
+    [Space(10)]
+    public DebuffType debuffType;
+    [Space(10)]
+    public UnityEvent onDebuffBegin;
+    [Space(10)]
+    public UnityEvent onDebuffPlaying;
+    [Space(10)]
+    public UnityEvent onDebuffEnd;
+}
+
 public class Debuff : MonoBehaviour
 {
+    [SerializeField]
+    private List<DebuffTrigger> debuffTriggers;
     [field: SerializeField]
     public DebuffStat DebuffStatData { get; private set; }
 
-    private Dictionary<DebuffType, MethodInfo> _methodInfos = new Dictionary<DebuffType, MethodInfo>();
+    private Dictionary<DebuffType, DebuffTrigger> _debuffTriggersByType = new Dictionary<DebuffType, DebuffTrigger>();
     private Dictionary<DebuffType, object> _attackers = new Dictionary<DebuffType, object>();
     private Dictionary<DebuffType, bool> _debuffStates = new Dictionary<DebuffType, bool>();
     private Dictionary<DebuffType, Coroutine> _coroutines = new Dictionary<DebuffType, Coroutine>();
@@ -27,16 +46,23 @@ public class Debuff : MonoBehaviour
     private Brain _ownerBrain;
 
     private float _poisonDelayTimer = -1f;
-    private float _freezeDurationTimer = -1f;
 
     private void Awake()
     {
+        foreach (DebuffTrigger debuffTrigger in debuffTriggers)
+        {
+            _debuffTriggersByType.Add(debuffTrigger.debuffType, debuffTrigger);
+        }
+    }
+
+    private void Start()
+    {
         foreach (DebuffType debuffType in Enum.GetValues(typeof(DebuffType)))
         {
-            _methodInfos.Add(debuffType, GetType().GetMethod(debuffType.ToString()));
-            _attackers.Add(debuffType, null);
-            _debuffStates.Add(debuffType, false);
-            _coroutines.Add(debuffType, null);
+            if (!_debuffTriggersByType.ContainsKey(debuffType))
+            {
+                _debuffTriggersByType.Add(debuffType, new DebuffTrigger());
+            }
         }
     }
 
@@ -56,7 +82,7 @@ public class Debuff : MonoBehaviour
         {
             if (GetDebuff(debuffType))
             {
-                _methodInfos[debuffType].Invoke(this, null);
+                _debuffTriggersByType[debuffType].onDebuffPlaying?.Invoke();
             }
         }
     }
@@ -75,7 +101,7 @@ public class Debuff : MonoBehaviour
     {
         _attackers[debuffType] = attacker;
 
-        _methodInfos[debuffType].Invoke(this, null);
+        _debuffTriggersByType[debuffType].onDebuffBegin?.Invoke();
     }
 
     public void SetDebuff(DebuffType debuffType, float duration, object attacker)
@@ -99,19 +125,34 @@ public class Debuff : MonoBehaviour
     {
         _debuffStates[debuffType] = true;
 
+        _debuffTriggersByType[debuffType].onDebuffBegin?.Invoke();
+
         yield return new WaitForSeconds(duration);
+
+        _debuffTriggersByType[debuffType].onDebuffEnd?.Invoke();
 
         _debuffStates[debuffType] = false;
         _coroutines[debuffType] = null;
     }
 
-    public void Poison()
+    #region Poison Functions
+    public void PoisonBegin()
+    {
+        if (_ownerController)
+        {
+            _poisonDelayTimer = Time.time - (_attackers[DebuffType.Poison] as Brain).DebuffCompo.DebuffStatData.poisonDelay;
+        }
+        else
+        {
+            _poisonDelayTimer = Time.time - (_attackers[DebuffType.Poison] as Player).DebuffCompo.DebuffStatData.poisonDelay;
+        }
+    }
+
+    public void PoisonPlaying()
     {
         if (_ownerController)
         {
             Brain attacker = _attackers[DebuffType.Poison] as Brain;
-
-            _poisonDelayTimer = Time.time - attacker.DebuffCompo.DebuffStatData.poisonDelay;
 
             if (Time.time > _poisonDelayTimer + attacker.DebuffCompo.DebuffStatData.poisonDelay)
             {
@@ -122,9 +163,7 @@ public class Debuff : MonoBehaviour
         }
         else
         {
-            PlayerController attacker = _attackers[DebuffType.Poison] as PlayerController;
-
-            _poisonDelayTimer = Time.time - attacker.DebuffCompo.DebuffStatData.poisonDelay;
+            Player attacker = _attackers[DebuffType.Poison] as Player;
 
             if (Time.time > _poisonDelayTimer + attacker.DebuffCompo.DebuffStatData.poisonDelay)
             {
@@ -134,48 +173,44 @@ public class Debuff : MonoBehaviour
             }
         }
     }
+    #endregion
 
-    public void Freeze()
+    #region Freeze Functions
+    public void FreezeBegin()
     {
         if (_ownerController)
         {
             Brain attacker = _attackers[DebuffType.Freeze] as Brain;
 
-            if (_freezeDurationTimer <= 0f)
-            {
-                _freezeDurationTimer = Time.time;
-
-                _ownerController.PlayerStatData.moveSpeed.AddModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
-            }
-
-            if (Time.time > _freezeDurationTimer + attacker.DebuffCompo.DebuffStatData.freezeDuration)
-            {
-                _ownerController.PlayerStatData.moveSpeed.RemoveModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
-
-                _freezeDurationTimer = -1f;
-            }
+            _ownerController.PlayerStatData.moveSpeed.AddModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
         }
         else
         {
             PlayerController attacker = _attackers[DebuffType.Freeze] as PlayerController;
 
-            if (_freezeDurationTimer <= 0f)
-            {
-                _freezeDurationTimer = Time.time;
-
-                _ownerBrain.EnemyStatData.moveSpeed.AddModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
-            }
-
-            if (Time.time > _freezeDurationTimer + attacker.DebuffCompo.DebuffStatData.freezeDuration)
-            {
-                _ownerBrain.EnemyStatData.moveSpeed.RemoveModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
-
-                _freezeDurationTimer = -1f;
-            }
+            _ownerBrain.EnemyStatData.moveSpeed.AddModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
         }
     }
 
-    public void Knockback()
+    public void FreezeEnd()
+    {
+        if (_ownerController)
+        {
+            Brain attacker = _attackers[DebuffType.Freeze] as Brain;
+
+            _ownerController.PlayerStatData.moveSpeed.RemoveModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
+        }
+        else
+        {
+            PlayerController attacker = _attackers[DebuffType.Freeze] as PlayerController;
+
+            _ownerBrain.EnemyStatData.moveSpeed.RemoveModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
+        }
+    }
+    #endregion
+
+    #region Knockback Functions
+    public void KnockbackBegin()
     {
         if (_ownerController)
         {
@@ -190,4 +225,5 @@ public class Debuff : MonoBehaviour
             _ownerBrain.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.DebuffCompo.DebuffStatData.knockbackForce, ForceMode.Impulse);
         }
     }
+    #endregion
 }

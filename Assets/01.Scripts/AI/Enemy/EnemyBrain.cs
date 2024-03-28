@@ -22,6 +22,7 @@ public class EnemyBrain : Brain
     public override void OnDie()
     {
         base.OnDie();
+
         GameManager.Instance.EnemyDieCount++;
     }
 }

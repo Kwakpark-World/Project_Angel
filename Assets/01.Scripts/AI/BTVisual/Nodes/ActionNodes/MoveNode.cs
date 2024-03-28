@@ -9,11 +9,13 @@ namespace BTVisual
         protected override void OnStart()
         {
             brain.NavMeshAgentCompo.destination = blackboard.destination;
+
+            brain.AnimatorCompo.SetAnimationState("Move");
         }
 
         protected override void OnStop()
         {
-            brain.AnimatorCompo.OnAnimationEnd();
+            brain.AnimatorCompo.OnAnimationEnd("");
         }
 
         protected override State OnUpdate()
@@ -21,11 +23,6 @@ namespace BTVisual
             if (brain.NavMeshAgentCompo.isStopped)
             {
                 brain.NavMeshAgentCompo.isStopped = false;
-            }
-
-            if (!brain.AnimatorCompo.GetParameterState("isMove"))
-            {
-                brain.AnimatorCompo.SetParameterEnable("isMove");
             }
 
             if (brain.NavMeshAgentCompo.remainingDistance > Mathf.Epsilon)

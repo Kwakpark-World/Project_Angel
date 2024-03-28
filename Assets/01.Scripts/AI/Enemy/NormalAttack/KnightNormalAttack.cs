@@ -7,20 +7,22 @@ public class KnightNormalAttack : Pattern
 {
     public override void OnStart()
     {
-        OwnerNode.brain.AnimatorCompo.SetParameterEnable("isAttack");
+        OwnerNode.brain.AnimatorCompo.SetAnimationState("Attack");
     }
 
     public override void OnStop()
     {
-        OwnerNode.brain.AnimatorCompo.OnAnimationEnd();
+        OwnerNode.brain.AnimatorCompo.OnAnimationEnd("");
     }
 
     public override Node.State OnUpdate()
     {
-        if (OwnerNode.brain.AnimatorCompo.GetParameterState("isAttack"))
+        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState() == "Attack")
         {
             return Node.State.Running;
         }
+
+        OwnerNode.brain.NormalAttackTimer = Time.time;
 
         return Node.State.Success;
     }

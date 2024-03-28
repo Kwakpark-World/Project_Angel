@@ -23,9 +23,9 @@ public class EnemyArrow : PoolableMono
 
     private void Update()
     {
-        _rigidbody.velocity = -transform.forward * _speed;
-
         _particleTransform.Rotate(-_particleTransform.forward, _rotateSpeed * Time.deltaTime);
+
+        _rigidbody.velocity = -transform.forward * _speed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,9 +33,10 @@ public class EnemyArrow : PoolableMono
         if (other.gameObject == GameManager.Instance.player.gameObject)
         {
             GameManager.Instance.player.OnHit(owner.EnemyStatData.GetAttackPower());
+            PoolManager.Instance.Push(this);
         }
 
-        PoolManager.Instance.Push(this);
+        // If arrow collision with environment, push to pool this.
     }
 
     public override void InitializePoolingItem()
