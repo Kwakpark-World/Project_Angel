@@ -35,12 +35,4 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public Transform playerTransform;
 
-    //EnemySpawn
-    [HideInInspector]
-    public int SpawnWave = 0;
-    [HideInInspector]
-    public int EnemySpawnCount = 0;
-    [HideInInspector]
-    public int EnemyDieCount = 0;
-
 }
