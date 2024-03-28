@@ -220,7 +220,11 @@ public class Player : PlayerController
             StateMachine.ChangeState(PlayerStateEnum.Dash);
         }
         else
+        {
+            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
+
             StateMachine.ChangeState(PlayerStateEnum.EDash);
+        }
     }
 
     public void AnimationEndTrigger()

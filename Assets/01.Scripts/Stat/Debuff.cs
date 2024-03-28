@@ -8,7 +8,9 @@ public enum DebuffType
 {
     Poison,
     Freeze,
-    Knockback
+    Knockback,
+    Scapegoat,
+    // Fill here.
 }
 
 public class Debuff : MonoBehaviour

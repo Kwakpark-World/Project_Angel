@@ -14,10 +14,12 @@ public enum PoolingType
     Shamshiel,
     Sariel,
     Satanael,
-    Arrow,
+    EnemyArrow,
     PoisonPotion,
     FreezePotion,
-    KnockbackPotion
+    KnockbackPotion,
+    PlayerMeleeAttack,
+    Rune
 }
 
 [Serializable]

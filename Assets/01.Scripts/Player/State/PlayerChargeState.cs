@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerChargeState : PlayerState
 {
     private float _clickTimer;
+
+    private float _minChargeTime = 0.5f;
+    private float _maxChargeTime = 2f;
 
     public PlayerChargeState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -29,11 +30,12 @@ public class PlayerChargeState : PlayerState
     {
         base.UpdateState();
 
-        _clickTimer = Mathf.Clamp01(_clickTimer);
-        
+        _clickTimer = Mathf.Clamp(_clickTimer, 0f, _maxChargeTime);
+        Debug.Log(_clickTimer);
+
         if (!_player.PlayerInput.isCharge)
         {
-            if (_clickTimer < 0.7f)
+            if (_clickTimer < _minChargeTime)
                 _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
             else
                 _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
@@ -42,11 +44,11 @@ public class PlayerChargeState : PlayerState
         {
             _clickTimer += Time.deltaTime;
 
-            if (_clickTimer >= 1)
+            if (_clickTimer >= _maxChargeTime)
             {
                 _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
             }
         }
-
+        
     }
 }

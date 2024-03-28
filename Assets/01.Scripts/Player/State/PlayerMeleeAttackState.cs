@@ -7,14 +7,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMeleeAttackState : PlayerState
 {
-    private int _comboCounter; // ÇöÀç ÄÞº¸
-    private float _lastAttackTime; // ¸¶Áö¸·À¸·Î °ø°ÝÇÑ ½Ã°£
-    private float _comboWindow = 0.8f; // ÄÞº¸°¡ ²÷±â±â ±îÁöÀÇ ½Ã°£ 
+    private int _comboCounter; // ï¿½ï¿½ï¿½ï¿½ ï¿½Þºï¿½
+    private float _lastAttackTime; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    private float _comboWindow = 0.8f; // ï¿½Þºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ 
    
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
     private HashSet<RaycastHit> _enemyDuplicateCheck = new HashSet<RaycastHit>();
-    private float _hitDistance = 2.8f; // 2.4°¡ °ËÅ©±â.
+    private float _hitDistance = 5f; // 2.4ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½.
 
     private Transform _weaponRayPoint;
     
@@ -32,7 +32,7 @@ public class PlayerMeleeAttackState : PlayerState
         _weaponRayPoint = _player._currentWeapon.transform.Find("Point");
         
         if (_comboCounter >= 2 || Time.time >= _lastAttackTime + _comboWindow)
-            _comboCounter = 0; // ÄÞº¸ ÃÊ±âÈ­
+            _comboCounter = 0; // ï¿½Þºï¿½ ï¿½Ê±ï¿½È­
 
         _player.UsingAnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
         _player.UsingAnimatorCompo.speed = _player.attackSpeed;
@@ -44,6 +44,8 @@ public class PlayerMeleeAttackState : PlayerState
         {
             _player.StopImmediately(false);
         });
+
+        EffectManager.Instance.PlayEffect(EffectManager.Instance.GetEffect($"Player{PlayerStateEnum.MeleeAttack}Effect"), Vector3.zero);
     }
 
     public override void Exit()
@@ -59,6 +61,7 @@ public class PlayerMeleeAttackState : PlayerState
 
         _enemyDuplicateCheck.Clear();
 
+        
         base.Exit();
     }
 
@@ -70,12 +73,13 @@ public class PlayerMeleeAttackState : PlayerState
         Vector3 dir = (_weaponRayPoint.position - _player._currentWeapon.transform.position).normalized;
 
         Debug.DrawRay(_player._currentWeapon.transform.position, dir * _hitDistance, Color.blue);
-        if (_isHitAbleCalled)
+        if (_isHitAbleTriggerCalled)
         {
             RaycastHit[] enemies = Physics.RaycastAll(_player._currentWeapon.transform.position, dir, _hitDistance, _player._enemyLayer);
     
             foreach(var enemy in enemies)
             {
+                Debug.Log("1");
                 if (_enemyDuplicateCheck.Add(enemy))
                 {
                     if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
@@ -101,5 +105,15 @@ public class PlayerMeleeAttackState : PlayerState
                 _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
             }
         }
-    }    
+    }   
+
+    public void UpgradeActivePoison()
+    {
+        //TODO: use poison every attack
+    }
+
+    public void KillInactivePoison()
+    {
+
+    }
 }

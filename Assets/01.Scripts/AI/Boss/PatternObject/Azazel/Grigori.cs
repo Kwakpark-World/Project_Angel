@@ -26,11 +26,6 @@ public abstract class Grigori : Brain
 
     public override void OnDie()
     {
-        if (CurrentHealth > 0f)
-        {
-            return;
-        }
-
         base.OnDie();
 
         Debuff();
