@@ -16,7 +16,7 @@ namespace BTVisual
 
         private void Update()
         {
-            if (brain.CurrentHealth <= 0f)
+            if (brain.AnimatorCompo.GetParameterState("isDie"))
             {
                 return;
             }

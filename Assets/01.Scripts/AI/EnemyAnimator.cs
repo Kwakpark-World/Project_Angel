@@ -128,7 +128,7 @@ public class EnemyAnimator : MonoBehaviour
     #region Enemy Normal Attack Functions
     public void ArcherNormalAttack()
     {
-        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Arrow, _weaponTransform.position) as EnemyArrow;
+        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.EnemyArrow, _weaponTransform.position) as EnemyArrow;
         arrow.owner = _owner as EnemyBrain;
     }
 
