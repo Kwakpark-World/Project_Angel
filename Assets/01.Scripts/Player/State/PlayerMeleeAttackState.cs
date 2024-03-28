@@ -17,6 +17,9 @@ public class PlayerMeleeAttackState : PlayerState
     private float _hitDistance = 5f; // 2.4가 검크기.
 
     private Transform _weaponRayPoint;
+
+    private float _awakenAttackDist = 4.2f;
+    private float _defaultAttackDist = 2.8f;
     
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {

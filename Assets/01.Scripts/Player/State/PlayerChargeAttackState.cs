@@ -19,6 +19,7 @@ public class PlayerChargeAttackState : PlayerState
 
     public override void Exit()
     {
+        _player.ChargingGage = 0;
         base.Exit();
     }
                                                                                                  

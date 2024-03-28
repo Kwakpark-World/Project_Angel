@@ -12,6 +12,9 @@ public class PlayerQSkillState : PlayerState
     private float _attackDist = 12f;
     private float _attackHeight = 2f;
 
+    private float _awakenAttackDist = 15f;
+    private float _defaultAttackDist = 12f;
+    
     public PlayerQSkillState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -19,6 +22,8 @@ public class PlayerQSkillState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _attackDist = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
+
         _player.SetVelocity(Vector3.up * _jumpForce);
     }
 

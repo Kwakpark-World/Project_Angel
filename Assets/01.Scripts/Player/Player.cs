@@ -21,6 +21,8 @@ public class Player : PlayerController
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
 
+    public float ChargingGage;
+
     [Header("Critical Settings")]
     public float criticalChance;
     public float criticalMultiplier;

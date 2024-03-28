@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PlayerChargeState : PlayerState
 {
-    private float _clickTimer;
-
     private float _minChargeTime = 0.5f;
     private float _maxChargeTime = 2f;
 
@@ -18,7 +16,7 @@ public class PlayerChargeState : PlayerState
         _player.StopImmediately(false);
         _player.RotateToMousePos();
 
-        _clickTimer = 0;
+        _player.ChargingGage = 0;
     }
 
     public override void Exit()
@@ -30,20 +28,23 @@ public class PlayerChargeState : PlayerState
     {
         base.UpdateState();
 
-        _clickTimer = Mathf.Clamp(_clickTimer, 0f, _maxChargeTime);
+        _player.ChargingGage = Mathf.Clamp(_player.ChargingGage, 0f, _maxChargeTime);
 
         if (!_player.PlayerInput.isCharge)
         {
-            if (_clickTimer < _minChargeTime)
+            if (_player.ChargingGage < _minChargeTime)
+            {
+                _player.ChargingGage = 0;
                 _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
+            }
             else
                 _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
         }
         else
         {
-            _clickTimer += Time.deltaTime;
+            _player.ChargingGage += Time.deltaTime;
 
-            if (_clickTimer >= _maxChargeTime)
+            if (_player.ChargingGage >= _maxChargeTime)
             {
                 _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
             }
