@@ -46,6 +46,7 @@ public class Player : PlayerController
     public bool IsPlayerStop { get; set; }
 
     public Vector3 MousePosInWorld { get; private set; }
+    public FakePlayer fakePlayer;
 
     protected override void Awake()
     {

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
             }
             else if (!_instance.player)
             {
-                _instance.player = FindObjectOfType<Player>();
+                _instance.player = FindFirstObjectByType<Player>();
 
                 if (_instance.player)
                 {
