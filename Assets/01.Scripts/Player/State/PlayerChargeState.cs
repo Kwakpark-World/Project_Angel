@@ -31,7 +31,6 @@ public class PlayerChargeState : PlayerState
         base.UpdateState();
 
         _clickTimer = Mathf.Clamp(_clickTimer, 0f, _maxChargeTime);
-        Debug.Log(_clickTimer);
 
         if (!_player.PlayerInput.isCharge)
         {

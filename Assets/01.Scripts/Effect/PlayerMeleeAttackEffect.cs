@@ -6,15 +6,17 @@ public class PlayerMeleeAttackEffect : PoolableMonoEffect
 {
     public override void InitializePoolingItem()
     {
+        base.InitializePoolingItem();
+
         //
 
-        base.InitializePoolingItem();
     }
 
     public override void RegisterEffect()
     {
         base.RegisterEffect();
 
-        //
+        // 
+
     }
 }
