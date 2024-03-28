@@ -10,7 +10,7 @@ public class StatIncrementEffectSO : RuneEffectSO
 
     public override void UseEffect()
     {
-        _stat = GameManager.Instance.player.PlayerStat.GetStatByType(increaseStat);
+        _stat = GameManager.Instance.player.PlayerStatData.GetStatByType(increaseStat);
         if(_stat == null)
         {
             Debug.LogError($"PlayerStat Dosen't have {increaseStat.ToString()} Stat.");
