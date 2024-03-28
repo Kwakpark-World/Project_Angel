@@ -22,15 +22,15 @@ public class WaveFont : MonoBehaviour
     {
         _waveFont.text = waveText;
 
-        transform.DOMove(new Vector3(950, 800, 1), 2).OnComplete(MoveBackToOriginalPosition);
+        transform.DOMove(new Vector3(950, 800, 1), 1.5f).OnComplete(MoveBackToOriginalPosition);
 
-        _image.rectTransform.DOMove(new Vector3(950, 800, 1), 2);
+        _image.rectTransform.DOMove(new Vector3(950, 800, 1), 1.5f);
     }
 
     void MoveBackToOriginalPosition()
     {
-        transform.DOMove(originalPosition, 2).SetDelay(2);
+        transform.DOMove(originalPosition, 1.5f).SetDelay(1);
 
-        _image.rectTransform.DOMove(originalPosition, 2).SetDelay(2);
+        _image.rectTransform.DOMove(originalPosition, 1.5f).SetDelay(1);
     }
 }
