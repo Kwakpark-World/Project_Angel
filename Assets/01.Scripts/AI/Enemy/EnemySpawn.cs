@@ -8,14 +8,14 @@ public class EnemySpawn : MonoBehaviour
     private EnemySpawnValueSO enemySpawnValue;
     [SerializeField]
     private int maxEnemyCount = 7;
-    private float ratioSum;
+    private float ratioSum;                                           
 
     private void Awake()
     {
         InitializeSpawner();
     }
 
-    public WaveFont waveFont;
+    public WaveFont waveFont;                                                                                                                                                     
 
     private void Start()
     {
