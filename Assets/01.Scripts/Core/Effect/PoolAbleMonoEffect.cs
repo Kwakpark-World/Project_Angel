@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class PoolAbleMonoEffect : PoolableMono
+public class PoolableMonoEffect : PoolableMono
 {
     public EffectType EffectType;
 
@@ -12,15 +12,24 @@ public class PoolAbleMonoEffect : PoolableMono
         RegisterEffect();
     }
 
-    public override void InitializePoolingItem(){}
-
-    protected virtual void RegisterEffect()
+    /// <summary>
+    /// Setting parentTrm, rotation, scale, etc.. , 
+    /// If the type is particle, it basically starts here.
+    /// </summary>
+    public override void InitializePoolingItem()
     {
         if (EffectType == EffectType.Particle)
-            EffectManager.Instance.RegisterEffect(gameObject.GetComponent<ParticleSystem>());
-        else if (EffectType == EffectType.Shader)
-            EffectManager.Instance.RegisterEffect(gameObject.GetComponent<Material>());
-        else if (EffectType == EffectType.VFX)
-            EffectManager.Instance.RegisterEffect(gameObject.GetComponent<VisualEffect>());        
+        {
+            if (this.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
+            {
+                particle.Play();
+            }
+        }
+    } 
+
+    public virtual void RegisterEffect()
+    {
+        EffectManager.Instance.RegisterEffect(this);  
     }
+
 }

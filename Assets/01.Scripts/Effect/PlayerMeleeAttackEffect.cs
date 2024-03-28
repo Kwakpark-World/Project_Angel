@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMeleeAttackEffect : PoolAbleMonoEffect
+public class PlayerMeleeAttackEffect : PoolableMonoEffect
 {
     public override void InitializePoolingItem()
     {
+        //
 
+        base.InitializePoolingItem();
     }
 
-    protected override void RegisterEffect()
+    public override void RegisterEffect()
     {
         base.RegisterEffect();
 
-        EffectManager.Instance.RegisterEffect(EffectType.Particle, this);
+        //
     }
 }

@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VFX;
-using static UnityEngine.ParticleSystem;
+using static UnityEditor.PlayerSettings;
 
 public class EffectManager : MonoBehaviour
 {
@@ -21,78 +20,148 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    private HashSet<ParticleSystem> _particles = new HashSet<ParticleSystem>();
-    private HashSet<Material> _shaders = new HashSet<Material>();
-    private HashSet<VisualEffect> _vfxs = new HashSet<VisualEffect>();
+    private Dictionary<string, PoolableMonoEffect> _effects = new Dictionary<string, PoolableMonoEffect>();
 
-    private Dictionary<string, PoolAbleMonoEffect> _effects = new Dictionary<string, PoolAbleMonoEffect>();
-
-    public void RegisterEffect(PoolAbleMonoEffect effect)
+    public void RegisterEffect(PoolableMonoEffect effect)
     {
-        
-    }
-
-    #region RegisterEffect
-    public void RegisterEffect(ParticleSystem particle)
-    {
-        if (particle == null)
+        if (effect == null)
         {
-            Debug.LogError($"this object : {particle} is not particle. Check Effect Type or Component Attatched");
+            Debug.LogError($"this object : {effect} is not effect. Check Component Attatched");
             return;
         }
 
-        if (_particles.Add(particle))
+        string effectName = effect.GetType().ToString();
+        if (!_effects.ContainsKey(effectName))
         {
-            if (particle.TryGetComponent<PoolAbleMonoEffect>(out var pool))
-            {
-                pool.InitializePoolingItem();
-            }
-            else
-                Debug.LogError($"{particle} is not PoolAbleEffect");
-
+            _effects.Add(effectName, effect);
         }
         else
-            Debug.Log($"This Object already contain particles. Object : {particle}");
-        
+            Debug.Log($"This Object already contain effect. Object : {effect}");
     }
 
-    public void RegisterEffect(Material shader)
+    public PoolableMonoEffect GetEffect(PoolableMonoEffect effect)
     {
-        if (shader == null)
+        string effectName = effect.GetType().ToString();
+        
+        if (!_effects.ContainsKey(effectName))
         {
-            Debug.LogError($"this object : {shader} is not shader. Check Effect Type or Component Attatched");
+            Debug.LogError($"{effectName} is Not Contain _effects");
+            return null;
+        }
+
+        return _effects[effectName];
+    }
+
+    public PoolableMonoEffect GetEffect(string effectName)
+    {
+        if (!_effects.ContainsKey(effectName))
+        {
+            Debug.LogError($"{effectName} is Not Contain _effects");
+            return null;
+        }
+
+        return _effects[effectName];
+    }
+
+    public void PlayEffect(PoolableMonoEffect effect, Vector3 pos)
+    {
+        string effectName = effect.GetType().ToString();
+
+        if (!_effects.ContainsKey(effectName))
+        {
+            Debug.LogError($"{effectName} is Not Contain _effects");
             return;
         }
 
-        if (_shaders.Add(shader))
-        {
-
-        }
-        else
-            Debug.Log($"This Object already contain Shaders. Object : {shader}");
-       
+        _effects[effectName].InitializePoolingItem();
+        PoolManager.Instance.Pop(effect.poolingType, pos);
     }
-    
-    public void RegisterEffect(VisualEffect vfx)
+
+    public void StopEffect(PoolableMonoEffect effect)
     {
-        if (vfx == null)
+        string effectName = effect.GetType().ToString();
+        if (!_effects.ContainsKey(effectName))
         {
-            Debug.LogError($"this object : {vfx} is not vfx. Check Effect Type or Component Attatched");
+            Debug.LogError($"{effectName} is Not Contain _effects");
             return;
         }
 
-        if (_vfxs.Add(vfx))
+        PoolManager.Instance.Push(_effects[effectName]);
+    }
+
+    public void PauseParticle(PoolableMonoEffect effect, float delayTime)
+    {
+        string effectName = effect.GetType().ToString();
+        if (!_effects.ContainsKey(effectName))
         {
-            if (vfx.TryGetComponent<PoolAbleMonoEffect>(out var pool))
-            {
-                pool.InitializePoolingItem();
-            }
-            else
-                Debug.LogError($"{vfx} is not PoolAbleEffect");
+            Debug.LogError($"{effectName} is Not Contain _effects");
+            return;
+        }
+
+        if (_effects[effectName].EffectType == EffectType.Particle)
+        {
+            Debug.LogError($"{effectName} is not particle.");
+            return;
+        }
+
+        if (effect.TryGetComponent<ParticleSystem>(out var particle))
+        {
+            StartCoroutine(ParticlePauseDelay(particle, delayTime));
         }
         else
-            Debug.Log($"This Object already contain vfxs. Object : {vfx}");
-        
+            Debug.LogError($"{effect} is not particle, Check Component Attatched");
     }
-    #endregion
+
+    public void PauseParticle(PoolableMonoEffect effect)
+    {
+        string effectName = effect.GetType().ToString();
+        if (!_effects.ContainsKey(effectName))
+        {
+            Debug.LogError($"{effectName} is Not Contain _effects");
+            return;
+        }
+
+        if (_effects[effectName].EffectType == EffectType.Particle)
+        {
+            Debug.LogError($"{effectName} is not particle.");
+            return;
+        }
+
+        if (effect.TryGetComponent<ParticleSystem>(out var particle))
+        {
+            particle.Pause();
+        }
+        else
+            Debug.LogError($"{effect} is not particle, Check Component Attatched");
+    }
+
+    public void PauseParticlePlay(PoolableMonoEffect effect)
+    {
+        string effectName = effect.GetType().ToString();
+        if (!_effects.ContainsKey(effectName))
+        {
+            Debug.LogError($"{effectName} is Not Contain _effects");
+            return;
+        }
+
+        if (_effects[effectName].EffectType == EffectType.Particle)
+        {
+            Debug.LogError($"{effectName} is not particle.");
+            return;
+        }
+
+        if (effect.TryGetComponent<ParticleSystem>(out var particle))
+        {
+            particle.Play();
+        }
+        else
+            Debug.LogError($"{effect} is not particle, Check Component Attatched");
+    }
+
+    private IEnumerator ParticlePauseDelay(ParticleSystem particle, float delayTime)
+    {
+        particle.Pause();
+        yield return new WaitForSeconds(delayTime);
+        particle.Play();
+    }
 }
