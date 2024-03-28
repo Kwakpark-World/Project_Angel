@@ -15,21 +15,36 @@ MonoBehaviour:
   maxHealth:
     _baseValue: 50
     modifiers: []
-  currentHealth:
-    _baseValue: 50
-    modifiers: []
   defensivePower:
     _baseValue: 0
     modifiers: []
-  moveSpeed:
-    _baseValue: 10
+  defenseCooldown:
+    _baseValue: 1
     modifiers: []
   attackPower:
     _baseValue: 0
+    modifiers: []
+  attackSpeed:
+    _baseValue: 1
     modifiers: []
   criticalChance:
     _baseValue: 0
     modifiers: []
   criticalMultiplier:
+    _baseValue: 0
+    modifiers: []
+  moveSpeed:
+    _baseValue: 10
+    modifiers: []
+  rotateSpeed:
+    _baseValue: 1
+    modifiers: []
+  dashSpeed:
+    _baseValue: 20
+    modifiers: []
+  dashDuration:
+    _baseValue: 0.4
+    modifiers: []
+  dashCooldown:
     _baseValue: 0
     modifiers: []

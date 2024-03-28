@@ -8,20 +8,20 @@ namespace BTVisual
     {
         protected override void OnStart()
         {
-            context.agent.isStopped = true;
+            context.agent.isStopped = false;
 
             if (context.agent.destination != blackboard.destination)
             {
                 context.agent.destination = blackboard.destination;
             }
 
-            brain.AnimatorCompo.SetBoolEnable("isMove");
+            brain.AnimatorCompo.SetParameterEnable("isMove");
         }
 
         protected override void OnStop()
         {
-
-            brain.AnimatorCompo.SetBoolDisable();
+            brain.AnimatorCompo.SetParameterDisable();
+            brain.AnimatorCompo.OnAnimationEnd();
         }
 
         protected override State OnUpdate()

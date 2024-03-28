@@ -11,23 +11,25 @@ public class KnightNormalAttack : Pattern
     {
         if (_enemySword == null)
         {
-            _enemySword = node.brain.GetComponentInChildren<EnemySword>();
+            _enemySword = OwnerNode.brain.GetComponentInChildren<EnemySword>();
         }
 
-        _enemySword.swordCollider.enabled = true;
-
-        node.brain.AnimatorCompo.SetBoolEnable("isAttack");
+        OwnerNode.brain.AnimatorCompo.SetParameterEnable("isAttack");
     }
 
     public override void OnStop()
     {
-        _enemySword.swordCollider.enabled = false;
-
-        node.brain.AnimatorCompo.SetBoolDisable();
+        OwnerNode.brain.AnimatorCompo.SetParameterDisable();
+        OwnerNode.brain.AnimatorCompo.OnAnimationEnd();
     }
 
     public override Node.State OnUpdate()
     {
+        if (OwnerNode.brain.AnimatorCompo.GetParameterState("isAttack"))
+        {
+            return Node.State.Running;
+        }
+
         return Node.State.Success;
     }
 }

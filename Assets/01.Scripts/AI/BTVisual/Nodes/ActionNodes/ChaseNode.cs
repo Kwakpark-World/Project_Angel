@@ -14,15 +14,16 @@ namespace BTVisual
 
             if (_attackRange <= 0f)
             {
-                _attackRange = brain.EnemyStatistic.GetAttackRange();
+                _attackRange = brain.EnemyStatData.GetAttackRange();
             }
 
-            brain.AnimatorCompo.SetBoolEnable("isMove");
+            brain.AnimatorCompo.SetParameterEnable("isMove");
         }
 
         protected override void OnStop()
         {
-            brain.AnimatorCompo.SetBoolDisable();
+            brain.AnimatorCompo.SetParameterDisable();
+            brain.AnimatorCompo.OnAnimationEnd();
         }
 
         protected override State OnUpdate()

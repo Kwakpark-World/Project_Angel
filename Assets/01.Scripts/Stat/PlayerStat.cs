@@ -22,17 +22,9 @@ public class PlayerStat : CharacterStat
             }
             else
             {
-                _fieldInfoDictionary.Add(statType, statField);
+                fieldInfoDictionary.Add(statType, statField);
             }
         }
-
-        foreach (DebuffType debuffType in Enum.GetValues(typeof(DebuffType)))
-        {
-            debuffDictionary.Add(debuffType, false);
-            _coroutines.Add(null);
-        }
-
-        currentHealth.SetDefalutValue(GetMaxHealthValue());
     }
 
     public void InitializeAllModifiers()
@@ -45,7 +37,7 @@ public class PlayerStat : CharacterStat
 
     public Stat GetStatByType(PlayerStatType statType)
     {
-        return _fieldInfoDictionary[statType].GetValue(this) as Stat;
+        return fieldInfoDictionary[statType].GetValue(this) as Stat;
     }
 
 }

@@ -15,19 +15,10 @@ MonoBehaviour:
   maxHealth:
     _baseValue: 30
     modifiers: []
-  currentHealth:
-    _baseValue: 30
-    modifiers:
-    - -10
-    - -10
-    - -10
   lifetime:
     _baseValue: 0
     modifiers: []
   defensivePower:
-    _baseValue: 0
-    modifiers: []
-  moveSpeed:
     _baseValue: 0
     modifiers: []
   detectRange:
@@ -37,10 +28,16 @@ MonoBehaviour:
     _baseValue: 3
     modifiers: []
   attackRange:
-    _baseValue: 2
+    _baseValue: 3
     modifiers: []
   attackDelay:
     _baseValue: 1
+    modifiers: []
+  moveSpeed:
+    _baseValue: 5
+    modifiers: []
+  rotateSpeed:
+    _baseValue: 7
     modifiers: []
   patternAmount:
     _baseValue: 0

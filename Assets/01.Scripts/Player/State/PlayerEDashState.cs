@@ -15,7 +15,6 @@ public class PlayerEDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        _player.PlayerInput.MeleeAttackEvent += AwakeningDashAttackEvent;
 
         float dashDistance = _dashDistanceMax;
 
@@ -30,7 +29,6 @@ public class PlayerEDashState : PlayerState
    
     public override void Exit()
     {
-        _player.PlayerInput.MeleeAttackEvent -= AwakeningDashAttackEvent;
         base.Exit();
     }
 
@@ -44,10 +42,6 @@ public class PlayerEDashState : PlayerState
         }
     }
 
-    private void AwakeningDashAttackEvent()
-    {
-
-    }
     
 }
 

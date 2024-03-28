@@ -13,6 +13,8 @@ public class PlayerESkillState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.StopImmediately(true);
+
         _player.StartCoroutine(PlayerAwakening());
     }
 
