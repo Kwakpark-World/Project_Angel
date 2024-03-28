@@ -12,15 +12,23 @@ public class PoolAbleMonoEffect : PoolableMono
         RegisterEffect();
     }
 
-    public override void InitializePoolingItem(){}
+    /// <summary>
+    /// Setting parentTrm, rotation, scale, etc.. , 
+    /// If the type is particle, it basically starts here.
+    /// </summary>
+    public override void InitializePoolingItem()
+    {
+        if (EffectType == EffectType.Particle)
+        {
+            if (this.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
+            {
+                particle.Play();
+            }
+        }
+    } 
 
     protected virtual void RegisterEffect()
     {
-        if (EffectType == EffectType.Particle)
-            EffectManager.Instance.RegisterEffect(gameObject.GetComponent<ParticleSystem>());
-        else if (EffectType == EffectType.Shader)
-            EffectManager.Instance.RegisterEffect(gameObject.GetComponent<Material>());
-        else if (EffectType == EffectType.VFX)
-            EffectManager.Instance.RegisterEffect(gameObject.GetComponent<VisualEffect>());        
+        EffectManager.Instance.RegisterEffect(this);  
     }
 }

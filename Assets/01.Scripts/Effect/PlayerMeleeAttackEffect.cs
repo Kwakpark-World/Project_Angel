@@ -6,13 +6,14 @@ public class PlayerMeleeAttackEffect : PoolAbleMonoEffect
 {
     public override void InitializePoolingItem()
     {
+        //
 
+        base.InitializePoolingItem();
     }
 
     protected override void RegisterEffect()
     {
         base.RegisterEffect();
 
-        EffectManager.Instance.RegisterEffect(EffectType.Particle, this);
     }
 }
