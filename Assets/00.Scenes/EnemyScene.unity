@@ -20541,9 +20541,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerTransform: {fileID: 0}
-  SpawnWave: 0
-  EnemySpawnCount: 0
-  EnemyDieCount: 0
 --- !u!4 &567515868
 Transform:
   m_ObjectHideFlags: 0
@@ -25798,6 +25795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waveFont: {fileID: 798787545}
   _image: {fileID: 64520326}
+  enemySpawn: {fileID: 1877294620}
 --- !u!114 &798787545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41556,6 +41554,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1890782957}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1877294620 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3063732054807919413, guid: a12b8f6dffc57ef428823d9a00483c65,
+    type: 3}
+  m_PrefabInstance: {fileID: 1204980250}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26539124f88dfbd4e9812d36a08552b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1890782956
 GameObject:
   m_ObjectHideFlags: 0

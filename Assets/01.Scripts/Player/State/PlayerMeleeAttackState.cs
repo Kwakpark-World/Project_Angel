@@ -79,7 +79,6 @@ public class PlayerMeleeAttackState : PlayerState
     
             foreach(var enemy in enemies)
             {
-                Debug.Log("1");
                 if (_enemyDuplicateCheck.Add(enemy))
                 {
                     if (enemy.transform.TryGetComponent<Brain>(out Brain brain))

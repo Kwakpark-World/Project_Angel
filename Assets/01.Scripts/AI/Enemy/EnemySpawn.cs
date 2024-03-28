@@ -31,9 +31,9 @@ public class EnemySpawn : MonoBehaviour
         if (EnemyDieCount == enemySpawnValue.maxEnemyCount)
         {
             EnemyDieCount = 0;
-            SpawnWave++;
-            SpawnEnemy();
             EnemySpawnCount = 0;
+            SpawnEnemy();
+            SpawnWave++;
             waveFont.WavePrint();
         }
     }
@@ -91,6 +91,7 @@ public class EnemySpawn : MonoBehaviour
 
                     break;
                 }
+                Debug.Log(SpawnWave);
             }
         }
     }
