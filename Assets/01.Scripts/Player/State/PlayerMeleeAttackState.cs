@@ -44,6 +44,8 @@ public class PlayerMeleeAttackState : PlayerState
         {
             _player.StopImmediately(false);
         });
+
+        EffectManager.Instance.PlayEffect(EffectManager.Instance.GetEffect($"Player{PlayerStateEnum.MeleeAttack}Effect"), Vector3.zero);
     }
 
     public override void Exit()
@@ -59,6 +61,7 @@ public class PlayerMeleeAttackState : PlayerState
 
         _enemyDuplicateCheck.Clear();
 
+        
         base.Exit();
     }
 

@@ -20,9 +20,9 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    private Dictionary<string, PoolAbleMonoEffect> _effects = new Dictionary<string, PoolAbleMonoEffect>();
+    private Dictionary<string, PoolableMonoEffect> _effects = new Dictionary<string, PoolableMonoEffect>();
 
-    public void RegisterEffect(PoolAbleMonoEffect effect)
+    public void RegisterEffect(PoolableMonoEffect effect)
     {
         if (effect == null)
         {
@@ -39,7 +39,7 @@ public class EffectManager : MonoBehaviour
             Debug.Log($"This Object already contain effect. Object : {effect}");
     }
 
-    public PoolAbleMonoEffect GetEffect(PoolAbleMonoEffect effect)
+    public PoolableMonoEffect GetEffect(PoolableMonoEffect effect)
     {
         string effectName = effect.GetType().ToString();
         
@@ -52,7 +52,18 @@ public class EffectManager : MonoBehaviour
         return _effects[effectName];
     }
 
-    public void PlayEffect(PoolableMono effect, Vector3 pos)
+    public PoolableMonoEffect GetEffect(string effectName)
+    {
+        if (!_effects.ContainsKey(effectName))
+        {
+            Debug.LogError($"{effectName} is Not Contain _effects");
+            return null;
+        }
+
+        return _effects[effectName];
+    }
+
+    public void PlayEffect(PoolableMonoEffect effect, Vector3 pos)
     {
         string effectName = effect.GetType().ToString();
 
@@ -66,7 +77,7 @@ public class EffectManager : MonoBehaviour
         PoolManager.Instance.Pop(effect.poolingType, pos);
     }
 
-    public void StopEffect(PoolableMono effect)
+    public void StopEffect(PoolableMonoEffect effect)
     {
         string effectName = effect.GetType().ToString();
         if (!_effects.ContainsKey(effectName))
@@ -78,7 +89,7 @@ public class EffectManager : MonoBehaviour
         PoolManager.Instance.Push(_effects[effectName]);
     }
 
-    public void PauseParticle(PoolableMono effect, float delayTime)
+    public void PauseParticle(PoolableMonoEffect effect, float delayTime)
     {
         string effectName = effect.GetType().ToString();
         if (!_effects.ContainsKey(effectName))
@@ -101,7 +112,7 @@ public class EffectManager : MonoBehaviour
             Debug.LogError($"{effect} is not particle, Check Component Attatched");
     }
 
-    public void PauseParticle(PoolableMono effect)
+    public void PauseParticle(PoolableMonoEffect effect)
     {
         string effectName = effect.GetType().ToString();
         if (!_effects.ContainsKey(effectName))
@@ -124,7 +135,7 @@ public class EffectManager : MonoBehaviour
             Debug.LogError($"{effect} is not particle, Check Component Attatched");
     }
 
-    public void PauseParticlePlay(PoolableMono effect)
+    public void PauseParticlePlay(PoolableMonoEffect effect)
     {
         string effectName = effect.GetType().ToString();
         if (!_effects.ContainsKey(effectName))

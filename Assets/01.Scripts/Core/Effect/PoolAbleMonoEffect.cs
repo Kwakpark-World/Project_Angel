@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class PoolAbleMonoEffect : PoolableMono
+public class PoolableMonoEffect : PoolableMono
 {
     public EffectType EffectType;
 
@@ -27,8 +27,9 @@ public class PoolAbleMonoEffect : PoolableMono
         }
     } 
 
-    protected virtual void RegisterEffect()
+    public virtual void RegisterEffect()
     {
         EffectManager.Instance.RegisterEffect(this);  
     }
+
 }
