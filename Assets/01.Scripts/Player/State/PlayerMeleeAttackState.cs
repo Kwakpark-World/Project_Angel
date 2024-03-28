@@ -81,4 +81,14 @@ public class PlayerMeleeAttackState : PlayerState
             }
         }
     }
+
+    public void UpgradeActivePoison()
+    {
+        //TODO: use poison every attack
+    }
+
+    public void KillInactivePoison()
+    {
+
+    }
 }
