@@ -75,6 +75,7 @@ public class EnemyAnimator : MonoBehaviour
         _currentState = stateName;
 
         _animator.SetBool(_parameterHashes["is" + _currentState], true);
+        Debug.Log(_parameterHashes["is" + _currentState]);
     }
 
     public void SetAnimationState(string stateName = "Idle", AnimationStateMode stateMode = AnimationStateMode.None)

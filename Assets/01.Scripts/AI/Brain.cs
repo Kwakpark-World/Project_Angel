@@ -107,7 +107,7 @@ public abstract class Brain : PoolableMono
     public virtual void OnDie()
     {
         NavMeshAgentCompo.isStopped = true;
-
+        Debug.Log(NavMeshAgentCompo.isStopped);
         AnimatorCompo.SetAnimationState("Die");
     }
 }
