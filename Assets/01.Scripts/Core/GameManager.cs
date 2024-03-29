@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     [HideInInspector]
     public Player player;
     [HideInInspector]
