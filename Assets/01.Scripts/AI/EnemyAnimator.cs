@@ -1,8 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+
+public enum AnimationStateMode
+{
+    None,
+    SavePreviousState,
+    LoadPreviousState
+}
 
 [Serializable]
 public struct AnimationTrigger
@@ -26,11 +34,11 @@ public class EnemyAnimator : MonoBehaviour
     private Transform _weaponTransform;
     private Brain _owner;
 
-    public Dictionary<string, AnimationTrigger> AnimationTriggersByParameter = new Dictionary<string, AnimationTrigger>();
-    private Dictionary<string, bool> _animationStates = new Dictionary<string, bool>();
+    private Dictionary<string, AnimationTrigger> _animationTriggersByParameter = new Dictionary<string, AnimationTrigger>();
     private Dictionary<string, int> _parameterHashes = new Dictionary<string, int>();
     private Animator _animator;
-    private string _enabledParameter = "isIdle";
+    private string _currentState = "Idle";
+    private string _previousState = "";
 
     private void Awake()
     {
@@ -38,7 +46,7 @@ public class EnemyAnimator : MonoBehaviour
 
         foreach (AnimationTrigger animationTrigger in animationTriggers)
         {
-            AnimationTriggersByParameter.Add(animationTrigger.parameterName, animationTrigger);
+            _animationTriggersByParameter.Add(animationTrigger.parameterName, animationTrigger);
         }
     }
 
@@ -46,12 +54,11 @@ public class EnemyAnimator : MonoBehaviour
     {
         foreach (AnimatorControllerParameter parameter in _animator.parameters)
         {
-            if (!AnimationTriggersByParameter.ContainsKey(parameter.name))
+            if (!_animationTriggersByParameter.ContainsKey(parameter.name))
             {
-                AnimationTriggersByParameter.Add(parameter.name, new AnimationTrigger());
+                _animationTriggersByParameter.Add(parameter.name, new AnimationTrigger());
             }
 
-            _animationStates.Add(parameter.name, false);
             _parameterHashes.Add(parameter.name, parameter.nameHash);
         }
     }
@@ -61,67 +68,73 @@ public class EnemyAnimator : MonoBehaviour
         _owner = owner;
     }
 
-    public void SetParameterEnable(string parameterName = "isIdle")
+    public void SetAnimationState(string stateName)
     {
-        if (parameterName == "isIdle")
-        {
-            SetParameterDisable();
+        _animator.SetBool(_parameterHashes["is" + _currentState], false);
 
-            return;
-        }
+        _currentState = stateName;
 
-        if (_enabledParameter != "isIdle")
-        {
-            _animator.SetBool(_parameterHashes[_enabledParameter], false);
-
-            _animationStates[_enabledParameter] = false;
-        }
-
-        _enabledParameter = parameterName;
-
-        _animator.SetBool(_parameterHashes[parameterName], true);
-
-        _animationStates[parameterName] = true;
+        _animator.SetBool(_parameterHashes["is" + _currentState], true);
+        Debug.Log(_parameterHashes["is" + _currentState]);
     }
 
-    public void SetParameterDisable()
+    public void SetAnimationState(string stateName = "Idle", AnimationStateMode stateMode = AnimationStateMode.None)
     {
-        if (_enabledParameter != "isIdle")
+        _animator.SetBool(_parameterHashes["is" + _currentState], false);
+
+        switch (stateMode)
         {
-            _animator.SetBool(_parameterHashes[_enabledParameter], false);
+            case AnimationStateMode.SavePreviousState:
+                _previousState = _currentState;
+                _currentState = stateName;
 
-            _animationStates[_enabledParameter] = false;
-            _enabledParameter = "isIdle";
+                break;
+
+            case AnimationStateMode.LoadPreviousState:
+                _currentState = _previousState;
+                _previousState = "";
+
+                break;
+
+            default:
+                _currentState = stateName;
+
+                break;
         }
+
+        _animator.SetBool(_parameterHashes["is" + _currentState], true);
     }
 
-    public string GetEnabledParameter()
+    public string GetCurrentAnimationState()
     {
-        return _enabledParameter;
-    }
-
-    public bool GetParameterState(string parameterName)
-    {
-        return _animationStates[parameterName];
+        return _currentState;
     }
 
     public void OnAnimationBegin()
     {
-        AnimationTriggersByParameter[_enabledParameter].onAnimationBegin?.Invoke();
+        _animationTriggersByParameter["is" + _currentState].onAnimationBegin?.Invoke();
     }
 
     public void OnAnimationPlaying()
     {
-        AnimationTriggersByParameter[_enabledParameter].onAnimationPlaying?.Invoke();
+        _animationTriggersByParameter["is" + _currentState].onAnimationPlaying?.Invoke();
     }
 
-    public void OnAnimationEnd(int isEndOfClip = 0)
+    public void OnAnimationEnd(string stateName)
     {
-        AnimationTriggersByParameter[_enabledParameter].onAnimationEnd?.Invoke();
+        _animationTriggersByParameter["is" + _currentState].onAnimationEnd?.Invoke();
 
-        if (isEndOfClip == 1)
+        if (stateName != "")
         {
-            SetParameterDisable();
+            SetAnimationState(stateName);
+        }
+        else if (_previousState != "")
+        {
+            SetAnimationState(stateMode: AnimationStateMode.LoadPreviousState);
+        }
+        else
+        {
+            SetAnimationState();
         }
     }
 

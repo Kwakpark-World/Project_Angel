@@ -1638,6 +1638,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007e9285b573e1f4a9c9e3d8b139c844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debuffTriggers:
+  - debuffType: 0
+    onDebuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8261309157372427609}
+          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+          m_MethodName: PoisonBegin
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onDebuffPlaying:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8261309157372427609}
+          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+          m_MethodName: PoisonPlaying
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onDebuffEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - debuffType: 1
+    onDebuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8261309157372427609}
+          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+          m_MethodName: FreezeBegin
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onDebuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onDebuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8261309157372427609}
+          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+          m_MethodName: FreezeEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - debuffType: 2
+    onDebuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8261309157372427609}
+          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+          m_MethodName: KnockbackBegin
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onDebuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onDebuffEnd:
+      m_PersistentCalls:
+        m_Calls: []
   <DebuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
     type: 2}
 --- !u!1 &1505651447680558441
