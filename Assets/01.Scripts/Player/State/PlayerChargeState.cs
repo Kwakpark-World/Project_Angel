@@ -20,11 +20,11 @@ public class PlayerChargeState : PlayerState
 
         _player.ChargingGage = 0;
 
-        EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._currentWeapon.transform.Find("Point").position);
 
         Vector3 pos = _player.transform.position;
         if (_player.IsAwakening)
         {
+            EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeEffect, _player._currentWeapon.transform.Find("Point").position);
             pos += _player.transform.forward;
             pos.y += 2f;
 
@@ -32,6 +32,7 @@ public class PlayerChargeState : PlayerState
         }
         else
         {
+            EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._currentWeapon.transform.Find("Point").position);
             pos += _player.transform.right * 2;
 
             EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeAttackEffect, pos);

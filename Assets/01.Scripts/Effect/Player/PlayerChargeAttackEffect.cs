@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerChargeAttackEffect : PoolableMonoEffect
 {
     float time;
     ParticleSystem particle;
+    BoxCollider boxCol;
 
     public override void InitializePoolingItem()
     {
@@ -25,6 +28,9 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
         transform.rotation = rot;
 
         particle = GetComponentInChildren<ParticleSystem>();
+        boxCol = GetComponent<BoxCollider>();
+
+        boxCol.enabled = false;
 
         time = 0;
         transform.localScale = Vector3.zero;
@@ -58,6 +64,7 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
             time = 0;
             
             particle.Play();
+            boxCol.enabled = true;
 
             PoolManager.Instance.Push(this, 3);
         }
@@ -68,5 +75,15 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
     {
         base.RegisterEffect();
     }
-
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (LayerMask.LayerToName(other.gameObject.layer) == "Enemy")
+        {
+            if(other.gameObject.TryGetComponent<Brain>(out Brain brain))
+            {
+                brain.OnHit(GameManager.Instance.player.attackPower);
+            }
+        }
+    }
 }
