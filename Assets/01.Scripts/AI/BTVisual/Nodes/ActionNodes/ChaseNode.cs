@@ -14,11 +14,13 @@ namespace BTVisual
             {
                 _attackRange = brain.EnemyStatData.GetAttackRange();
             }
+
+            brain.AnimatorCompo.SetAnimationState("Move");
         }
 
         protected override void OnStop()
         {
-            brain.AnimatorCompo.OnAnimationEnd();
+            brain.AnimatorCompo.OnAnimationEnd("");
         }
 
         protected override State OnUpdate()
@@ -29,11 +31,6 @@ namespace BTVisual
             }
 
             brain.NavMeshAgentCompo.destination = GameManager.Instance.playerTransform.position;
-
-            if (!brain.AnimatorCompo.GetParameterState("isMove"))
-            {
-                brain.AnimatorCompo.SetParameterEnable("isMove");
-            }
 
             if (brain.NavMeshAgentCompo.remainingDistance > _attackRange)
             {

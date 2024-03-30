@@ -22,6 +22,7 @@ public abstract class Brain : PoolableMono
     [field: SerializeField]
     public float CurrentHealth { get; set; }
     public float NormalAttackTimer { get; set; }
+    public EnemySpawn enemySpawn;
 
     protected virtual void Start()
     {
@@ -30,7 +31,7 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
-        if (AnimatorCompo.GetParameterState("isDie"))
+        if (AnimatorCompo.GetCurrentAnimationState() == "isDie")
         {
             return;
         }
@@ -46,7 +47,7 @@ public abstract class Brain : PoolableMono
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            OnHit(5f);
+            OnHit(15f);
         }
     }
 
@@ -57,7 +58,7 @@ public abstract class Brain : PoolableMono
             NavMeshAgentCompo.isStopped = false;
         }
 
-        AnimatorCompo?.SetParameterDisable();
+        AnimatorCompo?.SetAnimationState();
         EnemyStatData.InitializeAllModifiers();
 
         CurrentHealth = EnemyStatData.GetMaxHealth();
@@ -82,18 +83,20 @@ public abstract class Brain : PoolableMono
         EnemyStatData.SetOwner(this);
 
         NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
+
+        
     }
 
     public virtual void OnHit(float incomingDamage)
     {
-        if (AnimatorCompo.GetParameterState("isDie"))
+        if (AnimatorCompo.GetCurrentAnimationState() == "Die")
         {
             return;
         }
 
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
 
-        AnimatorCompo.SetParameterEnable("isHit");
+        AnimatorCompo.SetAnimationState("Hit", AnimationStateMode.SavePreviousState);
 
         if (CurrentHealth <= 0f)
         {
@@ -104,7 +107,7 @@ public abstract class Brain : PoolableMono
     public virtual void OnDie()
     {
         NavMeshAgentCompo.isStopped = true;
-
-        AnimatorCompo.SetParameterEnable("isDie");
+        Debug.Log(NavMeshAgentCompo.isStopped);
+        AnimatorCompo.SetAnimationState("Die");
     }
 }

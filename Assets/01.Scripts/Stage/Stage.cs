@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class Stage : MonoBehaviour
 {
     [SerializeField] private Transform _environmentTrm;
+    [SerializeField] private Transform _runeSpawnTrm;
     [SerializeField] private List<Barrier> _barriers = new List<Barrier>();
 
     [SerializeField] private CinemachineVirtualCamera _stageCam;
@@ -49,6 +50,10 @@ public class Stage : MonoBehaviour
         StartCoroutine(UnlockStage());
 
         _stageCam.Priority = 0;
+
+        Rune r = RuneManager.Instance.CreateRune();
+        r.transform.position = _runeSpawnTrm.position;
+        r.StartFloating();
     }
 
     private IEnumerator UnlockStage()

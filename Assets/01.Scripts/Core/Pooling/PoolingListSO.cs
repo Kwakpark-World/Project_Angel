@@ -26,6 +26,7 @@ public enum PoolingType
     PlayerEChargeAttackEffect,
     PlayerESkillEffect,
     PlayerESkillDownEffect,
+    Rune
 }
 
 [Serializable]
