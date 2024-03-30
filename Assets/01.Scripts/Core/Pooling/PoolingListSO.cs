@@ -18,7 +18,9 @@ public enum PoolingType
     PoisonPotion,
     FreezePotion,
     KnockbackPotion,
-    PlayerMeleeAttackEffect
+    PlayerMeleeAttackEffect,
+    PlayerChargeEffect,
+    PlayerChargeAttackEffect,
 }
 
 [Serializable]
