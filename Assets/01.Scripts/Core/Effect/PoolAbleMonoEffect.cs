@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.VFX;
 
 public class PoolableMonoEffect : PoolableMono
@@ -10,6 +11,11 @@ public class PoolableMonoEffect : PoolableMono
     private void Awake()
     {
         RegisterEffect();
+    }
+
+    protected virtual void Update()
+    {
+        
     }
 
     /// <summary>
@@ -25,11 +31,11 @@ public class PoolableMonoEffect : PoolableMono
                 particle.Play();
             }
         }
-    } 
+    }
 
     public virtual void RegisterEffect()
     {
-        EffectManager.Instance.RegisterEffect(this);  
+        EffectManager.Instance.RegisterEffect(poolingType);  
     }
 
 }

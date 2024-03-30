@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : PlayerController
@@ -19,6 +18,8 @@ public class Player : PlayerController
     public float attackPower;
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
+
+    public float ChargingGage;
 
     [Header("Critical Settings")]
     public float criticalChance;
@@ -241,6 +242,11 @@ public class Player : PlayerController
     {
         StateMachine.CurrentState.AnimationHitAbleTrigger();
     }
+
+    public void AnimationEffectTrigger()
+    {
+        StateMachine.CurrentState.AnimationEffectTrigger();
+    }
     #endregion
 
 
@@ -282,5 +288,4 @@ public class Player : PlayerController
 
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
-
 }

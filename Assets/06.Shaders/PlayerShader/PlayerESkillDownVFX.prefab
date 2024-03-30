@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6928280330862456518}
   - component: {fileID: 5630704926570889703}
   - component: {fileID: 1632923737121129649}
+  - component: {fileID: 1264379706823667192}
   m_Layer: 0
   m_Name: PlayerESkillDownVFX
   m_TagString: Untagged
@@ -28,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.92387956, z: 0, w: 0.38268343}
   m_LocalPosition: {x: 0, y: 12, z: -3.83}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 135, z: 0}
@@ -120,3 +121,17 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1264379706823667192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5938180043982864670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15fbeb030c5f86d4584a6a82a001e6ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolingType: 20
+  EffectType: 2

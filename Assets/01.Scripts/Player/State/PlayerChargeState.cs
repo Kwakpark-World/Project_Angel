@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerChargeState : PlayerState
 {
-    private float _clickTimer;
-
     private float _minChargeTime = 0.5f;
     private float _maxChargeTime = 2f;
+
+
 
     public PlayerChargeState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -18,7 +18,25 @@ public class PlayerChargeState : PlayerState
         _player.StopImmediately(false);
         _player.RotateToMousePos();
 
-        _clickTimer = 0;
+        _player.ChargingGage = 0;
+
+        EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._currentWeapon.transform.Find("Point").position);
+
+        Vector3 pos = _player.transform.position;
+        if (_player.IsAwakening)
+        {
+            pos += _player.transform.forward;
+            pos.y += 2f;
+
+            EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeAttackEffect, pos);
+        }
+        else
+        {
+            pos += _player.transform.right * 2;
+
+            EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeAttackEffect, pos);
+
+        }
     }
 
     public override void Exit()
@@ -30,24 +48,26 @@ public class PlayerChargeState : PlayerState
     {
         base.UpdateState();
 
-        _clickTimer = Mathf.Clamp(_clickTimer, 0f, _maxChargeTime);
+        _player.ChargingGage = Mathf.Clamp(_player.ChargingGage, 0f, _maxChargeTime);
 
         if (!_player.PlayerInput.isCharge)
         {
-            if (_clickTimer < _minChargeTime)
+            if (_player.ChargingGage < _minChargeTime)
+            {
+                _player.ChargingGage = 0;
                 _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
+            }
             else
                 _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
         }
         else
         {
-            _clickTimer += Time.deltaTime;
-
-            if (_clickTimer >= _maxChargeTime)
-            {
-                _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
-            }
+            if (_player.ChargingGage < _minChargeTime)
+                _player.ChargingGage += Time.deltaTime;
+            else
+                _player.ChargingGage += Time.deltaTime * 1.5f;
         }
+        
         
     }
 }

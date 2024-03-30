@@ -7,20 +7,23 @@ public class PlayerState
 {
     protected PlayerStateMachine _stateMachine;
     protected Player _player;
-    protected Rigidbody _rigidbody; // 이건 옵션 있어도 되고 없어도 됨
+    protected Rigidbody _rigidbody;
 
     protected int _animBoolHash; // 각 상태별 애니메이션 해시값
+    protected string _effectString; 
     protected readonly int _yVelocityHash = Animator.StringToHash("y_velocity");
 
     public bool _actionTriggerCalled { get; private set; } = false;
     public bool _endTriggerCalled { get; private set; } = false;
     public bool _isHitAbleTriggerCalled { get; private set; } = false;
+    public bool _effectTriggerCalled { get; private set; } = false;
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, string animBoolName)
     {
         _player = player;
         _stateMachine = stateMachine;
         _animBoolHash = Animator.StringToHash(animBoolName);
+        _effectString = $"Player{animBoolName}Effect";
         _rigidbody = _player.RigidbodyCompo;
     }
 
@@ -29,6 +32,8 @@ public class PlayerState
         _endTriggerCalled = false;
         _actionTriggerCalled = false;
         _isHitAbleTriggerCalled = false;
+        _effectTriggerCalled = false;
+
         _player.UsingAnimatorCompo.SetBool(_animBoolHash, true);
     }
 
@@ -60,5 +65,10 @@ public class PlayerState
     public void AnimationHitAbleTrigger()
     {
         _isHitAbleTriggerCalled = true;
+    }
+
+    public void AnimationEffectTrigger()
+    {
+        _effectTriggerCalled = true;
     }
 }
