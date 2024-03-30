@@ -175,7 +175,7 @@ public class EnemyAnimator : MonoBehaviour
     #region Enemy Die Function
     public void EnemyDieProcess()
     {
-        PoolManager.Instance.Push(_owner, 3);
+        PoolManager.Instance.Push(_owner, (int)1.8);
     }
     #endregion
 }
