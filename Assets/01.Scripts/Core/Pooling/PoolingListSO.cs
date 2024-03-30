@@ -21,6 +21,11 @@ public enum PoolingType
     PlayerMeleeAttackEffect,
     PlayerChargeEffect,
     PlayerChargeAttackEffect,
+    PlayerQSkillEffect,
+    PlayerEQSkillEffect,
+    PlayerEChargeAttackEffect,
+    PlayerESkillEffect,
+    PlayerESkillDownEffect,
 }
 
 [Serializable]

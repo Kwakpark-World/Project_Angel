@@ -48,7 +48,20 @@ public class PlayerQSkillState : PlayerState
             if (_player.IsGroundDetected())
             {
                 if (!_isAttacked)
+                {
+                    Vector3 pos = _player.transform.position;
+                    if (_player.IsAwakening)
+                    {
+                        EffectManager.Instance.PlayEffect(PoolingType.PlayerEQSkillEffect, pos);
+                    }
+                    else
+                    {
+                        pos.y += 2f;
+                        EffectManager.Instance.PlayEffect(PoolingType.PlayerQSkillEffect, pos);
+                    }
+
                     QAttack();
+                }
 
                 _stateMachine.ChangeState(PlayerStateEnum.Idle);
             } 

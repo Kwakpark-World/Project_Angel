@@ -23,10 +23,20 @@ public class PlayerChargeState : PlayerState
         EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._currentWeapon.transform.Find("Point").position);
 
         Vector3 pos = _player.transform.position;
-        pos += _player.transform.right * 2;
-        pos.y += 2;
+        if (_player.IsAwakening)
+        {
+            pos += _player.transform.forward;
+            pos.y += 2f;
 
-        EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeAttackEffect, pos);
+            EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeAttackEffect, pos);
+        }
+        else
+        {
+            pos += _player.transform.right * 2;
+
+            EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeAttackEffect, pos);
+
+        }
     }
 
     public override void Exit()

@@ -289,5 +289,4 @@ public class Player : PlayerController
 
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
-
 }
