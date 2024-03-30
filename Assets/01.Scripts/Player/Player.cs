@@ -243,6 +243,11 @@ public class Player : PlayerController
     {
         StateMachine.CurrentState.AnimationHitAbleTrigger();
     }
+
+    public void AnimationEffectTrigger()
+    {
+        StateMachine.CurrentState.AnimationEffectTrigger();
+    }
     #endregion
 
 

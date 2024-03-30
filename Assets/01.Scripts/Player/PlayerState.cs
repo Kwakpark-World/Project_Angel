@@ -16,6 +16,7 @@ public class PlayerState
     public bool _actionTriggerCalled { get; private set; } = false;
     public bool _endTriggerCalled { get; private set; } = false;
     public bool _isHitAbleTriggerCalled { get; private set; } = false;
+    public bool _effectTriggerCalled { get; private set; } = false;
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, string animBoolName)
     {
@@ -31,6 +32,8 @@ public class PlayerState
         _endTriggerCalled = false;
         _actionTriggerCalled = false;
         _isHitAbleTriggerCalled = false;
+        _effectTriggerCalled = false;
+
         _player.UsingAnimatorCompo.SetBool(_animBoolHash, true);
     }
 
@@ -62,5 +65,10 @@ public class PlayerState
     public void AnimationHitAbleTrigger()
     {
         _isHitAbleTriggerCalled = true;
+    }
+
+    public void AnimationEffectTrigger()
+    {
+        _effectTriggerCalled = true;
     }
 }

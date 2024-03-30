@@ -13,6 +13,11 @@ public class PoolableMonoEffect : PoolableMono
         RegisterEffect();
     }
 
+    protected virtual void Update()
+    {
+        
+    }
+
     /// <summary>
     /// Setting parentTrm, rotation, scale, etc.. , 
     /// If the type is particle, it basically starts here.

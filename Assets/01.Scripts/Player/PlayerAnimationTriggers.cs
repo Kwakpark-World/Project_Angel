@@ -25,4 +25,9 @@ public class PlayerAnimationTriggers : MonoBehaviour
     {
         _player.AnimationHitAbleTrigger();
     }
+
+    private void AnimationEffectTrigger()
+    {
+        _player.AnimationEffectTrigger();
+    }
 }

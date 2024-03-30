@@ -5,6 +5,8 @@ public class PlayerChargeState : PlayerState
     private float _minChargeTime = 0.5f;
     private float _maxChargeTime = 2f;
 
+
+
     public PlayerChargeState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -17,6 +19,14 @@ public class PlayerChargeState : PlayerState
         _player.RotateToMousePos();
 
         _player.ChargingGage = 0;
+
+        EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._currentWeapon.transform.Find("Point").position);
+
+        Vector3 pos = _player.transform.position;
+        pos += _player.transform.right * 2;
+        pos.y += 2;
+
+        EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeAttackEffect, pos);
     }
 
     public override void Exit()
@@ -42,13 +52,12 @@ public class PlayerChargeState : PlayerState
         }
         else
         {
-            _player.ChargingGage += Time.deltaTime;
-
-            if (_player.ChargingGage >= _maxChargeTime)
-            {
-                _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
-            }
+            if (_player.ChargingGage < _minChargeTime)
+                _player.ChargingGage += Time.deltaTime;
+            else
+                _player.ChargingGage += Time.deltaTime * 1.5f;
         }
+        
         
     }
 }

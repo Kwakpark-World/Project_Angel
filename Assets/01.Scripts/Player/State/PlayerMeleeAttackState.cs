@@ -20,6 +20,8 @@ public class PlayerMeleeAttackState : PlayerState
 
     private float _awakenAttackDist = 4.2f;
     private float _defaultAttackDist = 2.8f;
+
+    private bool _isEffectOn = false;
     
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -31,8 +33,10 @@ public class PlayerMeleeAttackState : PlayerState
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.IsAttack = true;
+        _isEffectOn = false;
 
         _weaponRayPoint = _player._currentWeapon.transform.Find("Point");
+        _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
         
         if (_comboCounter >= 2 || Time.time >= _lastAttackTime + _comboWindow)
             _comboCounter = 0; // ÄÞº¸ ÃÊ±âÈ­
@@ -55,7 +59,8 @@ public class PlayerMeleeAttackState : PlayerState
         _player.PlayerInput.MeleeAttackEvent -= ComboAttack;
 
         _player.IsAttack = false;
-        
+        _isEffectOn = false;
+
         _lastAttackTime = Time.time;
         
         ++_comboCounter;
@@ -92,7 +97,25 @@ public class PlayerMeleeAttackState : PlayerState
                 }
             }
         }
-        
+
+        if (_player.IsAwakening)
+        {
+            if (_effectTriggerCalled)
+            {
+                if (!_isEffectOn)
+                {
+                    _isEffectOn = true;
+
+                    Vector3 pos = _player.transform.position;
+                    float range = 2f;
+
+                    pos += _player.transform.forward * range;
+
+                    EffectManager.Instance.PlayEffect(PoolingType.PlayerMeleeAttackEffect, pos);
+                }
+            }
+        }
+
         if (_endTriggerCalled)
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
