@@ -58872,6 +58872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1221203866978666979}
   - component: {fileID: 3535561920273405734}
+  - component: {fileID: 1809717189571779181}
   m_Layer: 0
   m_Name: PlayerChargeAttackShader 1
   m_TagString: Untagged
@@ -58909,6 +58910,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolingType: 15
   EffectType: 0
+--- !u!65 &1809717189571779181
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279712344396793519}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 1, z: 12}
+  m_Center: {x: -2, y: 0, z: 7}
 --- !u!1 &7877240843351782942
 GameObject:
   m_ObjectHideFlags: 0
