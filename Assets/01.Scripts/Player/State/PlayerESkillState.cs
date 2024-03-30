@@ -31,6 +31,7 @@ public class PlayerESkillState : PlayerState
         if (_endTriggerCalled)
         {
             _player.SetPlayerModelAndAnim();
+            _player.fakePlayer?.SetPlayerModelAndAnim();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
@@ -42,6 +43,7 @@ public class PlayerESkillState : PlayerState
         _player.IsAwakening = false;
 
         _player.SetPlayerModelAndAnim();
+        _player.fakePlayer?.SetPlayerModelAndAnim();
         _stateMachine.ChangeState(PlayerStateEnum.Idle);
     }
 }

@@ -122,6 +122,8 @@ namespace BTVisual
             }
         }
 
+#endif
+
         public List<Node> GetChildren(Node parent)
         {
             List<Node> children = new List<Node>();
@@ -145,7 +147,6 @@ namespace BTVisual
             }
             return children;
         }
-#endif
         public void Traverse(Node node, System.Action<Node> visitor)
         {
             //노드를 순회하면서 각 노드들을 tree.nodes 리스트에 넣어주는 함수

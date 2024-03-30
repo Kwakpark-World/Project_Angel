@@ -481,9 +481,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!95 &1327590941787455746
 Animator:
@@ -629,6 +629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007e9285b573e1f4a9c9e3d8b139c844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debuffTriggers: []
   <DebuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
     type: 2}
 --- !u!114 &7092474217215256077
@@ -648,6 +649,7 @@ MonoBehaviour:
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 6d1bfd057cbbddb4888586eb66a822a8,
     type: 2}
   <CurrentHealth>k__BackingField: 0
+  enemySpawn: {fileID: 0}
 --- !u!114 &7685313126988761920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,9 +670,9 @@ MonoBehaviour:
     onAnimationPlaying:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7092474217215256077}
-          m_TargetAssemblyTypeName: EnemyBrain, Assembly-CSharp
-          m_MethodName: OnDie
+        - m_Target: {fileID: 7685313126988761920}
+          m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
+          m_MethodName: WitchNormalAttack
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -711,16 +713,52 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 3966618577297723766}
+          m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
+          m_MethodName: set_isStopped
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
     onAnimationPlaying:
       m_PersistentCalls:
         m_Calls: []
     onAnimationEnd:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 3966618577297723766}
+          m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
+          m_MethodName: set_isStopped
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - parameterName: isDie
     onAnimationBegin:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 3966618577297723766}
+          m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
+          m_MethodName: set_isStopped
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onAnimationPlaying:
       m_PersistentCalls:
         m_Calls:
@@ -2483,12 +2521,12 @@ PrefabInstance:
     - target: {fileID: 2987626564829718626, guid: 31c6eb1786edef943a2ddab1392caeaf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 3.45
       objectReference: {fileID: 0}
     - target: {fileID: 2987626564829718626, guid: 31c6eb1786edef943a2ddab1392caeaf,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.42
       objectReference: {fileID: 0}
     - target: {fileID: 2987626564829718626, guid: 31c6eb1786edef943a2ddab1392caeaf,
         type: 3}

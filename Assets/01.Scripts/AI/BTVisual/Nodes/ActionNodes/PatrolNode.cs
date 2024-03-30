@@ -23,11 +23,13 @@ namespace BTVisual
             {
                 _detectRange = brain.EnemyStatData.GetDetectRange();
             }
+
+            brain.AnimatorCompo.SetAnimationState("Move");
         }
 
         protected override void OnStop()
         {
-            brain.AnimatorCompo.OnAnimationEnd();
+            brain.AnimatorCompo.OnAnimationEnd("");
         }
 
         protected override State OnUpdate()
@@ -35,11 +37,6 @@ namespace BTVisual
             if (brain.NavMeshAgentCompo.isStopped)
             {
                 brain.NavMeshAgentCompo.isStopped = false;
-            }
-
-            if (!brain.AnimatorCompo.GetParameterState("isMove"))
-            {
-                brain.AnimatorCompo.SetParameterEnable("isMove");
             }
 
             if ((GameManager.Instance.playerTransform.position - brain.transform.position).sqrMagnitude > _detectRange * _detectRange)

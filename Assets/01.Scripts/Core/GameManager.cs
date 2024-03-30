@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
             }
             else if (!_instance.player)
             {
-                _instance.player = FindObjectOfType<Player>();
+                _instance.player = FindFirstObjectByType<Player>();
 
                 if (_instance.player)
                 {
@@ -30,17 +30,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     [HideInInspector]
     public Player player;
     [HideInInspector]
     public Transform playerTransform;
-
-    //EnemySpawn
-    [HideInInspector]
-    public int SpawnWave = 0;
-    [HideInInspector]
-    public int EnemySpawnCount = 0;
-    [HideInInspector]
-    public int EnemyDieCount = 0;
 
 }
