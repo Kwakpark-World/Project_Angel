@@ -19,9 +19,9 @@ public abstract class Brain : PoolableMono
 
     [field: SerializeField]
     public MonsterStat EnemyStatData { get; private set; }
-    [field: SerializeField]
     public float CurrentHealth { get; set; }
     public float NormalAttackTimer { get; set; }
+    [HideInInspector]
     public EnemySpawn enemySpawn;
 
     protected virtual void Start()
@@ -31,7 +31,7 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
-        if (AnimatorCompo.GetCurrentAnimationState() == "isDie")
+        if (AnimatorCompo.GetCurrentAnimationState() == "Die")
         {
             return;
         }
@@ -83,8 +83,6 @@ public abstract class Brain : PoolableMono
         EnemyStatData.SetOwner(this);
 
         NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
-
-        
     }
 
     public virtual void OnHit(float incomingDamage)
@@ -106,8 +104,6 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnDie()
     {
-        NavMeshAgentCompo.isStopped = true;
-        Debug.Log(NavMeshAgentCompo.isStopped);
         AnimatorCompo.SetAnimationState("Die");
     }
 }

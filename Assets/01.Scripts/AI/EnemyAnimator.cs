@@ -16,7 +16,7 @@ public enum AnimationStateMode
 public struct AnimationTrigger
 {
     [Space(10)]
-    public string parameterName;
+    public string stateName;
     [Space(10)]
     public UnityEvent onAnimationBegin;
     [Space(10)]
@@ -34,7 +34,7 @@ public class EnemyAnimator : MonoBehaviour
     private Transform _weaponTransform;
     private Brain _owner;
 
-    private Dictionary<string, AnimationTrigger> _animationTriggersByParameter = new Dictionary<string, AnimationTrigger>();
+    private Dictionary<string, AnimationTrigger> _animationTriggersByState = new Dictionary<string, AnimationTrigger>();
     private Dictionary<string, int> _parameterHashes = new Dictionary<string, int>();
     private Animator _animator;
     private string _currentState = "Idle";
@@ -46,7 +46,7 @@ public class EnemyAnimator : MonoBehaviour
 
         foreach (AnimationTrigger animationTrigger in animationTriggers)
         {
-            _animationTriggersByParameter.Add(animationTrigger.parameterName, animationTrigger);
+            _animationTriggersByState.Add(animationTrigger.stateName, animationTrigger);
         }
     }
 
@@ -54,9 +54,11 @@ public class EnemyAnimator : MonoBehaviour
     {
         foreach (AnimatorControllerParameter parameter in _animator.parameters)
         {
-            if (!_animationTriggersByParameter.ContainsKey(parameter.name))
+            string state = parameter.name.Replace("is", "");
+
+            if (!_animationTriggersByState.ContainsKey(state))
             {
-                _animationTriggersByParameter.Add(parameter.name, new AnimationTrigger());
+                _animationTriggersByState.Add(state, new AnimationTrigger());
             }
 
             _parameterHashes.Add(parameter.name, parameter.nameHash);
@@ -112,17 +114,17 @@ public class EnemyAnimator : MonoBehaviour
 
     public void OnAnimationBegin()
     {
-        _animationTriggersByParameter["is" + _currentState].onAnimationBegin?.Invoke();
+        _animationTriggersByState[_currentState].onAnimationBegin?.Invoke();
     }
 
     public void OnAnimationPlaying()
     {
-        _animationTriggersByParameter["is" + _currentState].onAnimationPlaying?.Invoke();
+        _animationTriggersByState[_currentState].onAnimationPlaying?.Invoke();
     }
 
     public void OnAnimationEnd(string stateName)
     {
-        _animationTriggersByParameter["is" + _currentState].onAnimationEnd?.Invoke();
+        _animationTriggersByState[_currentState].onAnimationEnd?.Invoke();
 
         if (stateName != "")
         {
