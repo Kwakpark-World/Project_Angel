@@ -19,7 +19,7 @@ public class PlayerChargeAttackState : PlayerState
 
         useDist = _player.IsAwakening ? awakenDist : defaultDist;
 
-        //ChargeAttack();
+        ChargeAttack();
     }
     public override void Exit()
     {
