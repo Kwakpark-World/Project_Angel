@@ -13,6 +13,9 @@ public class Player : PlayerController
     private GameObject[] _weapons;
     public GameObject _currentWeapon;
 
+    public ParticleSystem[] _weaponSlashParticles;
+    public ParticleSystem _currentSlashParticle;
+
     public LayerMask _enemyLayer;
 
     public float attackPower;
@@ -72,6 +75,7 @@ public class Player : PlayerController
         }
 
         _weapons = GameObject.FindGameObjectsWithTag("Weapon");
+
     }
 
     protected void OnEnable()
@@ -88,8 +92,9 @@ public class Player : PlayerController
         PlayerStatData.InitializeAllModifiers();
         PlayerStatInitialize();
 
+        _weaponSlashParticles[0].Stop();
+        _weaponSlashParticles[1].Stop();
 
-        
     }
 
 
@@ -271,11 +276,13 @@ public class Player : PlayerController
         {
             UsingAnimatorCompo = DefaultAnimatorCompo;
             _currentWeapon = _weapons[1];
+            _currentSlashParticle = _weaponSlashParticles[1];
         }
         else
         {
             UsingAnimatorCompo = AwakenAnimatorCompo;
             _currentWeapon = _weapons[0];
+            _currentSlashParticle = _weaponSlashParticles[0];
         }
     }
 
