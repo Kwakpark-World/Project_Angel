@@ -1597,6 +1597,7 @@ MonoBehaviour:
   attackMovement:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  ChargingGage: 0
   criticalChance: 0
   criticalMultiplier: 0
   defensivePower: 0
@@ -1604,8 +1605,13 @@ MonoBehaviour:
   dashCoolTime: 1
   defenseCoolTime: 1
   defensePrevTime: 0
+  qSkillCoolTime: 10
+  qPrevTime: 0
+  awakenMaxGage: 100
+  awakenCurrentGage: 0
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d771d326405705e4b9989f7211c9e6b3,
     type: 2}
+  fakePlayer: {fileID: 0}
 --- !u!114 &6423821823411293297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1655,6 +1661,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 8637140176355860739}
+          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onDebuffPlaying:
       m_PersistentCalls:
         m_Calls:
@@ -1672,7 +1690,19 @@ MonoBehaviour:
           m_CallState: 2
     onDebuffEnd:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 8637140176355860739}
+          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+          m_MethodName: Pause
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - debuffType: 1
     onDebuffBegin:
       m_PersistentCalls:
