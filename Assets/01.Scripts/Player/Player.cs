@@ -36,6 +36,12 @@ public class Player : PlayerController
     public float defenseCoolTime = 1f;
     public float defensePrevTime = 0f;
 
+    public float qSkillCoolTime = 10f;
+    public float qPrevTime = 0f;
+
+    public float awakenMaxGage = 100f;
+    public float awakenCurrentGage = 0f;
+
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
     public PlayerStateMachine StateMachine { get; private set; }
 
@@ -140,6 +146,8 @@ public class Player : PlayerController
     {
         if (IsDefense || IsDie)
             return;
+        if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill))
+            return;
 
         CurrentHealth -= Mathf.Max(incomingDamage - defensivePower, 0f);
 
@@ -164,6 +172,8 @@ public class Player : PlayerController
         dashSpeed = PlayerStatData.GetDashSpeed();
         dashDuration = PlayerStatData.GetDashDuration();
         dashCoolTime = PlayerStatData.GetDashCooldown();
+        qSkillCoolTime = PlayerStatData.GetQSkillCooldown();
+        awakenMaxGage = PlayerStatData.GetAwakenMaxGage();
     }
 
     public void SetPlayerStat(PlayerStatType stat, float value)

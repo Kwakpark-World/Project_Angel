@@ -56,6 +56,8 @@ public class PlayerChargeAttackState : PlayerState
                     Debug.Log($"hit {enemy.transform.gameObject}");
 
                     brain.OnHit(_player.attackPower);
+                    if (!_player.IsAwakening)
+                        _player.awakenCurrentGage++;
                 }
             }
         }

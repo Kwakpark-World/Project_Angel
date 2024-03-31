@@ -46,12 +46,17 @@ public abstract class PlayerGroundState : PlayerState
     private void ESkillHandle()
     {
         if (_player.IsAwakening) return;
+        if (_player.awakenCurrentGage < _player.awakenMaxGage) return;
 
         _stateMachine.ChangeState(PlayerStateEnum.ESkill);
     }
 
     private void QSkillHandle()
     {
+        if (_player.qPrevTime + _player.qSkillCoolTime > Time.time) return;
+
+        _player.qPrevTime = Time.time;
+
         _stateMachine.ChangeState(PlayerStateEnum.QSkill);
     }
 }

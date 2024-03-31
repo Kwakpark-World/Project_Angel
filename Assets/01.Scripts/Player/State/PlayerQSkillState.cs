@@ -22,6 +22,7 @@ public class PlayerQSkillState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.StopImmediately(false);
         _attackDist = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
 
         _player.SetVelocity(Vector3.up * _jumpForce);
@@ -88,6 +89,8 @@ public class PlayerQSkillState : PlayerState
                     Debug.Log($"hit {enemy.transform.gameObject}");
 
                     brain.OnHit(_player.attackPower);
+                    if (!_player.IsAwakening)
+                        _player.awakenCurrentGage++;
                 }
             }
         }

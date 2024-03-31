@@ -92,6 +92,8 @@ public class PlayerMeleeAttackState : PlayerState
                     if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
                     {
                         brain.OnHit(_player.attackPower);
+                        if (!_player.IsAwakening)
+                            _player.awakenCurrentGage++;
                     }
                 }
             }

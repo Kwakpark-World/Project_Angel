@@ -18,6 +18,7 @@ public enum PlayerStatType
     dashSpeed,
     dashDuration,
     dashCooldown,
+    qSkillCooldown,
 }
 
 public class CharacterStat : ScriptableObject
@@ -39,6 +40,10 @@ public class CharacterStat : ScriptableObject
     public Stat dashSpeed; // 대시 속도
     public Stat dashDuration; // 대시 지속시간
     public Stat dashCooldown; // 대시 쿨다운
+
+    [Header("Skill stats")]
+    public Stat qSkillCooldown; // Q스킬 쿨다운
+    public Stat awakenMaxGage; // 채워야 하는 E 게이지
 
     protected PlayerController owner;
 
@@ -107,5 +112,15 @@ public class CharacterStat : ScriptableObject
     public float GetDashCooldown()
     {
         return dashCooldown.GetValue();
+    }
+
+    public float GetQSkillCooldown()
+    {
+        return qSkillCooldown.GetValue();
+    }
+
+    public float GetAwakenMaxGage()
+    {
+        return awakenMaxGage.GetValue();
     }
 }
