@@ -13,7 +13,12 @@ public class PlayerHpUI : MonoBehaviour
 
     public PlayerController _playerController;
     public Player _player;
-    
+
+    private void Start()
+    {
+        //_maxHpBar.value = _playerController.
+    }
+
     private void Update()
     {
         PlayerHP();
@@ -29,9 +34,9 @@ public class PlayerHpUI : MonoBehaviour
     {
         _identityBar.value = _player.awakenCurrentGage;
 
-        if(_maxidentityBar.value == 100)
+        if(_player.IsAwakening == true)
         {
-            _identityBar.value -= 1;
+            _identityBar.value -= Time.deltaTime;
         }
     }
 }
