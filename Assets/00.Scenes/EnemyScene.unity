@@ -708,11 +708,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c524b28c1cffac45982de23c4c33db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHpBar: {fileID: 1043377685}
-  _maxidentityBar: {fileID: 75262408}
+  _HpBar: {fileID: 1043377685}
   _identityBar: {fileID: 75262408}
   _playerController: {fileID: 695782080}
   _player: {fileID: 695782080}
+  _awakeningTime: 10
 --- !u!1 &567515866
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,6 +889,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
+      propertyPath: awakenCurrentGage
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
         type: 3}
