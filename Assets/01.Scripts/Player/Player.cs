@@ -117,12 +117,11 @@ public class Player : PlayerController
             transform.rotation = Quaternion.LookRotation(Vector3.zero);
         }
 
-        // ����
-        //if (Keyboard.current.pKey.wasPressedThisFrame)
-        //{
-        //    PlayerStat.IncreaseStatBy(10, 4f, PlayerStat.GetStatByType(StatType.strength));
-        //}
-
+        // Debug
+        if (CurrentHealth <= 0f)
+        {
+            OnDie();
+        }
     }
 
     protected override void FixedUpdate()
@@ -236,6 +235,7 @@ public class Player : PlayerController
         }
         else
         {
+            if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
 
             StateMachine.ChangeState(PlayerStateEnum.EDash);

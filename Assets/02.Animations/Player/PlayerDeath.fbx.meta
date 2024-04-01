@@ -17,19 +17,21 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'ball_l'
+      : position error = 19.019094 mm\n\t'ball_r' : position error = 19.019121 mm\n"
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'mixamo.com' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'neck_01' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: "\nRetargeting quality report for clip 'mixamo.com':\n\tRightLowerLeg
-      average position error 0.4 mm and maximum position error 6.3 mm at time 3:22
-      (95.7%) Frame 112\n\tLeftLowerArm average position error 5.5 mm and maximum
-      position error 12.5 mm at time 2: 9 (59.0%) Frame 69\n\tRightLowerArm average
-      position error 2.6 mm and maximum position error 9.7 mm at time 3:27 (100.0%)
-      Frame 117\n\tHead average position error 25.3 mm and maximum position error
-      57.6 mm at time 3:16 (90.6%) Frame 106\n"
+      average position error 0.4 mm and maximum position error 6.2 mm at time 3:22
+      (95.7%) Frame 112\n\tLeftUpperArm average position error 4.1 mm and maximum
+      position error 4.1 mm at time 3: 4 (80.3%) Frame 94\n\tLeftLowerArm average
+      position error 5.3 mm and maximum position error 9.4 mm at time 2: 5 (55.6%)
+      Frame 65\n\tLeftHand average position error 4.1 mm and maximum position error
+      4.1 mm at time 0:22 (18.8%) Frame 22\n\tRightLowerArm average position error
+      2.3 mm and maximum position error 8.8 mm at time 3:27 (100.0%) Frame 117\n\tHead
+      average position error 28.5 mm and maximum position error 28.5 mm at time 3:11
+      (86.3%) Frame 101\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -56,7 +58,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1

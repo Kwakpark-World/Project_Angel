@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerESkillEffect : PoolableMonoEffect
 {
@@ -33,6 +34,8 @@ public class PlayerESkillEffect : PoolableMonoEffect
             Vector3 pos = transform.position;
             EffectManager.Instance.PlayEffect(PoolingType.PlayerESkillDownEffect, pos);
 
+            GameManager.Instance.player.IsAwakening = true;
+            GameManager.Instance.player.SetPlayerModelAndAnim();
         }
     }
 
