@@ -284,6 +284,8 @@ public class Player : PlayerController
             _currentWeapon = _weapons[0];
             _currentSlashParticle = _weaponSlashParticles[0];
         }
+
+        _currentSlashParticle.Stop();
     }
 
     public void RotateToMousePos()

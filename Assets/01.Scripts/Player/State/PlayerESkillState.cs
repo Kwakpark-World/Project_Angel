@@ -21,6 +21,8 @@ public class PlayerESkillState : PlayerState
         pos.y += 1.5f;
 
         EffectManager.Instance.PlayEffect(PoolingType.PlayerESkillEffect, pos);
+
+        _player.awakenCurrentGage = 0;
     }
 
     public override void Exit()
