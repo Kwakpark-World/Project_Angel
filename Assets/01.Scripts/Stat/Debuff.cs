@@ -99,6 +99,11 @@ public class Debuff : MonoBehaviour
 
     public void SetDebuff(DebuffType debuffType, object attacker)
     {
+        if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
+        {
+            return;
+        }
+
         _attackers[debuffType] = attacker;
 
         _debuffTriggersByType[debuffType].onDebuffBegin?.Invoke();
