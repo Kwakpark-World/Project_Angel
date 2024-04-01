@@ -114,12 +114,6 @@ public class Player : PlayerController
 
         SetMousePosInWorld();
 
-        // �ٴڿ� ���°� ������;; ���� ���� �˸� ����..
-        if (transform.rotation.x > 0.707 && transform.rotation.x < 0.709)
-        {
-            transform.rotation = Quaternion.LookRotation(Vector3.zero);
-        }
-
         // Debug
         if (CurrentHealth <= 0f)
         {
@@ -293,6 +287,7 @@ public class Player : PlayerController
     public void RotateToMousePos()
     {
         Vector3 dir = (MousePosInWorld - transform.position).normalized;
+        dir.y = 0;
 
         transform.transform.rotation = Quaternion.LookRotation(dir);
     }
