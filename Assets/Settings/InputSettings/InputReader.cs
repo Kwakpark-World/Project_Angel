@@ -9,7 +9,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public float YInput { get; private set; }
 
     public bool isDefense { get; private set; }
-    public bool isCharge { get; private set; }
+    public bool isCharge;
     public Vector2 MousePos;
 
     public event Action DashEvent;
