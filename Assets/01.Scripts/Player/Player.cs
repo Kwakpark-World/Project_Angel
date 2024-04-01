@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Player : PlayerController
@@ -13,11 +15,16 @@ public class Player : PlayerController
     private GameObject[] _weapons;
     public GameObject _currentWeapon;
 
+    public ParticleSystem[] _weaponSlashParticles;
+    public ParticleSystem _currentSlashParticle;
+
     public LayerMask _enemyLayer;
 
     public float attackPower;
     public float attackSpeed = 1f;
     public Vector3[] attackMovement;
+
+    public float ChargingGage;
 
     [Header("Critical Settings")]
     public float criticalChance;
@@ -34,6 +41,12 @@ public class Player : PlayerController
     public float defenseCoolTime = 1f;
     public float defensePrevTime = 0f;
 
+    public float qSkillCoolTime = 10f;
+    public float qPrevTime = 0f;
+
+    public float awakenMaxGage = 100f;
+    public float awakenCurrentGage = 0f;
+
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
     public PlayerStateMachine StateMachine { get; private set; }
 
@@ -45,7 +58,9 @@ public class Player : PlayerController
     public bool IsPlayerStop { get; set; }
 
     public Vector3 MousePosInWorld { get; private set; }
-    public FakePlayer fakePlayer;
+
+    public Renderer[] renderers;
+    public Material freezeMaterial;
 
     protected override void Awake()
     {
@@ -64,6 +79,7 @@ public class Player : PlayerController
         }
 
         _weapons = GameObject.FindGameObjectsWithTag("Weapon");
+
     }
 
     protected void OnEnable()
@@ -80,10 +96,9 @@ public class Player : PlayerController
         PlayerStatData.InitializeAllModifiers();
         PlayerStatInitialize();
 
-
-        
+        _weaponSlashParticles[0].Stop();
+        _weaponSlashParticles[1].Stop();
     }
-
 
     protected override void Update()
     {
@@ -99,18 +114,11 @@ public class Player : PlayerController
 
         SetMousePosInWorld();
 
-        // ¹Ù´Ú¿¡ ´¯´Â°Å ¹æÁöÀÓ;; ´¯´Â ÀÌÀ¯ ¾Ë¸é µğ¿¥Á»..
-        if (transform.rotation.x > 0.707 && transform.rotation.x < 0.709)
+        // Debug
+        if (CurrentHealth <= 0f)
         {
-            transform.rotation = Quaternion.LookRotation(Vector3.zero);
+            OnDie();
         }
-
-        // ï¿½ï¿½ï¿½ï¿½
-        //if (Keyboard.current.pKey.wasPressedThisFrame)
-        //{
-        //    PlayerStat.IncreaseStatBy(10, 4f, PlayerStat.GetStatByType(StatType.strength));
-        //}
-
     }
 
     protected override void FixedUpdate()
@@ -138,6 +146,8 @@ public class Player : PlayerController
     {
         if (IsDefense || IsDie)
             return;
+        if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill))
+            return;
 
         CurrentHealth -= Mathf.Max(incomingDamage - defensivePower, 0f);
 
@@ -162,6 +172,8 @@ public class Player : PlayerController
         dashSpeed = PlayerStatData.GetDashSpeed();
         dashDuration = PlayerStatData.GetDashDuration();
         dashCoolTime = PlayerStatData.GetDashCooldown();
+        qSkillCoolTime = PlayerStatData.GetQSkillCooldown();
+        awakenMaxGage = PlayerStatData.GetAwakenMaxGage();
     }
 
     public void SetPlayerStat(PlayerStatType stat, float value)
@@ -182,7 +194,7 @@ public class Player : PlayerController
             if (IsGroundDetected())
                 IsStair = false;
     }
-#endregion
+    #endregion
 
     #region handling input
     private void PlayerDefense()
@@ -220,6 +232,7 @@ public class Player : PlayerController
         }
         else
         {
+            if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
 
             StateMachine.ChangeState(PlayerStateEnum.EDash);
@@ -240,6 +253,11 @@ public class Player : PlayerController
     {
         StateMachine.CurrentState.AnimationHitAbleTrigger();
     }
+
+    public void AnimationEffectTrigger()
+    {
+        StateMachine.CurrentState.AnimationEffectTrigger();
+    }
     #endregion
 
 
@@ -254,17 +272,22 @@ public class Player : PlayerController
         {
             UsingAnimatorCompo = DefaultAnimatorCompo;
             _currentWeapon = _weapons[1];
+            _currentSlashParticle = _weaponSlashParticles[1];
         }
         else
         {
             UsingAnimatorCompo = AwakenAnimatorCompo;
             _currentWeapon = _weapons[0];
+            _currentSlashParticle = _weaponSlashParticles[0];
         }
+
+        _currentSlashParticle.Stop();
     }
 
     public void RotateToMousePos()
     {
         Vector3 dir = (MousePosInWorld - transform.position).normalized;
+        dir.y = 0;
 
         transform.transform.rotation = Quaternion.LookRotation(dir);
     }
@@ -282,4 +305,27 @@ public class Player : PlayerController
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
 
+    public void AddFreezeMaterial()
+    {
+        foreach (Renderer renderer in renderers)
+        {
+            List<Material> rendererMaterials = new List<Material>();
+
+            renderer.GetMaterials(rendererMaterials);
+            rendererMaterials.Add(freezeMaterial);
+            renderer.SetMaterials(rendererMaterials);
+        }
+    }
+
+    public void RemoveFreezeMaterial()
+    {
+        foreach (Renderer renderer in renderers)
+        {
+            List<Material> rendererMaterials = new List<Material>();
+
+            renderer.GetMaterials(rendererMaterials);
+            rendererMaterials.Remove(freezeMaterial);
+            renderer.SetMaterials(rendererMaterials);
+        }
+    }
 }

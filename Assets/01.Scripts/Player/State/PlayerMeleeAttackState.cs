@@ -9,14 +9,22 @@ public class PlayerMeleeAttackState : PlayerState
 {
     private int _comboCounter; // ���� �޺�
     private float _lastAttackTime; // ���������� ������ �ð�
-    private float _comboWindow = 0.8f; // �޺��� ����� ������ �ð� 
-   
+    private float _comboWindow = 0.8f; // �޺��� �����?������ �ð� 
+
+    private bool _isCombo;
+
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
     private HashSet<RaycastHit> _enemyDuplicateCheck = new HashSet<RaycastHit>();
     private float _hitDistance = 5f; // 2.4�� ��ũ��.
 
     private Transform _weaponRayPoint;
+
+    private float _awakenAttackDist = 4.2f;
+    private float _defaultAttackDist = 2.8f;
+
+    private bool _isAwakenSlashEffectOn = false;
+    private bool _slashEffectOn = false;
     
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -28,8 +36,12 @@ public class PlayerMeleeAttackState : PlayerState
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.IsAttack = true;
+        _isAwakenSlashEffectOn = false;
+        _slashEffectOn = false;
+        _isCombo = false;
 
         _weaponRayPoint = _player._currentWeapon.transform.Find("Point");
+        _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
         
         if (_comboCounter >= 2 || Time.time >= _lastAttackTime + _comboWindow)
             _comboCounter = 0; // �޺� �ʱ�ȭ
@@ -45,7 +57,7 @@ public class PlayerMeleeAttackState : PlayerState
             _player.StopImmediately(false);
         });
 
-        EffectManager.Instance.PlayEffect(EffectManager.Instance.GetEffect($"Player{PlayerStateEnum.MeleeAttack}Effect"), Vector3.zero);
+
     }
 
     public override void Exit()
@@ -53,7 +65,10 @@ public class PlayerMeleeAttackState : PlayerState
         _player.PlayerInput.MeleeAttackEvent -= ComboAttack;
 
         _player.IsAttack = false;
-        
+        _isAwakenSlashEffectOn = false;
+        _slashEffectOn = false;
+        _isCombo = false;
+
         _lastAttackTime = Time.time;
         
         ++_comboCounter;
@@ -61,7 +76,8 @@ public class PlayerMeleeAttackState : PlayerState
 
         _enemyDuplicateCheck.Clear();
 
-        
+
+
         base.Exit();
     }
 
@@ -84,26 +100,59 @@ public class PlayerMeleeAttackState : PlayerState
                     if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
                     {
                         brain.OnHit(_player.attackPower);
+                        if (!_player.IsAwakening)
+                            _player.awakenCurrentGage++;
                     }
                 }
             }
+
+            if (!_slashEffectOn)
+            {
+                _player._currentSlashParticle.Play();
+
+                _slashEffectOn = true;
+            }
         }
-        
+
+        if (_effectTriggerCalled)
+        {
+            if (_player.IsAwakening)
+            {
+                if (!_isAwakenSlashEffectOn)
+                {
+                    _isAwakenSlashEffectOn = true;
+
+                    Vector3 pos = _player.transform.position;
+                    float range = 2f;
+
+                    pos += _player.transform.forward * range;
+
+                    EffectManager.Instance.PlayEffect(PoolingType.PlayerMeleeAttackEffect, pos);
+                }
+            }
+        }
+
+        if (_actionTriggerCalled)
+        {
+            if (_player.IsGroundDetected())
+            {
+                if (_isCombo)
+                    _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
+            }
+        }
+
         if (_endTriggerCalled)
         {
+            _player._currentSlashParticle.Stop();
+            _player._currentSlashParticle.Clear();
+
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
 
     private void ComboAttack()
     {
-        if (_actionTriggerCalled)
-        {
-            if (_player.IsGroundDetected())
-            {
-                _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
-            }
-        }
+        _isCombo = true;
     }   
 
     public void UpgradeActivePoison()

@@ -17,5 +17,5 @@ public class EnemySpawnValueSO : ScriptableObject
     public Vector3 minimumSpawnRange;
     public Vector3 maximumSpawnRange;
     public List<EnemyToSpawn> enemiesToSpawn;
-    public int maxEnemyCount = 7;
+    public int maxEnemySpawnCount = 7;
 }

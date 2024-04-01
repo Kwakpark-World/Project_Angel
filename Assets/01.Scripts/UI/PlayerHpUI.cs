@@ -1,18 +1,22 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHpUI : MonoBehaviour
 {
-    public Slider _maxHpBar;
+    public Slider _HpBar;
     public Slider _identityBar;
-
     public PlayerController _playerController;
-    
+    public Player _player;
+
     private void Update()
     {
-        _maxHpBar.value = _playerController.CurrentHealth;
+        PlayerHP();
+        _identityBar.value = _player.awakenCurrentGage;
+    }
+
+    public void PlayerHP()
+    {
+        _HpBar.value = _playerController.CurrentHealth;
     }
 }

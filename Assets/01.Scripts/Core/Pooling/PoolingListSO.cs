@@ -18,7 +18,15 @@ public enum PoolingType
     PoisonPotion,
     FreezePotion,
     KnockbackPotion,
-    PlayerMeleeAttack,
+    PlayerMeleeAttackEffect,
+    PlayerChargeEffect,
+    PlayerChargeAttackEffect,
+    PlayerQSkillEffect,
+    PlayerEQSkillEffect,
+    PlayerEChargeAttackEffect,
+    PlayerESkillEffect,
+    PlayerESkillDownEffect,
+    PlayerEChargeEffect,
     Rune
 }
 

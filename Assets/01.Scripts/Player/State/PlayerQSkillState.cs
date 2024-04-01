@@ -12,6 +12,9 @@ public class PlayerQSkillState : PlayerState
     private float _attackDist = 12f;
     private float _attackHeight = 2f;
 
+    private float _awakenAttackDist = 15f;
+    private float _defaultAttackDist = 12f;
+    
     public PlayerQSkillState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -19,6 +22,10 @@ public class PlayerQSkillState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.StopImmediately(false);
+        _player.RotateToMousePos();
+        _attackDist = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
+
         _player.SetVelocity(Vector3.up * _jumpForce);
     }
 
@@ -43,7 +50,20 @@ public class PlayerQSkillState : PlayerState
             if (_player.IsGroundDetected())
             {
                 if (!_isAttacked)
+                {
+                    Vector3 pos = _player.transform.position;
+                    pos.y += 1f;
+                    if (_player.IsAwakening)
+                    {
+                        EffectManager.Instance.PlayEffect(PoolingType.PlayerEQSkillEffect, pos);
+                    }
+                    else
+                    {
+                        EffectManager.Instance.PlayEffect(PoolingType.PlayerQSkillEffect, pos);
+                    }
+
                     QAttack();
+                }
 
                 _stateMachine.ChangeState(PlayerStateEnum.Idle);
             } 
@@ -70,6 +90,8 @@ public class PlayerQSkillState : PlayerState
                     Debug.Log($"hit {enemy.transform.gameObject}");
 
                     brain.OnHit(_player.attackPower);
+                    if (!_player.IsAwakening)
+                        _player.awakenCurrentGage++;
                 }
             }
         }

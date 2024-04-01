@@ -19,6 +19,7 @@ public class PlayerDashState : PlayerState
         base.Enter();
 
         _dashStartTime = Time.time;
+        _player.RotateToMousePos();
     }
 
     public override void Exit()

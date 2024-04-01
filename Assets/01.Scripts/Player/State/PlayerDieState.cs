@@ -13,6 +13,7 @@ public class PlayerDieState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.StopImmediately(false);
         _player.IsDie = true;
         _isCollider = false;
     }

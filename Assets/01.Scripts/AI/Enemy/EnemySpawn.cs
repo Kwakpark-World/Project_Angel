@@ -6,35 +6,36 @@ public class EnemySpawn : MonoBehaviour
 {
     [SerializeField]
     public EnemySpawnValueSO enemySpawnValue;
-    [SerializeField]
-    public int SpawnWave = 0;
-    public int EnemySpawnCount = 0;
-    public int EnemyDieCount = 0;
+    [HideInInspector]
+    public WaveFont waveFont;
+    [HideInInspector]
+    public int spawnWave = 0;
+    [HideInInspector]
+    public int enemyDieCount = 0;
+    private int _enemySpawnCount = 0;
     
     private float ratioSum;                                           
 
     private void Awake()
     {
         InitializeSpawner();
-    }
-
-    public WaveFont waveFont;                                                                                                                                                     
+    }                                                                                                                                                 
 
     private void Start()
     {
         SpawnEnemy();
-        waveFont.WavePrint();
+        waveFont?.WavePrint();
     }
 
     private void Update()
     {
-        if (EnemyDieCount == enemySpawnValue.maxEnemyCount)
+        if (enemyDieCount == enemySpawnValue.maxEnemySpawnCount)
         {
-            EnemyDieCount = 0;
-            EnemySpawnCount = 0;
+            enemyDieCount = 0;
+            _enemySpawnCount = 0;
             SpawnEnemy();
-            SpawnWave++;
-            waveFont.WavePrint();
+            spawnWave++;
+            waveFont?.WavePrint();
         }
     }
 
@@ -66,7 +67,7 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        while(EnemySpawnCount < enemySpawnValue.maxEnemyCount)
+        while(_enemySpawnCount < enemySpawnValue.maxEnemySpawnCount)
         {
             Vector3 spawnPosition = new Vector3(
                 Random.Range(enemySpawnValue.minimumSpawnRange.x, enemySpawnValue.maximumSpawnRange.x),
@@ -87,11 +88,11 @@ public class EnemySpawn : MonoBehaviour
                 {
                     Brain brain = PoolManager.Instance.Pop(enemy.enemyType, spawnPosition) as Brain;
                     brain.enemySpawn = this;
-                    EnemySpawnCount++;
+                    _enemySpawnCount++;
 
                     break;
                 }
-                Debug.Log(SpawnWave);
+                Debug.Log(spawnWave);
             }
         }
     }

@@ -15,6 +15,7 @@ public class PlayerEDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.RotateToMousePos();
 
         float dashDistance = _dashDistanceMax;
 
