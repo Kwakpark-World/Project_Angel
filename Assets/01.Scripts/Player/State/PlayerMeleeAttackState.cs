@@ -21,7 +21,8 @@ public class PlayerMeleeAttackState : PlayerState
     private float _awakenAttackDist = 4.2f;
     private float _defaultAttackDist = 2.8f;
 
-    private bool _isEffectOn = false;
+    private bool _isAwakenSlashEffectOn = false;
+    private bool _slashEffectOn = false;
     
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -33,7 +34,8 @@ public class PlayerMeleeAttackState : PlayerState
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.IsAttack = true;
-        _isEffectOn = false;
+        _isAwakenSlashEffectOn = false;
+        _slashEffectOn = false;
 
         _weaponRayPoint = _player._currentWeapon.transform.Find("Point");
         _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
@@ -52,6 +54,7 @@ public class PlayerMeleeAttackState : PlayerState
             _player.StopImmediately(false);
         });
 
+
     }
 
     public override void Exit()
@@ -59,7 +62,8 @@ public class PlayerMeleeAttackState : PlayerState
         _player.PlayerInput.MeleeAttackEvent -= ComboAttack;
 
         _player.IsAttack = false;
-        _isEffectOn = false;
+        _isAwakenSlashEffectOn = false;
+        _slashEffectOn = false;
 
         _lastAttackTime = Time.time;
         
@@ -99,13 +103,23 @@ public class PlayerMeleeAttackState : PlayerState
             }
         }
 
-        if (_player.IsAwakening)
+        if (_isHitAbleTriggerCalled)
         {
-            if (_effectTriggerCalled)
+            if (!_slashEffectOn)
             {
-                if (!_isEffectOn)
+                _player._currentSlashParticle.Play();
+
+                _slashEffectOn = true;
+            }
+        }
+
+        if (_effectTriggerCalled)
+        {
+            if (_player.IsAwakening)
+            {
+                if (!_isAwakenSlashEffectOn)
                 {
-                    _isEffectOn = true;
+                    _isAwakenSlashEffectOn = true;
 
                     Vector3 pos = _player.transform.position;
                     float range = 2f;
@@ -119,6 +133,9 @@ public class PlayerMeleeAttackState : PlayerState
 
         if (_endTriggerCalled)
         {
+            _player._currentSlashParticle.Stop();
+            _player._currentSlashParticle.Clear();
+
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }

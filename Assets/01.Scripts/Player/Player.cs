@@ -15,6 +15,9 @@ public class Player : PlayerController
     private GameObject[] _weapons;
     public GameObject _currentWeapon;
 
+    public ParticleSystem[] _weaponSlashParticles;
+    public ParticleSystem _currentSlashParticle;
+
     public LayerMask _enemyLayer;
 
     public float attackPower;
@@ -55,7 +58,6 @@ public class Player : PlayerController
     public bool IsPlayerStop { get; set; }
 
     public Vector3 MousePosInWorld { get; private set; }
-    public FakePlayer fakePlayer;
 
     public Renderer[] renderers;
     public Material freezeMaterial;
@@ -77,6 +79,7 @@ public class Player : PlayerController
         }
 
         _weapons = GameObject.FindGameObjectsWithTag("Weapon");
+
     }
 
     protected void OnEnable()
@@ -93,10 +96,9 @@ public class Player : PlayerController
         PlayerStatData.InitializeAllModifiers();
         PlayerStatInitialize();
 
-
-
+        _weaponSlashParticles[0].Stop();
+        _weaponSlashParticles[1].Stop();
     }
-
 
     protected override void Update()
     {
@@ -112,7 +114,7 @@ public class Player : PlayerController
 
         SetMousePosInWorld();
 
-        // ¹Ù´Ú¿¡ ´¯´Â°Å ¹æÁöÀÓ;; ´¯´Â ÀÌÀ¯ ¾Ë¸é µð¿¥Á»..
+        // ï¿½Ù´Ú¿ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;; ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¸ï¿½ ï¿½ï¿½ï¿½ï¿½..
         if (transform.rotation.x > 0.707 && transform.rotation.x < 0.709)
         {
             transform.rotation = Quaternion.LookRotation(Vector3.zero);
@@ -276,12 +278,16 @@ public class Player : PlayerController
         {
             UsingAnimatorCompo = DefaultAnimatorCompo;
             _currentWeapon = _weapons[1];
+            _currentSlashParticle = _weaponSlashParticles[1];
         }
         else
         {
             UsingAnimatorCompo = AwakenAnimatorCompo;
             _currentWeapon = _weapons[0];
+            _currentSlashParticle = _weaponSlashParticles[0];
         }
+
+        _currentSlashParticle.Stop();
     }
 
     public void RotateToMousePos()
