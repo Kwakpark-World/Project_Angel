@@ -37,7 +37,6 @@ public class PlayerESkillState : PlayerState
         if (_endTriggerCalled)
         {
             _player.SetPlayerModelAndAnim();
-            _player.fakePlayer?.SetPlayerModelAndAnim();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
@@ -45,11 +44,15 @@ public class PlayerESkillState : PlayerState
     private IEnumerator PlayerAwakening()
     {
         _player.IsAwakening = true;
-        yield return new WaitForSeconds(_awakeningTime);
-        _player.IsAwakening = false;
+        while (_player.awakenCurrentGage > 0)
+        {
+            _player.awakenCurrentGage -= 10;
+            yield return new WaitForSeconds(1f);
+        }
 
+        _player.IsAwakening = false;
         _player.SetPlayerModelAndAnim();
-        _player.fakePlayer?.SetPlayerModelAndAnim();
         _stateMachine.ChangeState(PlayerStateEnum.Idle);
     }
+
 }

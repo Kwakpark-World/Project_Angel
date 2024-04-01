@@ -8,14 +8,23 @@ public class FakePlayer : MonoBehaviour
     [SerializeField] protected GameObject _defaultVisual;
     [SerializeField] protected GameObject _awakenVisual;
 
-    private void Start()
+    private void Update()
     {
         SetPlayerModelAndAnim();
     }
 
     public void SetPlayerModelAndAnim()
     {
-        _defaultVisual.SetActive(!GameManager.Instance.player.IsAwakening);
-        _awakenVisual.SetActive(GameManager.Instance.player.IsAwakening);
+        if(GameManager.Instance.player.IsAwakening == false)
+        {
+            _defaultVisual.SetActive(true);
+            _awakenVisual.SetActive(false);
+        }
+        else
+        {
+            _defaultVisual.SetActive(false);
+            _awakenVisual.SetActive(true);
+        }
+        
     }
 }
