@@ -39,6 +39,7 @@ public class PlayerChargeState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        _player.PlayerInput.isCharge = false;
         _isChargeParticleOn = false;
     }
 

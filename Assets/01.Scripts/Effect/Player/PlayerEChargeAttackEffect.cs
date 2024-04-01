@@ -59,6 +59,11 @@ public class PlayerEChargeAttackEffect : PoolableMonoEffect
 
             PoolManager.Instance.Push(this, 3);
         }
+
+        if (GameManager.Instance.player.StateMachine.CurrentState == GameManager.Instance.player.StateMachine.GetState(PlayerStateEnum.EDash))
+        {
+            PoolManager.Instance.Push(this);
+        }
     }
 
     public override void RegisterEffect()
