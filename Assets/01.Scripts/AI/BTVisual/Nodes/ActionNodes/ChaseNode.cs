@@ -14,8 +14,6 @@ namespace BTVisual
             {
                 _attackRange = brain.EnemyStatData.GetAttackRange();
             }
-
-            brain.AnimatorCompo.SetAnimationState("Move");
         }
 
         protected override void OnStop()
@@ -28,6 +26,11 @@ namespace BTVisual
             if (brain.NavMeshAgentCompo.isStopped)
             {
                 brain.NavMeshAgentCompo.isStopped = false;
+            }
+
+            if (brain.AnimatorCompo.GetCurrentAnimationState() != "Move")
+            {
+                brain.AnimatorCompo.SetAnimationState("Move");
             }
 
             brain.NavMeshAgentCompo.destination = GameManager.Instance.playerTransform.position;
