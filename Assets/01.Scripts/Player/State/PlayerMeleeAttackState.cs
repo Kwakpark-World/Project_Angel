@@ -88,7 +88,7 @@ public class PlayerMeleeAttackState : PlayerState
         if (_isHitAbleTriggerCalled)
         {
             RaycastHit[] enemies = Physics.RaycastAll(_player._currentWeapon.transform.position, dir, _hitDistance, _player._enemyLayer);
-    
+            Debug.Log(enemies.Length);
             foreach(var enemy in enemies)
             {
                 if (_enemyDuplicateCheck.Add(enemy))
