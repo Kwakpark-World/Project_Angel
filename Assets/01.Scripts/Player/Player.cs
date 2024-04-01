@@ -116,17 +116,11 @@ public class Player : PlayerController
 
         SetMousePosInWorld();
 
-        // �ٴڿ� ���°� ������;; ���� ���� �˸� ����..
-        if (transform.rotation.x > 0.707 && transform.rotation.x < 0.709)
+        // Debug
+        if (CurrentHealth <= 0f)
         {
-            transform.rotation = Quaternion.LookRotation(Vector3.zero);
+            OnDie();
         }
-
-        // ����
-        //if (Keyboard.current.pKey.wasPressedThisFrame)
-        //{
-        //    PlayerStat.IncreaseStatBy(10, 4f, PlayerStat.GetStatByType(StatType.strength));
-        //}
     }
 
     protected override void FixedUpdate()
@@ -240,6 +234,7 @@ public class Player : PlayerController
         }
         else
         {
+            if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
 
             StateMachine.ChangeState(PlayerStateEnum.EDash);
@@ -293,6 +288,7 @@ public class Player : PlayerController
     public void RotateToMousePos()
     {
         Vector3 dir = (MousePosInWorld - transform.position).normalized;
+        dir.y = 0;
 
         transform.transform.rotation = Quaternion.LookRotation(dir);
     }

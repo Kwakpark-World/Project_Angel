@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerChargeState : PlayerState
 {
     private float _minChargeTime = 0.5f;
     private float _maxChargeTime = 2f;
 
-
+    private bool _isChargeParticleOn;
 
     public PlayerChargeState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -19,30 +20,27 @@ public class PlayerChargeState : PlayerState
         _player.RotateToMousePos();
 
         _player.ChargingGage = 0;
-
+        _isChargeParticleOn = false;
 
         Vector3 pos = _player.transform.position;
         if (_player.IsAwakening)
         {
-            EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeEffect, _player._currentWeapon.transform.Find("Point").position);
             pos += _player.transform.forward;
             pos.y += 2f;
-
             EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeAttackEffect, pos);
         }
         else
         {
-            EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._currentWeapon.transform.Find("Point").position);
             pos += _player.transform.right * 2;
-
             EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeAttackEffect, pos);
-
         }
     }
 
     public override void Exit()
     {
         base.Exit();
+        _player.PlayerInput.isCharge = false;
+        _isChargeParticleOn = false;
     }
 
     public override void UpdateState()
@@ -69,6 +67,23 @@ public class PlayerChargeState : PlayerState
                 _player.ChargingGage += Time.deltaTime * 1.5f;
         }
         
+
+        if (_effectTriggerCalled)
+        {
+            if (!_isChargeParticleOn)
+            {
+                _isChargeParticleOn = true;
+
+                if (_player.IsAwakening)
+                {
+                    EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeEffect, _player._currentWeapon.transform.Find("Point").position);
+                }
+                else
+                {
+                    EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._currentWeapon.transform.Find("Point").position);
+                }
+            }
+        }
         
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerESkillState : PlayerState
 {
-    private float _awakeningTime = 10f;
 
     public PlayerESkillState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -21,8 +20,6 @@ public class PlayerESkillState : PlayerState
         pos.y += 1.5f;
 
         EffectManager.Instance.PlayEffect(PoolingType.PlayerESkillEffect, pos);
-
-        _player.awakenCurrentGage = 0;
     }
 
     public override void Exit()
@@ -34,20 +31,20 @@ public class PlayerESkillState : PlayerState
     {
         base.UpdateState();
 
+        _player.awakenCurrentGage = Mathf.Clamp(_player.awakenCurrentGage, 0, _player.awakenMaxGage);
         if (_endTriggerCalled)
         {
-            _player.SetPlayerModelAndAnim();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
 
     private IEnumerator PlayerAwakening()
     {
-        _player.IsAwakening = true;
-        while (_player.awakenCurrentGage > 0)
+        while (_player.awakenCurrentGage >= 0)
         {
-            _player.awakenCurrentGage -= 10;
-            yield return new WaitForSeconds(1f);
+            if (_player.IsAwakening)
+                _player.awakenCurrentGage -= 10 * Time.deltaTime;
+            yield return null;
         }
 
         _player.IsAwakening = false;

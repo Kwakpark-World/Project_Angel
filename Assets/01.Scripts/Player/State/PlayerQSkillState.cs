@@ -23,6 +23,7 @@ public class PlayerQSkillState : PlayerState
     {
         base.Enter();
         _player.StopImmediately(false);
+        _player.RotateToMousePos();
         _attackDist = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
 
         _player.SetVelocity(Vector3.up * _jumpForce);
