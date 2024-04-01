@@ -15,7 +15,7 @@ public class PlayerMeleeAttackState : PlayerState
 
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
-    private HashSet<RaycastHit> _enemyDuplicateCheck = new HashSet<RaycastHit>();
+    private HashSet<Brain> _enemyDuplicateCheck = new HashSet<Brain>();
     private float _hitDistance = 5f; // 2.4�� ��ũ��.
 
     private Transform _weaponRayPoint;
@@ -95,9 +95,9 @@ public class PlayerMeleeAttackState : PlayerState
             Debug.Log(enemies.Length);
             foreach(var enemy in enemies)
             {
-                if (_enemyDuplicateCheck.Add(enemy))
+                if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
                 {
-                    if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
+                    if (_enemyDuplicateCheck.Add(brain))
                     {
                         brain.OnHit(_player.attackPower);
                         if (!_player.IsAwakening)
