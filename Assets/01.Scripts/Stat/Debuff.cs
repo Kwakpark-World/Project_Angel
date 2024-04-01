@@ -106,6 +106,11 @@ public class Debuff : MonoBehaviour
 
     public void SetDebuff(DebuffType debuffType, float duration, object attacker)
     {
+        if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
+        {
+            return;
+        }
+
         _attackers[debuffType] = attacker;
 
         if (_coroutines[debuffType] != null)
@@ -214,6 +219,11 @@ public class Debuff : MonoBehaviour
     {
         if (_ownerController)
         {
+            if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.QSkill) || _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.ESkill))
+            {
+                return;
+            }
+
             Brain attacker = _attackers[DebuffType.Knockback] as Brain;
 
             _ownerController.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.DebuffCompo.DebuffStatData.knockbackForce, ForceMode.Impulse);

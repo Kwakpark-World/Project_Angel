@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.Collections;
 using UnityEngine;
 
 public class Player : PlayerController
@@ -61,6 +63,7 @@ public class Player : PlayerController
 
     public Renderer[] renderers;
     public Material freezeMaterial;
+    private bool _isFreezing;
 
     protected override void Awake()
     {
@@ -79,7 +82,6 @@ public class Player : PlayerController
         }
 
         _weapons = GameObject.FindGameObjectsWithTag("Weapon");
-
     }
 
     protected void OnEnable()
@@ -125,7 +127,6 @@ public class Player : PlayerController
         //{
         //    PlayerStat.IncreaseStatBy(10, 4f, PlayerStat.GetStatByType(StatType.strength));
         //}
-
     }
 
     protected override void FixedUpdate()
@@ -266,7 +267,6 @@ public class Player : PlayerController
     }
     #endregion
 
-
     public void SetPlayerModelAndAnim()
     {
         _defaultVisual.SetActive(!IsAwakening);
@@ -312,6 +312,13 @@ public class Player : PlayerController
 
     public void AddFreezeMaterial()
     {
+        if (_isFreezing)
+        {
+            return;
+        }
+
+        _isFreezing = true;
+
         foreach (Renderer renderer in renderers)
         {
             List<Material> rendererMaterials = new List<Material>();
@@ -324,12 +331,19 @@ public class Player : PlayerController
 
     public void RemoveFreezeMaterial()
     {
+        if (!_isFreezing)
+        {
+            return;
+        }
+
+        _isFreezing = false;
+
         foreach (Renderer renderer in renderers)
         {
             List<Material> rendererMaterials = new List<Material>();
 
             renderer.GetMaterials(rendererMaterials);
-            rendererMaterials.Remove(freezeMaterial);
+            rendererMaterials.Remove(rendererMaterials.Last());
             renderer.SetMaterials(rendererMaterials);
         }
     }
