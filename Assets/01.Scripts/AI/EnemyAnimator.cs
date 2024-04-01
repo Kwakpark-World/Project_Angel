@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -77,7 +78,6 @@ public class EnemyAnimator : MonoBehaviour
         _currentState = stateName;
 
         _animator.SetBool(_parameterHashes["is" + _currentState], true);
-        Debug.Log(_parameterHashes["is" + _currentState]);
     }
 
     public void SetAnimationState(string stateName = "Idle", AnimationStateMode stateMode = AnimationStateMode.None)

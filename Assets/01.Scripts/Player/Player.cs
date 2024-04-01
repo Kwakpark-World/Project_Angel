@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Player : PlayerController
@@ -55,6 +57,9 @@ public class Player : PlayerController
     public Vector3 MousePosInWorld { get; private set; }
     public FakePlayer fakePlayer;
 
+    public Renderer[] renderers;
+    public Material freezeMaterial;
+
     protected override void Awake()
     {
         base.Awake();
@@ -89,7 +94,7 @@ public class Player : PlayerController
         PlayerStatInitialize();
 
 
-        
+
     }
 
 
@@ -194,7 +199,7 @@ public class Player : PlayerController
             if (IsGroundDetected())
                 IsStair = false;
     }
-#endregion
+    #endregion
 
     #region handling input
     private void PlayerDefense()
@@ -299,5 +304,27 @@ public class Player : PlayerController
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
 
+    public void AddFreezeMaterial()
+    {
+        foreach (Renderer renderer in renderers)
+        {
+            List<Material> rendererMaterials = new List<Material>();
 
+            renderer.GetMaterials(rendererMaterials);
+            rendererMaterials.Add(freezeMaterial);
+            renderer.SetMaterials(rendererMaterials);
+        }
+    }
+
+    public void RemoveFreezeMaterial()
+    {
+        foreach (Renderer renderer in renderers)
+        {
+            List<Material> rendererMaterials = new List<Material>();
+
+            renderer.GetMaterials(rendererMaterials);
+            rendererMaterials.Remove(freezeMaterial);
+            renderer.SetMaterials(rendererMaterials);
+        }
+    }
 }

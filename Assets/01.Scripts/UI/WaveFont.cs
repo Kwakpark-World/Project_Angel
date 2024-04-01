@@ -20,7 +20,7 @@ public class WaveFont : MonoBehaviour
     // Start is called before the first frame update
     public void WavePrint()
     {
-        MoveToNewPosition("wave " + enemySpawn.SpawnWave);
+        MoveToNewPosition("wave " + enemySpawn.spawnWave);
     }
 
     void MoveToNewPosition(string waveText)

@@ -1597,6 +1597,7 @@ MonoBehaviour:
   attackMovement:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  ChargingGage: 0
   criticalChance: 0
   criticalMultiplier: 0
   defensivePower: 0
@@ -1604,8 +1605,49 @@ MonoBehaviour:
   dashCoolTime: 1
   defenseCoolTime: 1
   defensePrevTime: 0
+  qSkillCoolTime: 10
+  qPrevTime: 0
+  awakenMaxGage: 100
+  awakenCurrentGage: 0
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d771d326405705e4b9989f7211c9e6b3,
     type: 2}
+  fakePlayer: {fileID: 0}
+  renderers:
+  - {fileID: 9166074286034648693}
+  - {fileID: 2866051191039960501}
+  - {fileID: 5422177800281125075}
+  - {fileID: 7512572313320182013}
+  - {fileID: 8214724939459909532}
+  - {fileID: 8348956577880548871}
+  - {fileID: 228622949411185127}
+  - {fileID: 6493501655499024990}
+  - {fileID: 2986714894279716638}
+  - {fileID: 2988672077069622086}
+  - {fileID: 7026259747209209821}
+  - {fileID: 9035806998683433189}
+  - {fileID: 956195399650287943}
+  - {fileID: 1610162743861284963}
+  - {fileID: 7082828502394422254}
+  - {fileID: 1335214123330302499}
+  - {fileID: 3773456381067449165}
+  - {fileID: 3445086929823950368}
+  - {fileID: 7405753523421516083}
+  - {fileID: 6462437047474888970}
+  - {fileID: 2193127732440942472}
+  - {fileID: 8653127012510039328}
+  - {fileID: 6036145933067725516}
+  - {fileID: 9136447664195891028}
+  - {fileID: 6193853747086261152}
+  - {fileID: 9204447150119291919}
+  - {fileID: 711758822047387560}
+  - {fileID: 1116833592354517710}
+  - {fileID: 2350324283853638253}
+  - {fileID: 2623276325639359781}
+  - {fileID: 5371252164882284506}
+  - {fileID: 4721809675395040271}
+  - {fileID: 8263359408824834431}
+  - {fileID: 3352636767027984415}
+  freezeMaterial: {fileID: 2100000, guid: 7b34644260d996a42963d1af02704da0, type: 2}
 --- !u!114 &6423821823411293297
 MonoBehaviour:
   m_ObjectHideFlags: 0
