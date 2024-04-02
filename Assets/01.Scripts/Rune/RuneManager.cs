@@ -34,6 +34,14 @@ public class RuneManager : MonoBehaviour
         _collectedRunes = new Dictionary<RuneType, List<Rune>>();
     }
 
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            CreateRune();
+        }
+    }
+
     public Rune CreateRune()
     {
         Rune rune = PoolManager.Instance.Pop(PoolingType.Rune) as Rune;
@@ -63,5 +71,13 @@ public class RuneManager : MonoBehaviour
     public void SetRuneList(RuneListSO list)
     {
         _runeList = list;
+    }
+
+    public void ActivateRune()
+    {
+        if(_collectedRunes.Count < 3)
+        {
+            //·é È°¼ºÈ­
+        }
     }
 }
