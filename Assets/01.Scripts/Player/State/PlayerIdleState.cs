@@ -25,7 +25,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void UpdateState()
     {
         base.UpdateState();
-
+             
         //x 축으로 값이 눌렸다면 이동상태로 변경해주면 됨.
         float xInput = _player.PlayerInput.XInput;
         float yInput = _player.PlayerInput.YInput;

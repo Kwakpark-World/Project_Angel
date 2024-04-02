@@ -17,9 +17,6 @@ public class Player : PlayerController
     private GameObject[] _weapons;
     public GameObject _currentWeapon;
 
-    public ParticleSystem[] _weaponSlashParticles;
-    public ParticleSystem _currentSlashParticle;
-
     public LayerMask _enemyLayer;
 
     public float attackPower;
@@ -97,9 +94,6 @@ public class Player : PlayerController
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
         PlayerStatInitialize();
-
-        _weaponSlashParticles[0].Stop();
-        _weaponSlashParticles[1].Stop();
     }
 
     protected override void Update()
@@ -121,6 +115,7 @@ public class Player : PlayerController
         {
             OnDie();
         }
+
     }
 
     protected override void FixedUpdate()
@@ -230,6 +225,8 @@ public class Player : PlayerController
         if (!IsAwakening)
         {
             if (!IsGroundDetected()) return;
+            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
+
             StateMachine.ChangeState(PlayerStateEnum.Dash);
         }
         else
@@ -267,22 +264,20 @@ public class Player : PlayerController
         _defaultVisual.SetActive(!IsAwakening);
         _awakenVisual.SetActive(IsAwakening);
 
-        //StateMachine.ChangeState(PlayerStateEnum.Idle);
 
         if (!IsAwakening)
         {
             UsingAnimatorCompo = DefaultAnimatorCompo;
             _currentWeapon = _weapons[1];
-            _currentSlashParticle = _weaponSlashParticles[1];
         }
         else
         {
             UsingAnimatorCompo = AwakenAnimatorCompo;
             _currentWeapon = _weapons[0];
-            _currentSlashParticle = _weaponSlashParticles[0];
+            
+            StateMachine.ChangeState(PlayerStateEnum.Idle);
         }
 
-        _currentSlashParticle.Stop();
     }
 
     public void RotateToMousePos()

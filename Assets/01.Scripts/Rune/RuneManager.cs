@@ -14,6 +14,16 @@ public class RuneManager : MonoSingleton<RuneManager>
         _collectedRunes = new Dictionary<RuneType, List<Rune>>();
     }
 
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            CreateRune();
+        }
+
+        ActivateRune();
+    }
+
     public Rune CreateRune()
     {
         Rune rune = PoolManager.Instance.Pop(PoolingType.Rune) as Rune;
@@ -44,4 +54,16 @@ public class RuneManager : MonoSingleton<RuneManager>
     {
         _runeList = list;
     }
+
+    public void ActivateRune()
+    {
+        /*foreach (var synergyGroup in _collectedRunes.GroupBy(kvp => kvp.Value.FirstOrDefault()?.RuneData.)
+        {
+            if (synergyGroup.Count() >= 3)
+            {
+                Debug.Log($"시너지 그룹 {synergyGroup.Key}에 속하는 룬이 3개 이상 있습니다.");
+            }
+        }*/
+    }
+
 }
