@@ -77,13 +77,13 @@ public class RuneManager : MonoBehaviour
 
     public void ActivateRune()
     {
-        foreach (var synergyGroup in _collectedRunes.GroupBy(kvp => kvp.Value.FirstOrDefault()?.RuneData.synergyGroup))
+        /*foreach (var synergyGroup in _collectedRunes.GroupBy(kvp => kvp.Value.FirstOrDefault()?.RuneData.)
         {
             if (synergyGroup.Count() >= 3)
             {
                 Debug.Log($"시너지 그룹 {synergyGroup.Key}에 속하는 룬이 3개 이상 있습니다.");
             }
-        }
+        }*/
     }
 
 }
