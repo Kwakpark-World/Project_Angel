@@ -8,7 +8,7 @@ public class BloodParticle : PoolableMonoEffect
 
     public void ViewPlayerBlood()
     {
-        Vector3 playerPosition = GameManager.Instance.playerTransform.position;
+        Vector3 playerPosition = GameManager.Instance.PlayerInstance.transform.position;
 
         Vector3 direction = playerPosition - bloodTransform.position;
         direction.Normalize();

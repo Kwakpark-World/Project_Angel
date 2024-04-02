@@ -8,7 +8,7 @@ public class PlayerQSkillEffect : PoolableMonoEffect
     {
         base.InitializePoolingItem();
         
-        if (GameManager.Instance.player.IsAwakening)
+        if (GameManager.Instance.PlayerInstance.IsAwakening)
         {
             PoolManager.Instance.Push(this);
         }

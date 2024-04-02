@@ -58,7 +58,7 @@ public class Stage : MonoBehaviour
 
     private IEnumerator UnlockStage()
     {
-        GameManager.Instance.player.StopImmediately(true);
+        GameManager.Instance.PlayerInstance.StopImmediately(true);
 
         // TODO: disable player input
         for (int i = 0; i < _barriers.Count; i++)
@@ -73,7 +73,7 @@ public class Stage : MonoBehaviour
 
     private IEnumerator LockStage()
     {
-        GameManager.Instance.player.StopImmediately(true);
+        GameManager.Instance.PlayerInstance.StopImmediately(true);
 
         // TODO: disable player input
         for (int i = 0; i < _barriers.Count; i++)

@@ -2,31 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
-    private static GameManager _instance = null;
-    public static GameManager Instance
+    private Player _player;
+    public Player PlayerInstance
     {
         get
         {
-            if (_instance == null)
-                _instance = FindObjectOfType<GameManager>();
-
-            if (_instance == null)
+            if (!_player)
             {
-                Debug.LogError("GameManager Component is null");
-            }
-            else if (!_instance.player)
-            {
-                _instance.player = FindFirstObjectByType<Player>();
+                _player = FindObjectOfType<Player>();
 
-                if (_instance.player)
+                if (!_player)
                 {
-                    _instance.playerTransform = _instance.player.transform;
+                    Debug.LogError("Player instance doesn't exist.");
                 }
             }
 
-            return _instance;
+            return _player;
         }
     }
 
@@ -34,10 +27,4 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-
-    [HideInInspector]
-    public Player player;
-    [HideInInspector]
-    public Transform playerTransform;
-
 }

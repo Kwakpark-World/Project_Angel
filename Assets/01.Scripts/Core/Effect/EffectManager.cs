@@ -3,23 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectManager : MonoBehaviour
+public class EffectManager : MonoSingleton<EffectManager>
 {
-    private static EffectManager _instance;
-    public static EffectManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = FindObjectOfType<EffectManager>();
-
-            if (_instance == null)
-                Debug.LogError("Effect Manager is null");
-
-            return _instance;
-        }
-    }
-
     private Dictionary<string, PoolingType> _effects = new Dictionary<string, PoolingType>();
 
     public void RegisterEffect(PoolingType type)

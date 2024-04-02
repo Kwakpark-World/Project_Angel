@@ -28,7 +28,7 @@ namespace BTVisual
 
         protected override State OnUpdate()
         {
-            return (GameManager.Instance.playerTransform.position - brain.transform.position).sqrMagnitude <= _range * _range ? State.Success : State.Failure;
+            return (GameManager.Instance.PlayerInstance.transform.position - brain.transform.position).sqrMagnitude <= _range * _range ? State.Success : State.Failure;
         }
     }
 }

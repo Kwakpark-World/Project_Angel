@@ -33,7 +33,7 @@ namespace BTVisual
                 brain.AnimatorCompo.SetAnimationState("Move");
             }
 
-            brain.NavMeshAgentCompo.destination = GameManager.Instance.playerTransform.position;
+            brain.NavMeshAgentCompo.destination = GameManager.Instance.PlayerInstance.transform.position;
 
             if (brain.NavMeshAgentCompo.remainingDistance > _attackRange)
             {

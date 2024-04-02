@@ -1,31 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
-public class RuneManager : MonoBehaviour
+public class RuneManager : MonoSingleton<RuneManager>
 {
-    private static RuneManager _instance;
-    public static RuneManager Instance 
-    { 
-        get
-        {
-            if(_instance == null)
-            {
-                _instance = FindObjectOfType<RuneManager>();
-                if(_instance == null)
-                {
-                    Debug.LogError("룬매니저 넣어라 좀");
-                }
-            }
-            return _instance;
-        }
-    }
-
     private Dictionary<RuneType, List<Rune>> _collectedRunes;
     [SerializeField] private RuneListSO _runeList;
 

@@ -14,14 +14,14 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
     {
         base.InitializePoolingItem();
 
-        if (GameManager.Instance.player.IsAwakening)
+        if (GameManager.Instance.PlayerInstance.IsAwakening)
         {
             PoolManager.Instance.Push(this);
             return;
         }
             
 
-        Quaternion rot = GameManager.Instance.player.transform.rotation;
+        Quaternion rot = GameManager.Instance.PlayerInstance.transform.rotation;
         rot.x = 0;
         rot.z = 0;
 
@@ -41,21 +41,21 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
         base.Update();
         
 
-        if (GameManager.Instance.player.PlayerInput.isCharge)
+        if (GameManager.Instance.PlayerInstance.PlayerInput.isCharge)
         {
             if (time > 0.3f)
                 particle.Pause();
             else
                 time += Time.deltaTime;
 
-            if (GameManager.Instance.player.ChargingGage > 0.5f)
+            if (GameManager.Instance.PlayerInstance.ChargingGage > 0.5f)
             {
-                transform.localScale = Vector3.one * GameManager.Instance.player.ChargingGage * 0.5f;
+                transform.localScale = Vector3.one * GameManager.Instance.PlayerInstance.ChargingGage * 0.5f;
             }
         }
         else
         {
-            if (GameManager.Instance.player.ChargingGage < 0.5f)
+            if (GameManager.Instance.PlayerInstance.ChargingGage < 0.5f)
             {
                 PoolManager.Instance.Push(this);
             }
@@ -69,7 +69,7 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
             PoolManager.Instance.Push(this, 3);
         }
 
-        if (GameManager.Instance.player.StateMachine.CurrentState == GameManager.Instance.player.StateMachine.GetState(PlayerStateEnum.Dash))
+        if (GameManager.Instance.PlayerInstance.StateMachine.CurrentState == GameManager.Instance.PlayerInstance.StateMachine.GetState(PlayerStateEnum.Dash))
         {
             PoolManager.Instance.Push(this);
         }
@@ -86,7 +86,7 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
         {
             if(other.gameObject.TryGetComponent<Brain>(out Brain brain))
             {
-                brain.OnHit(GameManager.Instance.player.attackPower);
+                brain.OnHit(GameManager.Instance.PlayerInstance.attackPower);
             }
         }
     }

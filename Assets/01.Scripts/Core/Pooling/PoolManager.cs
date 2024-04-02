@@ -3,22 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager : MonoSingleton<PoolManager>
 {
-    private static PoolManager _instance = null;
-    public static PoolManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = FindObjectOfType<PoolManager>();
-
-            if (_instance == null)
-                Debug.LogError("PoolManager Component is null");
-
-            return _instance;
-        }
-    }
     private Dictionary<PoolingType, Pool<PoolableMono>> _pools = new Dictionary<PoolingType, Pool<PoolableMono>>();
     [SerializeField]
     private PoolingListSO _poolingList;

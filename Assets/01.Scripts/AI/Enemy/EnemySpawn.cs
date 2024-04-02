@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemySpawn : MonoBehaviour
 {
-    [SerializeField]
     public EnemySpawnValueSO enemySpawnValue;
     [HideInInspector]
     public WaveFont waveFont;
@@ -13,13 +11,13 @@ public class EnemySpawn : MonoBehaviour
     [HideInInspector]
     public int enemyDieCount = 0;
     private int _enemySpawnCount = 0;
-    
-    private float ratioSum;                                           
+
+    private float ratioSum;
 
     private void Awake()
     {
         InitializeSpawner();
-    }                                                                                                                                                 
+    }
 
     private void Start()
     {
@@ -67,16 +65,16 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        while(_enemySpawnCount < enemySpawnValue.maxEnemySpawnCount)
+        while (_enemySpawnCount < enemySpawnValue.maxEnemySpawnCount)
         {
-            Vector3 spawnPosition = new Vector3(
+            NavMesh.SamplePosition(new Vector3(
                 Random.Range(enemySpawnValue.minimumSpawnRange.x, enemySpawnValue.maximumSpawnRange.x),
                 Random.Range(enemySpawnValue.minimumSpawnRange.y, enemySpawnValue.maximumSpawnRange.y),
-                Random.Range(enemySpawnValue.minimumSpawnRange.z, enemySpawnValue.maximumSpawnRange.z)
-            );
-            
+                Random.Range(enemySpawnValue.minimumSpawnRange.z, enemySpawnValue.maximumSpawnRange.z)),
+                out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas);
+
             float randomValue = Random.value;
-            
+
             foreach (EnemyToSpawn enemy in enemySpawnValue.enemiesToSpawn)
             {
                 if (!enemy.canSpawn)
@@ -86,7 +84,7 @@ public class EnemySpawn : MonoBehaviour
 
                 if (enemy.spawnRatio >= randomValue)
                 {
-                    Brain brain = PoolManager.Instance.Pop(enemy.enemyType, spawnPosition) as Brain;
+                    Brain brain = PoolManager.Instance.Pop(enemy.enemyType, hit.position) as Brain;
                     brain.enemySpawn = this;
                     _enemySpawnCount++;
 
