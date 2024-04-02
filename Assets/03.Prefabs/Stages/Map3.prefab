@@ -13626,8 +13626,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawnValue: {fileID: 0}
-  maxEnemyCount: 7
   waveFont: {fileID: 0}
+  spawnWave: 0
+  enemyDieCount: 0
 --- !u!1 &983908649515893583
 GameObject:
   m_ObjectHideFlags: 0
@@ -81263,6 +81264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4472609256004031340}
+  - component: {fileID: 7717938813973037481}
   m_Layer: 0
   m_Name: Map3
   m_TagString: Untagged
@@ -81292,6 +81294,22 @@ Transform:
   - {fileID: 2852121810897376993}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7717938813973037481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6058471003620434673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9688a1fc5f0c4745abe33eac129aa7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _environmentTrm: {fileID: 0}
+  _runeSpawnTrm: {fileID: 0}
+  _barriers: []
+  _stageCam: {fileID: 0}
 --- !u!1 &6061875860780317148
 GameObject:
   m_ObjectHideFlags: 0
