@@ -40,6 +40,8 @@ public class RuneManager : MonoBehaviour
         {
             CreateRune();
         }
+
+        ActivateRune();
     }
 
     public Rune CreateRune()
@@ -75,9 +77,13 @@ public class RuneManager : MonoBehaviour
 
     public void ActivateRune()
     {
-        if(_collectedRunes.Count < 3)
+        /*foreach (var synergyGroup in _collectedRunes.GroupBy(kvp => kvp.Value.FirstOrDefault()?.RuneData.)
         {
-            //룬 활성화
-        }
+            if (synergyGroup.Count() >= 3)
+            {
+                Debug.Log($"시너지 그룹 {synergyGroup.Key}에 속하는 룬이 3개 이상 있습니다.");
+            }
+        }*/
     }
+
 }
