@@ -121,6 +121,8 @@ public class Player : PlayerController
         {
             OnDie();
         }
+
+        Debug.Log(StateMachine.CurrentState);
     }
 
     protected override void FixedUpdate()
@@ -230,6 +232,8 @@ public class Player : PlayerController
         if (!IsAwakening)
         {
             if (!IsGroundDetected()) return;
+            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
+
             StateMachine.ChangeState(PlayerStateEnum.Dash);
         }
         else
@@ -267,7 +271,6 @@ public class Player : PlayerController
         _defaultVisual.SetActive(!IsAwakening);
         _awakenVisual.SetActive(IsAwakening);
 
-        //StateMachine.ChangeState(PlayerStateEnum.Idle);
 
         if (!IsAwakening)
         {
@@ -280,6 +283,8 @@ public class Player : PlayerController
             UsingAnimatorCompo = AwakenAnimatorCompo;
             _currentWeapon = _weapons[0];
             _currentSlashParticle = _weaponSlashParticles[0];
+            
+            StateMachine.ChangeState(PlayerStateEnum.Idle);
         }
 
         _currentSlashParticle.Stop();

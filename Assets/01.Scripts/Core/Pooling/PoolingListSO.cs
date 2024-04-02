@@ -27,6 +27,7 @@ public enum PoolingType
     PlayerESkillEffect,
     PlayerESkillDownEffect,
     PlayerEChargeEffect,
+    PlayerSlashEffect,
     Rune
 }
 

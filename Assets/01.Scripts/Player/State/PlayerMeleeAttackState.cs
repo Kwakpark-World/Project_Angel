@@ -109,7 +109,7 @@ public class PlayerMeleeAttackState : PlayerState
             if (!_slashEffectOn)
             {
                 _player._currentSlashParticle.Play();
-
+                
                 _slashEffectOn = true;
             }
         }
