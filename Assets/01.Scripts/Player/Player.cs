@@ -116,7 +116,6 @@ public class Player : PlayerController
             OnDie();
         }
 
-        Debug.Log(StateMachine.CurrentState);
     }
 
     protected override void FixedUpdate()
