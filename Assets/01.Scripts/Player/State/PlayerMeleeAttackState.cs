@@ -108,8 +108,10 @@ public class PlayerMeleeAttackState : PlayerState
 
             if (!_slashEffectOn)
             {
-                _player._currentSlashParticle.Play();
-                
+                Vector3 pos = _player._currentWeapon.transform.position;
+
+                EffectManager.Instance.PlayEffect(PoolingType.PlayerSlashEffect, pos);
+
                 _slashEffectOn = true;
             }
         }
@@ -143,9 +145,6 @@ public class PlayerMeleeAttackState : PlayerState
 
         if (_endTriggerCalled)
         {
-            _player._currentSlashParticle.Stop();
-            _player._currentSlashParticle.Clear();
-
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }

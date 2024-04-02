@@ -17,9 +17,6 @@ public class Player : PlayerController
     private GameObject[] _weapons;
     public GameObject _currentWeapon;
 
-    public ParticleSystem[] _weaponSlashParticles;
-    public ParticleSystem _currentSlashParticle;
-
     public LayerMask _enemyLayer;
 
     public float attackPower;
@@ -97,9 +94,6 @@ public class Player : PlayerController
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
         PlayerStatInitialize();
-
-        _weaponSlashParticles[0].Stop();
-        _weaponSlashParticles[1].Stop();
     }
 
     protected override void Update()
@@ -276,18 +270,15 @@ public class Player : PlayerController
         {
             UsingAnimatorCompo = DefaultAnimatorCompo;
             _currentWeapon = _weapons[1];
-            _currentSlashParticle = _weaponSlashParticles[1];
         }
         else
         {
             UsingAnimatorCompo = AwakenAnimatorCompo;
             _currentWeapon = _weapons[0];
-            _currentSlashParticle = _weaponSlashParticles[0];
             
             StateMachine.ChangeState(PlayerStateEnum.Idle);
         }
 
-        _currentSlashParticle.Stop();
     }
 
     public void RotateToMousePos()
