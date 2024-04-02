@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 
 public class Stage : MonoBehaviour
 {
-    [SerializeField] private Transform _environmentTrm;
     [SerializeField] private Transform _runeSpawnTrm;
     [SerializeField] private List<Barrier> _barriers = new List<Barrier>();
 

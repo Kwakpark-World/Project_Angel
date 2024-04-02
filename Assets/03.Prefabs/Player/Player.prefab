@@ -1616,7 +1616,6 @@ MonoBehaviour:
   awakenCurrentGage: 0
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d771d326405705e4b9989f7211c9e6b3,
     type: 2}
-  fakePlayer: {fileID: 0}
   renderers:
   - {fileID: 9166074286034648693}
   - {fileID: 2866051191039960501}
@@ -1734,7 +1733,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 8637140176355860739}
           m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_MethodName: Pause
+          m_MethodName: Stop
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1760,6 +1759,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 8523927444897520135}
+          m_TargetAssemblyTypeName: Player, Assembly-CSharp
+          m_MethodName: AddFreezeMaterial
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onDebuffPlaying:
       m_PersistentCalls:
         m_Calls: []
@@ -1769,6 +1780,18 @@ MonoBehaviour:
         - m_Target: {fileID: 8261309157372427609}
           m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
           m_MethodName: FreezeEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 8523927444897520135}
+          m_TargetAssemblyTypeName: Player, Assembly-CSharp
+          m_MethodName: RemoveFreezeMaterial
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
