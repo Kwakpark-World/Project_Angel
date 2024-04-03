@@ -61,7 +61,8 @@ public class Rune : PoolableMono
                 return;
             }
             _runeData.UseEffect();
-            PoolManager.Instance.Push(this); 
+            PoolManager.Instance.Push(this);
+            RuneManager.Instance.ActivateRune();
         }
     }
 
