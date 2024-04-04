@@ -41,9 +41,9 @@ public abstract class Brain : PoolableMono
             return;
         }
 
-        if ((GameManager.Instance.playerTransform.position - transform.position).sqrMagnitude <= EnemyStatData.GetAttackRange() * EnemyStatData.GetAttackRange())
+        if ((GameManager.Instance.PlayerInstance.transform.position - transform.position).sqrMagnitude <= EnemyStatData.GetAttackRange() * EnemyStatData.GetAttackRange())
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GameManager.Instance.playerTransform.position - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GameManager.Instance.PlayerInstance.transform.position - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
         }
         else if (NavMeshAgentCompo.hasPath)
         {

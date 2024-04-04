@@ -30,9 +30,9 @@ public class EnemyArrow : PoolableMono
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == GameManager.Instance.player.gameObject)
+        if (other.gameObject == GameManager.Instance.PlayerInstance.gameObject)
         {
-            GameManager.Instance.player.OnHit(owner.EnemyStatData.GetAttackPower());
+            GameManager.Instance.PlayerInstance.OnHit(owner.EnemyStatData.GetAttackPower());
             PoolManager.Instance.Push(this);
         }
 
@@ -41,7 +41,7 @@ public class EnemyArrow : PoolableMono
 
     public override void InitializePoolingItem()
     {
-        Vector3 direction = new Vector3(GameManager.Instance.playerTransform.position.x - transform.position.x, 0f, GameManager.Instance.playerTransform.position.z - transform.position.z).normalized;
+        Vector3 direction = new Vector3(GameManager.Instance.PlayerInstance.transform.position.x - transform.position.x, 0f, GameManager.Instance.PlayerInstance.transform.position.z - transform.position.z).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(-direction);
         transform.rotation = lookRotation;
 

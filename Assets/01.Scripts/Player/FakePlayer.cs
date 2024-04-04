@@ -15,7 +15,7 @@ public class FakePlayer : MonoBehaviour
 
     public void SetPlayerModelAndAnim()
     {
-        if(GameManager.Instance.player.IsAwakening == false)
+        if(GameManager.Instance.PlayerInstance.IsAwakening == false)
         {
             _defaultVisual.SetActive(true);
             _awakenVisual.SetActive(false);

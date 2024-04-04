@@ -25,10 +25,10 @@ public class PlayerMeleeAttackState : PlayerState
 
     private bool _isAwakenSlashEffectOn = false;
     private bool _slashEffectOn = false;
-    
+
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        
+
     }
 
     public override void Enter()
@@ -42,7 +42,7 @@ public class PlayerMeleeAttackState : PlayerState
 
         _weaponRayPoint = _player._currentWeapon.transform.Find("Point");
         _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
-        
+
         if (_comboCounter >= 2 || Time.time >= _lastAttackTime + _comboWindow)
             _comboCounter = 0; // �޺� �ʱ�ȭ
 
@@ -62,6 +62,8 @@ public class PlayerMeleeAttackState : PlayerState
 
     public override void Exit()
     {
+        base.Exit();
+
         _player.PlayerInput.MeleeAttackEvent -= ComboAttack;
 
         _player.IsAttack = false;
@@ -70,21 +72,16 @@ public class PlayerMeleeAttackState : PlayerState
         _isCombo = false;
 
         _lastAttackTime = Time.time;
-        
+
         ++_comboCounter;
         _player.UsingAnimatorCompo.speed = 1f;
 
         _enemyDuplicateCheck.Clear();
-
-
-
-        base.Exit();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-
 
         Vector3 dir = (_weaponRayPoint.position - _player._currentWeapon.transform.position).normalized;
 
@@ -92,6 +89,7 @@ public class PlayerMeleeAttackState : PlayerState
         if (_isHitAbleTriggerCalled)
         {
             RaycastHit[] enemies = Physics.RaycastAll(_player._currentWeapon.transform.position, dir, _hitDistance, _player._enemyLayer);
+
             foreach(var enemy in enemies)
             {
                 if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
@@ -107,7 +105,9 @@ public class PlayerMeleeAttackState : PlayerState
 
             if (!_slashEffectOn)
             {
-                _player._currentSlashParticle.Play();
+                Vector3 pos = _player._currentWeapon.transform.position;
+
+                EffectManager.Instance.PlayEffect(PoolingType.PlayerSlashEffect, pos);
 
                 _slashEffectOn = true;
             }
@@ -136,15 +136,14 @@ public class PlayerMeleeAttackState : PlayerState
             if (_player.IsGroundDetected())
             {
                 if (_isCombo)
+                {
                     _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
+                }
             }
         }
 
         if (_endTriggerCalled)
         {
-            _player._currentSlashParticle.Stop();
-            _player._currentSlashParticle.Clear();
-
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
@@ -152,7 +151,7 @@ public class PlayerMeleeAttackState : PlayerState
     private void ComboAttack()
     {
         _isCombo = true;
-    }   
+    }
 
     public void UpgradeActivePoison()
     {

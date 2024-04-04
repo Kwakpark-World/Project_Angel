@@ -16,9 +16,9 @@ public class EnemySword : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == GameManager.Instance.player.gameObject)
+        if (other.gameObject == GameManager.Instance.PlayerInstance.gameObject)
         {
-            GameManager.Instance.player.OnHit(_owner.EnemyStatData.GetAttackPower());
+            GameManager.Instance.PlayerInstance.OnHit(_owner.EnemyStatData.GetAttackPower());
 
             swordCollider.enabled = false;
         }

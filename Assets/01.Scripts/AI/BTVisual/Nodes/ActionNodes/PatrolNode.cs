@@ -42,7 +42,7 @@ namespace BTVisual
                 brain.AnimatorCompo.SetAnimationState("Move");
             }
 
-            if ((GameManager.Instance.playerTransform.position - brain.transform.position).sqrMagnitude > _detectRange * _detectRange)
+            if ((GameManager.Instance.PlayerInstance.transform.position - brain.transform.position).sqrMagnitude > _detectRange * _detectRange)
             {
                 if (brain.NavMeshAgentCompo.remainingDistance <= Mathf.Epsilon)
                 {

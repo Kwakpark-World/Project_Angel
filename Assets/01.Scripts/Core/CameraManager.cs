@@ -1,26 +1,11 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : MonoSingleton<CameraManager>
 {
     public float shakeElapsedTime;
-    private static CameraManager _instance = null;
-    public static CameraManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = FindObjectOfType<CameraManager>();
-
-            if (_instance == null)
-                Debug.LogError("CameraManager Component is null");
-
-            return _instance;
-        }
-    }
 
     private Coroutine shakeCoroutine;
 
