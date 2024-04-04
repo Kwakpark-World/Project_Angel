@@ -24,9 +24,14 @@ public abstract class Brain : PoolableMono
     [HideInInspector]
     public EnemySpawn enemySpawn;
 
+    public List<Brain> nearbyEnemies = new List<Brain>();
+
+
     protected virtual void Start()
     {
         Initialize();
+
+        
     }
 
     protected virtual void Update()
@@ -87,6 +92,9 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage)
     {
+        FindNearbyEnemies();
+        EnemyDistance(5f);
+
         if (AnimatorCompo.GetCurrentAnimationState() == "Die")
         {
             return;
@@ -106,4 +114,36 @@ public abstract class Brain : PoolableMono
     {
         AnimatorCompo.SetAnimationState("Die");
     }
+
+    public void FindNearbyEnemies()
+    {
+        nearbyEnemies.Clear(); 
+
+        Brain[] allEnemies = FindObjectsOfType<Brain>();
+
+        foreach (Brain enemy in allEnemies)
+        {
+            if (enemy != this && Vector3.Distance(transform.position, enemy.transform.position) < 7)
+            {
+                nearbyEnemies.Add(enemy);
+            }
+        }
+    }
+
+    public virtual void EnemyDistance(float minDistance)
+    {
+        List<Brain> enemiesCopy = new List<Brain>(nearbyEnemies); 
+
+        foreach (Brain enemy in enemiesCopy)
+        {
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distance < minDistance)
+            {
+                CurrentHealth -= Mathf.Max(1 - EnemyStatData.GetDefensivePower(), 0f);
+                Debug.Log(CurrentHealth);
+            }
+        }
+    }
+
+
 }

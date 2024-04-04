@@ -121,4 +121,9 @@ public class Rune : PoolableMono
         _spriteRenderer.sprite = _runeData.runeSprite;
         _pointLight.color = _runeData.lightColor;
     }
+
+    public void EffectsRuneSynergy()
+    {
+        
+    }
 }

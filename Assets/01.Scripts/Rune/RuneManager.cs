@@ -26,8 +26,10 @@ public class RuneManager : MonoBehaviour
         }
     }
 
-    private Dictionary<RuneType, List<Rune>> _collectedRunes;
+    public Dictionary<RuneType, List<Rune>> _collectedRunes;
     [SerializeField] private RuneListSO _runeList;
+
+    public bool isDebuff = false;
 
     private void Awake()
     {
@@ -40,6 +42,8 @@ public class RuneManager : MonoBehaviour
         {
             CreateRune();
         }
+
+        Debug.Log(_collectedRunes);
 
         ActivateRune();
     }
@@ -82,9 +86,14 @@ public class RuneManager : MonoBehaviour
             RuneType runeType = kvp.Key;
             List<Rune> runes = kvp.Value;
 
-            if (runes.Count >= 3)
+            if (runeType == RuneType.STRENGTH && runes.Count >= 3)
             {
                 Debug.Log($"시너지 그룹 {runeType}에 속하는 룬이 3개 이상 있습니다.");
+            }
+
+            else if(runeType == RuneType.DEXTERITY && runes.Count >= 3)
+            {
+                
             }
         }
     }

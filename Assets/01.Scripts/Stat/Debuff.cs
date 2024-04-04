@@ -99,23 +99,31 @@ public class Debuff : MonoBehaviour
 
     public void SetDebuff(DebuffType debuffType, object attacker)
     {
+        RuneManager.Instance.isDebuff = true;
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
         }
+
+        Debug.Log(RuneManager.Instance.isDebuff);
 
         _attackers[debuffType] = attacker;
 
         _debuffTriggersByType[debuffType].onDebuffBegin?.Invoke();
+
+
+        RuneManager.Instance.isDebuff = false;
+
     }
 
     public void SetDebuff(DebuffType debuffType, float duration, object attacker)
     {
+        RuneManager.Instance.isDebuff = true;
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
         }
-
+        Debug.Log(RuneManager.Instance.isDebuff);
         _attackers[debuffType] = attacker;
 
         if (_coroutines[debuffType] != null)
@@ -124,6 +132,7 @@ public class Debuff : MonoBehaviour
         }
 
         _coroutines[debuffType] = StartCoroutine(DebuffCoroutine(debuffType, duration));
+        RuneManager.Instance.isDebuff = false;
     }
 
     public bool GetDebuff(DebuffType debuffType)
@@ -188,6 +197,9 @@ public class Debuff : MonoBehaviour
     #region Freeze Functions
     public void FreezeBegin()
     {
+        RuneManager.Instance.isDebuff = true;
+        Debug.Log(RuneManager.Instance.isDebuff);
+       
         if (_ownerController)
         {
             Brain attacker = _attackers[DebuffType.Freeze] as Brain;
@@ -200,6 +212,8 @@ public class Debuff : MonoBehaviour
 
             _ownerBrain.EnemyStatData.moveSpeed.AddModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
         }
+
+        RuneManager.Instance.isDebuff = false;
     }
 
     public void FreezeEnd()
