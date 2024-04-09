@@ -20,18 +20,18 @@ public class Goat : Brain
                 OnDie();
             }
 
-            if (!GameManager.Instance.player.IsDie)
+            if (!GameManager.Instance.PlayerInstance.IsDie)
             {
-                NavMeshAgentCompo.SetDestination(GameManager.Instance.playerTransform.position);
+                NavMeshAgentCompo.SetDestination(GameManager.Instance.PlayerInstance.transform.position);
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == GameManager.Instance.player.gameObject)
+        if (other.gameObject == GameManager.Instance.PlayerInstance.gameObject)
         {
-            GameManager.Instance.player.OnHit(EnemyStatData.GetAttackPower());
+            GameManager.Instance.PlayerInstance.OnHit(EnemyStatData.GetAttackPower());
 
             // Give scapegoat debuff.
 

@@ -1,33 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
-public class RuneManager : MonoBehaviour
+public class RuneManager : MonoSingleton<RuneManager>
 {
-    private static RuneManager _instance;
-    public static RuneManager Instance 
-    { 
-        get
-        {
-            if(_instance == null)
-            {
-                _instance = FindObjectOfType<RuneManager>();
-                if(_instance == null)
-                {
-                    Debug.LogError("·é¸Å´ÏÀú ³Ö¾î¶ó Á»");
-                }
-            }
-            return _instance;
-        }
-    }
-
-    private Dictionary<RuneType, List<Rune>> _collectedRunes;
+    public Dictionary<RuneType, List<Rune>> _collectedRunes;
     [SerializeField] private RuneListSO _runeList;
+
+    public bool isDebuff = false;
 
     private void Awake()
     {
@@ -40,6 +22,8 @@ public class RuneManager : MonoBehaviour
         {
             CreateRune();
         }
+
+        Debug.Log(_collectedRunes);
 
         ActivateRune();
     }
@@ -77,13 +61,23 @@ public class RuneManager : MonoBehaviour
 
     public void ActivateRune()
     {
-        /*foreach (var synergyGroup in _collectedRunes.GroupBy(kvp => kvp.Value.FirstOrDefault()?.RuneData.)
+        foreach (var kvp in _collectedRunes)
         {
-            if (synergyGroup.Count() >= 3)
+            RuneType runeType = kvp.Key;
+            List<Rune> runes = kvp.Value;
+
+            if (runeType == RuneType.STRENGTH && runes.Count >= 3)
             {
-                Debug.Log($"½Ã³ÊÁö ±×·ì {synergyGroup.Key}¿¡ ¼ÓÇÏ´Â ·éÀÌ 3°³ ÀÌ»ó ÀÖ½À´Ï´Ù.");
+                Debug.Log($"ï¿½Ã³ï¿½ï¿½ï¿½ ï¿½×·ï¿½ {runeType}ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
             }
-        }*/
+
+            else if(runeType == RuneType.DEXTERITY && runes.Count >= 3)
+            {
+                
+            }
+        }
     }
+
+
 
 }

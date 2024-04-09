@@ -23,11 +23,11 @@ public class PlayerEChargeEffect : PoolableMonoEffect
     {
         base.Update();
 
-        if (!GameManager.Instance.player.PlayerInput.isCharge)
+        if (!GameManager.Instance.PlayerInstance.PlayerInput.isCharge)
         {
             PoolManager.Instance.Push(this);
         }
         else
-            transform.position = GameManager.Instance.player._currentWeapon.transform.Find("Point").position;
+            transform.position = GameManager.Instance.PlayerInstance._currentWeapon.transform.Find("Point").position;
     }
 }

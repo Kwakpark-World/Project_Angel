@@ -22,14 +22,14 @@ public class UpgradeSkillEffectSO : RuneEffectSO
     public override void UseEffect()
     {
         MethodInfo m = killMethodList[selectedKillMethodIndex];
-        PlayerState playerState = GameManager.Instance.player.StateMachine.GetState(targetSkill);
+        PlayerState playerState = GameManager.Instance.PlayerInstance.StateMachine.GetState(targetSkill);
         m.Invoke(playerState, null);
     }
 
     public override void KillEffect()
     {
         MethodInfo m = methodList[selectedMethodIndex];
-        PlayerState playerState = GameManager.Instance.player.StateMachine.GetState(targetSkill);
+        PlayerState playerState = GameManager.Instance.PlayerInstance.StateMachine.GetState(targetSkill);
         m.Invoke(playerState, paramArr);
     }
 

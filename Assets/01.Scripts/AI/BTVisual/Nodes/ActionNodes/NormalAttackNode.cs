@@ -43,7 +43,7 @@ namespace BTVisual
                 brain.NavMeshAgentCompo.isStopped = true;
             }
 
-            if ((GameManager.Instance.playerTransform.position - brain.transform.position).sqrMagnitude > _attackRange * _attackRange)
+            if ((GameManager.Instance.PlayerInstance.transform.position - brain.transform.position).sqrMagnitude > _attackRange * _attackRange)
             {
                 return State.Failure;
             }

@@ -10,7 +10,7 @@ public class PlayerMeleeAttackEffect : PoolableMonoEffect
 
         //
 
-        Quaternion rot = GameManager.Instance.player.transform.rotation;
+        Quaternion rot = GameManager.Instance.PlayerInstance.transform.rotation;
         rot.x = 0;
         rot.z = 0;
 
