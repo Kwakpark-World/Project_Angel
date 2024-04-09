@@ -34,6 +34,7 @@ public class Stage : MonoBehaviour
     {
         _running = true;
         StartCoroutine(LockStage());
+        SoundManager.Instance.ChangeBGMMode(SoundMode.Combat);
 
         //TODO: Active Scene Cam
         //_stageCam.Follow = player.transform;
@@ -44,6 +45,7 @@ public class Stage : MonoBehaviour
         _running = false;
         _isClear = true;
         StartCoroutine(UnlockStage());
+        SoundManager.Instance.ChangeBGMMode(SoundMode.NonCombat);
 
         Rune r = RuneManager.Instance.CreateRune();
         r.transform.position = _runeSpawnTrm.position;

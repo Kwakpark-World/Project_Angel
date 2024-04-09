@@ -28,10 +28,11 @@ Material:
   - _METALLICSPECGLOSSMAP
   - _NORMALMAP
   - _OCCLUSIONMAP
+  - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2000
   stringTagMap:
     MotionVector: User
@@ -140,10 +141,10 @@ Material:
     - _Blend: 0
     - _BlendMode: 0
     - _BlendModePreserveSpecular: 1
-    - _BumpScale: 10
+    - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 0
+    - _Cull: 2
     - _CullMode: 0
     - _CullModeForward: 0
     - _Cutoff: 0.5
@@ -173,8 +174,8 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
-    - _Smoothness: 1
-    - _SmoothnessTextureChannel: 0
+    - _Smoothness: 0.636
+    - _SmoothnessTextureChannel: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
@@ -208,10 +209,10 @@ Material:
     m_Colors:
     - Color_3c43b0eee89842339cc8e58803320400: {r: 1, g: 0, b: 0, a: 1}
     - Color_aff348ea4f6649129c33f4c24044b425: {r: 0, g: 0, b: 0, a: 1}
-    - _BaseColor: {r: 0.38679248, g: 0.33716628, b: 0.33716628, a: 1}
-    - _Color: {r: 0.38679245, g: 0.33716625, b: 0.33716625, a: 1}
+    - _BaseColor: {r: 0.4433962, g: 0.41578853, b: 0.42003587, a: 1}
+    - _Color: {r: 0.44339618, g: 0.4157885, b: 0.4200358, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: 1, a: 0}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 0.10925241, b: 0, a: 1}
     - _SpecColor: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &6377674467973123672

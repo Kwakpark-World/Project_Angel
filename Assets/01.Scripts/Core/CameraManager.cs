@@ -1,73 +1,58 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class CameraManager : MonoSingleton<CameraManager>
 {
-    public float shakeElapsedTime;
+    private Dictionary<CameraType, CameraState> _cameraDictionary = new Dictionary<CameraType, CameraState>();
+    public CameraState currentCam { get; private set; } = null;
 
-    private Coroutine shakeCoroutine;
-
-    Dictionary<string, CinemachineVirtualCameraBase> _cameraDictionary = new Dictionary<string, CinemachineVirtualCameraBase>(); // 리플렉션으로 값 다 가져오기
-    private CinemachineVirtualCameraBase currentCam = null;
-
-    public void AddCam(CinemachineVirtualCameraBase addCam)
+    public void AddCamera(CameraState addCamera)
     {
-        _cameraDictionary.Add(addCam.name, addCam);
-    }
-
-    public void FindCamByString(string camName)
-    {
-
-    }
-
-    public void FindCamByCinemachine(CinemachineVirtualCameraBase findCam)
-    {
-
-    }
-
-    public void SetCam(CinemachineVirtualCameraBase selectCam)
-    {
-        if (currentCam == null)
+        if (addCamera._type == CameraType.None)
         {
-            currentCam = selectCam;
+            Debug.LogError($"{addCamera} type is None. Select Camera Type");
         }
 
-        currentCam.Priority = 0;
-        selectCam.Priority = 10;
+        _cameraDictionary.Add(addCamera._type, addCamera.RegisterCamera());
+    }
+
+    public void SetCamera(CameraState selectCam)
+    {
+        if (selectCam == null)
+        {
+            Debug.LogError($"CameraManager SetCam Error : {selectCam} is Not CameraState.");
+            return;
+        }
+
+        currentCam?.UnSelectCamera();
         currentCam = selectCam;
+        currentCam?.SelectCamera();
     }
 
-    public void ShakeCam(float shakeDuration, float shakeAmplitude, float shakeFrequency)
+    public CameraState GetCameraByType(CameraType type)
     {
-        if (shakeCoroutine != null)
-            StopCoroutine(shakeCoroutine);
-
-        shakeCoroutine = StartCoroutine(ShakeCamCoroutine(shakeDuration, shakeAmplitude, shakeFrequency));
-    }
-
-    private IEnumerator ShakeCamCoroutine(float shakeDuration, float shakeAmplitude, float shakeFrequency)
-    {
-        CinemachineBasicMultiChannelPerlin _virtualCameraNoise = null;
-
-        if (currentCam != null)
+        if (!_cameraDictionary.ContainsKey(type))
         {
-            _virtualCameraNoise = currentCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            Debug.LogError($"{type} is not Contain. Register CameraState");
         }
 
-        shakeElapsedTime = shakeDuration;
-
-        while (shakeElapsedTime > 0)
-        {
-            _virtualCameraNoise.m_AmplitudeGain = shakeAmplitude;
-            _virtualCameraNoise.m_FrequencyGain = shakeFrequency;
-
-            shakeElapsedTime -= Time.deltaTime;
-
-            yield return null;
-        }
-        _virtualCameraNoise.m_AmplitudeGain = 0f;
-        shakeElapsedTime = 0f;
+        return _cameraDictionary[type];
     }
+
+    public void CameraEventTrigger(CameraState camera)
+    {
+        if (camera == null)
+        {
+            Debug.LogError($"{camera} is Null");
+            return;
+        }
+
+        camera?.CameraEvent();
+    }
+
+    // shake
+    // zoom in, out
 }
