@@ -10,8 +10,6 @@ public class Stage : MonoBehaviour
     [SerializeField] private Transform _runeSpawnTrm;
     [SerializeField] private List<Barrier> _barriers = new List<Barrier>();
 
-    [SerializeField] private CinemachineVirtualCamera _stageCam;
-
     private bool _running = false;
     private bool _isClear = false;
 
@@ -38,7 +36,6 @@ public class Stage : MonoBehaviour
         StartCoroutine(LockStage());
 
         //TODO: Active Scene Cam
-        _stageCam.Priority = 15;
         //_stageCam.Follow = player.transform;
     }
 
@@ -47,8 +44,6 @@ public class Stage : MonoBehaviour
         _running = false;
         _isClear = true;
         StartCoroutine(UnlockStage());
-
-        _stageCam.Priority = 0;
 
         Rune r = RuneManager.Instance.CreateRune();
         r.transform.position = _runeSpawnTrm.position;

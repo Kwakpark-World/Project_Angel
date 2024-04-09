@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3619533312791615026}
   - component: {fileID: 7908675800558672886}
   - component: {fileID: 4321788645907691711}
+  - component: {fileID: -161107910005527396}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -71,3 +72,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolingList: {fileID: 11400000, guid: 4e47418fa772af64fae2632180eb855e, type: 2}
+--- !u!114 &-161107910005527396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338522080048316861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b100a46c3f029849956b751b00ddb7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runeList: {fileID: 11400000, guid: 92a932b9b7c11d540ad3bda0d6513b27, type: 2}
+  isDebuff: 0
