@@ -14,6 +14,11 @@ public enum SoundMode
     Combat
 }
 
+public enum EnvSoundType
+{
+    Wind,
+}
+
 public enum SoundEffectType
 {
     Button,
@@ -29,20 +34,29 @@ public struct SoundModeSource
 }
 
 [Serializable]
+public struct EnvSoundSource
+{
+    public EnvSoundType type;
+    public AudioSource source;
+}
+
+[Serializable]
 public struct SoundEffectClip
 {
-    public SoundEffectType mode;
+    public SoundEffectType type;
     public AudioClip clip;
 }
+
 
 public class SoundManager : MonoSingleton<SoundManager>
 {
     public SoundModeSource[] bgmList;
+    public EnvSoundSource[] envList;
     public SoundEffectClip[] sfxList;
     public AudioMixerGroup sfxGroup;
     private Dictionary<SoundMode, AudioSource> _bgmDictionary = new Dictionary<SoundMode, AudioSource>();
-    private Dictionary<SoundEffectType, AudioClip> _sfxDicionary = new Dictionary<SoundEffectType, AudioClip>();
-    private SoundMode _soundMode = SoundMode.None;
+    private Dictionary<EnvSoundType, AudioSource> _envDictionary = new Dictionary<EnvSoundType, AudioSource>();
+    private Dictionary<SoundEffectType, AudioClip> _sfxDicionary = new Dictionary<SoundEffectType, AudioClip>();    private SoundMode _soundMode = SoundMode.None;
 
     private void Awake()
     {
@@ -51,10 +65,17 @@ public class SoundManager : MonoSingleton<SoundManager>
             _bgmDictionary.Add(bgm.mode, bgm.source);
         }
 
-        foreach (SoundEffectClip bgm in sfxList)
+        foreach (EnvSoundSource env in envList)
         {
-            _sfxDicionary.Add(bgm.mode, bgm.clip);
+            _envDictionary.Add(env.type, env.source);
         }
+
+        foreach (SoundEffectClip sfx in sfxList)
+        {
+            _sfxDicionary.Add(sfx.type, sfx.clip);
+        }
+
+        
 
         DontDestroyOnLoad(gameObject);
     }
@@ -71,14 +92,24 @@ public class SoundManager : MonoSingleton<SoundManager>
         _bgmDictionary[_soundMode].Play();
     }
 
-    public void PlaySFX(SoundEffectType mode)
+    public void PlayEnv(EnvSoundType type)
+    {
+        _envDictionary[type].Play();
+    }
+
+    public void StopEnv(EnvSoundType type)
+    {
+        _envDictionary[type].Stop();
+    }
+
+    public void PlaySFX(SoundEffectType type)
     {
         GameObject gameObject = new GameObject("One shot audio");
         gameObject.transform.position = transform.position;
         AudioSource audioSource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
-        audioSource.clip = _sfxDicionary[mode];
+        audioSource.clip = _sfxDicionary[type];
         audioSource.outputAudioMixerGroup = sfxGroup;
         audioSource.Play();
-        Destroy(gameObject, _sfxDicionary[mode].length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+        Destroy(gameObject, _sfxDicionary[type].length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
     }
 }
