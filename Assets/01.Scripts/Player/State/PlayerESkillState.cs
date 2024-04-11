@@ -50,7 +50,6 @@ public class PlayerESkillState : PlayerState
         if (!_player.IsDie)
         {
             _player.IsAwakening = false;
-            _player.SetPlayerModelAndAnim();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }

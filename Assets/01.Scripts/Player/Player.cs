@@ -14,8 +14,7 @@ public class Player : PlayerController
     public float dashSpeed = 20f;
 
     [Header("Attack Settings")]
-    private GameObject[] _weapons;
-    public GameObject _currentWeapon;
+    public GameObject _weapon;
 
     public LayerMask _enemyLayer;
 
@@ -78,7 +77,7 @@ public class Player : PlayerController
             StateMachine.AddState(stateEnum, newState);
         }
 
-        _weapons = GameObject.FindGameObjectsWithTag("Weapon");
+        _weapon = GameObject.FindGameObjectWithTag("Weapon");
     }
 
     protected void OnEnable()
@@ -89,7 +88,6 @@ public class Player : PlayerController
     protected override void Start()
     {
         base.Start();
-        SetPlayerModelAndAnim();
 
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
@@ -258,27 +256,6 @@ public class Player : PlayerController
         StateMachine.CurrentState.AnimationEffectTrigger();
     }
     #endregion
-
-    public void SetPlayerModelAndAnim()
-    {
-        _defaultVisual.SetActive(!IsAwakening);
-        _awakenVisual.SetActive(IsAwakening);
-
-
-        if (!IsAwakening)
-        {
-            UsingAnimatorCompo = DefaultAnimatorCompo;
-            _currentWeapon = _weapons[0];
-        }
-        else
-        {
-            UsingAnimatorCompo = AwakenAnimatorCompo;
-            _currentWeapon = _weapons[1];
-            
-            StateMachine.ChangeState(PlayerStateEnum.Idle);
-        }
-
-    }
 
     public void RotateToMousePos()
     {

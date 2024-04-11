@@ -40,14 +40,14 @@ public class PlayerMeleeAttackState : PlayerState
         _slashEffectOn = false;
         _isCombo = false;
 
-        _weaponRayPoint = _player._currentWeapon.transform.Find("Point");
+        _weaponRayPoint = _player._weapon.transform.Find("Point");
         _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
 
         if (_comboCounter >= 2 || Time.time >= _lastAttackTime + _comboWindow)
             _comboCounter = 0; // �޺� �ʱ�ȭ
 
-        _player.UsingAnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
-        _player.UsingAnimatorCompo.speed = _player.attackSpeed;
+        _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
+        _player.AnimatorCompo.speed = _player.attackSpeed;
 
         Vector3 move = _player.attackMovement[_comboCounter];
         _player.SetVelocity(new Vector3(move.x, move.y, move.z));
@@ -74,7 +74,7 @@ public class PlayerMeleeAttackState : PlayerState
         _lastAttackTime = Time.time;
 
         ++_comboCounter;
-        _player.UsingAnimatorCompo.speed = 1f;
+        _player.AnimatorCompo.speed = 1f;
 
         _enemyDuplicateCheck.Clear();
     }
@@ -83,12 +83,12 @@ public class PlayerMeleeAttackState : PlayerState
     {
         base.UpdateState();
 
-        Vector3 dir = (_weaponRayPoint.position - _player._currentWeapon.transform.position).normalized;
+        Vector3 dir = (_weaponRayPoint.position - _player._weapon.transform.position).normalized;
 
-        Debug.DrawRay(_player._currentWeapon.transform.position, dir * _hitDistance, Color.blue);
+        Debug.DrawRay(_player._weapon.transform.position, dir * _hitDistance, Color.blue);
         if (_isHitAbleTriggerCalled)
         {
-            RaycastHit[] enemies = Physics.RaycastAll(_player._currentWeapon.transform.position, dir, _hitDistance, _player._enemyLayer);
+            RaycastHit[] enemies = Physics.RaycastAll(_player._weapon.transform.position, dir, _hitDistance, _player._enemyLayer);
 
             foreach(var enemy in enemies)
             {
@@ -105,7 +105,7 @@ public class PlayerMeleeAttackState : PlayerState
 
             if (!_slashEffectOn)
             {
-                Vector3 pos = _player._currentWeapon.transform.position;
+                Vector3 pos = _player._weapon.transform.position;
 
                 EffectManager.Instance.PlayEffect(PoolingType.PlayerSlashEffect, pos);
 

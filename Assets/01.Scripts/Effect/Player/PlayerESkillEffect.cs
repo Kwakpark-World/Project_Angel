@@ -35,7 +35,6 @@ public class PlayerESkillEffect : PoolableMonoEffect
             EffectManager.Instance.PlayEffect(PoolingType.PlayerESkillDownEffect, pos);
 
             GameManager.Instance.PlayerInstance.IsAwakening = true;
-            GameManager.Instance.PlayerInstance.SetPlayerModelAndAnim();
         }
     }
 
