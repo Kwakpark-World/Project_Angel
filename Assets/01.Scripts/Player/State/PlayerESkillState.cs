@@ -47,9 +47,12 @@ public class PlayerESkillState : PlayerState
             yield return null;
         }
 
-        _player.IsAwakening = false;
-        _player.SetPlayerModelAndAnim();
-        _stateMachine.ChangeState(PlayerStateEnum.Idle);
+        if (!_player.IsDie)
+        {
+            _player.IsAwakening = false;
+            _player.SetPlayerModelAndAnim();
+            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+        }
     }
 
 }

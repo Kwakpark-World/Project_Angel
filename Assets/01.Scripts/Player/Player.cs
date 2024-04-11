@@ -268,12 +268,12 @@ public class Player : PlayerController
         if (!IsAwakening)
         {
             UsingAnimatorCompo = DefaultAnimatorCompo;
-            _currentWeapon = _weapons[1];
+            _currentWeapon = _weapons[0];
         }
         else
         {
             UsingAnimatorCompo = AwakenAnimatorCompo;
-            _currentWeapon = _weapons[0];
+            _currentWeapon = _weapons[1];
             
             StateMachine.ChangeState(PlayerStateEnum.Idle);
         }

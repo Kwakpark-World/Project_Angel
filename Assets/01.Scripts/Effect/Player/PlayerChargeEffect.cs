@@ -16,7 +16,6 @@ public class PlayerChargeEffect : PoolableMonoEffect
     {
         base.Update();
 
-
         if (!GameManager.Instance.PlayerInstance.PlayerInput.isCharge)
         {
             PoolManager.Instance.Push(this);

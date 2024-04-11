@@ -1,13 +1,16 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraManager : MonoSingleton<CameraManager>
 {
     private Dictionary<CameraType, CameraState> _cameraDictionary = new Dictionary<CameraType, CameraState>();
-    public CameraState currentCam { get; private set; } = null;
+    public CameraState _currentCam { get; private set; } = null;
+
+    [SerializeField]
+    private NoiseSettings shake6DSettings;
 
     public void AddCamera(CameraState addCamera)
     {
@@ -27,9 +30,9 @@ public class CameraManager : MonoSingleton<CameraManager>
             return;
         }
 
-        currentCam?.UnSelectCamera();
-        currentCam = selectCam;
-        currentCam?.SelectCamera();
+        _currentCam?.UnSelectCamera();
+        _currentCam = selectCam;
+        _currentCam?.SelectCamera();
     }
 
     public CameraState GetCameraByType(CameraType type)
@@ -42,17 +45,84 @@ public class CameraManager : MonoSingleton<CameraManager>
         return _cameraDictionary[type];
     }
 
-    public void CameraEventTrigger(CameraState camera)
+    public void CameraEventTrigger()
     {
-        if (camera == null)
+        if (_currentCam == null)
         {
-            Debug.LogError($"{camera} is Null");
+            Debug.LogError($"CurrentCamera is Null");
             return;
         }
 
-        camera?.CameraEvent();
+        _currentCam?.CameraEvent();
     }
 
-    // shake
-    // zoom in, out
+    private Coroutine _ShakeCameraCoroutine = null;
+    public void ShakeCam(float duration, float frequency, float amplitude)
+    {
+        if (_currentCam == null)
+        {
+            Debug.LogError("Current Camera is Null");
+        }
+
+        if (_ShakeCameraCoroutine != null)
+            StopCoroutine(ShakeCamera(duration, frequency, amplitude));
+
+
+        _ShakeCameraCoroutine = StartCoroutine(ShakeCamera(duration, frequency, amplitude));
+    }
+
+    public void ZoomCam(float minZoom, float maxZoom, float addValue)
+    {
+        if (_currentCam == null)
+        {
+            Debug.LogError("CurrentCamera is Null");
+            return;
+        }
+        CinemachineVirtualCamera vCam = _currentCam._camera.GetComponent<CinemachineVirtualCamera>();
+
+        StartCoroutine(ZoomCamera(vCam, minZoom, maxZoom, addValue));
+    }
+
+    private IEnumerator ShakeCamera(float duration, float frequency, float amplitude)
+    {
+        CinemachineVirtualCamera noiseCamera = _currentCam.GetComponent<CinemachineVirtualCamera>();
+        if (noiseCamera == null)
+        {
+            Debug.LogError($"{noiseCamera} is Not Virtual Camera");
+        }
+
+        CinemachineBasicMultiChannelPerlin noise = noiseCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        if (noise == null)
+        {
+            noiseCamera.AddCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            noise = noiseCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+            if (shake6DSettings == null)
+            {
+                Debug.LogError("6D Shake Asset is NUll");
+            }
+
+            noise.m_NoiseProfile = shake6DSettings;
+        }
+        noise.m_FrequencyGain = frequency;
+        noise.m_AmplitudeGain = amplitude;
+
+        yield return new WaitForSeconds(duration);
+
+        noise.m_FrequencyGain = 0;
+        noise.m_AmplitudeGain = 0;
+    }    
+
+    private IEnumerator ZoomCamera(CinemachineVirtualCamera vCam, float minZoom, float maxZoom, float addValue)
+    {
+        float whileValue = Mathf.Abs(addValue);
+
+        while (whileValue > 0f)
+        {
+            vCam.m_Lens.OrthographicSize = Mathf.Clamp(vCam.m_Lens.OrthographicSize, minZoom, maxZoom);
+            vCam.m_Lens.OrthographicSize += addValue * Time.deltaTime;
+            whileValue -= Mathf.Abs(addValue) * Time.deltaTime;   
+            yield return null;
+        }
+    }
 }
