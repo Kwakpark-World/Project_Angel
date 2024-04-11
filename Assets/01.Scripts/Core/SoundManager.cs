@@ -26,6 +26,17 @@ public enum SoundEffectType
     Buy,
 }
 
+public enum PlayerSoundType
+{
+    PlayerQskill,
+    PlayerEKsill,
+
+    AwakeningQSkill,
+    AwakeningESkill,
+
+    Transforming
+}
+
 [Serializable]
 public struct SoundModeSource
 {
@@ -41,22 +52,31 @@ public struct EnvSoundSource
 }
 
 [Serializable]
+public struct PlayerSound
+{
+    public PlayerSoundType type;
+    public AudioSource source;
+
+}
+
+[Serializable]
 public struct SoundEffectClip
 {
     public SoundEffectType type;
     public AudioClip clip;
 }
 
-
 public class SoundManager : MonoSingleton<SoundManager>
 {
     public SoundModeSource[] bgmList;
     public EnvSoundSource[] envList;
     public SoundEffectClip[] sfxList;
+    public PlayerSound[] playerList;
     public AudioMixerGroup sfxGroup;
     private Dictionary<SoundMode, AudioSource> _bgmDictionary = new Dictionary<SoundMode, AudioSource>();
     private Dictionary<EnvSoundType, AudioSource> _envDictionary = new Dictionary<EnvSoundType, AudioSource>();
     private Dictionary<SoundEffectType, AudioClip> _sfxDicionary = new Dictionary<SoundEffectType, AudioClip>();    private SoundMode _soundMode = SoundMode.None;
+    private Dictionary<PlayerSoundType, AudioSource> _playerSfxDicionary = new Dictionary<PlayerSoundType, AudioSource>();
 
     private void Awake()
     {
@@ -72,7 +92,12 @@ public class SoundManager : MonoSingleton<SoundManager>
 
         foreach (SoundEffectClip sfx in sfxList)
         {
-            _sfxDicionary.Add(sfx.type, sfx.clip);
+            _sfxDicionary.Add(sfx.type, sfx.clip); 
+        }
+
+        foreach(PlayerSound playSfx in playerList)
+        {
+            _playerSfxDicionary.Add(playSfx.type, playSfx.source);
         }
 
         
@@ -111,5 +136,15 @@ public class SoundManager : MonoSingleton<SoundManager>
         audioSource.outputAudioMixerGroup = sfxGroup;
         audioSource.Play();
         Destroy(gameObject, _sfxDicionary[type].length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+    }
+
+    public void OnPlayerSfx(PlayerSoundType type)
+    {
+        _playerSfxDicionary[type].Play();
+    }
+
+    public void OffPlayerSfx(PlayerSoundType type)
+    {
+        _playerSfxDicionary[type].Stop();
     }
 }
