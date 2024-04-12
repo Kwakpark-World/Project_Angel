@@ -27,4 +27,9 @@ public class GameManager : MonoSingleton<GameManager>
     {
         DontDestroyOnLoad(gameObject);
     }
+
+    private void Start()
+    {
+        SoundManager.Instance.PlayEnv(EnvSoundType.Wind);
+    }
 }

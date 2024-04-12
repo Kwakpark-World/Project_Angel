@@ -30,8 +30,6 @@ public abstract class Brain : PoolableMono
     protected virtual void Start()
     {
         Initialize();
-
-        
     }
 
     protected virtual void Update()
