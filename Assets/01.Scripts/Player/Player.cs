@@ -278,6 +278,7 @@ public class Player : PlayerController
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void AddFreezeMaterial()
     {
         if (_isFreezing)
@@ -292,7 +293,7 @@ public class Player : PlayerController
             List<Material> rendererMaterials = new List<Material>();
 
             renderer.GetMaterials(rendererMaterials);
-            rendererMaterials.Add(freezeMaterial);
+            rendererMaterials.Add(freezeMaterial); 
             renderer.SetMaterials(rendererMaterials);
         }
     }

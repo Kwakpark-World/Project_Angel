@@ -150,7 +150,7 @@ public class PlayerMeleeAttackState : PlayerState
 
     private void ComboAttack()
     {
-        _isCombo = true;
+        //_isCombo = true;
     }
 
     public void UpgradeActivePoison()

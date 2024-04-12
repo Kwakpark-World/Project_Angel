@@ -897,7 +897,6 @@ MonoBehaviour:
   _stairLowerCheckDistance: 0.3
   _stairHeight: 0.6
   _stairMoveSmooth: 0.1
-  _defaultVisual: {fileID: 9147093538108030007}
   AnimatorCompo: {fileID: 0}
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: 2d8f987c0db816249b696fc32bb953cc,
     type: 2}
@@ -939,32 +938,7 @@ MonoBehaviour:
   - {fileID: 8348956577880548871}
   - {fileID: 228622949411185127}
   - {fileID: 6493501655499024990}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8590556825814068079}
   freezeMaterial: {fileID: 2100000, guid: 7b34644260d996a42963d1af02704da0, type: 2}
 --- !u!114 &8261309157372427609
 MonoBehaviour:
@@ -16928,7 +16902,7 @@ MonoBehaviour:
   drawTripods: 0
   boneSize: 1
   tripodSize: 1
-  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  boneColor: {r: 0, g: 0, b: 0, a: 0}
   m_Transforms:
   - {fileID: 2898762947204245406}
   - {fileID: 3079759093418824394}
@@ -17082,6 +17056,12 @@ PrefabInstance:
 --- !u!4 &5842328331091244379 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4998610038430316911, guid: a41f4623e58c70f448c0446d574d7eed,
+    type: 3}
+  m_PrefabInstance: {fileID: 1462192072398457908}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8590556825814068079 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7169016037055637339, guid: a41f4623e58c70f448c0446d574d7eed,
     type: 3}
   m_PrefabInstance: {fileID: 1462192072398457908}
   m_PrefabAsset: {fileID: 0}

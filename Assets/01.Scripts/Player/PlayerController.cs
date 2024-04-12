@@ -19,9 +19,6 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField] private float _stairHeight;
     [SerializeField] private float _stairMoveSmooth;
 
-    [Header("Awaken Parameters")]
-    [SerializeField] protected GameObject _defaultVisual;
-
     #region components
     public Animator AnimatorCompo;
 
