@@ -76,11 +76,11 @@ public class PlayerChargeState : PlayerState
 
                 if (_player.IsAwakening)
                 {
-                    EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeEffect, _player._currentWeapon.transform.Find("Point").position);
+                    EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeEffect, _player._weapon.transform.Find("Point").position);
                 }
                 else
                 {
-                    EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._currentWeapon.transform.Find("Point").position);
+                    EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._weapon.transform.Find("Point").position);
                 }
             }
         }
