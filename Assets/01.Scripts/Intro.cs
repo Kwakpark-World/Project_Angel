@@ -1,21 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< Updated upstream
 
-public class Intro : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-=======
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
@@ -62,6 +48,5 @@ public class Intro : MonoBehaviour
             // 플레이어와 충돌했을 때 원래 있던 씬에서 다음 씬(인덱스 2)으로 이동
             SceneManager.LoadScene(2);
         }
->>>>>>> Stashed changes
     }
 }
