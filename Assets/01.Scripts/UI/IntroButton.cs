@@ -14,6 +14,7 @@ public class IntroButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        SoundManager.Instance.PlaySFX(SoundEffectType.ButtonMousePoint);
         transform.localScale = originalScale * 1.1f;
     }
 
@@ -24,6 +25,6 @@ public class IntroButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void GameStart()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(2); 
     }
 }

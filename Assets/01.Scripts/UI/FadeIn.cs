@@ -34,6 +34,7 @@ public class FadeIn : MonoBehaviour
         // 타이머가 fadeInTime 보다 커지면 스크립트 비활성화하여 더 이상 업데이트하지 않음
         if (timer >= fadeInTime)
         {
+            
             SceneManager.LoadScene(2);
             enabled = false;
 
