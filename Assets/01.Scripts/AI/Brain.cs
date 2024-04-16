@@ -138,7 +138,6 @@ public abstract class Brain : PoolableMono
             if (distance < minDistance)
             {
                 CurrentHealth -= Mathf.Max(1 - EnemyStatData.GetDefensivePower(), 0f);
-                Debug.Log(CurrentHealth);
             }
         }
     }
