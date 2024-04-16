@@ -109,10 +109,10 @@ public class Player : PlayerController
         SetMousePosInWorld();
 
         // Debug
-        if (CurrentHealth <= 0f)
+        /*if (CurrentHealth <= 0f && RuneManager.Instance._islastDance == false)
         {
-            OnDie();
-        }
+            //OnDie();
+        }*/
 
     }
 
@@ -143,8 +143,16 @@ public class Player : PlayerController
             return;
         if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill))
             return;
-
-        CurrentHealth -= Mathf.Max(incomingDamage - defensivePower, 0f);
+       
+        if(RuneManager.Instance._islastDance == true && CurrentHealth <= 1f)
+        {
+            CurrentHealth -= Mathf.Max(0, 0f);
+        }
+        else
+        {
+            CurrentHealth -= Mathf.Max(incomingDamage - defensivePower, 0f);
+        }
+        
 
         if (CurrentHealth <= 0f)
         {
