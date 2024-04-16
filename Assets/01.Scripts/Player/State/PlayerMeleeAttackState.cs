@@ -20,8 +20,8 @@ public class PlayerMeleeAttackState : PlayerState
 
     private Transform[] _weaponRayPoints = new Transform[4];
 
-    private float _awakenAttackDist = 4.2f;
-    private float _defaultAttackDist = 2.8f;
+    private float _awakenAttackDist = 4.4f;
+    private float _defaultAttackDist = 3f;
 
     private bool _isAwakenSlashEffectOn = false;
     private bool _slashEffectOn = false;

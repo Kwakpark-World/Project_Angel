@@ -650,6 +650,12 @@ MonoBehaviour:
   sfxList: []
   playerList: []
   sfxGroup: {fileID: 0}
+--- !u!1 &1942498476 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7559007113953224229, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+    type: 3}
+  m_PrefabInstance: {fileID: 3931547472977994918}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2139745879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -806,6 +812,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
+      propertyPath: value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
+      propertyPath: _weapon
+      value: 
+      objectReference: {fileID: 1942498476}
     - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
         type: 3}
       propertyPath: qSkillCoolTime
