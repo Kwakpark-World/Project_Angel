@@ -21,7 +21,7 @@ public class PlayerChargeEffect : PoolableMonoEffect
             PoolManager.Instance.Push(this);
         }
         else
-            transform.position = GameManager.Instance.PlayerInstance._weapon.transform.Find("Point").position;
+            transform.position = GameManager.Instance.PlayerInstance._weapon.transform.Find("RightPointTop").position;
     }
 
     public override void RegisterEffect()
