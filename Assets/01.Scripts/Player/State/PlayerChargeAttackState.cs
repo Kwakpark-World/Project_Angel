@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using UnityEngine;
 
-public class PlayerChargeAttackState : PlayerState
+public class PlayerChargeAttackState : PlayerAttackState
 {
     float useDist = 5;
     float defaultDist = 5;
@@ -16,7 +18,6 @@ public class PlayerChargeAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-
 
         useDist = _player.IsAwakening ? awakenDist : defaultDist;
         ChargeAttack();
@@ -46,22 +47,7 @@ public class PlayerChargeAttackState : PlayerState
         Quaternion rot = Quaternion.Euler((_player.transform.forward * _player.ChargingGage * useDist) - _player.transform.position);
 
         Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
-
-        HashSet<Collider> enemyDuplicateCheck = new HashSet<Collider>();
-
-        foreach (var enemy in enemies)
-        {
-            if (enemyDuplicateCheck.Add(enemy))
-            {
-                if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
-                {
-                    Debug.Log($"hit {enemy.transform.gameObject}");
-
-                    brain.OnHit(_player.attackPower);
-                    if (!_player.IsAwakening)
-                        _player.awakenCurrentGage++;
-                }
-            }
-        }
+        
+        Attack(enemies.ToList());
     }
 }

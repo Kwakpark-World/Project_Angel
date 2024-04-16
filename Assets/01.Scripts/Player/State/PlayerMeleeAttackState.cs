@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMeleeAttackState : PlayerState
+public class PlayerMeleeAttackState : PlayerAttackState
 {
     private int _comboCounter;
     private float _lastAttackTime;
@@ -15,10 +15,7 @@ public class PlayerMeleeAttackState : PlayerState
 
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
-    private HashSet<Brain> _enemyDuplicateCheck = new HashSet<Brain>();
     private float _hitDistance = 5f; // 2.4�� ��ũ��.
-
-    private Transform[] _weaponRayPoints = new Transform[4];
 
     private float _awakenAttackDist = 4.4f;
     private float _defaultAttackDist = 3f;
@@ -39,11 +36,6 @@ public class PlayerMeleeAttackState : PlayerState
         _isAwakenSlashEffectOn = false;
         _slashEffectOn = false;
         _isCombo = false;
-
-        _weaponRayPoints[0] = _player._weapon.transform.Find("RightPointTop");
-        _weaponRayPoints[1] = _player._weapon.transform.Find("RightPointBottom");
-        _weaponRayPoints[2] = _player._weapon.transform.Find("LeftPointTop");
-        _weaponRayPoints[3] = _player._weapon.transform.Find("LeftPointBottom");
 
         _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
 
@@ -80,7 +72,6 @@ public class PlayerMeleeAttackState : PlayerState
         ++_comboCounter;
         _player.AnimatorCompo.speed = 1f;
 
-        _enemyDuplicateCheck.Clear();
     }
 
     public override void UpdateState()
@@ -90,34 +81,7 @@ public class PlayerMeleeAttackState : PlayerState
         
         if (_isHitAbleTriggerCalled)
         {
-            Transform RT = _weaponRayPoints[0];
-            Transform RB = _weaponRayPoints[1];
-            Transform LT = _weaponRayPoints[2];
-            Transform LB = _weaponRayPoints[3];
-
-            Vector3 rightDir = (RB.position - RT.position).normalized;
-            Vector3 leftDir = (LB.position - LT.position).normalized;
-
-            RaycastHit[] enemiesR = Physics.RaycastAll(_player._weapon.transform.position, rightDir, _hitDistance, _player._enemyLayer);
-            RaycastHit[] enemiesL = Physics.RaycastAll(_player._weapon.transform.position, leftDir, _hitDistance, _player._enemyLayer);
-
-            List<RaycastHit> enemies = new List<RaycastHit>();
-            
-            foreach (var enemy in enemiesL) enemies.Add(enemy);
-            foreach (var enemy in enemiesR) enemies.Add(enemy);
-
-            foreach (var enemy in enemies)
-            {
-                if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
-                {
-                    if (_enemyDuplicateCheck.Add(brain))
-                    {
-                        brain.OnHit(_player.attackPower);
-                        if (!_player.IsAwakening)
-                            _player.awakenCurrentGage++;
-                    }
-                }
-            }
+            MeleeAttack();
 
             if (!_slashEffectOn)
             {
@@ -162,6 +126,23 @@ public class PlayerMeleeAttackState : PlayerState
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
+    }
+
+    private void MeleeAttack()
+    {
+        Vector3 rightDir = (_weaponRB.position - _weaponRT.position).normalized;
+        Vector3 leftDir = (_weaponLB.position - _weaponLT.position).normalized;
+
+        Vector3 weaponPos = _player._weapon.transform.position;
+
+        List<RaycastHit> enemies = new List<RaycastHit>();
+        RaycastHit[] enemiesR = Physics.RaycastAll(weaponPos, rightDir, _hitDistance, _player._enemyLayer);
+        RaycastHit[] enemiesL = Physics.RaycastAll(weaponPos, leftDir, _hitDistance, _player._enemyLayer);
+
+        foreach (var enemy in enemiesL) enemies.Add(enemy);
+        foreach (var enemy in enemiesR) enemies.Add(enemy);
+
+        Attack(enemies);
     }
 
     private void ComboAttack()

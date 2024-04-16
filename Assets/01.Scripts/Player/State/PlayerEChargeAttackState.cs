@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEChargeAttackState : PlayerState
+public class PlayerEChargeAttackState : PlayerAttackState
 {
     public PlayerEChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {

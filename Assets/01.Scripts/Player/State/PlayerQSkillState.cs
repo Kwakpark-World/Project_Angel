@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class PlayerQSkillState : PlayerState
+public class PlayerQSkillState : PlayerAttackState
 {
     private float _jumpForce = 10f;
     private float _dropForce = 22f;
@@ -79,27 +80,14 @@ public class PlayerQSkillState : PlayerState
     private void QAttack()
     {
         _isAttacked = true;
-        //Collider[] enemies = Physics.OverlapSphere(_player.transform.position, 10f, _player._enemyLayer);
+
         Vector3 pos = _player.transform.position;
         pos.y += _attackHeight / 2f;
 
-        Collider[] enemies = Physics.OverlapBox(pos, new Vector3(_attackDist, _attackHeight, _attackDist), Quaternion.identity, _player._enemyLayer);
+        Vector3 size = new Vector3(_attackDist, _attackHeight, _attackDist);
 
-        HashSet<Collider> enemyDuplicateCheck = new HashSet<Collider>();
+        Collider[] enemies = Physics.OverlapBox(pos, size, Quaternion.identity, _player._enemyLayer);
 
-        foreach(var enemy in enemies)
-        {
-            if (enemyDuplicateCheck.Add(enemy))
-            {
-                if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
-                {
-                    Debug.Log($"hit {enemy.transform.gameObject}");
-
-                    brain.OnHit(_player.attackPower);
-                    if (!_player.IsAwakening)
-                        _player.awakenCurrentGage++;
-                }
-            }
-        }
+        Attack(enemies.ToList());
     }
 }
