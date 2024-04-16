@@ -18,7 +18,7 @@ public class Player : PlayerController
 
     public float attackPower;
     public float attackSpeed = 1f;
-    public Vector3[] attackMovement;
+    public float[] attackMovementDist;
 
     public float ChargingGage;
 
@@ -91,11 +91,11 @@ public class Player : PlayerController
         PlayerStatData.InitializeAllModifiers();
         PlayerStatInitialize();
     }
-
+    
     protected override void Update()
     {
         base.Update();
-
+        
         moveSpeed = PlayerStatData.GetMoveSpeed();
 
         StateMachine.CurrentState.UpdateState();

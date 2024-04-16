@@ -10,7 +10,6 @@ public class PlayerQSkillState : PlayerAttackState
 
     private bool _isAttacked = false;
 
-    private float _attackDist = 12f;
     private float _attackHeight = 2f;
 
     private float _awakenAttackDist = 15f;
@@ -25,7 +24,7 @@ public class PlayerQSkillState : PlayerAttackState
         base.Enter();
         _player.StopImmediately(false);
         _player.RotateToMousePos();
-        _attackDist = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
+        _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
 
         Vector3 move = Vector3.one;
         move.y *= _jumpForce;
@@ -84,7 +83,7 @@ public class PlayerQSkillState : PlayerAttackState
         Vector3 pos = _player.transform.position;
         pos.y += _attackHeight / 2f;
 
-        Vector3 size = new Vector3(_attackDist, _attackHeight, _attackDist);
+        Vector3 size = new Vector3(_hitDistance, _attackHeight, _hitDistance);
 
         Collider[] enemies = Physics.OverlapBox(pos, size, Quaternion.identity, _player._enemyLayer);
 

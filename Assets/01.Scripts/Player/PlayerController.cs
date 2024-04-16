@@ -20,6 +20,7 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField] private float _stairMoveSmooth;
 
     #region components
+    [Header("Components")]
     public Animator AnimatorCompo;
 
     public Rigidbody RigidbodyCompo { get; private set; }

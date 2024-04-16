@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class PlayerChargeAttackState : PlayerAttackState
 {
-    float useDist = 5;
     float defaultDist = 5;
     float awakenDist = 10;
 
@@ -19,7 +18,7 @@ public class PlayerChargeAttackState : PlayerAttackState
     {
         base.Enter();
 
-        useDist = _player.IsAwakening ? awakenDist : defaultDist;
+        _hitDistance = _player.IsAwakening ? awakenDist : defaultDist;
         ChargeAttack();
 
     }
@@ -40,11 +39,11 @@ public class PlayerChargeAttackState : PlayerAttackState
 
     private void ChargeAttack()
     {
-        Vector3 pos = _player.transform.position + (_player.transform.forward * _player.ChargingGage * useDist / 4);
+        Vector3 pos = _player.transform.position + (_player.transform.forward * _player.ChargingGage * _hitDistance / 4);
         pos.y += 1f;
 
-        Vector3 halfSize = new Vector3(0, 0, _player.ChargingGage * useDist / 4);
-        Quaternion rot = Quaternion.Euler((_player.transform.forward * _player.ChargingGage * useDist) - _player.transform.position);
+        Vector3 halfSize = new Vector3(0, 0, _player.ChargingGage * _hitDistance / 4);
+        Quaternion rot = Quaternion.Euler((_player.transform.forward * _player.ChargingGage * _hitDistance) - _player.transform.position);
 
         Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
         

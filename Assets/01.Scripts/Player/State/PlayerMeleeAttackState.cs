@@ -15,8 +15,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
-    private float _hitDistance = 5f; // 2.4�� ��ũ��.
-
     private float _awakenAttackDist = 4.4f;
     private float _defaultAttackDist = 3f;
 
@@ -45,8 +43,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
         _player.AnimatorCompo.speed = _player.attackSpeed;
 
-        Vector3 move = _player.attackMovement[_comboCounter];
-        _player.SetVelocity(new Vector3(move.x, move.y, move.z));
+        float moveDist = _player.attackMovementDist[_comboCounter];
+        _player.SetVelocity(_player.transform.forward * moveDist);
 
         _player.StartDelayAction(0.1f, () =>
         {
@@ -130,17 +128,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private void MeleeAttack()
     {
-        Vector3 rightDir = (_weaponRB.position - _weaponRT.position).normalized;
-        Vector3 leftDir = (_weaponLB.position - _weaponLT.position).normalized;
-
-        Vector3 weaponPos = _player._weapon.transform.position;
-
-        List<RaycastHit> enemies = new List<RaycastHit>();
-        RaycastHit[] enemiesR = Physics.RaycastAll(weaponPos, rightDir, _hitDistance, _player._enemyLayer);
-        RaycastHit[] enemiesL = Physics.RaycastAll(weaponPos, leftDir, _hitDistance, _player._enemyLayer);
-
-        foreach (var enemy in enemiesL) enemies.Add(enemy);
-        foreach (var enemy in enemiesR) enemies.Add(enemy);
+        List<RaycastHit> enemies = GetEnemyByWeapon();
 
         Attack(enemies);
     }
