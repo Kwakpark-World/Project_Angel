@@ -15,8 +15,6 @@ public class PlayerEChargeEffect : PoolableMonoEffect
     public override void RegisterEffect()
     {
         base.RegisterEffect();
-
-        
     }
 
     protected override void Update()

@@ -30,6 +30,4 @@ public class PlayerSlashEffect : PoolableMonoEffect
     {
         base.RegisterEffect();
     }
-
-
 }

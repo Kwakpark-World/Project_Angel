@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using Unity.Collections;
 using UnityEngine;
 
 public class Player : PlayerController
@@ -57,6 +55,9 @@ public class Player : PlayerController
     public bool IsPlayerStop { get; set; }
 
     public Vector3 MousePosInWorld { get; private set; }
+
+    public HashSet<Brain> enemyNormalHitDuplicateChecker = new HashSet<Brain>();
+    public HashSet<Brain> enemyChainHitDuplicateChecker = new HashSet<Brain>();
 
     public Renderer[] renderers;
     public Material freezeMaterial;

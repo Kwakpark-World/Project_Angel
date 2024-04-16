@@ -143,7 +143,7 @@ public class EnemyAnimator : MonoBehaviour
     #region Enemy Normal Attack Functions
     public void ArcherNormalAttack()
     {
-        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.EnemyArrow, _weaponTransform.position) as EnemyArrow;
+        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Arrow, _weaponTransform.position) as EnemyArrow;
         arrow.owner = _owner as EnemyBrain;
     }
 
@@ -154,17 +154,17 @@ public class EnemyAnimator : MonoBehaviour
         switch (UnityEngine.Random.Range(0, 3))
         {
             case 0:
-                potionType = PoolingType.PoisonPotion;
+                potionType = PoolingType.Potion_Poison;
 
                 break;
 
             case 1:
-                potionType = PoolingType.FreezePotion;
+                potionType = PoolingType.Potion_Freeze;
 
                 break;
 
             case 2:
-                potionType = PoolingType.KnockbackPotion;
+                potionType = PoolingType.Potion_Knockback;
 
                 break;
         }

@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0273e26f246b84682e9e9310bc434b, type: 3}
+  m_Name: PoolingList
+  m_EditorClassIdentifier: 
+  poolingList:
+  - name: KnightEnemy
+    type: 1
+    prefab: {fileID: 7700814571572305591, guid: c9c4d1b35bede634987b294233cf4273,
+      type: 3}
+    itemAmount: 10
+  - name: ArcherEnemy
+    type: 2
+    prefab: {fileID: 4190259864597979883, guid: 12db93ad1e6cd5848a28310b883f729a,
+      type: 3}
+    itemAmount: 10
+  - name: WitchEnemy
+    type: 3
+    prefab: {fileID: 4227931294706521803, guid: 806f2fe2106151b4e88cda77716cce18,
+      type: 3}
+    itemAmount: 10
+  - name: Arrow
+    type: 9
+    prefab: {fileID: 2652426644614743878, guid: 1871117e0158d2d4c8fbc9a98863ad76,
+      type: 3}
+    itemAmount: 10
+  - name: Potion_Poison
+    type: 10
+    prefab: {fileID: 2100192795850908437, guid: 4adc040bbe6756149871689233e1bb53,
+      type: 3}
+    itemAmount: 10
+  - name: Potion_Freeze
+    type: 11
+    prefab: {fileID: 302608196544367655, guid: 9c21e83ab70c3d34eb23d0dbd4c4f93b, type: 3}
+    itemAmount: 10
+  - name: Potion_Knockback
+    type: 12
+    prefab: {fileID: 240716459235156515, guid: 136fdbb66f4eb9b4fba20260b9c98a2e, type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Normal
+    type: 13
+    prefab: {fileID: 4738990184550198633, guid: 4f27cfa7d6f3b12439cd7af7458c8784,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Charging_Normal
+    type: 14
+    prefab: {fileID: 6614513267240354062, guid: cf09d59aab2e71c4c95aaa19c28b9861,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Charged_Normal
+    type: 15
+    prefab: {fileID: 3535561920273405734, guid: f9fb80416f47252469518e7405afeb87,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Q_Normal
+    type: 16
+    prefab: {fileID: 6917164093733201254, guid: 59f44528538a86b47b8b9925fa67173c,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAwakening
+    type: 17
+    prefab: {fileID: 2769667841155740136, guid: a885e54f07d65584e86e344903a904d2,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAwakened
+    type: 18
+    prefab: {fileID: 1264379706823667192, guid: 9b4431ba6225e3944a3c7aad231f875c,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Awaken
+    type: 19
+    prefab: {fileID: -3001959744196497147, guid: 4cc77b075f482a64d8a669d832b15eb4,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Charging_Awaken
+    type: 20
+    prefab: {fileID: 3808086685611198197, guid: 6b246ec5b2eddbf419f7105e96cbf5d6,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Charged_Awaken
+    type: 21
+    prefab: {fileID: -7963513485741728776, guid: 5fac128565fe3e540bfc3034e0691a8e,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Q_Awaken
+    type: 22
+    prefab: {fileID: 7430210012353646875, guid: dc5e33a41e89ecb4fad60175e8da6465,
+      type: 3}
+    itemAmount: 10

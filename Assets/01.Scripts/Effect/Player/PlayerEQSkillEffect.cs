@@ -25,5 +25,4 @@ public class PlayerEQSkillEffect : PoolableMonoEffect
     {
         base.RegisterEffect();
     }
-
 }

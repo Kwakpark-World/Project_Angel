@@ -20,17 +20,15 @@ public class RuneManager : MonoSingleton<RuneManager>
     {
         if(Input.GetKeyDown(KeyCode.P))
         {
-            CreateRune();
+            CreateRune(transform.position);
         }
-
-        Debug.Log(_collectedRunes);
 
         ActivateRune();
     }
 
-    public Rune CreateRune()
+    public Rune CreateRune(Vector3 runeSpawnPos)
     {
-        Rune rune = PoolManager.Instance.Pop(PoolingType.Rune) as Rune;
+        Rune rune = PoolManager.Instance.Pop(PoolingType.Rune, runeSpawnPos) as Rune;
         RuneEffectSO runeData = _runeList[Random.Range(0, _runeList.list.Count)];
         rune.SetRuneData(runeData);
         _runeList.Remove(runeData);
@@ -66,18 +64,15 @@ public class RuneManager : MonoSingleton<RuneManager>
             RuneType runeType = kvp.Key;
             List<Rune> runes = kvp.Value;
 
-            if (runeType == RuneType.STRENGTH && runes.Count >= 3)
+            if (runeType == RuneType.Attack && runes.Count >= 3)
             {
-                Debug.Log($"�ó��� �׷� {runeType}�� ���ϴ� ���� 3�� �̻� �ֽ��ϴ�.");
+
             }
 
-            else if(runeType == RuneType.DEXTERITY && runes.Count >= 3)
+            else if(runeType == RuneType.Acceleration && runes.Count >= 3)
             {
                 
             }
         }
     }
-
-
-
 }

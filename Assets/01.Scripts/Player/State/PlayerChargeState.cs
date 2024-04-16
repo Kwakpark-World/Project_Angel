@@ -27,12 +27,12 @@ public class PlayerChargeState : PlayerState
         {
             pos += _player.transform.forward;
             pos.y += 2f;
-            EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeAttackEffect, pos);
+            EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Awaken, pos);
         }
         else
         {
             pos += _player.transform.right * 2;
-            EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeAttackEffect, pos);
+            EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Normal, pos);
         }
     }
 
@@ -76,11 +76,11 @@ public class PlayerChargeState : PlayerState
 
                 if (_player.IsAwakening)
                 {
-                    EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeEffect, _player._currentWeapon.transform.Find("Point").position);
+                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Awaken, _player._currentWeapon.transform.Find("Point").position);
                 }
                 else
                 {
-                    EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._currentWeapon.transform.Find("Point").position);
+                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, _player._currentWeapon.transform.Find("Point").position);
                 }
             }
         }

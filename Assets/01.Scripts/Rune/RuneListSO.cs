@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/RuneList")]
+[CreateAssetMenu(menuName = "SO/Rune/RuneList")]
 public class RuneListSO : ScriptableObject
 {
     public List<RuneEffectSO> list;

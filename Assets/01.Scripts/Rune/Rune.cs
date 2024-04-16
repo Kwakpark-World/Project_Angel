@@ -5,12 +5,12 @@ using UnityEngine;
 
 public enum RuneType
 {
-    STRENGTH,   // 힘, 공격
-    ARMOR,      // 방어력
-    HEALTH,     // 체력
-    DEXTERITY,  // 민첩, 스피드
-    DEBUFF,     // 디버프
-    END
+    Attack,   // 힘, 공격
+    Defense,      // 방어력
+    Health,     // 체력
+    Acceleration,  // 민첩, 스피드
+    Debuff,     // 디버프
+    End
 }
 
 [RequireComponent(typeof(SpriteRenderer))]

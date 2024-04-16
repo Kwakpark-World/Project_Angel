@@ -22,7 +22,7 @@ public abstract class Brain : PoolableMono
     public float CurrentHealth { get; set; }
     public float NormalAttackTimer { get; set; }
     [HideInInspector]
-    public EnemySpawn enemySpawn;
+    public EnemyMannequin enemySpawn;
 
     public List<Brain> nearbyEnemies = new List<Brain>();
 
@@ -90,9 +90,6 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage)
     {
-        FindNearbyEnemies();
-        EnemyDistance(5f);
-
         if (AnimatorCompo.GetCurrentAnimationState() == "Die")
         {
             return;
@@ -142,6 +139,4 @@ public abstract class Brain : PoolableMono
             }
         }
     }
-
-
 }

@@ -18,10 +18,4 @@ public class EnemyBrain : Brain
         // Debug
         treeRunner.tree.blackboard.home = transform.position;
     }
-
-    public override void OnDie()
-    {
-        base.OnDie();
-        enemySpawn.enemyDieCount++;
-    }
 }
