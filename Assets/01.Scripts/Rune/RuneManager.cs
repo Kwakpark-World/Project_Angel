@@ -11,6 +11,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     public bool _islastDance = false;
 
+    public bool isArmor = false;
     public bool isDebuff = false;
 
     private void Awake()
@@ -74,7 +75,7 @@ public class RuneManager : MonoSingleton<RuneManager>
                 Debug.Log($"�ó��� �׷� {runeType}�� ���ϴ� ���� 3�� �̻� �ֽ��ϴ�.");
             }
 
-            if(runeType == RuneType.Acceleration && runes.Count >= 3 && RuneManager.Instance.isDebuff == true)
+            if(runeType == RuneType.Acceleration && runes.Count >= 3 && RuneManager.Instance.isArmor == true)
             {
                 //준호가 공격 만들면 하기 거기서 그냥 2타 했을 때 일시적으로 속도 빨라주게만 하면 됨
             }
@@ -89,13 +90,13 @@ public class RuneManager : MonoSingleton<RuneManager>
                 int Randomvalue = Random.Range(0, 1);
                 if(Randomvalue == 1)
                 {
-                    //준호가 공격 만들면 여기다가 할 예정
+                    isDebuff = true;
                 }
             }
 
             if(runeType == RuneType.ARMOR && runes.Count >= 3)
             {
-                RuneManager.Instance.isDebuff = false;
+                RuneManager.Instance.isArmor = false;
             }
         }
     }
