@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class RuneEffectSO : ScriptableObject
 {
     public RuneType runeType;
-    public Sprite runeSprite;
+    public GameObject runeObj;
     public Color lightColor;
 
     public abstract void UseEffect();

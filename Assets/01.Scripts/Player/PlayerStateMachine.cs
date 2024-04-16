@@ -9,14 +9,17 @@ public enum PlayerStateEnum
     Move,
     Fall,
     Dash,
-    MeleeAttack,
-    QSkill,
-    ESkill,
+    EDash,
     Defense,
+    MeleeAttack,
+    ESkill,
+    QSkill,
+    EQSkill,
     Charge,
     ChargeAttack,
+    ChargeStabAttack,
+    EChargeAttack,
     Die,
-    EDash,
 }
 
 public class PlayerStateMachine

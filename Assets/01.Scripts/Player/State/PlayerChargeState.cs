@@ -27,12 +27,12 @@ public class PlayerChargeState : PlayerState
         {
             pos += _player.transform.forward;
             pos.y += 2f;
-            EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeAttackEffect, pos);
+            //EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeAttackEffect, pos);
         }
         else
         {
             pos += _player.transform.right * 2;
-            EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeAttackEffect, pos);
+            //EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeAttackEffect, pos);
         }
     }
 
@@ -57,7 +57,12 @@ public class PlayerChargeState : PlayerState
                 _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
             }
             else
-                _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
+            {
+                if (_player.IsAwakening)
+                    _stateMachine.ChangeState(PlayerStateEnum.EChargeAttack);
+                else
+                    _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
+            }
         }
         else
         {
@@ -76,11 +81,11 @@ public class PlayerChargeState : PlayerState
 
                 if (_player.IsAwakening)
                 {
-                    EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeEffect, _player._weapon.transform.Find("Point").position);
+                    EffectManager.Instance.PlayEffect(PoolingType.PlayerEChargeEffect, _player._weapon.transform.Find("RightPointTop").position);
                 }
                 else
                 {
-                    EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._weapon.transform.Find("Point").position);
+                    EffectManager.Instance.PlayEffect(PoolingType.PlayerChargeEffect, _player._weapon.transform.Find("RightPointTop").position);
                 }
             }
         }

@@ -21,7 +21,8 @@ public enum EnvSoundType
 
 public enum SoundEffectType
 {
-    Button,
+    ButtonClick,
+    ButtonMousePoint,
     Scroll,
     Buy,
 }

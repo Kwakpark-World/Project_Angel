@@ -8,12 +8,11 @@ public enum RuneType
     STRENGTH,   // Èû, °ø°Ý
     ARMOR,      // ¹æ¾î·Â
     HEALTH,     // Ã¼·Â
-    DEXTERITY,  // ¹ÎÃ¸, ½ºÇÇµå
+    Acceleration,  // ¹ÎÃ¸, ½ºÇÇµå
     DEBUFF,     // µð¹öÇÁ
     END
 }
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class Rune : PoolableMono
 {
     [Header("Light Properties")]
@@ -35,16 +34,16 @@ public class Rune : PoolableMono
         }
     }
 
-    private SpriteRenderer _spriteRenderer;
-    private Material _material;
+    //private SpriteRenderer _spriteRenderer;
+    //private Material _material;
 
     private readonly int _dissolveValueHash = Shader.PropertyToID("_Value");
 
     private void Awake() 
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _material = _spriteRenderer.material;
-        _material.SetFloat(_dissolveValueHash, 0f);
+        //_spriteRenderer = GetComponent<SpriteRenderer>();
+        //_material = _spriteRenderer.material;
+        //_material.SetFloat(_dissolveValueHash, 0f);
     }
 
 
@@ -71,13 +70,10 @@ public class Rune : PoolableMono
     private IEnumerator DissolveCoroutine(float target, float duration = 2f)
     {
         target = Mathf.Clamp(target, 0f, 1f);
-        float startValue = _material.GetFloat(_dissolveValueHash);
+        //float startValue = _material.GetFloat(_dissolveValueHash);
         float t = 0f;
         while(t <= duration)
         {
-            float value = Mathf.Lerp(startValue, target, t / duration);
-            _material.SetFloat(_dissolveValueHash, value);
-            _pointLight.intensity = value * _lightIntensity;
             t += Time.deltaTime;
             yield return null;
         }
@@ -101,7 +97,7 @@ public class Rune : PoolableMono
 
     public override void InitializePoolingItem()
     {
-        _material.SetFloat(_dissolveValueHash, 0f);
+        //_material.SetFloat(_dissolveValueHash, 0f);
         _runeData = null;
     }
 
@@ -118,7 +114,6 @@ public class Rune : PoolableMono
     public void SetRuneData(RuneEffectSO runeData)
     {
         _runeData = runeData;
-        _spriteRenderer.sprite = _runeData.runeSprite;
         _pointLight.color = _runeData.lightColor;
     }
 
