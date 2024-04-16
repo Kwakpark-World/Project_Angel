@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerQSkillState : PlayerState
 {
     private float _jumpForce = 10f;
-    private float _dropForce = 18f;
+    private float _dropForce = 22f;
 
     private bool _isAttacked = false;
 
@@ -26,7 +26,13 @@ public class PlayerQSkillState : PlayerState
         _player.RotateToMousePos();
         _attackDist = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
 
-        _player.SetVelocity(Vector3.up * _jumpForce);
+        Vector3 move = Vector3.one;
+        move.y *= _jumpForce;
+
+        move += _player.transform.forward * 20f;
+
+
+        _player.SetVelocity(move);
     }
 
     public override void Exit()
@@ -39,7 +45,7 @@ public class PlayerQSkillState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        
+
         if (_actionTriggerCalled )
         {
             _player.SetVelocity(Vector3.down * _dropForce);

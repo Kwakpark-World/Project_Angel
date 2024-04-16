@@ -17,13 +17,15 @@ public class PlayerChargeAttackState : PlayerState
     {
         base.Enter();
 
-        useDist = _player.IsAwakening ? awakenDist : defaultDist;
 
+        useDist = _player.IsAwakening ? awakenDist : defaultDist;
         ChargeAttack();
+
     }
     public override void Exit()
     {
         _player.ChargingGage = 0;
+
         base.Exit();
     }
     public override void UpdateState()
@@ -31,7 +33,7 @@ public class PlayerChargeAttackState : PlayerState
         base.UpdateState();
         if (_endTriggerCalled)                                                                                
         {
-            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+            _stateMachine.ChangeState(PlayerStateEnum.ChargeStabAttack);
         }
     }
 
