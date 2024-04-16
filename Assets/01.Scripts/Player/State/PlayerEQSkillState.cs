@@ -21,6 +21,7 @@ public class PlayerEQSkillState : PlayerState
     {
         base.Enter();
         _player.PlayerInput.QSkillEvent += ComboSkill;
+        _player.RotateToMousePos();
 
         _isCombo = false;
 
