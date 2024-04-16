@@ -27,12 +27,12 @@ public class PlayerChargeState : PlayerState
         {
             pos += _player.transform.forward;
             pos.y += 2f;
-            EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Awaken, pos);
+            //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Awaken, pos);
         }
         else
         {
             pos += _player.transform.right * 2;
-            EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Normal, pos);
+            //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Normal, pos);
         }
     }
 
@@ -57,7 +57,12 @@ public class PlayerChargeState : PlayerState
                 _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
             }
             else
-                _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
+            {
+                if (_player.IsAwakening)
+                    _stateMachine.ChangeState(PlayerStateEnum.EChargeAttack);
+                else
+                    _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
+            }
         }
         else
         {
@@ -76,11 +81,11 @@ public class PlayerChargeState : PlayerState
 
                 if (_player.IsAwakening)
                 {
-                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Awaken, _player._currentWeapon.transform.Find("Point").position);
+                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Awaken, _player._weapon.transform.Find("RightPointTop").position);
                 }
                 else
                 {
-                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, _player._currentWeapon.transform.Find("Point").position);
+                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, _player._weapon.transform.Find("RightPointTop").position);
                 }
             }
         }

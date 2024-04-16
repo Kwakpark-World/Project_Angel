@@ -15,14 +15,6 @@ public class BlinkEffect : MonoBehaviour
         _originColor = _meshRenderer.material.color;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(OnBlinkEffect());
-        }
-    }
-
     private IEnumerator OnBlinkEffect()
     {
         _meshRenderer.material.color = Color.white;

@@ -8,6 +8,8 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public float XInput { get; private set; }
     public float YInput { get; private set; }
 
+    public float MouseWheel { get; private set; } = 0f;
+
     public bool isDefense { get; private set; }
     public bool isCharge;
     public Vector2 MousePos;
@@ -80,5 +82,22 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public void OnMousePos(InputAction.CallbackContext context)
     {
         MousePos = context.ReadValue<Vector2>();
+    }
+
+    public void OnMouseWheel(InputAction.CallbackContext context)
+    {
+        float value = context.ReadValue<float>();
+        if (value > 0f)
+        {
+            MouseWheel = -1f;
+        }
+        else if (value < 0f)
+        {
+            MouseWheel = 1f;
+        }
+        else
+        {
+            MouseWheel = 0f;
+        }
     }
 }

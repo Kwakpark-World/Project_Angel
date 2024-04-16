@@ -26,6 +26,6 @@ public class PlayerEChargeEffect : PoolableMonoEffect
             PoolManager.Instance.Push(this);
         }
         else
-            transform.position = GameManager.Instance.PlayerInstance._currentWeapon.transform.Find("Point").position;
+            transform.position = GameManager.Instance.PlayerInstance._weapon.transform.Find("RightPointTop").position;
     }
 }

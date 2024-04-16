@@ -9,6 +9,8 @@ public class RuneManager : MonoSingleton<RuneManager>
     public Dictionary<RuneType, List<Rune>> _collectedRunes;
     [SerializeField] private RuneListSO _runeList;
 
+    public bool _islastDance = false;
+
     public bool isDebuff = false;
 
     private void Awake()
@@ -59,6 +61,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     public void ActivateRune()
     {
+        float timer;
         foreach (var kvp in _collectedRunes)
         {
             RuneType runeType = kvp.Key;
@@ -69,10 +72,39 @@ public class RuneManager : MonoSingleton<RuneManager>
 
             }
 
-            else if(runeType == RuneType.Acceleration && runes.Count >= 3)
+            if(runeType == RuneType.Acceleration && runes.Count >= 3 && RuneManager.Instance.isDebuff == true)
             {
-                
+                //준호가 공격 만들면 하기 거기서 그냥 2타 했을 때 일시적으로 속도 빨라주게만 하면 됨
             }
+
+            if(runeType == RuneType.Health && runes.Count >= 3)
+            {
+                StartCoroutine(lastDance(5f));
+            }
+
+            if(runeType == RuneType.Debuff && runes.Count >= 3)
+            {
+                int Randomvalue = Random.Range(0, 1);
+                if(Randomvalue == 1)
+                {
+                    //준호가 공격 만들면 여기다가 할 예정
+                }
+            }
+
+            if(runeType == RuneType.Defense && runes.Count >= 3)
+            {
+                RuneManager.Instance.isDebuff = false;
+            }
+        }
+    }
+
+    IEnumerator lastDance(float time)
+    {
+        yield return new WaitForSeconds(5f);
+
+        if (GameManager.Instance.PlayerInstance.CurrentHealth <= 1 && _islastDance == false)
+        {
+            _islastDance = true;
         }
     }
 }

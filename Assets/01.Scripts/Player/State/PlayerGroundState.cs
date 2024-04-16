@@ -57,6 +57,9 @@ public abstract class PlayerGroundState : PlayerState
 
         _player.qPrevTime = Time.time;
 
-        _stateMachine.ChangeState(PlayerStateEnum.QSkill);
+        if (_player.IsAwakening)
+            _stateMachine.ChangeState(PlayerStateEnum.EQSkill);
+        else
+            _stateMachine.ChangeState(PlayerStateEnum.QSkill);
     }
 }

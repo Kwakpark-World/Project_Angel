@@ -158,6 +158,7 @@ public class Debuff : MonoBehaviour
         if (_ownerController)
         {
             _poisonDelayTimer = Time.time - (_attackers[DebuffType.Poison] as Brain).DebuffCompo.DebuffStatData.poisonDelay;
+            Debug.Log(RuneManager.Instance.isDebuff);
         }
         else
         {
