@@ -13,7 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _USE_CUSTOM_ON
-  - _USE_MASK_MIRROR_ON
+  - _USE_ONE_MINUS_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -138,7 +138,7 @@ Material:
     - _main_pow: 1
     - _main_upanner: 0.67
     - _main_vpanner: 0
-    - _mask_pow: 1.52
+    - _mask_pow: 4.71
     - _normal_str: 0.035
     - _normal_upanner: 0.79
     - _normal_vpanner: 0
@@ -146,8 +146,8 @@ Material:
     - _slash_uoff: 0.06
     - _slash_voff: 0
     - _use_custom: 1
-    - _use_mask_mirror: 1
-    - _use_one_minus: 0
+    - _use_mask_mirror: 0
+    - _use_one_minus: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
