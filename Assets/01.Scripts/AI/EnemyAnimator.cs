@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -177,7 +175,7 @@ public class EnemyAnimator : MonoBehaviour
     #region Enemy Die Function
     public void EnemyDieProcess()
     {
-        PoolManager.Instance.Push(_owner, (int)1.8);
+        PoolManager.Instance.Push(_owner, 1.8f);
     }
     #endregion
 }

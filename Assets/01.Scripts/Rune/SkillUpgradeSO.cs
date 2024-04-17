@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/Rune/RuneEffect/SkillUpgrade")]
-public class SkillUpgradeSO : RuneEffectSO
+[CreateAssetMenu(menuName = "SO/Data/Rune/SkillUpgrade")]
+public class SkillUpgradeSO : RuneDataSO
 {
     public PlayerStateEnum targetSkill;
 

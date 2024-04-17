@@ -26,14 +26,14 @@ public class CustomRuneManager : Editor
 
     private RuneListSO CreateAssetDatabase()
     {
-        List<RuneEffectSO> loadedList = new List<RuneEffectSO>();
+        List<RuneDataSO> loadedList = new List<RuneDataSO>();
 
         string[] assetNames = AssetDatabase.FindAssets("", new[] { _prefabPath });
 
         foreach (string assetName in assetNames)
         {
             string path = AssetDatabase.GUIDToAssetPath(assetName);
-            RuneEffectSO powerUp = AssetDatabase.LoadAssetAtPath<RuneEffectSO>(path);
+            RuneDataSO powerUp = AssetDatabase.LoadAssetAtPath<RuneDataSO>(path);
             if (powerUp == null) continue;
             loadedList.Add(powerUp);
         }

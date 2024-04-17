@@ -132,6 +132,7 @@ public abstract class Brain : PoolableMono
         foreach (Brain enemy in enemiesCopy)
         {
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
+
             if (distance < minDistance)
             {
                 CurrentHealth -= Mathf.Max(1 - EnemyStatData.GetDefensivePower(), 0f);

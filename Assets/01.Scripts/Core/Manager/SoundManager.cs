@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 
 public enum BGMMode
 {
@@ -46,7 +44,6 @@ public struct SFXTypeClip
     public SFXType type;
     public AudioClip clip;
 }
-
 
 public class SoundManager : MonoSingleton<SoundManager>
 {

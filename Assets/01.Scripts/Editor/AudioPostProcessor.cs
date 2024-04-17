@@ -10,7 +10,7 @@ public class AudioPostProcessor : AssetPostprocessor
     {
         foreach (string movedAsset in movedAssets)
         {
-            if (movedAsset.Contains("12.Sounds"))
+            if (movedAsset.Contains("10.Sounds"))
             {
                 AssetDatabase.ImportAsset(movedAsset);
             }

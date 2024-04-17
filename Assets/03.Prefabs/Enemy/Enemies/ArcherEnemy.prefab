@@ -474,10 +474,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5721603142344133239}
-  - {fileID: 6353511155849533482}
-  - {fileID: 1969659578326918091}
   - {fileID: 2010785108878135195}
+  - {fileID: 5721603142344133239}
+  - {fileID: 1969659578326918091}
+  - {fileID: 6353511155849533482}
   m_Father: {fileID: 7311124152982338495}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &953594231853836824
@@ -5036,20 +5036,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6173569979461806992, guid: 18c79401e8294544bae8ebf87e235467,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7371698572001994380, guid: 18c79401e8294544bae8ebf87e235467,
         type: 3}
       propertyPath: m_Name
-      value: die1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7371698572001994380, guid: 18c79401e8294544bae8ebf87e235467,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
+      value: EnemyDie
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5275,26 +5265,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyBlood
       objectReference: {fileID: 0}
-    - target: {fileID: 2225297037483996674, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5343,11 +5313,6 @@ PrefabInstance:
     - target: {fileID: 2551846743984539939, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813668706843374449, guid: d6ab9e35bc49b7e46a4c122307a1e3e9,
-        type: 3}
-      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5543,12 +5508,7 @@ PrefabInstance:
     - target: {fileID: 7666257459373816061, guid: b95356e00eea99846a8c62bc6a6edaca,
         type: 3}
       propertyPath: m_Name
-      value: hit4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7666257459373816061, guid: b95356e00eea99846a8c62bc6a6edaca,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
+      value: EnemyHit
       objectReference: {fileID: 0}
     - target: {fileID: 8158160594287960077, guid: b95356e00eea99846a8c62bc6a6edaca,
         type: 3}
@@ -5598,16 +5558,6 @@ PrefabInstance:
     - target: {fileID: 8158160594287960077, guid: b95356e00eea99846a8c62bc6a6edaca,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8761105119204282543, guid: b95356e00eea99846a8c62bc6a6edaca,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 479b66874e9cf3a4ab8d7ed4df2fc287, type: 3}
-    - target: {fileID: 8761105119204282543, guid: b95356e00eea99846a8c62bc6a6edaca,
-        type: 3}
-      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/Rune/RuneEffect/StatUpgrade")]
-public class StatUpgradeSO : RuneEffectSO
+[CreateAssetMenu(menuName = "SO/Data/Rune/StatUpgrade")]
+public class StatUpgradeSO : RuneDataSO
 {
     public PlayerStatType increaseStat;
     public int increaseValue;

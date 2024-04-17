@@ -145,7 +145,7 @@ public class Player : PlayerController
         if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill))
             return;
        
-        if(RuneManager.Instance._islastDance == true && CurrentHealth <= 1f)
+        if(RuneManager.Instance.isLastDance == true && CurrentHealth <= 1f)
         {
             CurrentHealth -= Mathf.Max(0, 0f);
         }
@@ -177,7 +177,7 @@ public class Player : PlayerController
         dashDuration = PlayerStatData.GetDashDuration();
         dashCoolTime = PlayerStatData.GetDashCooldown();
         qSkillCoolTime = PlayerStatData.GetQSkillCooldown();
-        awakenMaxGage = PlayerStatData.GetAwakenMaxGage();
+        awakenMaxGage = PlayerStatData.GetMaxAwakenGauge();
     }
 
     public void SetPlayerStat(PlayerStatType stat, float value)

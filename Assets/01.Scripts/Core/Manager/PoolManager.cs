@@ -34,9 +34,9 @@ public class PoolManager : MonoSingleton<PoolManager>
         _pools[item.poolingType].Push(item);
     }
 
-    public async void Push(PoolableMono item, int secondsDelay, bool resetParent = false)
+    public async void Push(PoolableMono item, float secondsDelay, bool resetParent = false)
     {
-        await Task.Delay(secondsDelay * 1000);
+        await Task.Delay((int)(secondsDelay * 1000));
 
         if (resetParent)
         {
