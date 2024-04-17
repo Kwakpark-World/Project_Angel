@@ -19,7 +19,8 @@ public enum ENVType
 
 public enum SFXType
 {
-    Button,
+    UI_Button_Hover,
+    UI_Button_Click,
     Scroll,
     Buy,
 }
