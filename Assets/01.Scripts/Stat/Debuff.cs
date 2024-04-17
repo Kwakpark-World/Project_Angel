@@ -120,7 +120,7 @@ public class Debuff : MonoBehaviour
         }
 
         _coroutines[debuffType] = StartCoroutine(DebuffCoroutine(debuffType, duration));
-        RuneManager.Instance.isArmor = false;
+        //RuneManager.Instance.isArmor = false;
     }
 
     public bool GetDebuff(DebuffType debuffType)
@@ -148,7 +148,7 @@ public class Debuff : MonoBehaviour
         if (_ownerController)
         {
             _poisonDelayTimer = Time.time - (_attackers[DebuffType.Poison] as Brain).DebuffCompo.DebuffStatData.poisonDelay;
-            Debug.Log(RuneManager.Instance.isArmor);
+            //Debug.Log(RuneManager.Instance.isArmor);
         }
         else
         {
@@ -199,7 +199,7 @@ public class Debuff : MonoBehaviour
             _ownerBrain.EnemyStatData.moveSpeed.AddModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
         }
 
-        RuneManager.Instance.isArmor = false;
+        //RuneManager.Instance.isArmor = false;
     }
 
     public void FreezeEnd()
