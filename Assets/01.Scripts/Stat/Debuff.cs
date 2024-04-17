@@ -1,12 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Reflection;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public enum DebuffType
 {
@@ -100,30 +96,28 @@ public class Debuff : MonoBehaviour
     public void SetDebuff(DebuffType debuffType, object attacker)
     {
         RuneManager.Instance.isDebuff = true;
+
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
         }
-
-        Debug.Log(RuneManager.Instance.isDebuff);
 
         _attackers[debuffType] = attacker;
 
         _debuffTriggersByType[debuffType].onDebuffBegin?.Invoke();
 
-
         RuneManager.Instance.isDebuff = false;
-
     }
 
     public void SetDebuff(DebuffType debuffType, float duration, object attacker)
     {
         RuneManager.Instance.isDebuff = true;
+
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
         }
-        Debug.Log(RuneManager.Instance.isDebuff);
+
         _attackers[debuffType] = attacker;
 
         if (_coroutines[debuffType] != null)
@@ -199,7 +193,6 @@ public class Debuff : MonoBehaviour
     public void FreezeBegin()
     {
         RuneManager.Instance.isDebuff = true;
-        Debug.Log(RuneManager.Instance.isDebuff);
        
         if (_ownerController)
         {
