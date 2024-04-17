@@ -35,7 +35,7 @@ public class EnemyAnimator : MonoBehaviour
 
     private Dictionary<string, AnimationTrigger> _animationTriggersByState = new Dictionary<string, AnimationTrigger>();
     private Dictionary<string, int> _parameterHashes = new Dictionary<string, int>();
-    private Animator _animator;
+    public Animator _animator;
     private string _currentState = "Idle";
     private string _previousState = "";
 

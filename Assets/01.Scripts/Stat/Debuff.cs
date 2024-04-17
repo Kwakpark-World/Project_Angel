@@ -95,8 +95,6 @@ public class Debuff : MonoBehaviour
 
     public void SetDebuff(DebuffType debuffType, object attacker)
     {
-        RuneManager.Instance.isDebuff = true;
-
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
@@ -105,14 +103,10 @@ public class Debuff : MonoBehaviour
         _attackers[debuffType] = attacker;
 
         _debuffTriggersByType[debuffType].onDebuffBegin?.Invoke();
-
-        RuneManager.Instance.isDebuff = false;
     }
 
     public void SetDebuff(DebuffType debuffType, float duration, object attacker)
     {
-        RuneManager.Instance.isDebuff = true;
-
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
@@ -126,7 +120,7 @@ public class Debuff : MonoBehaviour
         }
 
         _coroutines[debuffType] = StartCoroutine(DebuffCoroutine(debuffType, duration));
-        RuneManager.Instance.isDebuff = false;
+        RuneManager.Instance.isArmor = false;
     }
 
     public bool GetDebuff(DebuffType debuffType)
@@ -154,7 +148,7 @@ public class Debuff : MonoBehaviour
         if (_ownerController)
         {
             _poisonDelayTimer = Time.time - (_attackers[DebuffType.Poison] as Brain).DebuffCompo.DebuffStatData.poisonDelay;
-            Debug.Log(RuneManager.Instance.isDebuff);
+            Debug.Log(RuneManager.Instance.isArmor);
         }
         else
         {
@@ -192,8 +186,6 @@ public class Debuff : MonoBehaviour
     #region Freeze Functions
     public void FreezeBegin()
     {
-        RuneManager.Instance.isDebuff = true;
-       
         if (_ownerController)
         {
             Brain attacker = _attackers[DebuffType.Freeze] as Brain;
@@ -207,7 +199,7 @@ public class Debuff : MonoBehaviour
             _ownerBrain.EnemyStatData.moveSpeed.AddModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
         }
 
-        RuneManager.Instance.isDebuff = false;
+        RuneManager.Instance.isArmor = false;
     }
 
     public void FreezeEnd()
