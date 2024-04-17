@@ -13,6 +13,7 @@ public class RuneManager : MonoSingleton<RuneManager>
     public bool isLastDance = false;
     public bool isDebuff = false;
 
+
     private void Awake()
     {
         foreach (RuneType type in Enum.GetValues(typeof(RuneType)))
@@ -91,11 +92,13 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     private IEnumerator LastDance(float time)
     {
-        yield return new WaitForSeconds(time);
-
         if (GameManager.Instance.PlayerInstance.CurrentHealth <= 1 && isLastDance == false)
         {
             isLastDance = true;
         }
+
+        yield return new WaitForSeconds(time);
+
+        isLastDance = false;
     }
 }

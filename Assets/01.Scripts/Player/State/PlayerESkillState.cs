@@ -4,46 +4,57 @@ using UnityEngine;
 
 public class PlayerESkillState : PlayerState
 {
-
+    private bool _isAwakenOn;
     public PlayerESkillState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
+        
     }
 
     public override void Enter()
     {
         base.Enter();
         _player.StopImmediately(true);
-
-        _player.StartCoroutine(PlayerAwakening());
+        _isAwakenOn = false;
 
         Vector3 pos = _player.transform.position;
         pos.y += 1.5f;
 
-        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAwakening, pos);
+        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAwakening, pos);
     }
 
     public override void Exit()
     {
         base.Exit();
+        _isAwakenOn = false;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        _player.awakenCurrentGage = Mathf.Clamp(_player.awakenCurrentGage, 0, _player.awakenMaxGage);
         if (_endTriggerCalled)
         {
+            if (!_isAwakenOn)
+            {
+                _isAwakenOn = true;
+                _player.StartCoroutine(PlayerAwakening());
+            }
+
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
 
     private IEnumerator PlayerAwakening()
     {
-        while (_player.awakenCurrentGage >= 0)
+        while (_player.awakenCurrentGauge >= 0)
         {
+            _player.IsAwakening = true;
+
             if (_player.IsAwakening)
-                _player.awakenCurrentGage -= 10 * Time.deltaTime;
+            {
+                _player.awakenCurrentGauge = Mathf.Clamp(_player.awakenCurrentGauge, 0, _player.awakenMaxGauge);
+                _player.awakenCurrentGauge -= 10 * Time.deltaTime;
+            }
             yield return null;
         }
 

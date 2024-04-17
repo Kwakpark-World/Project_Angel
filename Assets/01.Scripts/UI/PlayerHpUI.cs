@@ -12,7 +12,7 @@ public class PlayerHpUI : MonoBehaviour
     private void Update()
     {
         PlayerHP();
-        _identityBar.value = _player.awakenCurrentGage;
+        _identityBar.value = _player.awakenCurrentGauge;
     }
 
     public void PlayerHP()

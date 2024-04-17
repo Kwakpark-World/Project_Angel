@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDefenseState : PlayerState
+public class PlayerDefenseState : PlayerGroundState
 {
     private float _defenseTimer;
     private bool _isDefenseRotatable;

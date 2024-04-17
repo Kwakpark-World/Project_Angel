@@ -18,9 +18,11 @@ public class Player : PlayerController
 
     public float attackPower;
     public float attackSpeed = 1f;
-    public Vector3[] attackMovement;
+    public float[] attackMovementDist;
 
-    public float ChargingGage;
+    public float ChargingGauge;
+    public float ChargingAttackSpeed;
+    public float ChargingAttackStabDistance;
 
     [Header("Critical Settings")]
     public float criticalChance;
@@ -40,8 +42,8 @@ public class Player : PlayerController
     public float qSkillCoolTime = 10f;
     public float qPrevTime = 0f;
 
-    public float awakenMaxGage = 100f;
-    public float awakenCurrentGage = 0f;
+    public float awakenMaxGauge = 100f;
+    public float awakenCurrentGauge = 0f;
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
     public PlayerStateMachine StateMachine { get; private set; }
@@ -94,11 +96,11 @@ public class Player : PlayerController
         PlayerStatData.InitializeAllModifiers();
         PlayerStatInitialize();
     }
-
+    
     protected override void Update()
     {
         base.Update();
-
+        
         moveSpeed = PlayerStatData.GetMoveSpeed();
 
         StateMachine.CurrentState.UpdateState();
@@ -110,10 +112,10 @@ public class Player : PlayerController
         SetMousePosInWorld();
 
         // Debug
-        /*if (CurrentHealth <= 0f && RuneManager.Instance._islastDance == false)
+        if (CurrentHealth <= 0f)
         {
-            //OnDie();
-        }*/
+            OnDie();
+        }
 
     }
 
@@ -177,7 +179,9 @@ public class Player : PlayerController
         dashDuration = PlayerStatData.GetDashDuration();
         dashCoolTime = PlayerStatData.GetDashCooldown();
         qSkillCoolTime = PlayerStatData.GetQSkillCooldown();
-        awakenMaxGage = PlayerStatData.GetMaxAwakenGauge();
+        awakenMaxGauge = PlayerStatData.GetMaxAwakenGauge();
+        ChargingAttackSpeed = PlayerStatData.GetChargingAttackSpeed();
+        ChargingAttackStabDistance = PlayerStatData.GetChargingAttackDistance();
     }
 
     public void SetPlayerStat(PlayerStatType stat, float value)

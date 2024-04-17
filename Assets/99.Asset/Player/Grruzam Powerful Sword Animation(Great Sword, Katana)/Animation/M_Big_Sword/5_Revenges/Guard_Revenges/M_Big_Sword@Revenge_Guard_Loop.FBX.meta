@@ -1000,14 +1000,32 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
       copied configuration does not match position in animation file:\n\t'thigh_l'
-      : position error = 14.512432 mm\n\t'calf_l' : position error = 14.234022 mm\n\t'foot_l'
-      : position error = 1.127252 mm\n\t'ball_l' : position error = 2.139407 mm\n\t'thigh_r'
-      : position error = 14.271006 mm\n\t'calf_r' : position error = 19.616137 mm\n\t'foot_r'
-      : position error = 9.804008 mm\n\t'ball_r' : position error = 10.424783 mm\n"
+      : position error = 26.779266 mm\n\t'calf_l' : position error = 18.097279 mm\n\t'foot_l'
+      : position error = 45.291992 mm\n\t'ball_l' : position error = 2.208556 mm\n\t'thigh_r'
+      : position error = 5.150827 mm\n\t'calf_r' : position error = 25.306408 mm\n\t'foot_r'
+      : position error = 49.555641 mm\n\t'ball_r' : position error = 10.761811 mm\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'calf_r' has translation animation that
+      to improve retargeting quality.\n\t'spine_01' has translation animation that
+      will be discarded.\n\t'clavicle_l' has translation animation that will be discarded.\n\t'lowerarm_l'
+      has translation animation that will be discarded.\n\t'hand_l' has translation
+      animation that will be discarded.\n\t'index_01_l' has translation animation
+      that will be discarded.\n\t'index_03_l' has translation animation that will
+      be discarded.\n\t'middle_01_l' has translation animation that will be discarded.\n\t'middle_03_l'
+      has translation animation that will be discarded.\n\t'pinky_01_l' has translation
+      animation that will be discarded.\n\t'pinky_02_l' has translation animation
+      that will be discarded.\n\t'ring_01_l' has translation animation that will
+      be discarded.\n\t'ring_03_l' has translation animation that will be discarded.\n\t'thumb_01_l'
+      has translation animation that will be discarded.\n\t'thumb_02_l' has translation
+      animation that will be discarded.\n\t'thumb_03_l' has translation animation
+      that will be discarded.\n\t'clavicle_r' has translation animation that will
+      be discarded.\n\t'lowerarm_r' has translation animation that will be discarded.\n\t'hand_r'
+      has translation animation that will be discarded.\n\t'neck_01' has translation
+      animation that will be discarded.\n\t'thigh_l' has translation animation that
+      will be discarded.\n\t'calf_l' has translation animation that will be discarded.\n\t'foot_l'
+      has translation animation that will be discarded.\n\t'thigh_r' has translation
+      animation that will be discarded.\n\t'calf_r' has translation animation that
       will be discarded.\n\t'foot_r' has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
@@ -1036,7 +1054,7 @@ ModelImporter:
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1

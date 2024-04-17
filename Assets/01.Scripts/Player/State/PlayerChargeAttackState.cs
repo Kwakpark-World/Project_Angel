@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using UnityEngine;
 
-public class PlayerChargeAttackState : PlayerState
+public class PlayerChargeAttackState : PlayerAttackState
 {
-    float useDist = 5;
     float defaultDist = 5;
     float awakenDist = 10;
 
@@ -17,20 +18,27 @@ public class PlayerChargeAttackState : PlayerState
     {
         base.Enter();
 
+        _hitDistance = _player.IsAwakening ? awakenDist : defaultDist;
 
-        useDist = _player.IsAwakening ? awakenDist : defaultDist;
-        ChargeAttack();
+        // Default Speed + (0.GaugeAmount) * MultiplyValue
+        // (0.GaugeAmount) = 0 ~ 0.1;
+        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / 20) * _player.ChargingAttackSpeed; 
+
 
     }
+
     public override void Exit()
     {
-        _player.ChargingGage = 0;
-
         base.Exit();
+
     }
+
     public override void UpdateState()
     {
         base.UpdateState();
+        
+        ChargeAttack();
+        
         if (_endTriggerCalled)                                                                                
         {
             _stateMachine.ChangeState(PlayerStateEnum.ChargeStabAttack);
@@ -39,29 +47,19 @@ public class PlayerChargeAttackState : PlayerState
 
     private void ChargeAttack()
     {
-        Vector3 pos = _player.transform.position + (_player.transform.forward * _player.ChargingGage * useDist / 4);
-        pos.y += 1f;
+        //Vector3 pos = _player.transform.position + (_player.transform.forward * _player.ChargingGage * _hitDistance / 4);
+        //pos.y += 1f;
+        //
+        //Vector3 halfSize = new Vector3(0, 0, _player.ChargingGage * _hitDistance / 4);
+        //Quaternion rot = Quaternion.Euler((_player.transform.forward * _player.ChargingGage * _hitDistance) - _player.transform.position);
+        //
+        //Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
+        //
+        //Attack(enemies.ToList());
 
-        Vector3 halfSize = new Vector3(0, 0, _player.ChargingGage * useDist / 4);
-        Quaternion rot = Quaternion.Euler((_player.transform.forward * _player.ChargingGage * useDist) - _player.transform.position);
+        List<RaycastHit> enemies = GetEnemyByWeapon();
 
-        Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
-
-        HashSet<Collider> enemyDuplicateCheck = new HashSet<Collider>();
-
-        foreach (var enemy in enemies)
-        {
-            if (enemyDuplicateCheck.Add(enemy))
-            {
-                if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
-                {
-                    Debug.Log($"hit {enemy.transform.gameObject}");
-
-                    brain.OnHit(_player.attackPower);
-                    if (!_player.IsAwakening)
-                        _player.awakenCurrentGage++;
-                }
-            }
-        }
+        Attack(enemies);
     }
+
 }
