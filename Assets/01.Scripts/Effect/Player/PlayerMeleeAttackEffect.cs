@@ -22,8 +22,5 @@ public class PlayerMeleeAttackEffect : PoolableMonoEffect
     public override void RegisterEffect()
     {
         base.RegisterEffect();
-
-        // 
-
     }
 }

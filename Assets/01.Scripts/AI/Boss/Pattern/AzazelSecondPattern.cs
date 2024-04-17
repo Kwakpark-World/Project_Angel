@@ -24,7 +24,7 @@ public class AzazelSecondPattern : Pattern
 
         PoolingType grigoriType = grigoris[Random.Range(0, grigoris.Count)];
 
-        if (PoolManager.Instance.Pop(grigoriType).TryGetComponent(out Grigori grigori))
+        if (PoolManager.Instance.Pop(grigoriType, OwnerNode.brain.transform.position).TryGetComponent(out Grigori grigori))
         {
             if (!grigori.owner)
             {

@@ -2,62 +2,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using UnityEngine.InputSystem;
 
 public class RuneManager : MonoSingleton<RuneManager>
 {
-    public Dictionary<RuneType, List<Rune>> _collectedRunes;
-    [SerializeField] private RuneListSO _runeList;
+    [SerializeField]
+    private RuneListSO _runeList;
 
-    public float _runSynergy;
-
-    public bool _islastDance = false;
-
-    public bool isArmor = false;
+    public Dictionary<RuneType, List<Rune>> collectedRunes = new Dictionary<RuneType, List<Rune>>();
+    public bool isLastDance = false;
     public bool isDebuff = false;
 
 
     private void Awake()
     {
-        _collectedRunes = new Dictionary<RuneType, List<Rune>>();
+        foreach (RuneType type in Enum.GetValues(typeof(RuneType)))
+        {
+            collectedRunes[type] = new List<Rune>();
+        }
     }
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+#if UNITY_EDITOR // Debug
+        if (Keyboard.current.pKey.wasPressedThisFrame)
         {
-            CreateRune();
+            CreateRune(GameManager.Instance.PlayerInstance.transform.position + Vector3.forward * 5f);
         }
-
-        //Debug.Log(_collectedRunes);
-
-        ActivateRune();
-    }
-
-    public Rune CreateRune()
-    {
-        Rune rune = PoolManager.Instance.Pop(PoolingType.Rune) as Rune;
-        RuneEffectSO runeData = _runeList[Random.Range(0, _runeList.list.Count)];
-        rune.SetRuneData(runeData);
-        _runeList.Remove(runeData);
-
-        RegisterRune(rune);
-
-        rune.SetDissolve(0.55f);
-        return rune;
-    }
-
-    public void RegisterRune(Rune rune)
-    {
-        if(_collectedRunes.TryGetValue(rune.RuneData.runeType, out List<Rune> runes))
-        {
-            runes.Add(rune);
-        }
-        else
-        {
-            List<Rune> list = new List<Rune> { rune };
-            _collectedRunes.Add(rune.RuneData.runeType, list);
-        }
+#endif
     }
 
     public void SetRuneList(RuneListSO list)
@@ -65,102 +37,68 @@ public class RuneManager : MonoSingleton<RuneManager>
         _runeList = list;
     }
 
-    public void ActivateRune()
+    public Rune CreateRune(Vector3 runeSpawnPos)
     {
-        
-        foreach (var kvp in _collectedRunes)
+        Rune rune = PoolManager.Instance.Pop(PoolingType.Rune, runeSpawnPos) as Rune;
+        RuneDataSO runeData = _runeList.list[UnityEngine.Random.Range(0, _runeList.list.Count)];
+
+        rune.SetRuneData(runeData);
+        rune.InitializeRune();
+        _runeList.list.Remove(runeData);
+
+        return rune;
+    }
+
+    public void CheckRuneSynergy()
+    {
+        foreach (var rune in collectedRunes)
         {
-            RuneType runeType = kvp.Key;
-            List<Rune> runes = kvp.Value;
-
-            if (runeType == RuneType.STRENGTH && runes.Count >= 3)
+            if (rune.Value.Count < 3)
             {
-                Debug.Log($"{runeType}");
+                return;
             }
 
-            if(runeType == RuneType.Acceleration && runes.Count >= 3)
+            switch (rune.Key)
             {
-                //준호가 공격 만들면 하기 거기서 그냥 2타 했을 때 일시적으로 속도 빨라주게만 하면 됨
-                StartCoroutine(RuneCooldownCoroutine(30));
-                Debug.Log($"{runeType}");
-            }
+                case RuneType.Attack:
+                    break;
 
-            if(runeType == RuneType.HEALTH && runes.Count >= 3)
-            {
-                StartCoroutine(lastDance(5f));
-                
-                StartCoroutine(RuneCooldownCoroutine(300));
-                Debug.Log($"{runeType}");
-            }
+                case RuneType.Defense:
+                    isDebuff = false;
 
-            if(runeType == RuneType.DEBUFF && runes.Count >= 3)
-            {
-                Debug.Log($"{runeType}");
-                //여기서 때릴때마다 확인 시키기
-                int Randomvalue = Random.Range(0, 1);
+                    break;
 
-                if(Randomvalue == 1)
-                {
-                    isDebuff = true;
-                }
-            }
+                case RuneType.Health:
+                    StartCoroutine(LastDance(5f));
 
-            if(runeType == RuneType.ARMOR && runes.Count >= 3)
-            {
-                isArmor = false;
-                StartCoroutine(RuneCooldownCoroutine(60));
-                Debug.Log($"{runeType}");
+                    break;
+
+                case RuneType.Acceleration:
+                    break;
+
+                case RuneType.Debuff:
+                    if (UnityEngine.Random.value <= 0.5f)
+                    {
+                        //준호가 공격 만들면 여기다가 할 예정
+                    }
+
+                    break;
+
+                default:
+                    break;
             }
         }
     }
 
-    IEnumerator RuneCooldownCoroutine(float delay)
+    private IEnumerator LastDance(float time)
     {
-        yield return new WaitForSeconds(delay);
-
-        foreach (var kvp in _collectedRunes)
+        if (GameManager.Instance.PlayerInstance.CurrentHealth <= 1 && isLastDance == false)
         {
-            RuneType runeType = kvp.Key;
-            List<Rune> runes = kvp.Value;
-
-            if (runeType == RuneType.STRENGTH && runes.Count >= 3)
-            {
-                // STRENGTH rune logic
-                Debug.Log($"You have collected 3 or more runes of type {runeType}.");
-            }
-
-            if (runeType == RuneType.Acceleration && runes.Count >= 3)
-            {
-                // Acceleration rune logic
-            }
-
-            if (runeType == RuneType.HEALTH && runes.Count >= 3)
-            {
-                // HEALTH rune logic
-            }
-
-            if (runeType == RuneType.DEBUFF && runes.Count >= 3)
-            {
-                
-                isDebuff = true;
-            }
-
-            if (runeType == RuneType.ARMOR && runes.Count >= 3)
-            {
-                
-                isArmor = true;
-            }
+            isLastDance = true;
         }
-    }
 
-    IEnumerator lastDance(float time)
-    {
-        yield return new WaitForSeconds(5f);
-         
-        if (GameManager.Instance.PlayerInstance.CurrentHealth <= 1 && _islastDance == false)
-        {
-            _islastDance = true;
-        }
-        _islastDance = false;
+        yield return new WaitForSeconds(time);
+
+        isLastDance = false;
     }
 }

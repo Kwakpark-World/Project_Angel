@@ -1,12 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Reflection;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public enum DebuffType
 {
@@ -99,31 +95,23 @@ public class Debuff : MonoBehaviour
 
     public void SetDebuff(DebuffType debuffType, object attacker)
     {
-        RuneManager.Instance.isArmor = true;
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
         }
-
-        Debug.Log(RuneManager.Instance.isArmor);
 
         _attackers[debuffType] = attacker;
 
         _debuffTriggersByType[debuffType].onDebuffBegin?.Invoke();
-
-
-        RuneManager.Instance.isArmor = false;
-
     }
 
     public void SetDebuff(DebuffType debuffType, float duration, object attacker)
     {
-        RuneManager.Instance.isArmor = true;
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
         }
-        Debug.Log(RuneManager.Instance.isArmor);
+
         _attackers[debuffType] = attacker;
 
         if (_coroutines[debuffType] != null)
@@ -198,9 +186,6 @@ public class Debuff : MonoBehaviour
     #region Freeze Functions
     public void FreezeBegin()
     {
-        RuneManager.Instance.isArmor = true;
-        Debug.Log(RuneManager.Instance.isArmor);
-       
         if (_ownerController)
         {
             Brain attacker = _attackers[DebuffType.Freeze] as Brain;

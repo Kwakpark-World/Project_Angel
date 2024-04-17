@@ -19,7 +19,7 @@ public class PlayerESkillState : PlayerState
         Vector3 pos = _player.transform.position;
         pos.y += 1.5f;
 
-        EffectManager.Instance.PlayEffect(PoolingType.PlayerESkillEffect, pos);
+        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAwakening, pos);
     }
 
     public override void Exit()

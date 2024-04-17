@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5214989456544898720}
-  - component: {fileID: 3619533312791615026}
   - component: {fileID: 7908675800558672886}
+  - component: {fileID: 3619533312791615026}
   - component: {fileID: 4321788645907691711}
   - component: {fileID: -161107910005527396}
+  - component: {fileID: 6227062837556393868}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -35,18 +36,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3619533312791615026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6338522080048316861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c0a45491aa35364a96e4b184337a860, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7908675800558672886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,6 +46,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5309511f03d495c4799be43df1bb3a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3619533312791615026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338522080048316861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0a45491aa35364a96e4b184337a860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4321788645907691711
@@ -86,3 +87,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runeList: {fileID: 11400000, guid: 92a932b9b7c11d540ad3bda0d6513b27, type: 2}
   isDebuff: 0
+--- !u!114 &6227062837556393868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338522080048316861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339187063ef02dc44846c2ddf0b00903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmList: []
+  envList: []
+  sfxList: []
+  audioMixer: {fileID: 24100000, guid: 00bd0b9e747f3df46914b84dbfb1ee9f, type: 2}

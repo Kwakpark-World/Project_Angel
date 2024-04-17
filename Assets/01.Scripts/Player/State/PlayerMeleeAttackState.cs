@@ -15,8 +15,7 @@ public class PlayerMeleeAttackState : PlayerState
 
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
-    private HashSet<Brain> _enemyDuplicateCheck = new HashSet<Brain>();
-    private float _hitDistance = 5f; // 2.4�� ��ũ��.
+    private float _hitDistance = 5f;
 
     private Transform[] _weaponRayPoints = new Transform[4];
 
@@ -80,7 +79,7 @@ public class PlayerMeleeAttackState : PlayerState
         ++_comboCounter;
         _player.AnimatorCompo.speed = 1f;
 
-        _enemyDuplicateCheck.Clear();
+        _player.enemyNormalHitDuplicateChecker.Clear();
     }
 
     public override void UpdateState()
@@ -110,9 +109,15 @@ public class PlayerMeleeAttackState : PlayerState
             {
                 if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
                 {
-                    if (_enemyDuplicateCheck.Add(brain))
+                    if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                     {
+                        if (_player.enemyNormalHitDuplicateChecker.Count == 1)
+                        {
+                            brain.OnHit(1f); // Call chaining method here.
+                        }
+
                         brain.OnHit(_player.attackPower);
+
                         if (!_player.IsAwakening)
                             _player.awakenCurrentGage++;
                     }
@@ -123,7 +128,7 @@ public class PlayerMeleeAttackState : PlayerState
             {
                 Vector3 pos = _player._weapon.transform.position;
 
-                //EffectManager.Instance.PlayEffect(PoolingType.PlayerSlashEffect, pos);
+                //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Normal, pos);
 
                 _slashEffectOn = true;
             }
@@ -142,7 +147,7 @@ public class PlayerMeleeAttackState : PlayerState
 
                     pos += _player.transform.forward * range;
 
-                    EffectManager.Instance.PlayEffect(PoolingType.PlayerMeleeAttackEffect, pos);
+                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Awaken, pos);
                 }
             }
         }
