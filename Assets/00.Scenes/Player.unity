@@ -609,10 +609,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1793186389}
-    - targetCorrespondingSourceObject: {fileID: 6338522080048316861, guid: 68479dde4c401d147b3732f592f08bca,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1793186395}
   m_SourcePrefab: {fileID: 100100000, guid: 68479dde4c401d147b3732f592f08bca, type: 3}
 --- !u!1 &1793186384 stripped
 GameObject:
@@ -633,23 +629,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shake6DSettings: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
---- !u!114 &1793186395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793186384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 339187063ef02dc44846c2ddf0b00903, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bgmList: []
-  envList: []
-  sfxList: []
-  playerList: []
-  sfxGroup: {fileID: 0}
 --- !u!1001 &2139745879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -808,8 +787,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
         type: 3}
-      propertyPath: qSkillCoolTime
-      value: 2
+      propertyPath: awakenCurrentGauge
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
+      propertyPath: attackMovementDist.Array.size
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -48,14 +48,14 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
             else
                 time += Time.deltaTime;
 
-            if (GameManager.Instance.PlayerInstance.ChargingGage > 0.5f)
+            if (GameManager.Instance.PlayerInstance.ChargingGauge > 0.5f)
             {
-                transform.localScale = Vector3.one * GameManager.Instance.PlayerInstance.ChargingGage * 0.5f;
+                transform.localScale = Vector3.one * GameManager.Instance.PlayerInstance.ChargingGauge * 0.5f;
             }
         }
         else
         {
-            if (GameManager.Instance.PlayerInstance.ChargingGage < 0.5f)
+            if (GameManager.Instance.PlayerInstance.ChargingGauge < 0.5f)
             {
                 PoolManager.Instance.Push(this);
             }

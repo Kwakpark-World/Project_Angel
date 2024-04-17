@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class PlayerQSkillState : PlayerState
+public class PlayerQSkillState : PlayerAttackState
 {
     private float _jumpForce = 10f;
     private float _dropForce = 22f;
 
     private bool _isAttacked = false;
 
-    private float _attackDist = 12f;
     private float _attackHeight = 2f;
 
     private float _awakenAttackDist = 15f;
@@ -24,7 +24,7 @@ public class PlayerQSkillState : PlayerState
         base.Enter();
         _player.StopImmediately(false);
         _player.RotateToMousePos();
-        _attackDist = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
+        _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
 
         Vector3 move = Vector3.one;
         move.y *= _jumpForce;
@@ -61,11 +61,11 @@ public class PlayerQSkillState : PlayerState
                     pos.y += 1f;
                     if (_player.IsAwakening)
                     {
-                        EffectManager.Instance.PlayEffect(PoolingType.PlayerEQSkillEffect, pos);
+                        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Q_Awaken, pos);
                     }
                     else
                     {
-                        EffectManager.Instance.PlayEffect(PoolingType.PlayerQSkillEffect, pos);
+                        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Q_Normal, pos);
                     }
 
                     QAttack();
@@ -79,27 +79,14 @@ public class PlayerQSkillState : PlayerState
     private void QAttack()
     {
         _isAttacked = true;
-        //Collider[] enemies = Physics.OverlapSphere(_player.transform.position, 10f, _player._enemyLayer);
+
         Vector3 pos = _player.transform.position;
         pos.y += _attackHeight / 2f;
 
-        Collider[] enemies = Physics.OverlapBox(pos, new Vector3(_attackDist, _attackHeight, _attackDist), Quaternion.identity, _player._enemyLayer);
+        Vector3 size = new Vector3(_hitDistance, _attackHeight, _hitDistance);
 
-        HashSet<Collider> enemyDuplicateCheck = new HashSet<Collider>();
+        Collider[] enemies = Physics.OverlapBox(pos, size, Quaternion.identity, _player._enemyLayer);
 
-        foreach(var enemy in enemies)
-        {
-            if (enemyDuplicateCheck.Add(enemy))
-            {
-                if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
-                {
-                    Debug.Log($"hit {enemy.transform.gameObject}");
-
-                    brain.OnHit(_player.attackPower);
-                    if (!_player.IsAwakening)
-                        _player.awakenCurrentGage++;
-                }
-            }
-        }
+        Attack(enemies.ToList());
     }
 }

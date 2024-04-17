@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEQSkillState : PlayerState
+public class PlayerEQSkillState : PlayerAttackState
 {
     private int _comboCounter;
     private float _lastAttackTime;

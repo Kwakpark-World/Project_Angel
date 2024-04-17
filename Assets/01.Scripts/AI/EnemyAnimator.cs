@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -37,7 +35,7 @@ public class EnemyAnimator : MonoBehaviour
 
     private Dictionary<string, AnimationTrigger> _animationTriggersByState = new Dictionary<string, AnimationTrigger>();
     private Dictionary<string, int> _parameterHashes = new Dictionary<string, int>();
-    private Animator _animator;
+    public Animator _animator;
     private string _currentState = "Idle";
     private string _previousState = "";
 
@@ -143,7 +141,7 @@ public class EnemyAnimator : MonoBehaviour
     #region Enemy Normal Attack Functions
     public void ArcherNormalAttack()
     {
-        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.EnemyArrow, _weaponTransform.position) as EnemyArrow;
+        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Arrow, _weaponTransform.position) as EnemyArrow;
         arrow.owner = _owner as EnemyBrain;
     }
 
@@ -154,17 +152,17 @@ public class EnemyAnimator : MonoBehaviour
         switch (UnityEngine.Random.Range(0, 3))
         {
             case 0:
-                potionType = PoolingType.PoisonPotion;
+                potionType = PoolingType.Potion_Poison;
 
                 break;
 
             case 1:
-                potionType = PoolingType.FreezePotion;
+                potionType = PoolingType.Potion_Freeze;
 
                 break;
 
             case 2:
-                potionType = PoolingType.KnockbackPotion;
+                potionType = PoolingType.Potion_Knockback;
 
                 break;
         }
@@ -177,7 +175,7 @@ public class EnemyAnimator : MonoBehaviour
     #region Enemy Die Function
     public void EnemyDieProcess()
     {
-        PoolManager.Instance.Push(_owner, (int)1.8);
+        PoolManager.Instance.Push(_owner, 1.8f);
     }
     #endregion
 }

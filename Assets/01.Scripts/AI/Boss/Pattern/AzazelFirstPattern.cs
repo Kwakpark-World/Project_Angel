@@ -18,11 +18,7 @@ public class AzazelFirstPattern : Pattern
     public override Node.State OnUpdate()
     {
         Debug.Log("Use first pattern.");
-
-        if (PoolManager.Instance.Pop(PoolingType.Goat).TryGetComponent(out Goat goat))
-        {
-            goat.transform.position = OwnerNode.brain.transform.position;
-        }
+        PoolManager.Instance.Pop(PoolingType.Goat, OwnerNode.brain.transform.position);
 
         return Node.State.Success;
     }

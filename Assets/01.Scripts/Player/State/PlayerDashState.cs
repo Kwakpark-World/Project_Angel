@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerState
 {
-    private float _dashStartTime;
     private Vector3 _dashDirection;
-
-    //private SkinnedMeshRenderer _skinnedMeshRenderer;
 
     public PlayerDashState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        //_skinnedMeshRenderer = _player.transform.GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        _dashStartTime = Time.time;
         _player.RotateToMousePos();
     }
 
@@ -35,7 +30,7 @@ public class PlayerDashState : PlayerState
 
         _player.SetVelocity(_dashDirection * _player.dashSpeed);
         
-        if (_dashStartTime + _player.dashDuration <= Time.time && _endTriggerCalled)
+        if (_endTriggerCalled)
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }

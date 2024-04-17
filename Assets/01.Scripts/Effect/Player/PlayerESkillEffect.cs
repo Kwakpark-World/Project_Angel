@@ -32,7 +32,7 @@ public class PlayerESkillEffect : PoolableMonoEffect
             PoolManager.Instance.Push(this);
 
             Vector3 pos = transform.position;
-            EffectManager.Instance.PlayEffect(PoolingType.PlayerESkillDownEffect, pos);
+            EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAwakened, pos);
 
             GameManager.Instance.PlayerInstance.IsAwakening = true;
         }

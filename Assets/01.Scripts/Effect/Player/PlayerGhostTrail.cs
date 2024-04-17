@@ -23,11 +23,13 @@ public class PlayerGhostTrail : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR // Debug
         if (Keyboard.current.spaceKey.wasPressedThisFrame)//&& !isTrailActive)
         {
             isTrailActive = true;
             StartCoroutine(GhostTrail(activeTime));
         }
+#endif
     }
 
     private IEnumerator GhostTrail(float timeActive)
