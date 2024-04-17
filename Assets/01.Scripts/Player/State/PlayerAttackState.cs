@@ -45,7 +45,7 @@ public class PlayerAttackState : PlayerState
                 {
                     brain.OnHit(_player.attackPower);
                     if (!_player.IsAwakening)
-                        _player.awakenCurrentGage++;
+                        _player.awakenCurrentGauge++;
                 }
             }
         }
@@ -63,7 +63,7 @@ public class PlayerAttackState : PlayerState
                 {
                     brain.OnHit(_player.attackPower);
                     if (!_player.IsAwakening)
-                        _player.awakenCurrentGage++;
+                        _player.awakenCurrentGauge++;
                 }
             }
         }

@@ -61,11 +61,11 @@ public class PlayerQSkillState : PlayerAttackState
                     pos.y += 1f;
                     if (_player.IsAwakening)
                     {
-                        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Q_Awaken, pos);
+                        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Q_Awaken, pos);
                     }
                     else
                     {
-                        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Q_Normal, pos);
+                        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Q_Normal, pos);
                     }
 
                     QAttack();

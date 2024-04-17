@@ -46,7 +46,7 @@ public abstract class PlayerGroundState : PlayerState
     private void ESkillHandle()
     {
         if (_player.IsAwakening) return;
-        if (_player.awakenCurrentGage < _player.awakenMaxGage) return;
+        if (_player.awakenCurrentGauge < _player.awakenMaxGauge) return;
 
         _stateMachine.ChangeState(PlayerStateEnum.ESkill);
     }

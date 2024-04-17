@@ -19,7 +19,7 @@ public class PlayerChargeState : PlayerState
         _player.StopImmediately(false);
         _player.RotateToMousePos();
 
-        _player.ChargingGage = 0;
+        _player.ChargingGauge = 0;
         _isChargeParticleOn = false;
 
         Vector3 pos = _player.transform.position;
@@ -47,13 +47,13 @@ public class PlayerChargeState : PlayerState
     {
         base.UpdateState();
 
-        _player.ChargingGage = Mathf.Clamp(_player.ChargingGage, 0f, _maxChargeTime);
+        _player.ChargingGauge = Mathf.Clamp(_player.ChargingGauge, 0f, _maxChargeTime);
 
         if (!_player.PlayerInput.isCharge)
         {
-            if (_player.ChargingGage < _minChargeTime)
+            if (_player.ChargingGauge < _minChargeTime)
             {
-                _player.ChargingGage = 0;
+                _player.ChargingGauge = 0;
                 _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
             }
             else
@@ -66,10 +66,10 @@ public class PlayerChargeState : PlayerState
         }
         else
         {
-            if (_player.ChargingGage < _minChargeTime)
-                _player.ChargingGage += Time.deltaTime;
+            if (_player.ChargingGauge < _minChargeTime)
+                _player.ChargingGauge += Time.deltaTime;
             else
-                _player.ChargingGage += Time.deltaTime * 1.5f;
+                _player.ChargingGauge += Time.deltaTime * 1.5f;
         }
         
 

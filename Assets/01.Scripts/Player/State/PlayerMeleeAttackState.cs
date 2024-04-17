@@ -104,7 +104,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
                     pos += _player.transform.forward * range;
 
-                    EffectManager.Instance.PlayEffect(PoolingType.PlayerMeleeAttackEffect, pos);
+                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Normal, pos);
                 }
             }
         }

@@ -12,6 +12,12 @@ public class TemplateCameraState : CameraState
         return this;
     }
 
+    private void Awake()
+    {
+        CameraManager.Instance.AddCamera(this);
+
+    }
+
     private void Update()
     {
         /* Debug

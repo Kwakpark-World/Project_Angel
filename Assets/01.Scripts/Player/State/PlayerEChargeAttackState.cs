@@ -11,11 +11,16 @@ public class PlayerEChargeAttackState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
+
+        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / 20) * _player.ChargingAttackSpeed;
+
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        _player.AnimatorCompo.speed = 1;
     }
 
     public override void UpdateState()
