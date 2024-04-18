@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerAwakeningState : PlayerState
 {
     private bool _isAwakenOn;
+
     public PlayerAwakeningState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         

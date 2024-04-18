@@ -20,8 +20,6 @@ public class Player : PlayerController
 
     public float defensePrevTime = 0f;
 
-    public float slamPrevTime = 0f;
-
     public float awakenCurrentGauge = 0f;
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }

@@ -8,12 +8,12 @@ public class PlayerNormalSlamState : PlayerAttackState
     private float _jumpForce = 10f;
     private float _dropForce = 22f;
 
-    private bool _isAttacked = false;
-
     private float _attackHeight = 2f;
 
     private float _awakenAttackDist = 15f;
     private float _normalAttackDist = 12f;
+
+    private bool _isAttacked = false;
     
     public PlayerNormalSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {

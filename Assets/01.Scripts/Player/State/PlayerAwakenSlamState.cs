@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class PlayerAwakenSlamState : PlayerAttackState
 {
+    private readonly int _comboCounterHash = Animator.StringToHash("SlamComboCounter");
     private int _comboCounter;
-    private float _lastAttackTime;
+
+    private float _attackPrevTime;
     private float _comboWindow = 0.8f;
 
     private bool _isCombo = false;
-
-    private readonly int _comboCounterHash = Animator.StringToHash("SlamComboCounter");
 
     public PlayerAwakenSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -35,7 +35,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
     {
         base.Exit();
 
-        _lastAttackTime = Time.time;
+        _attackPrevTime = Time.time;
         ++_comboCounter;
     }
 
@@ -61,7 +61,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
     {
         _isCombo = false;
 
-        if (_comboCounter >= 3 || Time.time >= _lastAttackTime + _comboWindow)
+        if (_comboCounter >= 3 || Time.time >= _attackPrevTime + _comboWindow)
             _comboCounter = 0;
 
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);

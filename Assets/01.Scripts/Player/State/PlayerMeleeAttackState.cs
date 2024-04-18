@@ -7,16 +7,18 @@ using UnityEngine.InputSystem;
 
 public class PlayerMeleeAttackState : PlayerAttackState
 {
-    private int _comboCounter;
-    private float _lastAttackTime;
-    private float _comboWindow = 0.8f;
-
-    private bool _isCombo;
-
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
+
+    private int _comboCounter;
+    
+    private float _attackPrevTime;
+    private float _comboWindow = 0.8f;
 
     private float _awakenAttackDist = 4.4f;
     private float _normalAttackDist = 3f;
+
+
+    private bool _isCombo;
 
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -49,7 +51,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         _player.AnimatorCompo.speed = 1f;
 
-        _lastAttackTime = Time.time;
+        _attackPrevTime = Time.time;
 
         ++_comboCounter;
 
@@ -109,7 +111,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         _isCombo = false;
 
-        if (_comboCounter >= 7 || Time.time >= _lastAttackTime + _comboWindow)
+        if (_comboCounter >= 7 || Time.time >= _attackPrevTime + _comboWindow)
             _comboCounter = 0;
 
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);

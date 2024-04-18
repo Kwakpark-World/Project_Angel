@@ -3,8 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerChargingState : PlayerChargeState
 {
-    private bool _isChargeParticleOn;
-
     public PlayerChargingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -17,7 +15,6 @@ public class PlayerChargingState : PlayerChargeState
         _player.RotateToMousePos();
 
         _player.ChargingGauge = 0;
-        _isChargeParticleOn = false;
     }
 
     public override void Exit()

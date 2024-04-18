@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class PlayerGroundState : PlayerState
 {
+    private float _slamPrevTime = 0f;
+
     protected PlayerGroundState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -50,9 +52,9 @@ public abstract class PlayerGroundState : PlayerState
 
     private void QSkillHandle()
     {
-        if (_player.slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
+        if (_slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
 
-        _player.slamPrevTime = Time.time;
+        _slamPrevTime = Time.time;
 
         if (_player.IsAwakening)
             _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
