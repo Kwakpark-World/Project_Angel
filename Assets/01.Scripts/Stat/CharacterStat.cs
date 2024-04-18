@@ -17,7 +17,7 @@ public enum PlayerStatType
     dashSpeed,
     dashDuration,
     dashCooldown,
-    qSkillCooldown,
+    slamCooldown,
     maxAwakenGauge,
     chargingAttackSpeed,
     chargingAttackDistance
@@ -46,7 +46,7 @@ public class CharacterStat : ScriptableObject
     public Stat dashCooldown; // 대시 쿨다운
 
     [Header("Skill stats")]
-    public Stat qSkillCooldown; // Q 스킬 쿨다운
+    public Stat slamCooldown; // Q 스킬 쿨다운
     public Stat maxAwakenGauge; // 최대 각성 게이지
 
     protected PlayerController owner;
@@ -118,9 +118,9 @@ public class CharacterStat : ScriptableObject
         return dashCooldown.GetValue();
     }
 
-    public float GetQSkillCooldown()
+    public float GetSlamSkillCooldown()
     {
-        return qSkillCooldown.GetValue();
+        return slamCooldown.GetValue();
     }
 
     public float GetMaxAwakenGauge()

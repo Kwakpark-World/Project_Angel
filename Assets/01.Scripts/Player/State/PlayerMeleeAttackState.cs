@@ -7,19 +7,18 @@ using UnityEngine.InputSystem;
 
 public class PlayerMeleeAttackState : PlayerAttackState
 {
-    private int _comboCounter;
-    private float _lastAttackTime;
-    private float _comboWindow = 0.8f;
-
-    private bool _isCombo;
-
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
-    private float _awakenAttackDist = 4.4f;
-    private float _defaultAttackDist = 3f;
+    private int _comboCounter;
+    
+    private float _attackPrevTime;
+    private float _comboWindow = 0.8f;
 
-    private bool _isAwakenSlashEffectOn = false;
-    private bool _slashEffectOn = false;
+    private float _awakenAttackDist = 4.4f;
+    private float _normalAttackDist = 3f;
+
+
+    private bool _isCombo;
 
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -31,20 +30,10 @@ public class PlayerMeleeAttackState : PlayerAttackState
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.IsAttack = true;
-        _isAwakenSlashEffectOn = false;
-        _slashEffectOn = false;
-        _isCombo = false;
+        
+        _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
 
-        _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
-
-        if (_comboCounter >= 7 || Time.time >= _lastAttackTime + _comboWindow)
-            _comboCounter = 0;
-
-        _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
-        _player.AnimatorCompo.speed = _player.attackSpeed;
-
-        float moveDist = _player.attackMovementDist[_comboCounter];
-        _player.SetVelocity(_player.transform.forward * moveDist);
+        _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
 
         _player.StartDelayAction(0.1f, () =>
         {
@@ -57,18 +46,14 @@ public class PlayerMeleeAttackState : PlayerAttackState
     public override void Exit()
     {
         base.Exit();
-
         _player.PlayerInput.MeleeAttackEvent -= ComboAttack;
-
         _player.IsAttack = false;
-        _isAwakenSlashEffectOn = false;
-        _slashEffectOn = false;
-        _isCombo = false;
 
-        _lastAttackTime = Time.time;
+        _player.AnimatorCompo.speed = 1f;
+
+        _attackPrevTime = Time.time;
 
         ++_comboCounter;
-        _player.AnimatorCompo.speed = 1f;
 
     }
 
@@ -80,33 +65,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
         if (_isHitAbleTriggerCalled)
         {
             MeleeAttack();
-
-            if (!_slashEffectOn)
-            {
-                Vector3 pos = _player._weapon.transform.position;
-
-                //EffectManager.Instance.PlayEffect(PoolingType.PlayerSlashEffect, pos);
-
-                _slashEffectOn = true;
-            }
-        }
-
-        if (_effectTriggerCalled)
-        {
-            if (_player.IsAwakening)
-            {
-                if (!_isAwakenSlashEffectOn)
-                {
-                    _isAwakenSlashEffectOn = true;
-
-                    Vector3 pos = _player.transform.position;
-                    float range = 2f;
-
-                    pos += _player.transform.forward * range;
-
-                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Normal, pos);
-                }
-            }
         }
 
         if (_actionTriggerCalled)
@@ -116,6 +74,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
                 if (_isCombo)
                 {
                     _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
+                    return;
                 }
             }
         }
@@ -145,6 +104,17 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     public void KillInactivePoison()
     {
+
+    }
+
+    private void SetCombo()
+    {
+        _isCombo = false;
+
+        if (_comboCounter >= 7 || Time.time >= _attackPrevTime + _comboWindow)
+            _comboCounter = 0;
+
+        _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
 
     }
 }

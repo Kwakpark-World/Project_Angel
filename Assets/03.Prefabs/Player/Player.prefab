@@ -912,15 +912,17 @@ MonoBehaviour:
     m_Bits: 128
   attackPower: 0
   attackSpeed: 1
-  attackMovement:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  ChargingGage: 0
+  attackMovementDist:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  ChargingGauge: 0
+  ChargingAttackSpeed: 0
+  ChargingAttackStabDistance: 0
   criticalChance: 0
   criticalMultiplier: 0
   defensivePower: 0
@@ -930,8 +932,8 @@ MonoBehaviour:
   defensePrevTime: 0
   qSkillCoolTime: 10
   qPrevTime: 0
-  awakenMaxGage: 100
-  awakenCurrentGage: 100
+  awakenMaxGauge: 100
+  awakenCurrentGauge: 100
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d771d326405705e4b9989f7211c9e6b3,
     type: 2}
   renderers:

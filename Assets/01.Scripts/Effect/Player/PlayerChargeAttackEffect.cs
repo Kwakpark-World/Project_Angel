@@ -69,7 +69,7 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
             PoolManager.Instance.Push(this, 3);
         }
 
-        if (GameManager.Instance.PlayerInstance.StateMachine.CurrentState == GameManager.Instance.PlayerInstance.StateMachine.GetState(PlayerStateEnum.Dash))
+        if (GameManager.Instance.PlayerInstance.StateMachine.CurrentState == GameManager.Instance.PlayerInstance.StateMachine.GetState(PlayerStateEnum.NormalDash))
         {
             PoolManager.Instance.Push(this);
         }
@@ -86,7 +86,7 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
         {
             if(other.gameObject.TryGetComponent<Brain>(out Brain brain))
             {
-                brain.OnHit(GameManager.Instance.PlayerInstance.attackPower);
+                brain.OnHit(GameManager.Instance.PlayerInstance.PlayerStatData.GetAttackPower());
             }
         }
     }

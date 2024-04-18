@@ -35,7 +35,12 @@ public class PlayerDefenseState : PlayerGroundState
         base.UpdateState();
 
         _defenseTimer += Time.deltaTime;
-        
+
+        EndDefense();
+    }
+
+    private void EndDefense()
+    {
         if (!_player.PlayerInput.isDefense || _defenseTimer >= _player.defenseTime)
         {
             _defenseTimer = 0;

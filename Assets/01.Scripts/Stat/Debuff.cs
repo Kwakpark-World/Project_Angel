@@ -224,7 +224,7 @@ public class Debuff : MonoBehaviour
     {
         if (_ownerController)
         {
-            if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.QSkill) || _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.ESkill))
+            if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.NormalSlam) || _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Awakening))
             {
                 return;
             }

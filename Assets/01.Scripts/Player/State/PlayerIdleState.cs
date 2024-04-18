@@ -32,7 +32,7 @@ public class PlayerIdleState : PlayerGroundState
 
         if (Mathf.Abs(xInput) > 0.05f || Mathf.Abs(yInput) > 0.05f)
         {
-            _stateMachine.ChangeState(PlayerStateEnum.Move);
+            _stateMachine.ChangeState(PlayerStateEnum.Walk);
         }
     }
 }

@@ -19,8 +19,9 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField] private float _stairHeight;
     [SerializeField] private float _stairMoveSmooth;
 
+
     #region components
-    [Header("Components")]
+    [Space(30f), Header("Components")]
     public Animator AnimatorCompo;
 
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -29,9 +30,10 @@ public abstract class PlayerController : MonoBehaviour
     public Debuff DebuffCompo { get; private set; }
     [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
     [field: SerializeField] public float CurrentHealth { get; set; }
-
+    
+    private float _gravity = -9.8f;
     #endregion
-    [SerializeField] protected float _gravity = -9.8f;
+
 
     protected virtual void Awake()
     {

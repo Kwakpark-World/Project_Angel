@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerChargeState : PlayerState
+public class PlayerChargeState : PlayerAttackState
 {
-    private float _minChargeTime = 0.5f;
-    private float _maxChargeTime = 2f;
-
-    private bool _isChargeParticleOn;
+    protected float _minChargeTime = 0.5f;
+    protected float _maxChargeTime = 2f;
 
     public PlayerChargeState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -16,79 +14,15 @@ public class PlayerChargeState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        _player.StopImmediately(false);
-        _player.RotateToMousePos();
-
-        _player.ChargingGauge = 0;
-        _isChargeParticleOn = false;
-
-        Vector3 pos = _player.transform.position;
-        if (_player.IsAwakening)
-        {
-            pos += _player.transform.forward;
-            pos.y += 2f;
-            //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Awaken, pos);
-        }
-        else
-        {
-            pos += _player.transform.right * 2;
-            //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Normal, pos);
-        }
     }
 
     public override void Exit()
     {
         base.Exit();
-        _player.PlayerInput.isCharge = false;
-        _isChargeParticleOn = false;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-
-        _player.ChargingGauge = Mathf.Clamp(_player.ChargingGauge, 0f, _maxChargeTime);
-
-        if (!_player.PlayerInput.isCharge)
-        {
-            if (_player.ChargingGauge < _minChargeTime)
-            {
-                _player.ChargingGauge = 0;
-                _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
-            }
-            else
-            {
-                if (_player.IsAwakening)
-                    _stateMachine.ChangeState(PlayerStateEnum.EChargeAttack);
-                else
-                    _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
-            }
-        }
-        else
-        {
-            if (_player.ChargingGauge < _minChargeTime)
-                _player.ChargingGauge += Time.deltaTime;
-            else
-                _player.ChargingGauge += Time.deltaTime * 1.5f;
-        }
-        
-
-        if (_effectTriggerCalled)
-        {
-            if (!_isChargeParticleOn)
-            {
-                _isChargeParticleOn = true;
-
-                if (_player.IsAwakening)
-                {
-                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Awaken, _player._weapon.transform.Find("RightPointTop").position);
-                }
-                else
-                {
-                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, _player._weapon.transform.Find("RightPointTop").position);
-                }
-            }
-        }
-        
     }
 }
