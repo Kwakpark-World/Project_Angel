@@ -18,7 +18,6 @@ public class Player : PlayerController
 
     public float attackPower;
     public float attackSpeed = 1f;
-    public float[] attackMovementDist;
 
     public float ChargingGauge;
     public float ChargingAttackSpeed;
