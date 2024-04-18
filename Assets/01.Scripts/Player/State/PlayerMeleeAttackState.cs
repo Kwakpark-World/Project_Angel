@@ -16,7 +16,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
     private float _awakenAttackDist = 4.4f;
-    private float _defaultAttackDist = 3f;
+    private float _normalAttackDist = 3f;
 
     private bool _isAwakenSlashEffectOn = false;
     private bool _slashEffectOn = false;
@@ -35,7 +35,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _slashEffectOn = false;
         _isCombo = false;
 
-        _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
+        _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
 
         if (_comboCounter >= 7 || Time.time >= _lastAttackTime + _comboWindow)
             _comboCounter = 0;

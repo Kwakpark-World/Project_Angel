@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerState
 {
-    private Vector3 _dashDirection;
-
     public PlayerDashState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }

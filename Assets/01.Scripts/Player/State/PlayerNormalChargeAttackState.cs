@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class PlayerNormalChargeAttackState : PlayerChargeState
 {
-    float defaultDist = 5;
-    float awakenDist = 10;
+    float _normalDist = 5;
+    float _awakenDist = 10;
 
     public PlayerNormalChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -18,7 +18,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
     {
         base.Enter();
 
-        _hitDistance = _player.IsAwakening ? awakenDist : defaultDist;
+        _hitDist = _player.IsAwakening ? _awakenDist : _normalDist;
 
         // Default Speed + (0.GaugeAmount) * MultiplyValue
         // (0.GaugeAmount) = 0 ~ 0.1;

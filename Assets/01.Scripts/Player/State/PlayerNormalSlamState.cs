@@ -13,7 +13,7 @@ public class PlayerNormalSlamState : PlayerAttackState
     private float _attackHeight = 2f;
 
     private float _awakenAttackDist = 15f;
-    private float _defaultAttackDist = 12f;
+    private float _normalAttackDist = 12f;
     
     public PlayerNormalSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -24,7 +24,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         base.Enter();
         _player.StopImmediately(false);
         _player.RotateToMousePos();
-        _hitDistance = _player.IsAwakening ? _awakenAttackDist : _defaultAttackDist;
+        _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
 
         Vector3 move = Vector3.one;
         move.y *= _jumpForce;
@@ -83,7 +83,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         Vector3 pos = _player.transform.position;
         pos.y += _attackHeight / 2f;
 
-        Vector3 size = new Vector3(_hitDistance, _attackHeight, _hitDistance);
+        Vector3 size = new Vector3(_hitDist, _attackHeight, _hitDist);
 
         Collider[] enemies = Physics.OverlapBox(pos, size, Quaternion.identity, _player._enemyLayer);
 

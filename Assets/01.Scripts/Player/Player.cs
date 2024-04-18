@@ -38,8 +38,8 @@ public class Player : PlayerController
     public float defenseCoolTime = 1f;
     public float defensePrevTime = 0f;
 
-    public float qSkillCoolTime = 10f;
-    public float qPrevTime = 0f;
+    public float slamSkillCoolTime = 10f;
+    public float slamPrevTime = 0f;
 
     public float awakenMaxGauge = 100f;
     public float awakenCurrentGauge = 0f;
@@ -177,7 +177,7 @@ public class Player : PlayerController
         dashSpeed = PlayerStatData.GetDashSpeed();
         dashDuration = PlayerStatData.GetDashDuration();
         dashCoolTime = PlayerStatData.GetDashCooldown();
-        qSkillCoolTime = PlayerStatData.GetQSkillCooldown();
+        slamSkillCoolTime = PlayerStatData.GetSlamSkillCooldown();
         awakenMaxGauge = PlayerStatData.GetMaxAwakenGauge();
         ChargingAttackSpeed = PlayerStatData.GetChargingAttackSpeed();
         ChargingAttackStabDistance = PlayerStatData.GetChargingAttackDistance();

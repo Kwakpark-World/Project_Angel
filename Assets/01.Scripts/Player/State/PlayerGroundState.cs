@@ -53,9 +53,9 @@ public abstract class PlayerGroundState : PlayerState
 
     private void QSkillHandle()
     {
-        if (_player.qPrevTime + _player.qSkillCoolTime > Time.time) return;
+        if (_player.slamPrevTime + _player.slamSkillCoolTime > Time.time) return;
 
-        _player.qPrevTime = Time.time;
+        _player.slamPrevTime = Time.time;
 
         if (_player.IsAwakening)
             _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);

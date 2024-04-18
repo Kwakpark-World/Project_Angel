@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAttackState : PlayerState
 {
     protected Transform _weaponRT, _weaponRB, _weaponLT, _weaponLB;
-    public float _hitDistance = 4f;
+    public float _hitDist = 4f;
     
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -77,8 +77,8 @@ public class PlayerAttackState : PlayerState
         Vector3 weaponPos = _player._weapon.transform.position;
 
         List<RaycastHit> enemies = new List<RaycastHit>();
-        RaycastHit[] enemiesR = Physics.RaycastAll(weaponPos, rightDir, _hitDistance, _player._enemyLayer);
-        RaycastHit[] enemiesL = Physics.RaycastAll(weaponPos, leftDir, _hitDistance, _player._enemyLayer);
+        RaycastHit[] enemiesR = Physics.RaycastAll(weaponPos, rightDir, _hitDist, _player._enemyLayer);
+        RaycastHit[] enemiesL = Physics.RaycastAll(weaponPos, leftDir, _hitDist, _player._enemyLayer);
 
         foreach (var enemy in enemiesL) enemies.Add(enemy);
         foreach (var enemy in enemiesR) enemies.Add(enemy);
