@@ -24,21 +24,15 @@ public class PlayerNormalSlamState : PlayerAttackState
         base.Enter();
         _player.StopImmediately(false);
         _player.RotateToMousePos();
+        _isAttacked = false;
+        
         _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
 
-        Vector3 move = Vector3.one;
-        move.y *= _jumpForce;
-
-        move += _player.transform.forward * 20f;
-
-
-        _player.SetVelocity(move);
+        JumpToFront();
     }
 
     public override void Exit()
     {
-        _isAttacked = false;
-
         base.Exit();
     }
 
@@ -48,7 +42,7 @@ public class PlayerNormalSlamState : PlayerAttackState
 
         if (_actionTriggerCalled )
         {
-            _player.SetVelocity(Vector3.down * _dropForce);
+            AttackDrop();
         }
 
         if (_endTriggerCalled )
@@ -57,18 +51,7 @@ public class PlayerNormalSlamState : PlayerAttackState
             {
                 if (!_isAttacked)
                 {
-                    Vector3 pos = _player.transform.position;
-                    pos.y += 1f;
-                    if (_player.IsAwakening)
-                    {
-                        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Q_Awaken, pos);
-                    }
-                    else
-                    {
-                        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Q_Normal, pos);
-                    }
-
-                    QAttack();
+                    SlamAttack();
                 }
 
                 _stateMachine.ChangeState(PlayerStateEnum.Idle);
@@ -76,7 +59,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         }
     }
 
-    private void QAttack()
+    private void SlamAttack()
     {
         _isAttacked = true;
 
@@ -88,5 +71,19 @@ public class PlayerNormalSlamState : PlayerAttackState
         Collider[] enemies = Physics.OverlapBox(pos, size, Quaternion.identity, _player._enemyLayer);
 
         Attack(enemies.ToList());
+    }
+
+    private void JumpToFront()
+    {
+        Vector3 move = Vector3.one;
+        move.y *= _jumpForce;
+
+        move += _player.transform.forward * 20f;
+        _player.SetVelocity(move);
+    }
+
+    private void AttackDrop()
+    {
+        _player.SetVelocity(Vector3.down * _dropForce);
     }
 }

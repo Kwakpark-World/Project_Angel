@@ -11,7 +11,6 @@ public class Player : PlayerController
     public LayerMask _enemyLayer;
 
     public float ChargingGauge;
-    public float ChargingAttackStabDistance;
 
     [Header("Defense Settings")]
     public float defenseTime = 3f;

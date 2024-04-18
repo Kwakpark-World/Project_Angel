@@ -23,12 +23,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
         _player.PlayerInput.QSkillEvent += ComboSkill;
         _player.RotateToMousePos();
 
-        _isCombo = false;
-
-        if (_comboCounter >= 3 || Time.time >= _lastAttackTime + _comboWindow)
-            _comboCounter = 0;
-
-        _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
+        SetCombo();
 
         _player.StartDelayAction(0.1f, () =>
         {
@@ -39,10 +34,8 @@ public class PlayerAwakenSlamState : PlayerAttackState
     public override void Exit()
     {
         base.Exit();
-        _isCombo = false;
 
         _lastAttackTime = Time.time;
-
         ++_comboCounter;
     }
 
@@ -62,5 +55,15 @@ public class PlayerAwakenSlamState : PlayerAttackState
     private void ComboSkill()
     {
         _isCombo = true;
+    }
+
+    private void SetCombo()
+    {
+        _isCombo = false;
+
+        if (_comboCounter >= 3 || Time.time >= _lastAttackTime + _comboWindow)
+            _comboCounter = 0;
+
+        _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
     }
 }

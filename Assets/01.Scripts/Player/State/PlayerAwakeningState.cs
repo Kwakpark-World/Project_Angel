@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAwakeningState : PlayerState
@@ -15,17 +16,11 @@ public class PlayerAwakeningState : PlayerState
         base.Enter();
         _player.StopImmediately(true);
         _isAwakenOn = false;
-
-        Vector3 pos = _player.transform.position;
-        pos.y += 1.5f;
-
-        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAwakening, pos);
     }
 
     public override void Exit()
     {
         base.Exit();
-        _isAwakenOn = false;
     }
 
     public override void UpdateState()
@@ -34,14 +29,18 @@ public class PlayerAwakeningState : PlayerState
 
         if (_endTriggerCalled)
         {
-            if (!_isAwakenOn)
-            {
-                _isAwakenOn = true;
-                _player.StartCoroutine(PlayerAwakening());
-            }
+            OnAwakening();
 
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
+    }
+
+    private void OnAwakening()
+    {
+        if (_isAwakenOn) return;
+
+        _isAwakenOn = true;
+        _player.StartCoroutine(PlayerAwakening());
     }
 
     private IEnumerator PlayerAwakening()

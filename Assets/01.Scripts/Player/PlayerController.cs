@@ -30,7 +30,8 @@ public abstract class PlayerController : MonoBehaviour
     public Debuff DebuffCompo { get; private set; }
     [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
     [field: SerializeField] public float CurrentHealth { get; set; }
-    [field: SerializeField] protected float _gravity = -9.8f;
+    
+    private float _gravity = -9.8f;
     #endregion
 
 

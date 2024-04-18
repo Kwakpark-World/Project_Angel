@@ -29,13 +29,6 @@ public abstract class PlayerGroundState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (!_player.IsGroundDetected())
-        {
-            if (_player.IsStair) return;
-
-            //_stateMachine.ChangeState(PlayerStateEnum.Fall);
-        }
     }
 
     private void HandlePrimaryAttackEvent()

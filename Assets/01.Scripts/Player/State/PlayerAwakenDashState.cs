@@ -16,15 +16,7 @@ public class PlayerAwakenDashState : PlayerDashState
     {
         base.Enter();
 
-        float dashDistance = _dashDistMax;
-
-        RaycastHit hit;
-        if (Physics.Raycast(_player.transform.position, _player.transform.forward, out hit, _dashDistMax))
-        {
-            dashDistance = hit.distance;
-        }
-
-        _player.transform.position += _player.transform.forward * dashDistance;
+        _player.transform.position += _player.transform.forward * CalcDistance();
     }
    
     public override void Exit()
@@ -37,6 +29,17 @@ public class PlayerAwakenDashState : PlayerDashState
         base.UpdateState();
     }
 
-    
+    private float CalcDistance()
+    {
+        float dashDistance = _dashDistMax;
+
+        RaycastHit hit;
+        if (Physics.Raycast(_player.transform.position, _player.transform.forward, out hit, _dashDistMax))
+        {
+            dashDistance = hit.distance;
+        }
+
+        return dashDistance;
+    }
 }
 

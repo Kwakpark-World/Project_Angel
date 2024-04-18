@@ -18,74 +18,51 @@ public class PlayerChargingState : PlayerChargeState
 
         _player.ChargingGauge = 0;
         _isChargeParticleOn = false;
-
-        Vector3 pos = _player.transform.position;
-        if (_player.IsAwakening)
-        {
-            pos += _player.transform.forward;
-            pos.y += 2f;
-            //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Awaken, pos);
-        }
-        else
-        {
-            pos += _player.transform.right * 2;
-            //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Normal, pos);
-        }
     }
 
     public override void Exit()
     {
         base.Exit();
         _player.PlayerInput.isCharge = false;
-        _isChargeParticleOn = false;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        _player.ChargingGauge = Mathf.Clamp(_player.ChargingGauge, 0f, _maxChargeTime);
+        SetChargingGauge();
+        ChargeToNextState();
+    }
 
-        if (!_player.PlayerInput.isCharge)
+    private void ChargeToNextState()
+    {
+        if (_player.PlayerInput.isCharge) return;
+        
+        if (_player.ChargingGauge < _minChargeTime)
         {
-            if (_player.ChargingGauge < _minChargeTime)
-            {
-                _player.ChargingGauge = 0;
-                _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
-            }
-            else
-            {
-                if (_player.IsAwakening)
-                    _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
-                else
-                    _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
-            }
+            _player.ChargingGauge = 0;
+            _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
         }
         else
         {
-            if (_player.ChargingGauge < _minChargeTime)
-                _player.ChargingGauge += Time.deltaTime;
+            if (_player.IsAwakening)
+                _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
             else
-                _player.ChargingGauge += Time.deltaTime * 1.5f;
+                _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
         }
+    }
 
+    private void SetChargingGauge()
+    {
+        if (!_player.PlayerInput.isCharge) return;
 
-        if (_effectTriggerCalled)
-        {
-            if (!_isChargeParticleOn)
-            {
-                _isChargeParticleOn = true;
+        _player.ChargingGauge = Mathf.Clamp(_player.ChargingGauge, 0f, _maxChargeTime);
 
-                if (_player.IsAwakening)
-                {
-                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Awaken, _weaponRT.position);
-                }
-                else
-                {
-                    EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, _weaponRT.position);
-                }
-            }
-        }
+        if (_player.ChargingGauge < _minChargeTime)
+            _player.ChargingGauge += Time.deltaTime;
+        else
+            _player.ChargingGauge += Time.deltaTime * 1.5f;
+
 
     }
 }
