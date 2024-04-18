@@ -33,6 +33,7 @@ public class Player : PlayerController
     public bool IsStair { get; private set; }
     public bool IsAwakening { get; set; }
     public bool IsPlayerStop { get; set; }
+    public bool IsGroundState { get; set; }
 
     public Vector3 MousePosInWorld { get; private set; }
 

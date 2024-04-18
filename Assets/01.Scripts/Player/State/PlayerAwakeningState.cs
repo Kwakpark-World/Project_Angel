@@ -57,6 +57,8 @@ public class PlayerAwakeningState : PlayerState
             yield return null;
         }
 
+        while (!_player.IsGroundState) yield return null;
+
         if (!_player.IsDie)
         {
             _player.IsAwakening = false;
