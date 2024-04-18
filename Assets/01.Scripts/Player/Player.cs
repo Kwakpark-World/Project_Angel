@@ -88,13 +88,6 @@ public class Player : PlayerController
         PlayerOnStair();
 
         SetMousePosInWorld();
-
-        // Debug
-        if (CurrentHealth <= 0f)
-        {
-            OnDie();
-        }
-
     }
 
     protected override void FixedUpdate()
@@ -234,6 +227,7 @@ public class Player : PlayerController
     }
     #endregion
 
+    #region Mouse Control
     public void RotateToMousePos()
     {
         Vector3 dir = (MousePosInWorld - transform.position).normalized;
@@ -254,8 +248,9 @@ public class Player : PlayerController
 
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
+    #endregion
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    #region Debuff Control
     public void AddFreezeMaterial()
     {
         if (_isFreezing)
@@ -293,4 +288,5 @@ public class Player : PlayerController
             renderer.SetMaterials(rendererMaterials);
         }
     }
+    #endregion
 }
