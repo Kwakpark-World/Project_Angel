@@ -91,7 +91,7 @@ public class Rune : PoolableMono
 
         while (true)
         {
-            pos.y = Mathf.Sin(t) * _floatingHeight + originY;
+            pos.y = Mathf.Sin(t) * _floatingHeight + originY + _floatingHeight;
             transform.position = pos;
             t += Time.deltaTime * _floatingSpeed;
 

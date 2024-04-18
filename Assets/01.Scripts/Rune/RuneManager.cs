@@ -69,6 +69,7 @@ public class RuneManager : MonoSingleton<RuneManager>
                     break;
 
                 case RuneType.Health:
+                    Debug.Log("3");
                     StartCoroutine(LastDance(5f));
 
                     break;
