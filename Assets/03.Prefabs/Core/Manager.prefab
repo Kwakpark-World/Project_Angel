@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4321788645907691711}
   - component: {fileID: -161107910005527396}
   - component: {fileID: 6227062837556393868}
+  - component: {fileID: 748126870551193402}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -86,6 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _runeList: {fileID: 11400000, guid: 92a932b9b7c11d540ad3bda0d6513b27, type: 2}
+  isLastDance: 0
   isDebuff: 0
 --- !u!114 &6227062837556393868
 MonoBehaviour:
@@ -103,3 +105,15 @@ MonoBehaviour:
   envList: []
   sfxList: []
   audioMixer: {fileID: 24100000, guid: 00bd0b9e747f3df46914b84dbfb1ee9f, type: 2}
+--- !u!114 &748126870551193402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338522080048316861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38690f4e7763697458e3473b0ae75c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
