@@ -8,7 +8,7 @@ public enum PlayerStateEnum
     Idle,
     Move,
     Fall,
-    Dash,
+    Roll,
     EDash,
     Defense,
     MeleeAttack,

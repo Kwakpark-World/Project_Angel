@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerChargeStabAttackState : PlayerAttackState
+public class PlayerChargeStabAttackState : PlayerChargeState
 {
     private bool _isStabMove;
 

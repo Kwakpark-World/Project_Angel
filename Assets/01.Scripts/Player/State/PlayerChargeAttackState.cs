@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerChargeAttackState : PlayerAttackState
+public class PlayerChargeAttackState : PlayerChargeState
 {
     float defaultDist = 5;
     float awakenDist = 10;
@@ -22,8 +22,7 @@ public class PlayerChargeAttackState : PlayerAttackState
 
         // Default Speed + (0.GaugeAmount) * MultiplyValue
         // (0.GaugeAmount) = 0 ~ 0.1;
-        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / 20) * _player.ChargingAttackSpeed; 
-
+        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.ChargingAttackSpeed;
 
     }
 

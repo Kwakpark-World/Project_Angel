@@ -69,7 +69,7 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
             PoolManager.Instance.Push(this, 3);
         }
 
-        if (GameManager.Instance.PlayerInstance.StateMachine.CurrentState == GameManager.Instance.PlayerInstance.StateMachine.GetState(PlayerStateEnum.Dash))
+        if (GameManager.Instance.PlayerInstance.StateMachine.CurrentState == GameManager.Instance.PlayerInstance.StateMachine.GetState(PlayerStateEnum.Roll))
         {
             PoolManager.Instance.Push(this);
         }

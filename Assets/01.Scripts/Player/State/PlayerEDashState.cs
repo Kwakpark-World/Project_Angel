@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerEDashState : PlayerState
+public class PlayerEDashState : PlayerDashState
 {
     private float _dashDistanceMax = 10f;
 
@@ -15,7 +15,6 @@ public class PlayerEDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        _player.RotateToMousePos();
 
         float dashDistance = _dashDistanceMax;
 
@@ -36,11 +35,6 @@ public class PlayerEDashState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        
-        if (_endTriggerCalled)
-        {
-            _stateMachine.ChangeState(PlayerStateEnum.Idle);
-        }
     }
 
     

@@ -213,7 +213,7 @@ public class Player : PlayerController
             if (curState == StateMachine.GetState(PlayerStateEnum.MeleeAttack)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.QSkill)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Dash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Roll)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.EDash)) return;
             if (curState == StateMachine.GetState(PlayerStateEnum.Charge)) return;
 
@@ -237,7 +237,7 @@ public class Player : PlayerController
             if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
 
-            StateMachine.ChangeState(PlayerStateEnum.Dash);
+            StateMachine.ChangeState(PlayerStateEnum.Roll);
         }
         else
         {

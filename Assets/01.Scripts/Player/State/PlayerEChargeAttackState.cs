@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEChargeAttackState : PlayerAttackState
+public class PlayerEChargeAttackState : PlayerChargeState
 {
     public PlayerEChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -12,7 +12,7 @@ public class PlayerEChargeAttackState : PlayerAttackState
     {
         base.Enter();
 
-        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / 20) * _player.ChargingAttackSpeed;
+        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.ChargingAttackSpeed;
 
     }
 
