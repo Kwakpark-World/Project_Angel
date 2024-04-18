@@ -46,14 +46,14 @@ public abstract class PlayerGroundState : PlayerState
     private void ESkillHandle()
     {
         if (_player.IsAwakening) return;
-        if (_player.awakenCurrentGauge < _player.awakenMaxGauge) return;
+        if (_player.awakenCurrentGauge < _player.PlayerStatData.GetMaxAwakenGauge()) return;
 
         _stateMachine.ChangeState(PlayerStateEnum.Awakening);
     }
 
     private void QSkillHandle()
     {
-        if (_player.slamPrevTime + _player.slamSkillCoolTime > Time.time) return;
+        if (_player.slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
 
         _player.slamPrevTime = Time.time;
 

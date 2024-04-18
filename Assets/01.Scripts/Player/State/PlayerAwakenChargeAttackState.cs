@@ -12,7 +12,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
     {
         base.Enter();
 
-        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.ChargingAttackSpeed;
+        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
 
     }
 

@@ -22,8 +22,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
         // Default Speed + (0.GaugeAmount) * MultiplyValue
         // (0.GaugeAmount) = 0 ~ 0.1;
-        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.ChargingAttackSpeed;
-
+        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
     }
 
     public override void Exit()

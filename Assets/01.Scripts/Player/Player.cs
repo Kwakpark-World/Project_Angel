@@ -5,43 +5,24 @@ using UnityEngine;
 
 public class Player : PlayerController
 {
-    [Header("Movement Settings")]
-    public float moveSpeed = 1f;
-    public float rotationSpeed = 1f;
-    public float dashDuration = 0.4f;
-    public float dashSpeed = 20f;
-
-    [Header("Attack Settings")]
+    [Space(30f), Header("Attack Settings")]
     public GameObject _weapon;
 
     public LayerMask _enemyLayer;
 
-    public float attackPower;
-    public float attackSpeed = 1f;
-
     public float ChargingGauge;
-    public float ChargingAttackSpeed;
     public float ChargingAttackStabDistance;
 
-    [Header("Critical Settings")]
-    public float criticalChance;
-    public float criticalMultiplier;
-
     [Header("Defense Settings")]
-    public float defensivePower;
     public float defenseTime = 3f;
 
     [Header("CoolTime Settings")]
-    public float dashCoolTime = 0f;
     private float dashPrevTime = 0f;
 
-    public float defenseCoolTime = 1f;
     public float defensePrevTime = 0f;
 
-    public float slamSkillCoolTime = 10f;
     public float slamPrevTime = 0f;
 
-    public float awakenMaxGauge = 100f;
     public float awakenCurrentGauge = 0f;
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
@@ -59,6 +40,7 @@ public class Player : PlayerController
     public HashSet<Brain> enemyNormalHitDuplicateChecker = new HashSet<Brain>();
     public HashSet<Brain> enemyChainHitDuplicateChecker = new HashSet<Brain>();
 
+    [Header("Debuff Render")]
     public Renderer[] renderers;
     public Material freezeMaterial;
     private bool _isFreezing;
@@ -99,8 +81,6 @@ public class Player : PlayerController
     protected override void Update()
     {
         base.Update();
-        
-        moveSpeed = PlayerStatData.GetMoveSpeed();
 
         StateMachine.CurrentState.UpdateState();
 
@@ -152,7 +132,7 @@ public class Player : PlayerController
         }
         else
         {
-            CurrentHealth -= Mathf.Max(incomingDamage - defensivePower, 0f);
+            CurrentHealth -= Mathf.Max(incomingDamage - PlayerStatData.GetDefensivePower(), 0f);
         }
         
 
@@ -166,21 +146,7 @@ public class Player : PlayerController
     private void PlayerStatInitialize()
     {
         CurrentHealth = PlayerStatData.GetMaxHealth();
-        defensivePower = PlayerStatData.GetDefensivePower();
-        defenseCoolTime = PlayerStatData.GetDefenseCooldown();
-        attackPower = PlayerStatData.GetAttackPower();
-        attackSpeed = PlayerStatData.GetAttackSpeed();
-        criticalChance = PlayerStatData.GetCriticalChance();
-        criticalMultiplier = PlayerStatData.GetCriticalMultiplier();
-        moveSpeed = PlayerStatData.GetMoveSpeed();
-        rotationSpeed = PlayerStatData.GetRotateSpeed();
-        dashSpeed = PlayerStatData.GetDashSpeed();
-        dashDuration = PlayerStatData.GetDashDuration();
-        dashCoolTime = PlayerStatData.GetDashCooldown();
-        slamSkillCoolTime = PlayerStatData.GetSlamSkillCooldown();
-        awakenMaxGauge = PlayerStatData.GetMaxAwakenGauge();
-        ChargingAttackSpeed = PlayerStatData.GetChargingAttackSpeed();
-        ChargingAttackStabDistance = PlayerStatData.GetChargingAttackDistance();
+
     }
 
     public void SetPlayerStat(PlayerStatType stat, float value)
@@ -219,7 +185,7 @@ public class Player : PlayerController
 
             if (IsGroundDetected())
             {
-                if (defenseCoolTime + defensePrevTime > Time.time) return;
+                if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time) return;
                 StateMachine.ChangeState(PlayerStateEnum.Defense);
             }
         }
@@ -227,7 +193,7 @@ public class Player : PlayerController
 
     private void HandleDashEvent()
     {
-        if (dashCoolTime + dashPrevTime > Time.time) return;
+        if (PlayerStatData.GetDefenseCooldown() + dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
 
         dashPrevTime = Time.time;

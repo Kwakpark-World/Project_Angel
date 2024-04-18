@@ -41,7 +41,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
             _comboCounter = 0;
 
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
-        _player.AnimatorCompo.speed = _player.attackSpeed;
+        _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
 
         //float moveDist = _player.attackMovementDist[_comboCounter];
         //_player.SetVelocity(_player.transform.forward * moveDist);

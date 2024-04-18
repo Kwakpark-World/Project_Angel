@@ -52,7 +52,7 @@ public class PlayerAwakeningState : PlayerState
 
             if (_player.IsAwakening)
             {
-                _player.awakenCurrentGauge = Mathf.Clamp(_player.awakenCurrentGauge, 0, _player.awakenMaxGauge);
+                _player.awakenCurrentGauge = Mathf.Clamp(_player.awakenCurrentGauge, 0, _player.PlayerStatData.GetMaxAwakenGauge());
                 _player.awakenCurrentGauge -= 10 * Time.deltaTime;
             }
             yield return null;

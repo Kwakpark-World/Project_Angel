@@ -86,7 +86,7 @@ public class PlayerChargeAttackEffect : PoolableMonoEffect
         {
             if(other.gameObject.TryGetComponent<Brain>(out Brain brain))
             {
-                brain.OnHit(GameManager.Instance.PlayerInstance.attackPower);
+                brain.OnHit(GameManager.Instance.PlayerInstance.PlayerStatData.GetAttackPower());
             }
         }
     }

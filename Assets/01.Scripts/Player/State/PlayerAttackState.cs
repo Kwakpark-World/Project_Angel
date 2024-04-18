@@ -19,8 +19,6 @@ public class PlayerAttackState : PlayerState
         _weaponRB = _player._weapon.transform.Find("RightPointBottom");
         _weaponLT = _player._weapon.transform.Find("LeftPointTop");
         _weaponLB = _player._weapon.transform.Find("LeftPointBottom");
-
-
     }
 
     public override void Exit()
@@ -43,7 +41,7 @@ public class PlayerAttackState : PlayerState
             {
                 if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
                 {
-                    brain.OnHit(_player.attackPower);
+                    brain.OnHit(_player.PlayerStatData.GetAttackPower());
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
                 }
@@ -61,7 +59,7 @@ public class PlayerAttackState : PlayerState
             {
                 if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
                 {
-                    brain.OnHit(_player.attackPower);
+                    brain.OnHit(_player.PlayerStatData.GetAttackPower());
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
                 }
