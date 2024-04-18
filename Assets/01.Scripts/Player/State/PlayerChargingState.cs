@@ -56,9 +56,9 @@ public class PlayerChargingState : PlayerChargeState
             else
             {
                 if (_player.IsAwakening)
-                    _stateMachine.ChangeState(PlayerStateEnum.EChargeAttack);
+                    _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
                 else
-                    _stateMachine.ChangeState(PlayerStateEnum.ChargeAttack);
+                    _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
             }
         }
         else

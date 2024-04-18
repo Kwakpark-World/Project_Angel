@@ -143,7 +143,7 @@ public class Player : PlayerController
     {
         if (IsDefense || IsDie)
             return;
-        if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill))
+        if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening))
             return;
        
         if(RuneManager.Instance.isLastDance == true && CurrentHealth <= 1f)
@@ -211,11 +211,11 @@ public class Player : PlayerController
             var curState = StateMachine.CurrentState;
 
             if (curState == StateMachine.GetState(PlayerStateEnum.MeleeAttack)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.QSkill)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Roll)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.EDash)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Charge)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.NormalSlam)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.NormalDash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.AwakenDash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Charging)) return;
 
             if (IsGroundDetected())
             {
@@ -235,16 +235,16 @@ public class Player : PlayerController
         if (!IsAwakening)
         {
             if (!IsGroundDetected()) return;
-            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
+            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
 
-            StateMachine.ChangeState(PlayerStateEnum.Roll);
+            StateMachine.ChangeState(PlayerStateEnum.NormalDash);
         }
         else
         {
             if (!IsGroundDetected()) return;
-            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
+            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
 
-            StateMachine.ChangeState(PlayerStateEnum.EDash);
+            StateMachine.ChangeState(PlayerStateEnum.AwakenDash);
         }
     }
 

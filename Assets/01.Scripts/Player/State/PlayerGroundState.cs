@@ -40,7 +40,7 @@ public abstract class PlayerGroundState : PlayerState
 
     private void HandlePrimaryAttackEvent()
     {
-        _stateMachine.ChangeState(PlayerStateEnum.Charge);
+        _stateMachine.ChangeState(PlayerStateEnum.Charging);
     }
 
     private void ESkillHandle()
@@ -48,7 +48,7 @@ public abstract class PlayerGroundState : PlayerState
         if (_player.IsAwakening) return;
         if (_player.awakenCurrentGauge < _player.awakenMaxGauge) return;
 
-        _stateMachine.ChangeState(PlayerStateEnum.ESkill);
+        _stateMachine.ChangeState(PlayerStateEnum.Awakening);
     }
 
     private void QSkillHandle()
@@ -58,8 +58,8 @@ public abstract class PlayerGroundState : PlayerState
         _player.qPrevTime = Time.time;
 
         if (_player.IsAwakening)
-            _stateMachine.ChangeState(PlayerStateEnum.EQSkill);
+            _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
         else
-            _stateMachine.ChangeState(PlayerStateEnum.QSkill);
+            _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
     }
 }
