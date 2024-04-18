@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RuneDataSO : ScriptableObject
+[CreateAssetMenu(menuName = "SO/Data/Rune")]
+public class RuneDataSO : ScriptableObject
 {
     public RuneType runeType;
     public GameObject runeObj;
+    public Sprite runeSprite;
     public Color lightColor;
-
-    public abstract void UseEffect();
-
-    public abstract void KillEffect();
+    public BuffType buffType;
 }

@@ -51,6 +51,12 @@ public class Rune : PoolableMono
         {
             StopAllCoroutines();
 
+            RuneType runtype = _runeData.runeType;
+            Sprite runeSprite = _runeData.runeSprite;
+
+            RuneInventory.Instance.AddItem(runtype, runeSprite);
+           
+
             if (_runeData == null)
             {
                 Debug.LogError($"Rune data is null.");
@@ -58,8 +64,9 @@ public class Rune : PoolableMono
                 return;
             }
 
-            _runeData.UseEffect();
+            p.BuffCompo.SetBuff(_runeData.buffType, this);
             RuneManager.Instance.collectedRunes[_runeData.runeType].Add(this);
+            
             RuneManager.Instance.CheckRuneSynergy();
             PoolManager.Instance.Push(this);
         }
@@ -72,6 +79,7 @@ public class Rune : PoolableMono
 
     public void InitializeRune()
     {
+        Debug.Log(_runeData.name);
         transform.Find(_runeData.name).gameObject.SetActive(true);
         StartCoroutine(FloatingCoroutine());
     }

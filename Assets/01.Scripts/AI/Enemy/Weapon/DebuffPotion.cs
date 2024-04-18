@@ -7,7 +7,7 @@ public class DebuffPotion : PoolableMono
     [HideInInspector]
     public EnemyBrain owner;
     [SerializeField]
-    private DebuffType _debuffType;
+    private BuffType _debuffType;
     [SerializeField]
     private int _lifetime = 5;
     [SerializeField]
@@ -30,18 +30,18 @@ public class DebuffPotion : PoolableMono
         {
             switch (_debuffType)
             {
-                case DebuffType.Poison:
-                    GameManager.Instance.PlayerInstance.DebuffCompo.SetDebuff(_debuffType, owner.DebuffCompo.DebuffStatData.poisonDuration, owner);
+                case BuffType.Poison:
+                    GameManager.Instance.PlayerInstance.BuffCompo.SetBuff(_debuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
 
                     break;
 
-                case DebuffType.Freeze:
-                    GameManager.Instance.PlayerInstance.DebuffCompo.SetDebuff(_debuffType, owner.DebuffCompo.DebuffStatData.freezeDuration, owner);
+                case BuffType.Freeze:
+                    GameManager.Instance.PlayerInstance.BuffCompo.SetBuff(_debuffType, owner.BuffCompo.BuffStatData.freezeDuration, owner);
 
                     break;
 
-                case DebuffType.Knockback:
-                    GameManager.Instance.PlayerInstance.DebuffCompo.SetDebuff(_debuffType, owner);
+                case BuffType.Knockback:
+                    GameManager.Instance.PlayerInstance.BuffCompo.SetBuff(_debuffType, owner);
 
                     break;
             }
