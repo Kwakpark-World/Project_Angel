@@ -18,7 +18,6 @@ public class RuneInventory : MonoSingleton<RuneInventory>
         if (!itemSprites.ContainsKey(runeType))
         {
             itemSprites.Add(runeType, itemSprite);
-            
         }
     }
 

@@ -1037,14 +1037,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
         type: 3}
+      propertyPath: _weapon
+      value: 
+      objectReference: {fileID: 1079090521}
+    - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
       propertyPath: _groundCheckDistance
       value: 1.1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8261309157372427609, guid: 7be0185120f2fa546ab1a40fccf5e39e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1494236958258072100, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1688675606}
   m_SourcePrefab: {fileID: 100100000, guid: 7be0185120f2fa546ab1a40fccf5e39e, type: 3}
+--- !u!1 &618819938 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1494236958258072100, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+    type: 3}
+  m_PrefabInstance: {fileID: 618819937}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &771833197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,6 +1905,12 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1079090521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7559007113953224229, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+    type: 3}
+  m_PrefabInstance: {fileID: 618819937}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1118049798
 GameObject:
   m_ObjectHideFlags: 0
@@ -2339,12 +2361,27 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 618819937}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 618819938}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4d89d7772c97bc43b1acc82642405ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1688675606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618819938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6a623fbadf0cb4bacff7c4f8f4a59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffTriggers: []
+  <BuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
+    type: 2}
 --- !u!1 &1751012426
 GameObject:
   m_ObjectHideFlags: 0

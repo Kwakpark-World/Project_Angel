@@ -79,7 +79,6 @@ public class Rune : PoolableMono
 
     public void InitializeRune()
     {
-        Debug.Log(_runeData.name);
         transform.Find(_runeData.name).gameObject.SetActive(true);
         StartCoroutine(FloatingCoroutine());
     }

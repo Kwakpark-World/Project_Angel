@@ -12,12 +12,17 @@ public class InventroyUI : MonoBehaviour
     void Start()
     {
         itemSprites = runeInventory.itemSprites;
-        Debug.Log("5");
+        
+    }
+
+    private void Update()
+    {
         UpdateDisplay();
     }
 
     void UpdateDisplay()
     {
+        Debug.Log("2");
         // 현재 UI Image에 아이템 이미지 설정하기
         foreach (var kvp in itemSprites)
         {
