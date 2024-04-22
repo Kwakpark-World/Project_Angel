@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -34,11 +35,19 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void Quit()
     {
+        _fadePanel.DOFade(1f, _fadeDuration)
+            .OnStart(() =>
+            {
+                _fadePanel.raycastTarget = true;
+            })
+            .OnComplete(() =>
+            {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+                UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+                Application.Quit();
 #endif
+            });
     }
 
     private IEnumerator LoadSceneAsync(string sceneName)
