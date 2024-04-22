@@ -31,7 +31,7 @@ public class Debuff : MonoBehaviour
     [SerializeField]
     private List<DebuffTrigger> debuffTriggers;
     [field: SerializeField]
-    public DebuffStat DebuffStatData { get; private set; }
+    public Buff DebuffStatData { get; private set; }
 
     private Dictionary<DebuffType, DebuffTrigger> _debuffTriggersByType = new Dictionary<DebuffType, DebuffTrigger>();
     private Dictionary<DebuffType, object> _attackers = new Dictionary<DebuffType, object>();
@@ -147,12 +147,12 @@ public class Debuff : MonoBehaviour
     {
         if (_ownerController)
         {
-            _poisonDelayTimer = Time.time - (_attackers[DebuffType.Poison] as Brain).DebuffCompo.DebuffStatData.poisonDelay;
+            _poisonDelayTimer = Time.time - (_attackers[DebuffType.Poison] as Brain).BuffCompo.BuffStatData.poisonDelay;
             //Debug.Log(RuneManager.Instance.isArmor);
         }
         else
         {
-            _poisonDelayTimer = Time.time - (_attackers[DebuffType.Poison] as Player).DebuffCompo.DebuffStatData.poisonDelay;
+            _poisonDelayTimer = Time.time - (_attackers[DebuffType.Poison] as Player).BuffCompo.BuffStatData.poisonDelay;
         }
     }
 
@@ -162,9 +162,9 @@ public class Debuff : MonoBehaviour
         {
             Brain attacker = _attackers[DebuffType.Poison] as Brain;
 
-            if (Time.time > _poisonDelayTimer + attacker.DebuffCompo.DebuffStatData.poisonDelay)
+            if (Time.time > _poisonDelayTimer + attacker.BuffCompo.BuffStatData.poisonDelay)
             {
-                _ownerController.OnHit(attacker.DebuffCompo.DebuffStatData.poisonDamage);
+                _ownerController.OnHit(attacker.BuffCompo.BuffStatData.poisonDamage);
 
                 _poisonDelayTimer = Time.time;
             }
@@ -173,9 +173,9 @@ public class Debuff : MonoBehaviour
         {
             Player attacker = _attackers[DebuffType.Poison] as Player;
 
-            if (Time.time > _poisonDelayTimer + attacker.DebuffCompo.DebuffStatData.poisonDelay)
+            if (Time.time > _poisonDelayTimer + attacker.BuffCompo.BuffStatData.poisonDelay)
             {
-                _ownerBrain.OnHit(attacker.DebuffCompo.DebuffStatData.poisonDamage);
+                _ownerBrain.OnHit(attacker.BuffCompo.BuffStatData.poisonDamage);
 
                 _poisonDelayTimer = Time.time;
             }
@@ -190,55 +190,55 @@ public class Debuff : MonoBehaviour
         {
             Brain attacker = _attackers[DebuffType.Freeze] as Brain;
 
-            _ownerController.PlayerStatData.moveSpeed.AddModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
+            _ownerController.PlayerStatData.moveSpeed.AddModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
         }
         else
         {
             PlayerController attacker = _attackers[DebuffType.Freeze] as PlayerController;
 
-            _ownerBrain.EnemyStatData.moveSpeed.AddModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
-        }
+            _ownerBrain.EnemyStatData.moveSpeed.AddModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
 
-        //RuneManager.Instance.isArmor = false;
-    }
-
-    public void FreezeEnd()
-    {
-        if (_ownerController)
-        {
-            Brain attacker = _attackers[DebuffType.Freeze] as Brain;
-
-            _ownerController.PlayerStatData.moveSpeed.RemoveModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
-        }
-        else
-        {
-            PlayerController attacker = _attackers[DebuffType.Freeze] as PlayerController;
-
-            _ownerBrain.EnemyStatData.moveSpeed.RemoveModifier(attacker.DebuffCompo.DebuffStatData.freezeMoveSpeedModifier);
+            //RuneManager.Instance.isArmor = false;
         }
     }
-    #endregion
 
-    #region Knockback Functions
-    public void KnockbackBegin()
-    {
-        if (_ownerController)
+        public void FreezeEnd()
         {
-            if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.NormalSlam) || _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Awakening))
+            if (_ownerController)
             {
-                return;
+                Brain attacker = _attackers[DebuffType.Freeze] as Brain;
+
+                _ownerController.PlayerStatData.moveSpeed.RemoveModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
             }
+            else
+            {
+                PlayerController attacker = _attackers[DebuffType.Freeze] as PlayerController;
 
-            Brain attacker = _attackers[DebuffType.Knockback] as Brain;
-
-            _ownerController.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.DebuffCompo.DebuffStatData.knockbackForce, ForceMode.Impulse);
+                _ownerBrain.EnemyStatData.moveSpeed.RemoveModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
+            }
         }
-        else
+        #endregion
+
+        #region Knockback Functions
+        public void KnockbackBegin()
         {
-            PlayerController attacker = _attackers[DebuffType.Knockback] as PlayerController;
+            if (_ownerController)
+            {
+                if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.NormalSlam) || _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Awakening))
+                {
+                    return;
+                }
 
-            _ownerBrain.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.DebuffCompo.DebuffStatData.knockbackForce, ForceMode.Impulse);
+                Brain attacker = _attackers[DebuffType.Knockback] as Brain;
+
+                _ownerController.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.knockbackForce, ForceMode.Impulse);
+            }
+            else
+            {
+                PlayerController attacker = _attackers[DebuffType.Knockback] as PlayerController;
+
+                _ownerBrain.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.knockbackForce, ForceMode.Impulse);
+            }
         }
-    }
-    #endregion
-}
+        #endregion
+    } 
