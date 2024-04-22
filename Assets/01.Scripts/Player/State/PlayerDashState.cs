@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerState
 {
-    private Vector3 _dashDirection;
-
     public PlayerDashState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -25,11 +23,6 @@ public class PlayerDashState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-
-        _dashDirection = _player.transform.forward;
-
-        _player.SetVelocity(_dashDirection * _player.dashSpeed);
-        
         if (_endTriggerCalled)
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);

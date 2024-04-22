@@ -5,44 +5,21 @@ using UnityEngine;
 
 public class Player : PlayerController
 {
-    [Header("Movement Settings")]
-    public float moveSpeed = 1f;
-    public float rotationSpeed = 1f;
-    public float dashDuration = 0.4f;
-    public float dashSpeed = 20f;
-
-    [Header("Attack Settings")]
+    [Space(30f), Header("Attack Settings")]
     public GameObject _weapon;
 
     public LayerMask _enemyLayer;
 
-    public float attackPower;
-    public float attackSpeed = 1f;
-    public float[] attackMovementDist;
-
     public float ChargingGauge;
-    public float ChargingAttackSpeed;
-    public float ChargingAttackStabDistance;
-
-    [Header("Critical Settings")]
-    public float criticalChance;
-    public float criticalMultiplier;
 
     [Header("Defense Settings")]
-    public float defensivePower;
     public float defenseTime = 3f;
 
     [Header("CoolTime Settings")]
-    public float dashCoolTime = 0f;
     private float dashPrevTime = 0f;
 
-    public float defenseCoolTime = 1f;
     public float defensePrevTime = 0f;
 
-    public float qSkillCoolTime = 10f;
-    public float qPrevTime = 0f;
-
-    public float awakenMaxGauge = 100f;
     public float awakenCurrentGauge = 0f;
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
@@ -54,12 +31,14 @@ public class Player : PlayerController
     public bool IsStair { get; private set; }
     public bool IsAwakening { get; set; }
     public bool IsPlayerStop { get; set; }
+    public bool IsGroundState { get; set; }
 
     public Vector3 MousePosInWorld { get; private set; }
 
     public HashSet<Brain> enemyNormalHitDuplicateChecker = new HashSet<Brain>();
     public HashSet<Brain> enemyChainHitDuplicateChecker = new HashSet<Brain>();
 
+    [Header("Debuff Render")]
     public Renderer[] renderers;
     public Material freezeMaterial;
     private bool _isFreezing;
@@ -100,8 +79,6 @@ public class Player : PlayerController
     protected override void Update()
     {
         base.Update();
-        
-        moveSpeed = PlayerStatData.GetMoveSpeed();
 
         StateMachine.CurrentState.UpdateState();
 
@@ -110,13 +87,6 @@ public class Player : PlayerController
         PlayerOnStair();
 
         SetMousePosInWorld();
-
-        // Debug
-        if (CurrentHealth <= 0f)
-        {
-            OnDie();
-        }
-
     }
 
     protected override void FixedUpdate()
@@ -144,7 +114,7 @@ public class Player : PlayerController
     {
         if (IsDefense || IsDie)
             return;
-        if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill))
+        if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening))
             return;
        
         if(RuneManager.Instance.isLastDance == true && CurrentHealth <= 1f)
@@ -153,7 +123,7 @@ public class Player : PlayerController
         }
         else
         {
-            CurrentHealth -= Mathf.Max(incomingDamage - defensivePower, 0f);
+            CurrentHealth -= Mathf.Max(incomingDamage - PlayerStatData.GetDefensivePower(), 0f);
         }
         
 
@@ -167,21 +137,7 @@ public class Player : PlayerController
     private void PlayerStatInitialize()
     {
         CurrentHealth = PlayerStatData.GetMaxHealth();
-        defensivePower = PlayerStatData.GetDefensivePower();
-        defenseCoolTime = PlayerStatData.GetDefenseCooldown();
-        attackPower = PlayerStatData.GetAttackPower();
-        attackSpeed = PlayerStatData.GetAttackSpeed();
-        criticalChance = PlayerStatData.GetCriticalChance();
-        criticalMultiplier = PlayerStatData.GetCriticalMultiplier();
-        moveSpeed = PlayerStatData.GetMoveSpeed();
-        rotationSpeed = PlayerStatData.GetRotateSpeed();
-        dashSpeed = PlayerStatData.GetDashSpeed();
-        dashDuration = PlayerStatData.GetDashDuration();
-        dashCoolTime = PlayerStatData.GetDashCooldown();
-        qSkillCoolTime = PlayerStatData.GetQSkillCooldown();
-        awakenMaxGauge = PlayerStatData.GetMaxAwakenGauge();
-        ChargingAttackSpeed = PlayerStatData.GetChargingAttackSpeed();
-        ChargingAttackStabDistance = PlayerStatData.GetChargingAttackDistance();
+
     }
 
     public void SetPlayerStat(PlayerStatType stat, float value)
@@ -212,15 +168,15 @@ public class Player : PlayerController
             var curState = StateMachine.CurrentState;
 
             if (curState == StateMachine.GetState(PlayerStateEnum.MeleeAttack)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.QSkill)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Dash)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.EDash)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Charge)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.NormalSlam)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.NormalDash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.AwakenDash)) return;
+            if (curState == StateMachine.GetState(PlayerStateEnum.Charging)) return;
 
             if (IsGroundDetected())
             {
-                if (defenseCoolTime + defensePrevTime > Time.time) return;
+                if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time) return;
                 StateMachine.ChangeState(PlayerStateEnum.Defense);
             }
         }
@@ -228,7 +184,7 @@ public class Player : PlayerController
 
     private void HandleDashEvent()
     {
-        if (dashCoolTime + dashPrevTime > Time.time) return;
+        if (PlayerStatData.GetDefenseCooldown() + dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
 
         dashPrevTime = Time.time;
@@ -236,16 +192,16 @@ public class Player : PlayerController
         if (!IsAwakening)
         {
             if (!IsGroundDetected()) return;
-            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
+            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
 
-            StateMachine.ChangeState(PlayerStateEnum.Dash);
+            StateMachine.ChangeState(PlayerStateEnum.NormalDash);
         }
         else
         {
             if (!IsGroundDetected()) return;
-            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.ESkill)) return;
+            if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
 
-            StateMachine.ChangeState(PlayerStateEnum.EDash);
+            StateMachine.ChangeState(PlayerStateEnum.AwakenDash);
         }
     }
 
@@ -270,6 +226,7 @@ public class Player : PlayerController
     }
     #endregion
 
+    #region Mouse Control
     public void RotateToMousePos()
     {
         Vector3 dir = (MousePosInWorld - transform.position).normalized;
@@ -290,8 +247,9 @@ public class Player : PlayerController
 
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
+    #endregion
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    #region Debuff Control
     public void AddFreezeMaterial()
     {
         if (_isFreezing)
@@ -329,4 +287,5 @@ public class Player : PlayerController
             renderer.SetMaterials(rendererMaterials);
         }
     }
+    #endregion
 }

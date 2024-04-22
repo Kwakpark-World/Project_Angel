@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class PlayerGroundState : PlayerState
 {
+    private float _slamPrevTime = 0f;
+
     protected PlayerGroundState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -13,6 +15,8 @@ public abstract class PlayerGroundState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.IsGroundState = true;
+
         _player.PlayerInput.QSkillEvent += QSkillHandle;
         _player.PlayerInput.ESkillEvent += ESkillHandle;
         _player.PlayerInput.MeleeAttackEvent += HandlePrimaryAttackEvent;
@@ -20,6 +24,8 @@ public abstract class PlayerGroundState : PlayerState
 
     public override void Exit()
     {
+        _player.IsGroundState = true;
+
         _player.PlayerInput.QSkillEvent -= QSkillHandle;
         _player.PlayerInput.ESkillEvent -= ESkillHandle;
         _player.PlayerInput.MeleeAttackEvent -= HandlePrimaryAttackEvent;
@@ -29,37 +35,30 @@ public abstract class PlayerGroundState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (!_player.IsGroundDetected())
-        {
-            if (_player.IsStair) return;
-
-            //_stateMachine.ChangeState(PlayerStateEnum.Fall);
-        }
     }
 
     private void HandlePrimaryAttackEvent()
     {
-        _stateMachine.ChangeState(PlayerStateEnum.Charge);
+        _stateMachine.ChangeState(PlayerStateEnum.Charging);
     }
 
     private void ESkillHandle()
     {
         if (_player.IsAwakening) return;
-        if (_player.awakenCurrentGauge < _player.awakenMaxGauge) return;
+        if (_player.awakenCurrentGauge < _player.PlayerStatData.GetMaxAwakenGauge()) return;
 
-        _stateMachine.ChangeState(PlayerStateEnum.ESkill);
+        _stateMachine.ChangeState(PlayerStateEnum.Awakening);
     }
 
     private void QSkillHandle()
     {
-        if (_player.qPrevTime + _player.qSkillCoolTime > Time.time) return;
+        if (_slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
 
-        _player.qPrevTime = Time.time;
+        _slamPrevTime = Time.time;
 
         if (_player.IsAwakening)
-            _stateMachine.ChangeState(PlayerStateEnum.EQSkill);
+            _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
         else
-            _stateMachine.ChangeState(PlayerStateEnum.QSkill);
+            _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
     }
 }
