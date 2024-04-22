@@ -20,6 +20,8 @@ public class RuneManager : MonoSingleton<RuneManager>
         {
             collectedRunes[type] = new List<Rune>();
         }
+
+        _runeList = Instantiate(_runeList);
     }
 
     public void Update()
@@ -60,7 +62,19 @@ public class RuneManager : MonoSingleton<RuneManager>
 
             switch (rune.Key)
             {
+
+                case RuneType.Acceleration:
+                    break;
+
                 case RuneType.Attack:
+                    break;
+
+                case RuneType.Debuff:
+                    if (UnityEngine.Random.value <= 0.5f)
+                    {
+                        //준호가 공격 만들면 여기다가 할 예정
+                    }
+
                     break;
 
                 case RuneType.Defense:
@@ -69,18 +83,8 @@ public class RuneManager : MonoSingleton<RuneManager>
                     break;
 
                 case RuneType.Health:
+                    Debug.Log("3");
                     StartCoroutine(LastDance(5f));
-
-                    break;
-
-                case RuneType.Acceleration:
-                    break;
-
-                case RuneType.Debuff:
-                    if (UnityEngine.Random.value <= 0.5f)
-                    {
-                        //준호가 공격 만들면 여기다가 할 예정
-                    }
 
                     break;
 
