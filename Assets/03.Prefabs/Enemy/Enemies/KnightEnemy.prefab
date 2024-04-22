@@ -3090,9 +3090,9 @@ GameObject:
   - component: {fileID: 7221655224559645079}
   - component: {fileID: -4427341669288770123}
   - component: {fileID: 5062443879734286216}
-  - component: {fileID: 6755206849200449279}
   - component: {fileID: 7700814571572305591}
   - component: {fileID: 8909113713508752019}
+  - component: {fileID: 6098907853124249871}
   m_Layer: 7
   m_Name: KnightEnemy
   m_TagString: Untagged
@@ -3304,20 +3304,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: 01990108a821ef240aecee84a8a8f482, type: 2}
   brain: {fileID: 7700814571572305591}
---- !u!114 &6755206849200449279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7234891252622568735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007e9285b573e1f4a9c9e3d8b139c844, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debuffTriggers: []
-  <DebuffStatData>k__BackingField: {fileID: 0}
 --- !u!114 &7700814571572305591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3549,6 +3535,20 @@ MonoBehaviour:
         m_Calls: []
   _weaponTransform: {fileID: 0}
   _animator: {fileID: 3552165078964842164}
+--- !u!114 &6098907853124249871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7234891252622568735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6a623fbadf0cb4bacff7c4f8f4a59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffTriggers: []
+  <BuffStatData>k__BackingField: {fileID: 0}
 --- !u!1 &7259109201846599702
 GameObject:
   m_ObjectHideFlags: 0
