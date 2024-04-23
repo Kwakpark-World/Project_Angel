@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventroyUI : MonoBehaviour
+public class RuneDescription : MonoBehaviour
 {
     public RuneInventory runeInventory;
 
@@ -11,16 +12,18 @@ public class InventroyUI : MonoBehaviour
     public Image _targetImage;
 
     public GameObject _Inventory;
-    
+    public RuneDataSO runeDataSO;
 
-    private Dictionary<RuneType, Sprite> itemSprites;
-    private Dictionary<RuneType, int> runeTypeCounts;
+    private Dictionary<BuffType, Sprite> itemSprites;
+    //private Dictionary<RuneDataSO, string> targetSprites;
+
+    public TextMeshProUGUI _runeName;
 
     void Start()
     {
         itemSprites = runeInventory.itemSprites;
         _Inventory.SetActive(false);
-        _targetImage.gameObject.SetActive(false);
+       // _targetImage.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -101,8 +104,6 @@ public class InventroyUI : MonoBehaviour
 
     public void CopyImage(int index)
     {
-
-        // index가 유효한 인덱스인지 확인
         if (index >= 0 && index < _displayImage.Count)
         {
             Image sourceImage = _displayImage[index];
@@ -111,9 +112,8 @@ public class InventroyUI : MonoBehaviour
             if (sourceImage != null && _targetImage != null)
             {
                 _targetImage.sprite = sourceImage.sprite;
+                _runeName.text = runeDataSO.runeName;
             }
         }
-
-
     }
 }
