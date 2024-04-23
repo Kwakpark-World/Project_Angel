@@ -2,6 +2,7 @@ using Autodesk.Fbx;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -9,11 +10,11 @@ using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class AddressableManager : MonoSingleton<AddressableManager>
 {
-    public AssetLabelReference _playerRef;
+    [field: SerializeField] public AssetLabelReference _playerRef { get; private set; }
 
     private List<IEnumerator> _handles = new List<IEnumerator>();
-
-    private void Start()
+    
+    private void Awake()
     {
         StartCoroutine(IninAddressable()); // 혹시 모를 버그를 위해 초기화하는 함수.
     }
@@ -24,47 +25,57 @@ public class AddressableManager : MonoSingleton<AddressableManager>
             ReleaseAsset();
     }
 
-    public T GetAssetToString<T>(string path)
+
+    public async Task<T> GetAssetToString<T>(string path)
     {
         T result = default(T);
-        Addressables.LoadAssetAsync<T>(path).Completed += (AsyncOperationHandle<T> obj) =>
-        {
-            result = obj.Result;
-            _handles.Add(obj);
-        };
+
+        var loadAssets = Addressables.LoadAssetAsync<T>(path);
+        await loadAssets.Task;
+
+        result = loadAssets.Result;
+        _handles.Add(loadAssets);
 
         return result;
     }
 
-    public List<T> GetAssetByLabelToString<T>(string labelName)
+    public async Task<List<T>> GetAssetsByLabelToLabelName<T>(string labelName)
+    {
+        var result = new List<T>();
+
+        var loadAssets = Addressables.LoadResourceLocationsAsync(labelName);
+        await loadAssets.Task;
+
+        var assetResults = loadAssets.Result;
+
+        await LoadAssetByLabel<T>(assetResults, result);
+
+        return result;
+    }
+
+    public async Task<List<T>> GetAssetsByLabelToRef<T>(AssetLabelReference assetRef)
     {
         List<T> result = new List<T>();
 
-        Addressables.LoadResourceLocationsAsync(labelName).Completed += (obj) => LoadAssetByLabel(obj, result);
-        Addressables.LoadResourceLocationsAsync(labelName).Completed -= (obj) => LoadAssetByLabel(obj, result);
+        var loadAssets = Addressables.LoadResourceLocationsAsync(assetRef.labelString);
+        await loadAssets.Task;
+
+        var assetResults = loadAssets.Result;
+
+        await LoadAssetByLabel<T>(assetResults, result);
 
         return result;
     }
 
-    public List<T> GetAssetByLabelToRef<T>(AssetLabelReference assetRef)
+    private async Task LoadAssetByLabel<T>(IList<IResourceLocation> objs, List<T> list)
     {
-        List<T> result = new List<T>();
-
-        Addressables.LoadResourceLocationsAsync(assetRef.labelString).Completed += (obj) => LoadAssetByLabel(obj, result);
-        Addressables.LoadResourceLocationsAsync(assetRef.labelString).Completed -= (obj) => LoadAssetByLabel(obj, result);
-        
-        return result;
-    }
-
-    private void LoadAssetByLabel<T>(AsyncOperationHandle<IList<IResourceLocation>> obj, List<T> list)
-    {
-        foreach (var item in obj.Result)
+        foreach (var item in objs)
         {
-            Addressables.LoadAssetAsync<T>(item.PrimaryKey).Completed += (value) =>
-            {
-                list.Add(value.Result);
-                _handles.Add(value);
-            };
+            var handle = Addressables.LoadAssetAsync<T>(item.PrimaryKey);
+            await handle.Task;
+
+            list.Add(handle.Result);
+            _handles.Add(handle);
         }
 
     }
