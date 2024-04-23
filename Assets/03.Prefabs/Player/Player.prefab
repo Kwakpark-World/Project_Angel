@@ -796,7 +796,7 @@ GameObject:
   - component: {fileID: 5323078755393635929}
   - component: {fileID: 5173864762241979809}
   - component: {fileID: 8523927444897520135}
-  - component: {fileID: 8261309157372427609}
+  - component: {fileID: 6385291853889329438}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -901,38 +901,13 @@ MonoBehaviour:
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: 2d8f987c0db816249b696fc32bb953cc,
     type: 2}
   <CurrentHealth>k__BackingField: 0
-  _gravity: -9.8
-  moveSpeed: 5.5
-  rotationSpeed: 4
-  dashDuration: 0.4
-  dashSpeed: 5
   _weapon: {fileID: 0}
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackPower: 0
-  attackSpeed: 1
-  attackMovementDist:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
   ChargingGauge: 0
-  ChargingAttackSpeed: 0
-  ChargingAttackStabDistance: 0
-  criticalChance: 0
-  criticalMultiplier: 0
-  defensivePower: 0
   defenseTime: 3
-  dashCoolTime: 1
-  defenseCoolTime: 1
   defensePrevTime: 0
-  qSkillCoolTime: 10
-  qPrevTime: 0
-  awakenMaxGauge: 100
   awakenCurrentGauge: 100
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d771d326405705e4b9989f7211c9e6b3,
     type: 2}
@@ -947,7 +922,7 @@ MonoBehaviour:
   - {fileID: 6493501655499024990}
   - {fileID: 8590556825814068079}
   freezeMaterial: {fileID: 2100000, guid: 7b34644260d996a42963d1af02704da0, type: 2}
---- !u!114 &8261309157372427609
+--- !u!114 &6385291853889329438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -956,16 +931,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1494236958258072100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007e9285b573e1f4a9c9e3d8b139c844, type: 3}
+  m_Script: {fileID: 11500000, guid: ea6a623fbadf0cb4bacff7c4f8f4a59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debuffTriggers:
-  - debuffType: 0
-    onDebuffBegin:
+  buffTriggers:
+  - buffType: 0
+    onBuffBegin:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8261309157372427609}
-          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
           m_MethodName: PoisonBegin
           m_Mode: 1
           m_Arguments:
@@ -976,23 +951,11 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 8637140176355860739}
-          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_MethodName: Play
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    onDebuffPlaying:
+    onBuffPlaying:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8261309157372427609}
-          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
           m_MethodName: PoisonPlaying
           m_Mode: 1
           m_Arguments:
@@ -1003,27 +966,15 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onDebuffEnd:
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - buffType: 1
+    onBuffBegin:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8637140176355860739}
-          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_MethodName: Stop
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - debuffType: 1
-    onDebuffBegin:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 8261309157372427609}
-          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
           m_MethodName: FreezeBegin
           m_Mode: 1
           m_Arguments:
@@ -1034,26 +985,14 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 8523927444897520135}
-          m_TargetAssemblyTypeName: Player, Assembly-CSharp
-          m_MethodName: AddFreezeMaterial
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    onDebuffPlaying:
+    onBuffPlaying:
       m_PersistentCalls:
         m_Calls: []
-    onDebuffEnd:
+    onBuffEnd:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8261309157372427609}
-          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
           m_MethodName: FreezeEnd
           m_Mode: 1
           m_Arguments:
@@ -1064,24 +1003,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 8523927444897520135}
-          m_TargetAssemblyTypeName: Player, Assembly-CSharp
-          m_MethodName: RemoveFreezeMaterial
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - debuffType: 2
-    onDebuffBegin:
+  - buffType: 2
+    onBuffBegin:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8261309157372427609}
-          m_TargetAssemblyTypeName: Debuff, Assembly-CSharp
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
           m_MethodName: KnockbackBegin
           m_Mode: 1
           m_Arguments:
@@ -1092,13 +1019,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onDebuffPlaying:
+    onBuffPlaying:
       m_PersistentCalls:
         m_Calls: []
-    onDebuffEnd:
+    onBuffEnd:
       m_PersistentCalls:
         m_Calls: []
-  <DebuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
+  <BuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
     type: 2}
 --- !u!1 &1534901178157195354
 GameObject:

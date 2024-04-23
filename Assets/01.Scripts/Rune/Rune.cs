@@ -22,8 +22,6 @@ public class Rune : PoolableMono
     [SerializeField]
     private float _rotateSpeed = 1.5f;
     [SerializeField]
-    private float _lightIntensity = 5f;
-    [SerializeField]
     private Light _pointLight;
 
     private RuneDataSO _runeData;
