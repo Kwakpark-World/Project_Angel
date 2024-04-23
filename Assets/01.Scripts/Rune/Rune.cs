@@ -22,9 +22,9 @@ public class Rune : PoolableMono
     [SerializeField]
     private float _rotateSpeed = 1.5f;
     [SerializeField]
-    private float _lightIntensity = 5f;
-    [SerializeField]
     private Light _pointLight;
+    [SerializeField]
+    private string runeName;
 
     private RuneDataSO _runeData;
     public RuneDataSO RuneData
@@ -47,9 +47,17 @@ public class Rune : PoolableMono
 
     private void OnTriggerEnter(Collider other)
     {
+
+
         if (other.TryGetComponent(out Player p))
         {
             StopAllCoroutines();
+
+            BuffType runtype = _runeData.buffType;
+            Sprite runeSprite = _runeData.runeSprite;
+
+            RuneInventory.Instance.AddItem(runtype, runeSprite, _runeData,runeName);
+           
 
             if (_runeData == null)
             {
@@ -58,8 +66,9 @@ public class Rune : PoolableMono
                 return;
             }
 
-            _runeData.UseEffect();
+            p.BuffCompo.SetBuff(_runeData.buffType, this);
             RuneManager.Instance.collectedRunes[_runeData.runeType].Add(this);
+            
             RuneManager.Instance.CheckRuneSynergy();
             PoolManager.Instance.Push(this);
         }
@@ -91,7 +100,7 @@ public class Rune : PoolableMono
 
         while (true)
         {
-            pos.y = Mathf.Sin(t) * _floatingHeight + originY;
+            pos.y = Mathf.Sin(t) * _floatingHeight + originY + _floatingHeight;
             transform.position = pos;
             t += Time.deltaTime * _floatingSpeed;
 

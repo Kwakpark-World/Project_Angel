@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3531168893790223424}
+  - component: {fileID: 7652593973220001670}
   - component: {fileID: 4537098756171562567}
   m_Layer: 12
   m_Name: Rune
@@ -48,6 +49,27 @@ Transform:
   - {fileID: 8540222909600508002}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7652593973220001670
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512616388168453242}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.35
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4537098756171562567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,11 +83,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingType: 23
-  _floatingHeight: 0.75
+  _floatingHeight: 0.5
   _floatingSpeed: 1.5
-  _rotateSpeed: 1.5
-  _lightIntensity: 5
+  _rotateSpeed: 7
   _pointLight: {fileID: 353877782481813060}
+  runeName: '?'
 --- !u!1 &4341748872053622689
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,8 +276,8 @@ MonoBehaviour:
   _floatingHeight: 0.75
   _floatingSpeed: 1.5
   _rotateSpeed: 1.5
-  _lightIntensity: 5
   _pointLight: {fileID: 0}
+  runeName: 
 --- !u!1001 &843784025272614957
 PrefabInstance:
   m_ObjectHideFlags: 0

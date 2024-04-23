@@ -22,4 +22,19 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
             return _instance;
         }
     }
+
+    protected virtual void Awake()
+    {
+        if (Instance == this)
+        {
+            if (transform.root.gameObject.scene.name != "DontDestroyOnLoad")
+            {
+                DontDestroyOnLoad(transform.root.gameObject);
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 }

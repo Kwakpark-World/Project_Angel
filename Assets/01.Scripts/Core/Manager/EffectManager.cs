@@ -14,8 +14,8 @@ public class EffectManager : MonoSingleton<EffectManager>
         {
             _effects.Add(effectName, type);
         }
-        else
-            Debug.Log($"This Object already contain effect. Object Pooling Type : {type}");
+        //else
+            //Debug.Log($"This Object already contain effect. Object Pooling Type : {type}");
     }
 
     public PoolingType GetEffectType(string effectName)

@@ -23,12 +23,6 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-
-    }
-
     private void Start()
     {
         SoundManager.Instance.PlayEnv(ENVType.Wind);

@@ -47,7 +47,7 @@ public class Player : PlayerController
     {
         base.Awake();
 
-        DebuffCompo.SetOwner(this);
+        BuffCompo.SetOwner(this);
 
         StateMachine = new PlayerStateMachine();
 

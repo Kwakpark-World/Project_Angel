@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
-[RequireComponent(typeof(Debuff), typeof(EnemyAnimator))]
+[RequireComponent(typeof(Buff), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {
     public BehaviourTreeRunner treeRunner;
@@ -13,7 +13,7 @@ public abstract class Brain : PoolableMono
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
     public NavMeshAgent NavMeshAgentCompo { get; private set; }
-    public Debuff DebuffCompo { get; private set; }
+    public Buff BuffCompo { get; private set; }
     public EnemyAnimator AnimatorCompo { get; private set; }
     #endregion
 
@@ -73,9 +73,9 @@ public abstract class Brain : PoolableMono
         RigidbodyCompo = GetComponent<Rigidbody>();
         NavMeshAgentCompo = GetComponent<NavMeshAgent>();
         NavMeshAgentCompo.updateRotation = false;
-        DebuffCompo = GetComponent<Debuff>();
+        BuffCompo = GetComponent<Buff>();
 
-        DebuffCompo.SetOwner(this);
+        BuffCompo.SetOwner(this);
 
         AnimatorCompo = GetComponent<EnemyAnimator>();
 

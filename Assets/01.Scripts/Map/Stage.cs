@@ -23,30 +23,28 @@ public class Stage : MonoBehaviour
     private void Update()
     {
 #if UNITY_EDITOR // Debug
-        if (Keyboard.current.cKey.wasPressedThisFrame)
+        if (_running && Keyboard.current.cKey.wasPressedThisFrame)
         {
             ClearStage();
         }
 #endif
     }
 
-    public void StartStage(Player player)
+    public void StartStage()
     {
         _running = true;
+
         StartCoroutine(LockStage());
         SoundManager.Instance.ChangeBGMMode(BGMMode.Combat);
-
-        //TODO: Active Scene Cam
-        //_stageCam.Follow = player.transform;
     }
 
     public void ClearStage()
     {
         _running = false;
         _isClear = true;
+
         StartCoroutine(UnlockStage());
         SoundManager.Instance.ChangeBGMMode(BGMMode.NonCombat);
-
         RuneManager.Instance.CreateRune(_runeSpawnTrm.position);
     }
 
@@ -84,7 +82,7 @@ public class Stage : MonoBehaviour
     {
         if(other.CompareTag("Player") && !_isClear)
         {
-            StartStage(other.GetComponent<Player>());
+            StartStage();
         }
     }
 }

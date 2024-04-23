@@ -27,7 +27,7 @@ public abstract class PlayerController : MonoBehaviour
     public Rigidbody RigidbodyCompo { get; private set; }
     public CapsuleCollider ColliderCompo { get; private set; }
 
-    public Debuff DebuffCompo { get; private set; }
+    public Buff BuffCompo { get; private set; }
     [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
     [field: SerializeField] public float CurrentHealth { get; set; }
     
@@ -44,7 +44,7 @@ public abstract class PlayerController : MonoBehaviour
         RigidbodyCompo = GetComponent<Rigidbody>();
         ColliderCompo = GetComponent<CapsuleCollider>();
 
-        DebuffCompo = GetComponent<Debuff>();
+        BuffCompo = GetComponent<Buff>();
 
         PlayerStatData = Instantiate(PlayerStatData);
         PlayerStatData.SetOwner(this);
