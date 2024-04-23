@@ -2,7 +2,6 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -13,10 +12,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private float _fadeDuration;
 
-    private void Awake()
+    protected override void Awake()
     {
-        DontDestroyOnLoad(this);
-
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoaded();
     }
 
