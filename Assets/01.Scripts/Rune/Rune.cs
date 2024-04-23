@@ -56,7 +56,7 @@ public class Rune : PoolableMono
             BuffType runtype = _runeData.buffType;
             Sprite runeSprite = _runeData.runeSprite;
 
-            RuneInventory.Instance.AddItem(runtype, runeSprite, _runeData,runeName);
+            //RuneInventory.AddItem(runtype, runeSprite, _runeData,runeName);
            
 
             if (_runeData == null)

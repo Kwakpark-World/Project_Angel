@@ -92,6 +92,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         _soundMode = mode;
 
         _bgmDictionary[_soundMode].Play();
+        Debug.Log("1");
     }
 
     public void PlayEnv(ENVType type)
