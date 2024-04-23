@@ -80,11 +80,11 @@ AudioMixerController:
   - guid: fb535e3321cc7b248a4c6bdee5b5ce48
     name: BGM
   - guid: e7379a53a6b82444bb59ca8a1ae5c683
-    name: MyExposedParam
+    name: ENV
   - guid: 94f31a44d8448cf4bb27ff9da09e7801
-    name: MyExposedParam 2
+    name: Master
   - guid: 9e43bdeefbb805a47ba0423854a6f953
-    name: MyExposedParam 1
+    name: SFX
   m_AudioMixerGroupViews:
   - guids:
     - f09b7926653aba24eb1ba0031f5775ec
@@ -167,7 +167,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Env
+  m_Name: ENV
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: ac8b303231121ce4491d384c07d6b0b5
   m_Children: []

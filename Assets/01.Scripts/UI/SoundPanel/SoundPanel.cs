@@ -17,7 +17,7 @@ public class SoundPanel : MonoBehaviour
     {
         masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
         bgmVolumeSlider.onValueChanged.AddListener(SetBGMVolume);
-        sfxVolumeSlider.onValueChanged.AddListener(SetBGMVolume);
+        sfxVolumeSlider.onValueChanged.AddListener(SetSFXVolume);
         envVolumeSlider.onValueChanged.AddListener(SetENVVolume);
 
         float initialMasterVolume = PlayerPrefs.GetFloat("Master", 1f);
