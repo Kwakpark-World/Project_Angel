@@ -25,10 +25,12 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if (_instance == null)
+        if (Instance == this)
         {
-            _instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            if (transform.root.gameObject.scene.name != "DontDestroyOnLoad")
+            {
+                DontDestroyOnLoad(transform.root.gameObject);
+            }
         }
         else
         {

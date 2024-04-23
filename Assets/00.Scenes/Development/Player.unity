@@ -609,6 +609,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1793186389}
+    - targetCorrespondingSourceObject: {fileID: 6338522080048316861, guid: 68479dde4c401d147b3732f592f08bca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1793186398}
+    - targetCorrespondingSourceObject: {fileID: 6338522080048316861, guid: 68479dde4c401d147b3732f592f08bca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1793186407}
   m_SourcePrefab: {fileID: 100100000, guid: 68479dde4c401d147b3732f592f08bca, type: 3}
 --- !u!1 &1793186384 stripped
 GameObject:
@@ -629,6 +637,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shake6DSettings: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+--- !u!114 &1793186398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793186384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7fe0bc66fb7ff4fbde868c576c10d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_playerRef>k__BackingField:
+    m_LabelString: Player
+--- !u!114 &1793186407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793186384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8015ccaaf67d5f4b9bbb8e481d99c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2139745879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -706,6 +740,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838397616875376618, guid: b3cd1553e0715c544a04aaf75f3b8806,
+        type: 3}
+      propertyPath: m_XDamping
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838397616875376618, guid: b3cd1553e0715c544a04aaf75f3b8806,
+        type: 3}
+      propertyPath: m_YDamping
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838397616875376618, guid: b3cd1553e0715c544a04aaf75f3b8806,
+        type: 3}
+      propertyPath: m_ZDamping
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -33,6 +33,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
         
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
 
+        SetCombo();
+
         _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
 
         _player.StartDelayAction(0.1f, () =>

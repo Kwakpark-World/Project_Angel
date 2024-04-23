@@ -6,7 +6,7 @@ using TMPro;
 public class InventoryRuneDescription : MonoBehaviour
 {
     public TextMeshProUGUI SelectRuneTxt;
-    public InventroyUI _inventoryUi;
+    public RuneDescription _inventoryUi;
 
     private Dictionary<BuffType, string> SelectRune;
 

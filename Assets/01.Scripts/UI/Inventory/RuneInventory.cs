@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuneInventory : MonoSingleton<RuneInventory>
+public class RuneInventory : MonoBehaviour
 {
-    public Dictionary<RuneType, Sprite> itemSprites; // 아이템 스프라이트 딕셔너리
+    public Dictionary<BuffType, Sprite> itemSprites; // 아이템 스프라이트 딕셔너리
 
-    protected override void Awake()
+
+    private void Awake()
     {
-        base.Awake();
-        itemSprites = new Dictionary<RuneType, Sprite>();
+        itemSprites = new Dictionary<BuffType, Sprite>();
     }
 
     // 아이템을 추가하는 메소드
-    public void AddItem(RuneType runeType, Sprite itemSprite)
+    public void AddItem(BuffType runeType, Sprite itemSprite)
     {
         if (!itemSprites.ContainsKey(runeType))
         {
@@ -22,7 +22,7 @@ public class RuneInventory : MonoSingleton<RuneInventory>
     }
 
     // 아이템을 제거하는 메소드
-    public void RemoveItem(RuneType runeType)
+    public void RemoveItem(BuffType runeType)
     {
         if (itemSprites.ContainsKey(runeType))
         {

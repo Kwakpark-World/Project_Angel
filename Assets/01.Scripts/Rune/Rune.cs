@@ -23,6 +23,8 @@ public class Rune : PoolableMono
     private float _rotateSpeed = 1.5f;
     [SerializeField]
     private Light _pointLight;
+    [SerializeField]
+    private string runeName;
 
     private RuneDataSO _runeData;
     public RuneDataSO RuneData
@@ -45,14 +47,16 @@ public class Rune : PoolableMono
 
     private void OnTriggerEnter(Collider other)
     {
+
+
         if (other.TryGetComponent(out Player p))
         {
             StopAllCoroutines();
 
-            RuneType runtype = _runeData.runeType;
+            BuffType runtype = _runeData.buffType;
             Sprite runeSprite = _runeData.runeSprite;
 
-            RuneInventory.Instance.AddItem(runtype, runeSprite);
+            RuneInventory.Instance.AddItem(runtype, runeSprite, _runeData,runeName);
            
 
             if (_runeData == null)

@@ -73,8 +73,6 @@ public class SoundManager : MonoSingleton<SoundManager>
         {
             _sfxDicionary.Add(sfx.type, sfx.clip);
         }
-
-        DontDestroyOnLoad(gameObject);
     }
 
     public void ChangeBGMMode(BGMMode mode)
