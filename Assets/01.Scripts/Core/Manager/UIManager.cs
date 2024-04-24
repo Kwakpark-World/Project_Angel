@@ -11,10 +11,20 @@ public class UIManager : MonoSingleton<UIManager>
     private Image _fadePanel;
     [SerializeField]
     private float _fadeDuration;
+    [SerializeField]
+    private GameObject _volumeSetting;
 
     protected override void Awake()
     {
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoaded();
+    }
+
+    protected void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _volumeSetting.activeSelf)
+        {
+            _volumeSetting.SetActive(false);
+        }
     }
 
     public void LoadScene(string sceneName)
@@ -28,6 +38,12 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 StartCoroutine(LoadSceneAsync(sceneName));
             });
+    }
+
+    public void Setting()
+    {
+        _volumeSetting.SetActive(true);
+
     }
 
     public void Quit()
