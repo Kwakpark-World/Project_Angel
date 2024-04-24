@@ -28,7 +28,7 @@ public class Player : PlayerController
     [field: SerializeField] public AssetLabelReference awakenStateLabel { get; private set; }
 
     #region Material Parameters
-    protected Material[] _materials { get; private set; } = new Material[6];
+    public Material[] _materials { get; private set; } = new Material[6];
 
     public const string weaponMatName = "PlayerWeaponMat";
     public const string hairMatName = "PlayerHairMat";
@@ -59,7 +59,8 @@ public class Player : PlayerController
     protected override void Awake()
     {
         base.Awake();
-        MaterialCaching();
+
+        MaterialManager.Instance._cachingAction += MaterialCaching;
 
         BuffCompo.SetOwner(this);
 
@@ -87,16 +88,15 @@ public class Player : PlayerController
 
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
-        PlayerStatInitialize();
+
+        CurrentHealth = PlayerStatData.GetMaxHealth();
     }
-    
+
     protected override void Update()
     {
         base.Update();
 
         StateMachine.CurrentState.UpdateState();
-
-        PlayerDefense();
 
         PlayerOnStair();
 
@@ -148,12 +148,6 @@ public class Player : PlayerController
     }
 
     #region Player Stat Func
-    private void PlayerStatInitialize()
-    {
-        CurrentHealth = PlayerStatData.GetMaxHealth();
-
-    }
-
     public void SetPlayerStat(PlayerStatType stat, float value)
     {
         PlayerStatData.GetStatByType(stat).AddModifier(value);
@@ -175,26 +169,6 @@ public class Player : PlayerController
     #endregion
 
     #region handling input
-    private void PlayerDefense()
-    {
-        if (PlayerInput.isDefense)
-        {
-            var curState = StateMachine.CurrentState;
-
-            if (curState == StateMachine.GetState(PlayerStateEnum.MeleeAttack)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.NormalSlam)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.NormalDash)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.AwakenDash)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Charging)) return;
-
-            if (IsGroundDetected())
-            {
-                if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time) return;
-                StateMachine.ChangeState(PlayerStateEnum.Defense);
-            }
-        }
-    }
 
     private void HandleDashEvent()
     {

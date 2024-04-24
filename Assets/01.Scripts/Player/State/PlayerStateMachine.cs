@@ -59,4 +59,9 @@ public class PlayerStateMachine
     {
         return StateDictionary[state];
     }
+
+    public bool CompareState(PlayerStateEnum state)
+    {
+        return (CurrentState == GetState(state));
+    }
 }

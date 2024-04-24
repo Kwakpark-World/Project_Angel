@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using UnityEngine.AddressableAssets;
 
 public class MaterialManager : MonoSingleton<MaterialManager>
 {
+    public Action _cachingAction;
     private Dictionary<string, List<Material>> _materials = new Dictionary<string, List<Material>>(); // Label, (matName, mat)
 
     private async void Start()
@@ -21,11 +23,13 @@ public class MaterialManager : MonoSingleton<MaterialManager>
 
         foreach (var label in labelList)
         {
-            List<Material> _getMats = new List<Material>();
+            List<Material> _getMats;
             _getMats = await AddressableManager.Instance.GetAssetsByLabelToLabelName<Material>(label);
 
             _materials.Add(label, _getMats);
         }
+
+        _cachingAction?.Invoke();
     }
 
     public List<Material> GetMaterial(string labelName)
