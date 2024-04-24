@@ -10,12 +10,11 @@ using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class AddressableManager : MonoSingleton<AddressableManager>
 {
-    [field: SerializeField] public AssetLabelReference _playerRef { get; private set; }
-
     private List<IEnumerator> _handles = new List<IEnumerator>();
-    
-    private void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         StartCoroutine(IninAddressable()); // 혹시 모를 버그를 위해 초기화하는 함수.
     }
 
