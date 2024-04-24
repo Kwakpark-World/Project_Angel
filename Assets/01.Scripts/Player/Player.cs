@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class Player : PlayerController
 {
@@ -21,6 +22,18 @@ public class Player : PlayerController
     public float defensePrevTime = 0f;
 
     public float awakenCurrentGauge = 0f;
+
+    [field: Header("Asset Label")]
+    [field: SerializeField] public AssetLabelReference normalStateLabel { get; private set; }
+    [field: SerializeField] public AssetLabelReference awakenStateLabel { get; private set; }
+
+    #region Material Parameters
+    public Material[] _materials { get; private set; } = new Material[6];
+
+    public const string weaponMatName = "PlayerWeaponMat";
+    public const string hairMatName = "PlayerHairMat";
+    public const string armorMatName = "PlayerArmorMat";
+    #endregion
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
     public PlayerStateMachine StateMachine { get; private set; }
@@ -46,6 +59,8 @@ public class Player : PlayerController
     protected override void Awake()
     {
         base.Awake();
+
+        MaterialManager.Instance._cachingAction += MaterialCaching;
 
         BuffCompo.SetOwner(this);
 
@@ -73,16 +88,15 @@ public class Player : PlayerController
 
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
-        PlayerStatInitialize();
+
+        CurrentHealth = PlayerStatData.GetMaxHealth();
     }
-    
+
     protected override void Update()
     {
         base.Update();
 
         StateMachine.CurrentState.UpdateState();
-
-        PlayerDefense();
 
         PlayerOnStair();
 
@@ -134,12 +148,6 @@ public class Player : PlayerController
     }
 
     #region Player Stat Func
-    private void PlayerStatInitialize()
-    {
-        CurrentHealth = PlayerStatData.GetMaxHealth();
-
-    }
-
     public void SetPlayerStat(PlayerStatType stat, float value)
     {
         PlayerStatData.GetStatByType(stat).AddModifier(value);
@@ -161,26 +169,6 @@ public class Player : PlayerController
     #endregion
 
     #region handling input
-    private void PlayerDefense()
-    {
-        if (PlayerInput.isDefense)
-        {
-            var curState = StateMachine.CurrentState;
-
-            if (curState == StateMachine.GetState(PlayerStateEnum.MeleeAttack)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.NormalSlam)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.NormalDash)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.AwakenDash)) return;
-            if (curState == StateMachine.GetState(PlayerStateEnum.Charging)) return;
-
-            if (IsGroundDetected())
-            {
-                if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time) return;
-                StateMachine.ChangeState(PlayerStateEnum.Defense);
-            }
-        }
-    }
 
     private void HandleDashEvent()
     {
@@ -286,6 +274,21 @@ public class Player : PlayerController
             rendererMaterials.Remove(rendererMaterials.Last());
             renderer.SetMaterials(rendererMaterials);
         }
+    }
+    #endregion
+
+    #region caching
+    private void MaterialCaching()
+    {
+        string normalLabel = normalStateLabel.labelString;
+        string awakenLabel = awakenStateLabel.labelString;
+
+        _materials[(int)PlayerMaterialIndex.Weapon_Normal] = MaterialManager.Instance.GetMaterial(normalLabel, weaponMatName);
+        _materials[(int)PlayerMaterialIndex.Hair_Normal] = MaterialManager.Instance.GetMaterial(normalLabel, hairMatName);
+        _materials[(int)PlayerMaterialIndex.Armor_Normal] = MaterialManager.Instance.GetMaterial(normalLabel, armorMatName);
+        _materials[(int)PlayerMaterialIndex.Weapon_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, weaponMatName);
+        _materials[(int)PlayerMaterialIndex.Hair_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, hairMatName);
+        _materials[(int)PlayerMaterialIndex.Armor_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, armorMatName);
     }
     #endregion
 }

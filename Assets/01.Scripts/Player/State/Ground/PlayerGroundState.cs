@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class PlayerGroundState : PlayerState
 {
@@ -35,6 +36,20 @@ public abstract class PlayerGroundState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
+
+        PlayerDefense();
+    }
+
+    private void PlayerDefense()
+    {
+        if (_player.PlayerInput.isDefense)
+        {
+            if (_player.IsGroundDetected())
+            {
+                if (_player.PlayerStatData.GetDefenseCooldown() + _player.defensePrevTime > Time.time) return;
+                _player.StateMachine.ChangeState(PlayerStateEnum.Defense);
+            }
+        }
     }
 
     private void HandlePrimaryAttackEvent()

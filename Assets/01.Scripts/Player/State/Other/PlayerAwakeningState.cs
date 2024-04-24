@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -41,15 +42,62 @@ public class PlayerAwakeningState : PlayerState
         if (_isAwakenOn) return;
 
         _isAwakenOn = true;
+        _player.IsAwakening = true;
+
+        ChangeModelMaterial();
+        
         _player.StartCoroutine(PlayerAwakening());
+    }
+
+    private void ChangeModelMaterial()
+    {
+        int index;
+        int normalStartIndex = (int)PlayerMaterialIndex.Weapon_Normal;
+        int awakenStartIndex = (int)PlayerMaterialIndex.Weapon_Awaken;
+
+        const string weaponString = Player.weaponMatName;
+        const string hairString = Player.hairMatName;
+        const string armorString = Player.armorMatName;
+
+        
+        for (int i = 0; i < _player.renderers.Length; i++)
+        {
+            List<Material> mats = new List<Material>();
+            _player.renderers[i].GetMaterials(mats);
+
+            for (int j = 0; j < _player.renderers[i].materials.Length; j++)
+            {
+                index = _player.IsAwakening ? awakenStartIndex : normalStartIndex;
+                string[] matName = _player.renderers[i].materials[j].name.Split(' ');
+                
+                switch (matName[0])
+                {
+                    case weaponString:
+                        break;
+                    case hairString:
+                        index += 1;
+                        break;
+                    case armorString:
+                        index += 2;
+                        break;
+
+                    default:
+                        continue;
+                }
+
+                mats[j] = _player._materials[index];
+            }
+
+            _player.renderers[i].SetMaterials(mats);
+        }
+        
+
     }
 
     private IEnumerator PlayerAwakening()
     {
         while (_player.awakenCurrentGauge >= 0)
         {
-            _player.IsAwakening = true;
-
             if (_player.IsAwakening)
             {
                 _player.awakenCurrentGauge = Mathf.Clamp(_player.awakenCurrentGauge, 0, _player.PlayerStatData.GetMaxAwakenGauge());
@@ -63,8 +111,11 @@ public class PlayerAwakeningState : PlayerState
         if (!_player.IsDie)
         {
             _player.IsAwakening = false;
+            ChangeModelMaterial();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
+
+   
 
 }
