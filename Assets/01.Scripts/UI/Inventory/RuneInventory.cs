@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuneInventory : MonoBehaviour
+public class RuneInventory : MonoSingleton<RuneInventory>
 {
     public Dictionary<BuffType, Sprite> itemSprites; // 아이템 스프라이트 딕셔너리
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         itemSprites = new Dictionary<BuffType, Sprite>();
     }
 

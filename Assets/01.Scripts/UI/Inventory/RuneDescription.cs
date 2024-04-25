@@ -51,9 +51,9 @@ public class RuneDescription : MonoBehaviour
         int index = 0;
         foreach (var kvp in itemSprites)
         {
-            _displayImage[index].sprite = kvp.Value;
             // 이미지를 할당한 후 displayImage를 활성화
             _displayImage[index].gameObject.SetActive(true);
+            _displayImage[index].sprite = kvp.Value;
             index++;
         }
 
