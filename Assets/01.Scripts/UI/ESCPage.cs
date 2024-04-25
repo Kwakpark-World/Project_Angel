@@ -23,7 +23,7 @@ public class ESCPage : MonoBehaviour
         {
 
             _controlPanel.SetActive(false);
-            UIManager.Instance._volumeSetting.SetActive(false);
+            //UIManager.Instance._volumeSetting.SetActive(false);
             AnmationPanel();
             isPanel = false;
         }
