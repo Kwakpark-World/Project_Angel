@@ -1,7 +1,10 @@
+using AYellowpaper.SerializedCollections;
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,10 +14,26 @@ public class UIManager : MonoSingleton<UIManager>
     private Image _fadePanel;
     [SerializeField]
     private float _fadeDuration;
+    [SerializeField]
+    private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
 
     protected override void Awake()
     {
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoaded();
+
+        foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
+        {
+            popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
+            popup.TogglePopup();
+        }
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current.lKey.wasPressedThisFrame)
+        {
+            popups["Inventory"].TogglePopup();
+        }
     }
 
     public void LoadScene(string sceneName)

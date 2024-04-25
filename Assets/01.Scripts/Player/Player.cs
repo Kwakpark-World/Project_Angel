@@ -117,7 +117,7 @@ public class Player : PlayerController
         if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening))
             return;
        
-        if(RuneManager.Instance.isLastDance == true && CurrentHealth <= 1f)
+        if(BuffCompo.GetBuffState(BuffType.Rune_Defense_Synergy) && CurrentHealth <= 1f)
         {
             CurrentHealth -= Mathf.Max(0, 0f);
         }

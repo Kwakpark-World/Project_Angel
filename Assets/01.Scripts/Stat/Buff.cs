@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public enum BuffType
 {
+    None = 0,
     Poison,
     Freeze,
     Knockback,
@@ -13,18 +14,23 @@ public enum BuffType
     Rune_Acceleration_DefenseCooldown,
     Rune_Acceleration_MoveSpeed,
     Rune_Acceleration_SkillCooldown,
+    Rune_Acceleration_Synergy,
     Rune_Attack_AttackPower,
     Rune_Attack_AttackSpeed,
     Rune_Attack_CriticalChance,
+    Rune_Attack_Synergy,
     Rune_Debuff_Freeze,
     Rune_Debuff_Knockback,
     Rune_Debuff_Poison,
+    Rune_Debuff_Synergy,
     Rune_Defense_DefensivePower,
     Rune_Defense_Reflection,
     Rune_Defense_Shield,
+    Rune_Defense_Synergy,
     Rune_Health_Absorb,
     Rune_Health_MaxHealth,
     Rune_Health_Recovery,
+    Rune_Health_Synergy,
     // Fill here.
 }
 
@@ -91,7 +97,7 @@ public class Buff : MonoBehaviour
     {
         foreach (BuffType buffType in Enum.GetValues(typeof(BuffType)))
         {
-            if (GetBuff(buffType))
+            if (GetBuffState(buffType))
             {
                 _buffTriggersByType[buffType].onBuffPlaying?.Invoke();
             }
@@ -108,7 +114,19 @@ public class Buff : MonoBehaviour
         _ownerBrain = owner;
     }
 
-    public void SetBuff(BuffType buffType, object attacker)
+    public void PlayBuff(BuffType buffType)
+    {
+        if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
+        {
+            return;
+        }
+
+        _buffStates[buffType] = true;
+
+        _buffTriggersByType[buffType].onBuffBegin?.Invoke();
+    }
+
+    public void PlayBuff(BuffType buffType, object attacker)
     {
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
@@ -120,7 +138,7 @@ public class Buff : MonoBehaviour
         _buffTriggersByType[buffType].onBuffBegin?.Invoke();
     }
 
-    public void SetBuff(BuffType buffType, float duration, object attacker)
+    public void PlayBuff(BuffType buffType, float duration, object attacker)
     {
         if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
@@ -135,10 +153,22 @@ public class Buff : MonoBehaviour
         }
 
         _coroutines[buffType] = StartCoroutine(BuffCoroutine(buffType, duration));
-        //RuneManager.Instance.isArmor = false;
     }
 
-    public bool GetBuff(BuffType buffType)
+    public void StopBuff(BuffType buffType)
+    {
+        if (_coroutines[buffType] != null)
+        {
+            StopCoroutine(_coroutines[buffType]);
+        }
+
+        _buffTriggersByType[buffType].onBuffEnd?.Invoke();
+
+        _buffStates[buffType] = false;
+        _coroutines[buffType] = null;
+    }
+
+    public bool GetBuffState(BuffType buffType)
     {
         return _buffStates[buffType];
     }

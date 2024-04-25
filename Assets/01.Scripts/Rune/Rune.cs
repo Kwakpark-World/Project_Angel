@@ -2,16 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum RuneType
-{
-    Attack,
-    Defense,
-    Health,
-    Acceleration,
-    Debuff,
-    End
-}
-
 public class Rune : PoolableMono
 {
     [Header("Light Properties")]
@@ -22,9 +12,7 @@ public class Rune : PoolableMono
     [SerializeField]
     private float _rotateSpeed = 1.5f;
     [SerializeField]
-    private Light _pointLight;
-    [SerializeField]
-    private string runeName;
+    private Light _runeLight;
 
     private RuneDataSO _runeData;
     public RuneDataSO RuneData
@@ -45,31 +33,17 @@ public class Rune : PoolableMono
         transform.Rotate(Vector3.up, _rotateSpeed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-
-
-        if (other.TryGetComponent(out Player p))
+        if (other.TryGetComponent(out Player player))
         {
-            StopAllCoroutines();
-
-            BuffType runtype = _runeData.buffType;
-            Sprite runeSprite = _runeData.runeSprite;
-
-            RuneInventory.Instance.AddItem(runtype, runeSprite, _runeData,runeName);
-           
-
-            if (_runeData == null)
+            if (!RuneManager.Instance.TryEquipRune(RuneData))
             {
-                Debug.LogError($"Rune data is null.");
-
                 return;
             }
 
-            p.BuffCompo.SetBuff(_runeData.buffType, this);
-            RuneManager.Instance.collectedRunes[_runeData.runeType].Add(this);
-            
-            RuneManager.Instance.CheckRuneSynergy();
+            StopAllCoroutines();
+            player.BuffCompo.PlayBuff(_runeData.buffType);
             PoolManager.Instance.Push(this);
         }
     }
@@ -79,16 +53,13 @@ public class Rune : PoolableMono
         _runeData = null;
     }
 
-    public void InitializeRune()
-    {
-        transform.Find(_runeData.name).gameObject.SetActive(true);
-        StartCoroutine(FloatingCoroutine());
-    }
-
-    public void SetRuneData(RuneDataSO runeData)
+    public void InitializeRune(RuneDataSO runeData)
     {
         _runeData = runeData;
-        _pointLight.color = _runeData.lightColor;
+        _runeLight.color = runeData.runeColor;
+
+        transform.Find(runeData.name).gameObject.SetActive(true);
+        StartCoroutine(FloatingCoroutine());
     }
 
     #region Coroutine
