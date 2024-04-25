@@ -1,7 +1,10 @@
+using AYellowpaper.SerializedCollections;
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,18 +15,24 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private float _fadeDuration;
     [SerializeField]
-    public GameObject _volumeSetting;
+    private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
 
     protected override void Awake()
     {
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoaded();
+
+        foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
+        {
+            popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
+            popup.TogglePopup();
+        }
     }
 
-    protected void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && _volumeSetting.activeSelf)
+        if (Keyboard.current.lKey.wasPressedThisFrame)
         {
-            _volumeSetting.SetActive(false);
+            popups["Inventory"].TogglePopup();
         }
     }
 
@@ -38,11 +47,6 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 StartCoroutine(LoadSceneAsync(sceneName));
             });
-    }
-
-    public void Setting()
-    {
-        _volumeSetting.SetActive(true);
     }
 
     public void Quit()

@@ -45,7 +45,7 @@ public class Stage : MonoBehaviour
 
         StartCoroutine(UnlockStage());
         SoundManager.Instance.ChangeBGMMode(BGMMode.NonCombat);
-        RuneManager.Instance.CreateRune(_runeSpawnTrm.position);
+        RuneManager.Instance.SpawnRune(_runeSpawnTrm.position);
     }
 
     private IEnumerator UnlockStage()
