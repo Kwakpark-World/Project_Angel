@@ -43,7 +43,7 @@ public struct ENVTypeSource
 public struct SFXTypeClip
 {
     public SFXType type;
-    public AudioClip clip;
+    public AudioSource clip;
 }
 
 public class SoundManager : MonoSingleton<SoundManager>
@@ -54,7 +54,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     public AudioMixer audioMixer;
     private Dictionary<BGMMode, AudioSource> _bgmDictionary = new Dictionary<BGMMode, AudioSource>();
     private Dictionary<ENVType, AudioSource> _envDictionary = new Dictionary<ENVType, AudioSource>();
-    private Dictionary<SFXType, AudioClip> _sfxDicionary = new Dictionary<SFXType, AudioClip>();
+    private Dictionary<SFXType, AudioSource> _sfxDicionary = new Dictionary<SFXType, AudioSource>();
     private BGMMode _soundMode = BGMMode.None;
 
     private void Awake()
@@ -127,12 +127,7 @@ public class SoundManager : MonoSingleton<SoundManager>
             return;
         }
 
-        GameObject gameObject = new GameObject("One shot audio");
-        gameObject.transform.position = transform.position;
-        AudioSource audioSource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
-        audioSource.clip = _sfxDicionary[type];
-        audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
-        audioSource.Play();
-        Destroy(gameObject, _sfxDicionary[type].length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+        _sfxDicionary[type].Play();
+        
     }
 }
