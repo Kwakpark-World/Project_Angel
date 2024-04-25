@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 public class ESCPage : MonoBehaviour
@@ -9,40 +10,47 @@ public class ESCPage : MonoBehaviour
 
     public GameObject _controlPanel;
 
-    public GameObject _settingPanel;
+    private bool isPanel = false;
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && isPanel == false)
         {
-            _escPanel.SetActive(false);
+                isPanel = true;
+                _escPanel.transform.DOMoveY(550, 1);
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && isPanel == true)
+        {
+
             _controlPanel.SetActive(false);
-            _settingPanel.SetActive(false);
+            UIManager.Instance._volumeSetting.SetActive(false);
+            AnmationPanel();
+            isPanel = false;
         }
     }
 
     public void ContinueGame()
     {
-        _escPanel.SetActive(false);
+        AnmationPanel();
     }
 
     public void ReturnGame()
     {
-        _escPanel.SetActive(false);
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
     }
 
     public void Control()
     {
-        _escPanel.SetActive(false);
         _controlPanel.SetActive(true);
     }
 
-    public void Setting()
+    public void AnmationPanel()
     {
-        _escPanel.SetActive(false);
-        _settingPanel.SetActive(true);
+            _escPanel.transform.DOMoveY(380, 0.8f).OnComplete(() =>
+            {
+                _escPanel.transform.DOMoveY(1500, 1);
+            });
     }
 
     public void ExitGame()

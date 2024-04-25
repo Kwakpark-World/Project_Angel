@@ -12,9 +12,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private float _fadeDuration;
     [SerializeField]
-    private GameObject _volumeSetting;
-    [SerializeField]
-    private GameObject ESCPage;
+    public GameObject _volumeSetting;
 
     protected override void Awake()
     {
@@ -23,17 +21,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     protected void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) && ESCPage.activeSelf == false) 
-        { 
-            ESCPage.SetActive(true);
-        }
-
-        else if(Input.GetKeyDown(KeyCode.Escape) && ESCPage.activeSelf == true)
-        {
-            ESCPage.SetActive(false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && _volumeSetting.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) && _volumeSetting.activeSelf)
         {
             _volumeSetting.SetActive(false);
         }
@@ -55,7 +43,6 @@ public class UIManager : MonoSingleton<UIManager>
     public void Setting()
     {
         _volumeSetting.SetActive(true);
-
     }
 
     public void Quit()
