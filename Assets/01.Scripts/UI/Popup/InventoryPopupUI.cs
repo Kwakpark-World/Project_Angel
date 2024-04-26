@@ -8,11 +8,11 @@ using UnityEngine.UI;
 public class InventoryPopupUI : PopupUI
 {
     [SerializeField]
-    private List<DisplayRune> _equipedRunes = new List<DisplayRune>();
+    private List<RuneDisplay> _equipedRunes = new List<RuneDisplay>();
     [SerializeField]
     private List<Image> _equipedRuneSynergyLines = new List<Image>();
 
-    private DisplayRune _selectedRune;
+    private RuneDisplay _selectedRune;
 
     [SerializeField]
     private Image _selectedRuneImage;
@@ -29,7 +29,7 @@ public class InventoryPopupUI : PopupUI
         UpdateEquipedRune();
     }
 
-    public void SelectRune(DisplayRune selectedRune)
+    public void SelectRune(RuneDisplay selectedRune)
     {
         if (!selectedRune)
         {
@@ -45,7 +45,7 @@ public class InventoryPopupUI : PopupUI
         selectedRune.onClickRune.AddListener(DeselectRune);
     }
 
-    public void DeselectRune(DisplayRune selectedRune)
+    public void DeselectRune(RuneDisplay selectedRune)
     {
         _selectedRuneImage.color = Color.clear;
         _selectedRuneImage.sprite = null;
