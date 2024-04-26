@@ -1,17 +1,16 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(LineRenderer))]
-[RequireComponent(typeof(NavMeshAgent))]
 public class PathFinder : MonoBehaviour
 {
     private LineRenderer _lineRender;
     private NavMeshAgent _navMashAgent;
 
-    public List<Vector3> _targetList; //½ÃÀÛÀ» 0
+    public List<Vector3> _targetList; //ì‹œì‘ì„ 0
 
     private int _targetIndex;
 
@@ -25,11 +24,9 @@ public class PathFinder : MonoBehaviour
         //SetOriginTransform(trans);
 
         _lineRender = GetComponent<LineRenderer>();
-        _lineRender.startWidth = 0.5f;
-        _lineRender.endWidth = 0.5f;
         _lineRender.positionCount = 0;
 
-        _navMashAgent = GetComponent<NavMeshAgent>();
+        _navMashAgent = transform.Find("NavMesh").GetComponent<NavMeshAgent>();
         _navMashAgent.isStopped = true;
         _navMashAgent.radius = 1;
         _navMashAgent.height = 1;
