@@ -6,11 +6,16 @@ public abstract class PopupUI : MonoBehaviour
 {
     public abstract void InitializePopup();
 
-    public void TogglePopup()
+    public void TogglePopup(bool value)
     {
-        gameObject.SetActive(!gameObject.activeSelf);
+        if (gameObject.activeSelf == value)
+        {
+            return;
+        }
 
-        if (gameObject.activeSelf)
+        gameObject.SetActive(value);
+
+        if (value)
         {
             InitializePopup();
         }

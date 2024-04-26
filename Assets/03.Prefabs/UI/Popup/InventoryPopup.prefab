@@ -111,7 +111,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5646084717349934266
 CanvasRenderer:
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 4142911311340007383}
   - component: {fileID: 1527175715969670439}
   - component: {fileID: 2271691309397687289}
-  - component: {fileID: 2507099707987894708}
+  - component: {fileID: 8777812038870378445}
   m_Layer: 5
   m_Name: Image_EquipedRune_3
   m_TagString: Untagged
@@ -311,7 +311,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &2271691309397687289
 MonoBehaviour:
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2507099707987894708
+--- !u!114 &8777812038870378445
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,7 +339,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1771014201805606224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c094af9f8876bd448308be34a4fcde1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c1afb610fe75da48a550ad045da72a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onClickRune:
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 4774656945066579007}
   - component: {fileID: 7830871338745996940}
   m_Layer: 5
-  m_Name: Socket_4
+  m_Name: Image_Socket_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -381,7 +381,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 132.25, y: -182.03}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4774656945066579007
 CanvasRenderer:
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 1237431901690854127}
   - component: {fileID: 891929632342122016}
   - component: {fileID: 6793965469848232795}
-  - component: {fileID: 8050124348406872299}
+  - component: {fileID: 6622582869591513878}
   m_Layer: 5
   m_Name: Image_EquipedRune_1
   m_TagString: Untagged
@@ -620,7 +620,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &6793965469848232795
 MonoBehaviour:
@@ -639,7 +639,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8050124348406872299
+--- !u!114 &6622582869591513878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2220230524595016627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c094af9f8876bd448308be34a4fcde1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c1afb610fe75da48a550ad045da72a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onClickRune:
@@ -817,11 +817,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipedRunes:
-  - {fileID: 8050124348406872299}
-  - {fileID: 4076269287661544106}
-  - {fileID: 2507099707987894708}
-  - {fileID: 87808507319084065}
-  - {fileID: 4448458115822192660}
+  - {fileID: 6622582869591513878}
+  - {fileID: 5767339884104887686}
+  - {fileID: 8777812038870378445}
+  - {fileID: 9167261351463705181}
+  - {fileID: 8099084766543663393}
   _equipedRuneSynergyLines:
   - {fileID: 635775574074549683}
   - {fileID: 246618296558633258}
@@ -843,7 +843,7 @@ GameObject:
   - component: {fileID: 4985200076928481564}
   - component: {fileID: 4071657864719645923}
   m_Layer: 5
-  m_Name: Socket_5
+  m_Name: Image_Socket_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -867,7 +867,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 213.99, y: 69.53}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4985200076928481564
 CanvasRenderer:
@@ -1058,7 +1058,7 @@ GameObject:
   - component: {fileID: 5207757834107731450}
   - component: {fileID: 7348540780920847900}
   m_Layer: 5
-  m_Name: Background
+  m_Name: Image_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1122,7 +1122,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.75
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &4145271597957347224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,7 +1685,7 @@ GameObject:
   - component: {fileID: 3690796829835471764}
   - component: {fileID: 9126124237951707125}
   - component: {fileID: 8842672108756932551}
-  - component: {fileID: 4448458115822192660}
+  - component: {fileID: 8099084766543663393}
   m_Layer: 5
   m_Name: Image_EquipedRune_5
   m_TagString: Untagged
@@ -1771,7 +1771,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &8842672108756932551
 MonoBehaviour:
@@ -1790,7 +1790,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4448458115822192660
+--- !u!114 &8099084766543663393
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1799,7 +1799,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6016381741765276347}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c094af9f8876bd448308be34a4fcde1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c1afb610fe75da48a550ad045da72a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onClickRune:
@@ -1892,7 +1892,7 @@ GameObject:
   - component: {fileID: 544013553845950580}
   - component: {fileID: 6289088115750125099}
   m_Layer: 5
-  m_Name: Socket_1
+  m_Name: Image_Socket_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1916,7 +1916,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 225}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &544013553845950580
 CanvasRenderer:
@@ -2103,7 +2103,7 @@ GameObject:
   - component: {fileID: 3518403142404976818}
   - component: {fileID: 6278411612357943124}
   m_Layer: 5
-  m_Name: Socket_2
+  m_Name: Image_Socket_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2127,7 +2127,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -213.99, y: 69.53}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3518403142404976818
 CanvasRenderer:
@@ -2180,7 +2180,7 @@ GameObject:
   - component: {fileID: 800865221187994264}
   - component: {fileID: 4959119847487067934}
   - component: {fileID: 1931420599139985652}
-  - component: {fileID: 4076269287661544106}
+  - component: {fileID: 5767339884104887686}
   m_Layer: 5
   m_Name: Image_EquipedRune_2
   m_TagString: Untagged
@@ -2266,7 +2266,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &1931420599139985652
 MonoBehaviour:
@@ -2285,7 +2285,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4076269287661544106
+--- !u!114 &5767339884104887686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2294,7 +2294,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8916105922888159229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c094af9f8876bd448308be34a4fcde1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c1afb610fe75da48a550ad045da72a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onClickRune:
@@ -2312,7 +2312,7 @@ GameObject:
   - component: {fileID: 5989749285925810410}
   - component: {fileID: 7273637404996025785}
   m_Layer: 5
-  m_Name: Socket_3
+  m_Name: Image_Socket_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2336,7 +2336,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -132.25, y: -182.03}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5989749285925810410
 CanvasRenderer:
@@ -2389,7 +2389,7 @@ GameObject:
   - component: {fileID: 8607983585331637121}
   - component: {fileID: 2748377062666638118}
   - component: {fileID: 3163320460814719940}
-  - component: {fileID: 87808507319084065}
+  - component: {fileID: 9167261351463705181}
   m_Layer: 5
   m_Name: Image_EquipedRune_4
   m_TagString: Untagged
@@ -2475,7 +2475,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &3163320460814719940
 MonoBehaviour:
@@ -2494,7 +2494,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &87808507319084065
+--- !u!114 &9167261351463705181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2503,7 +2503,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9097550246703608868}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c094af9f8876bd448308be34a4fcde1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c1afb610fe75da48a550ad045da72a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onClickRune:

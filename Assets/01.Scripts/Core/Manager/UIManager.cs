@@ -1,8 +1,8 @@
-using AYellowpaper.SerializedCollections;
 using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -24,15 +24,18 @@ public class UIManager : MonoSingleton<UIManager>
         foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
         {
             popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
-            popup.TogglePopup();
+            popup.TogglePopup(false);
         }
     }
 
     private void Update()
     {
-        if (Keyboard.current.lKey.wasPressedThisFrame)
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
-            popups["Inventory"].TogglePopup();
+            foreach (var popup in popups)
+            {
+                popup.Value.TogglePopup(popup.Key == "Inventory");
+            }
         }
     }
 
