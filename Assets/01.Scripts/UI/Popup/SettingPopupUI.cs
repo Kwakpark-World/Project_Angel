@@ -39,6 +39,13 @@ public class SettingPopupUI : PopupUI
 
     public void ChangeVolume(string audioMixerGroupName, float volume)
     {
+        if (!_volumeSliders[audioMixerGroupName].muteImageToggle.isOn)
+        {
+            volume = 0f;
+
+            ChangeVolumeSliderValue(audioMixerGroupName, volume);
+        }
+
         _audioMixer.SetFloat(audioMixerGroupName, volume > 0f ? Mathf.Log10(volume) * 20f : -80f);
 
         _volumeSliders[audioMixerGroupName].volumePercentageText.text = $"{(volume * 100f).ToString("##0")}%";
@@ -46,18 +53,20 @@ public class SettingPopupUI : PopupUI
 
     public void ChangeVolumeSliderValue(string audioMixerGroupName, float value)
     {
-        if (!_volumeSliders[audioMixerGroupName].muteImageToggle.isOn)
-        {
-            _volumeSliders[audioMixerGroupName].volumeSlider.value = 0f;
-        }
-        else
-        {
-            _volumeSliders[audioMixerGroupName].volumeSlider.value = value;
-        }
+        _volumeSliders[audioMixerGroupName].volumeSlider.value = value;
     }
 
     public void ChangeVolumeSliderValue(string audioMixerGroupName, bool value)
     {
         _volumeSliders[audioMixerGroupName].volumeSlider.value = value ? 1f : 0f;
+
+        if (value)
+        {
+            _volumeSliders[audioMixerGroupName].volumeSlider.onValueChanged.AddListener((value) => ChangeVolume(audioMixerGroupName, value));
+        }
+        else
+        {
+            _volumeSliders[audioMixerGroupName].volumeSlider.onValueChanged.RemoveListener((value) => ChangeVolume(audioMixerGroupName, value));
+        }
     }
 }

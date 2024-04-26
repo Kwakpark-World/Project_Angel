@@ -34,7 +34,24 @@ public class UIManager : MonoSingleton<UIManager>
         {
             foreach (var popup in popups)
             {
-                popup.Value.TogglePopup(popup.Key == "Inventory");
+                popup.Value.TogglePopup(popup.Key == "Inventory" && !popup.Value.gameObject.activeInHierarchy);
+            }
+        }
+
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            foreach (var popup in popups)
+            {
+                popup.Value.TogglePopup(popup.Key == "Pause" && !popup.Value.gameObject.activeInHierarchy);
+            }
+        }
+
+        // Debug
+        if (Keyboard.current.lKey.wasPressedThisFrame)
+        {
+            foreach (var popup in popups)
+            {
+                popup.Value.TogglePopup(popup.Key == "Setting" && !popup.Value.gameObject.activeInHierarchy);
             }
         }
     }
