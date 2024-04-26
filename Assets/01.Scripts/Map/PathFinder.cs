@@ -1,61 +1,85 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class PathFinder : MonoBehaviour
 {
-    public GameObject player;
-    public List<GameObject> targets;
-    public LineRenderer playerLineRenderer; // Player의 LineRenderer
-    // public List<LineRenderer> targetLineRenderers; // 각 오브젝트의 LineRenderer (제거)
+    private LineRenderer _lineRender;
+    private NavMeshAgent _navMashAgent;
 
-    public float distanceThreshold = 1f; // 플레이어가 타겟에 도달하는 거리 임계값
+    public List<Vector3> _targetList; //시작을 0
 
-    // Start is called before the first frame update
-    void Start()
+    private int _targetIndex;
+
+    private void Start()
     {
-        // Player의 LineRenderer 초기화
-        playerLineRenderer.startWidth = playerLineRenderer.endWidth = 0.5f;
-        playerLineRenderer.material.color = Color.blue;
-        playerLineRenderer.enabled = false;
+        InitNaviManager(0.01f);
     }
 
-    private void Update()
+    public void InitNaviManager(float updateDelay)
     {
-        DrawPath();
+        //SetOriginTransform(trans);
+
+        _lineRender = GetComponent<LineRenderer>();
+        _lineRender.startWidth = 0.5f;
+        _lineRender.endWidth = 0.5f;
+        _lineRender.positionCount = 0;
+
+        _navMashAgent = GetComponent<NavMeshAgent>();
+        _navMashAgent.isStopped = true;
+        _navMashAgent.radius = 1;
+        _navMashAgent.height = 1;
+
+        StartCoroutine(UpdateNavi(updateDelay));
     }
 
-    public void DrawPath()
+    IEnumerator UpdateNavi(float delay)
     {
-        playerLineRenderer.enabled = true;
+        WaitForSeconds delayTime = new WaitForSeconds(delay);
 
-        // 플레이어의 LineRenderer 설정
-        playerLineRenderer.positionCount = targets.Count + 1;
-        playerLineRenderer.SetPosition(0, transform.position);
-
-        // 오브젝트들의 LineRenderer 설정
-        for (int i = 0; i < targets.Count; i++)
+        while (true)
         {
-            if (targets[i] != null)
+            if (Vector3.Distance(transform.position, _targetList[_targetIndex]) <= 2f)
             {
-                // 플레이어와 타겟 사이의 LineRenderer만 그리기
-                // playerLineRenderer.SetPosition(i + 1, targets[i].transform.position); // 이 줄 주석 처리
-
-                // 플레이어가 타겟에 가까이 있는지 확인
-                if (Vector3.Distance(player.transform.position, targets[i].transform.position) < distanceThreshold)
-                {
-                    // 타겟의 LineRenderer 비활성화
-                    // targetLineRenderers[i].enabled = false; // 이 줄 주석 처리
-                    Debug.Log("3");
-                }
-                else
-                {
-                    Debug.Log("999");
-                    // 타겟의 LineRenderer 활성화
-                    // targetLineRenderers[i].enabled = true; // 이 줄 주석 처리
-                }
+                PassToNextDestination();
             }
+
+            if (_targetIndex >= _targetList.Count)
+            {
+                _lineRender.enabled = false;
+
+                break;
+            }
+
+            transform.position = GameManager.Instance.PlayerInstance.transform.position;
+            _navMashAgent.SetDestination(_targetList[_targetIndex]);
+            DrawPath();
+            yield return delayTime;
+        }
+    }
+
+    public void PassToNextDestination()
+    {
+        _targetIndex++;
+    }
+
+    private void DrawPath()
+    {
+        _lineRender.positionCount = _navMashAgent.path.corners.Length;
+        _lineRender.SetPosition(0, transform.position);
+
+        if (_navMashAgent.path.corners.Length < 2)
+        {
+            return;
+        }
+
+        for (int i = 1; i < _navMashAgent.path.corners.Length; ++i)
+        {
+            _lineRender.SetPosition(i, _navMashAgent.path.corners[i]);
         }
     }
 }
