@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PausePopupUI : PopupUI
 {
@@ -11,6 +12,11 @@ public class PausePopupUI : PopupUI
 
     public override void TogglePopup(bool value)
     {
+        if (value && SceneManager.GetActiveScene().name != "GameScene")
+        {
+            return;
+        }
+
         base.TogglePopup(value);
 
         if (!value)

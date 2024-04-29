@@ -21,6 +21,12 @@ public class UIManager : MonoSingleton<UIManager>
         base.Awake();
 
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoaded();
+
+        foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
+        {
+            popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
+            popup.TogglePopup(false);
+        }
     }
 
     private void Update()
@@ -114,19 +120,6 @@ public class UIManager : MonoSingleton<UIManager>
             .OnComplete(() =>
             {
                 _fadePanel.raycastTarget = false;
-
-                GameSceneUIInitialize();
             });
-    }
-
-    private void GameSceneUIInitialize()
-    {
-        popups.Clear();
-
-        foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
-        {
-            popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
-            popup.TogglePopup(false);
-        }
     }
 }

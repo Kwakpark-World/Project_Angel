@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InventoryPopupUI : PopupUI
@@ -27,6 +26,16 @@ public class InventoryPopupUI : PopupUI
     {
         DeselectRune(_selectedRune);
         UpdateEquipedRune();
+    }
+
+    public override void TogglePopup(bool value)
+    {
+        if (value && SceneManager.GetActiveScene().name != "GameScene")
+        {
+            return;
+        }
+
+        base.TogglePopup(value);
     }
 
     public void SelectRune(RuneDisplay selectedRune)
