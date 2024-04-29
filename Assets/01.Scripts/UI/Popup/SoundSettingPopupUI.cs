@@ -15,7 +15,7 @@ public class VolumeSlider
     public ImageToggle muteImageToggle;
 }
 
-public class SettingPopupUI : PopupUI
+public class SoundSettingPopupUI : PopupUI
 {
     [SerializeField]
     private AudioMixer _audioMixer;

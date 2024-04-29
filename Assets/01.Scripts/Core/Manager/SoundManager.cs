@@ -138,5 +138,6 @@ public class SoundManager : MonoSingleton<SoundManager>
         audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
         audioSource.Play();
         Destroy(gameObject, _sfxDicionary[type].length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+        // Change to pool.
     }
 }

@@ -79,6 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmList:
+  - mode: 1
+    source: {fileID: 2493952074102188002}
   - mode: 3
     source: {fileID: 6392590542443636374}
   - mode: 2
@@ -194,6 +196,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c09c162c5f2f674693555cd21d3c979, type: 3}
+--- !u!82 &2493952074102188002 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4487191302533603617, guid: 9c09c162c5f2f674693555cd21d3c979,
+    type: 3}
+  m_PrefabInstance: {fileID: 2078965955488728771}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3584311833001929460 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3271847651708398647, guid: 9c09c162c5f2f674693555cd21d3c979,

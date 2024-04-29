@@ -6,7 +6,7 @@ public abstract class PopupUI : MonoBehaviour
 {
     public abstract void InitializePopup();
 
-    public void TogglePopup(bool value)
+    public virtual void TogglePopup(bool value)
     {
         if (gameObject.activeSelf == value)
         {

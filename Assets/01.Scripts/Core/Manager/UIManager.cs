@@ -2,7 +2,6 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -19,40 +18,21 @@ public class UIManager : MonoSingleton<UIManager>
 
     protected override void Awake()
     {
-        SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoaded();
+        base.Awake();
 
-        foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
-        {
-            popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
-            popup.TogglePopup(false);
-        }
+        SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoaded();
     }
 
     private void Update()
     {
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
-            foreach (var popup in popups)
-            {
-                popup.Value.TogglePopup(popup.Key == "Inventory" && !popup.Value.gameObject.activeInHierarchy);
-            }
+            TogglePopupUniquely("Inventory");
         }
 
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            foreach (var popup in popups)
-            {
-                popup.Value.TogglePopup(popup.Key == "Pause" && !popup.Value.gameObject.activeInHierarchy);
-            }
-        }
-
-        // Debug
-        if (Keyboard.current.lKey.wasPressedThisFrame)
-        {
-            foreach (var popup in popups)
-            {
-                popup.Value.TogglePopup(popup.Key == "Setting" && !popup.Value.gameObject.activeInHierarchy);
-            }
+            TogglePopupUniquely("Pause");
         }
     }
 
@@ -67,6 +47,14 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 StartCoroutine(LoadSceneAsync(sceneName));
             });
+    }
+
+    public void TogglePopupUniquely(string popupName)
+    {
+        foreach (var popup in popups)
+        {
+            popup.Value.TogglePopup(popup.Key == popupName && !popup.Value.gameObject.activeInHierarchy);
+        }
     }
 
     public void Quit()
@@ -126,6 +114,19 @@ public class UIManager : MonoSingleton<UIManager>
             .OnComplete(() =>
             {
                 _fadePanel.raycastTarget = false;
+
+                GameSceneUIInitialize();
             });
+    }
+
+    private void GameSceneUIInitialize()
+    {
+        popups.Clear();
+
+        foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
+        {
+            popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
+            popup.TogglePopup(false);
+        }
     }
 }
