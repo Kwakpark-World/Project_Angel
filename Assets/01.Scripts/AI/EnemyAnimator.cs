@@ -170,6 +170,25 @@ public class EnemyAnimator : MonoBehaviour
         DebuffPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as DebuffPotion;
         debuffPotion.owner = _owner as EnemyBrain;
     }
+
+    public void ArcherNormalAttack()
+    {
+        int arrowCount = 3;
+        float angleRange = 45;
+        float angleIncrement = angleRange / (arrowCount - 1);
+
+        for (int i = 0; i < arrowCount; i++)
+        {
+            float angle = -angleIncrement + angleIncrement * i;
+            Vector3 direction = Quaternion.Euler(0, angle, 0) * -transform.forward;
+
+            EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Arrow, _weaponTransform.position) as EnemyArrow;
+            arrow.transform.forward = direction;
+            arrow.owner = _owner as EnemyBrain;
+            //arrowObject.transform.forward = direction;
+        }
+
+    }
     #endregion
 
     #region Enemy Die Function

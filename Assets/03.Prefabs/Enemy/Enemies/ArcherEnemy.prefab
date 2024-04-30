@@ -2398,7 +2398,7 @@ GameObject:
   - component: {fileID: 3196164918243249557}
   - component: {fileID: 4795403527296716066}
   m_Layer: 7
-  m_Name: RangerEnemy
+  m_Name: ArcherEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2485,7 +2485,7 @@ Animator:
   m_GameObject: {fileID: 4680992739912269551}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: caf50a4b1220c2649a12a698f4fe4bc4, type: 3}
-  m_Controller: {fileID: 9100000, guid: e4b2dea5a6a08724b9ebf44a5a7a6999, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8fa3508ca9747614e8b1e52672d2bb7c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2605,7 +2605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9f15a09f32fd243bedc9c1a77b2958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 11400000, guid: 576870bf9edbe764b8971edb0aa2ba95, type: 2}
+  tree: {fileID: 11400000, guid: 7d11649306bf0e449ad1bab572f666fd, type: 2}
   brain: {fileID: 4190259864597979883}
 --- !u!114 &4190259864597979883
 MonoBehaviour:
@@ -2619,7 +2619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609df6e340b50e64f887eb178025cbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolingType: 2
+  poolingType: 5
   treeRunner: {fileID: 8165959268599431937}
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 46e50af425a1ebd4f987bfb17bcd6fcb,
     type: 2}
@@ -2657,7 +2657,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 3196164918243249557}
           m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
-          m_MethodName: RangerNormalAttack
+          m_MethodName: ArcherNormalAttack
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2666,18 +2666,6 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-          m_MethodName: Play
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
           m_CallState: 2
     onAnimationEnd:
       m_PersistentCalls:
@@ -4965,7 +4953,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 147f8decffc321543af85ec7d7703f0f, type: 2}
+      objectReference: {fileID: 2100000, guid: a025e340ba87be94a8358821825d91c4, type: 2}
     - target: {fileID: 919132149155446097, guid: 43b799b44dfeb1a4aaeac5ee932d42ce,
         type: 3}
       propertyPath: m_Name
