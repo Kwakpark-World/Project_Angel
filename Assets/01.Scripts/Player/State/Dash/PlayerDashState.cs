@@ -23,10 +23,6 @@ public class PlayerDashState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_endTriggerCalled)
-        {
-            _stateMachine.ChangeState(PlayerStateEnum.Idle);
-        }
     }
 
 

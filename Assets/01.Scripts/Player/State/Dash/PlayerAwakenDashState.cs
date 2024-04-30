@@ -27,6 +27,10 @@ public class PlayerAwakenDashState : PlayerDashState
     public override void UpdateState()
     {
         base.UpdateState();
+        if (_endTriggerCalled)
+        {
+            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+        }
     }
 
     private float CalcDistance()

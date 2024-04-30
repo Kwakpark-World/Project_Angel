@@ -6,7 +6,11 @@ public class PlayerAttackState : PlayerState
 {
     protected Transform _weaponRT, _weaponRB, _weaponLT, _weaponLB;
     public float _hitDist = 4f;
-    
+    protected float _hitWidth = 6f;
+    protected float _hitHeight = 3f;
+    protected Vector3 _attackOffset = Vector3.zero;
+    protected Vector3 _attackSize = Vector3.one;
+
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }

@@ -19618,6 +19618,7 @@ GameObject:
   - component: {fileID: 2644827596082775603}
   - component: {fileID: 5325457153023426504}
   - component: {fileID: 3940984335300436772}
+  - component: {fileID: 8708101344185854265}
   m_Layer: 0
   m_Name: P_Charging_Sting
   m_TagString: Untagged
@@ -24444,6 +24445,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8708101344185854265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4138699181679490457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a3b274057352045849e673ae214ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolingType: 16
+  EffectType: 0
+  _playerState: 12
 --- !u!1 &4705634631284202558
 GameObject:
   m_ObjectHideFlags: 0
