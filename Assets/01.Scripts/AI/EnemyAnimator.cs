@@ -167,7 +167,7 @@ public class EnemyAnimator : MonoBehaviour
                 break;
         }
 
-        DebuffPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as DebuffPotion;
+        EnemyPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as EnemyPotion;
         debuffPotion.owner = _owner as EnemyBrain;
     }
     #endregion
