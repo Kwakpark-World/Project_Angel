@@ -797,6 +797,7 @@ GameObject:
   - component: {fileID: 5173864762241979809}
   - component: {fileID: 8523927444897520135}
   - component: {fileID: 6385291853889329438}
+  - component: {fileID: 1287738534370631338}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -901,7 +902,7 @@ MonoBehaviour:
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: 2d8f987c0db816249b696fc32bb953cc,
     type: 2}
   <CurrentHealth>k__BackingField: 0
-  _weapon: {fileID: 0}
+  _weapon: {fileID: 7559007113953224229}
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -1031,6 +1032,22 @@ MonoBehaviour:
         m_Calls: []
   <BuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
     type: 2}
+--- !u!114 &1287738534370631338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494236958258072100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e3b19ef4c2c8a4394dffe3db2dc3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  ChargeAttack_Normal: 0
+  ChargeAttack_Stab_Normal: 0
 --- !u!1 &1534901178157195354
 GameObject:
   m_ObjectHideFlags: 0
@@ -17139,6 +17156,12 @@ PrefabInstance:
 --- !u!4 &5842328331091244379 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4998610038430316911, guid: a41f4623e58c70f448c0446d574d7eed,
+    type: 3}
+  m_PrefabInstance: {fileID: 1462192072398457908}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7559007113953224229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8983629139494234641, guid: a41f4623e58c70f448c0446d574d7eed,
     type: 3}
   m_PrefabInstance: {fileID: 1462192072398457908}
   m_PrefabAsset: {fileID: 0}

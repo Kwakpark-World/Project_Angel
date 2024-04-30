@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerNormalChargeStabAttackState : PlayerChargeState
 {
     private bool _isStabMove;
+    private bool _isEffectOn = false;
 
     public PlayerNormalChargeStabAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -14,6 +15,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     {
         base.Enter();
 
+        _isEffectOn = false;
         _isStabMove = false;
     }
 
@@ -28,6 +30,19 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     public override void UpdateState()
     {
         base.UpdateState();
+
+        MoveToFront();
+
+        if (_effectTriggerCalled)
+        {
+            if (!_isEffectOn)
+            {
+                _isEffectOn = true;
+                Vector3 pos = _player._weapon.transform.position;
+                EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Stab_Normal, pos);
+            }
+        }
+
 
         if (_endTriggerCalled)
         {

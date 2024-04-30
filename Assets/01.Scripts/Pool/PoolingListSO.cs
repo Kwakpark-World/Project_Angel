@@ -21,13 +21,14 @@ public enum PoolingType
     Effect_PlayerAttack_Normal,
     Effect_PlayerAttack_Charging_Normal,
     Effect_PlayerAttack_Charged_Normal,
-    Effect_PlayerAttack_Q_Normal,
+    Effect_PlayerAttack_Charged_Stab_Normal,
+    Effect_PlayerAttack_Slam_Normal,
     Effect_PlayerAwakening,
     Effect_PlayerAwakened,
     Effect_PlayerAttack_Awaken,
     Effect_PlayerAttack_Charging_Awaken,
     Effect_PlayerAttack_Charged_Awaken,
-    Effect_PlayerAttack_Q_Awaken,
+    Effect_PlayerAttack_Slam_Awaken,
     Rune
 }
 

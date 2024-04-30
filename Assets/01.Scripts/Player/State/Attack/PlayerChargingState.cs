@@ -15,6 +15,9 @@ public class PlayerChargingState : PlayerChargeState
         _player.RotateToMousePos();
 
         _player.ChargingGauge = 0;
+
+        Vector3 pos = Vector3.zero;
+        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, pos);
     }
 
     public override void Exit()
