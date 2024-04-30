@@ -53,6 +53,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
     {
         base.UpdateState();
         
+        // 가설. 여기서 이게 계속 돎 그렇기에 때리는 함수에 값을 넘기고 
         ChargeAttack();
 
         ChargeAttackEffect();
@@ -90,11 +91,22 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         Vector3 halfSize = _attackSize * 0.5f;
 
         Quaternion rot = Quaternion.Euler((_player.transform.forward * _hitDist) - _player.transform.position);
-
         
         Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
+        List<Collider> hitableEnemy = new List<Collider>();
+        foreach (var enemy in enemies)
+        {
+            if (enemy.TryGetComponent(out Brain brain))
+            {
+                if (!_player.enemyNormalHitDuplicateChecker.Contains(brain))
+                {
+                    hitableEnemy.Add(enemy);
+                }
+            }
+        }
         
-        Attack(enemies.ToList());
+
+        Attack(hitableEnemy, out _player.enemyNormalHitDuplicateChecker);
     }
 
 }

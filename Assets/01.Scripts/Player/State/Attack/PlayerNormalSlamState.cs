@@ -70,7 +70,19 @@ public class PlayerNormalSlamState : PlayerAttackState
 
         Collider[] enemies = Physics.OverlapBox(pos, size, Quaternion.identity, _player._enemyLayer);
 
-        Attack(enemies.ToList());
+        List<Collider> hitableEnemy = new List<Collider>();
+        foreach (var enemy in enemies)
+        {
+            if (enemy.TryGetComponent(out Brain brain))
+            {
+                if (!_player.enemyNormalHitDuplicateChecker.Contains(brain))
+                {
+                    hitableEnemy.Add(enemy);
+                }
+            }
+        }
+
+        Attack(hitableEnemy, out _player.enemyNormalHitDuplicateChecker);
     }
 
     private void JumpToFront()

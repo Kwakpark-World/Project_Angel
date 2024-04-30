@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerNormalChargeStabAttackState : PlayerChargeState
 {
@@ -22,6 +23,8 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     public override void Exit()
     {
         base.Exit();
+
+        _player.enemyNormalHitDuplicateChecker.Clear();
 
         _player.ChargingGauge = 0;
         _player.AnimatorCompo.speed = 1;

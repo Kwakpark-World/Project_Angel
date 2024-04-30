@@ -35,9 +35,10 @@ public class PlayerAttackState : PlayerState
         base.UpdateState();
     }
 
-    public void Attack(List<Collider> enemies)
+    public void Attack(List<Collider> enemies, out HashSet<Brain> saves)
     {
         HashSet<Collider> enemyDuplicateCheck = new HashSet<Collider>();
+        HashSet<Brain> enemySave = new HashSet<Brain>();
 
         foreach (var enemy in enemies)
         {
@@ -46,16 +47,22 @@ public class PlayerAttackState : PlayerState
                 if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
                 {
                     brain.OnHit(_player.PlayerStatData.GetAttackPower());
+
+                    enemySave.Add(brain);
+
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
                 }
             }
         }
+
+        saves = enemySave;
     }
 
-    public void Attack(List<RaycastHit> enemies)
+    public void Attack(List<RaycastHit> enemies, out HashSet<Brain> saves)
     {
         HashSet<RaycastHit> enemyDuplicateCheck = new HashSet<RaycastHit>();
+        HashSet<Brain> enemySave = new HashSet<Brain>();
 
         foreach (var enemy in enemies)
         {
@@ -64,11 +71,16 @@ public class PlayerAttackState : PlayerState
                 if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
                 {
                     brain.OnHit(_player.PlayerStatData.GetAttackPower());
+
+                    enemySave.Add(brain);
+
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
                 }
             }
         }
+
+        saves = enemySave;
     }
 
     public List<RaycastHit> GetEnemyByWeapon()

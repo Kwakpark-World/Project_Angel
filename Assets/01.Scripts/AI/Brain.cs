@@ -75,6 +75,8 @@ public abstract class Brain : PoolableMono
         NavMeshAgentCompo.updateRotation = false;
         BuffCompo = GetComponent<Buff>();
 
+        CurrentHealth = EnemyStatData.GetMaxHealth();
+
         BuffCompo.SetOwner(this);
 
         AnimatorCompo = GetComponent<EnemyAnimator>();

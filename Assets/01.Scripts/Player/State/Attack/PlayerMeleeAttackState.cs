@@ -91,7 +91,19 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         List<RaycastHit> enemies = GetEnemyByWeapon();
 
-        Attack(enemies);
+        List<RaycastHit> hitableEnemy = new List<RaycastHit>();
+        foreach (var enemy in enemies)
+        {
+            if (enemy.transform.TryGetComponent(out Brain brain))
+            {
+                if (!_player.enemyNormalHitDuplicateChecker.Contains(brain))
+                {
+                    hitableEnemy.Add(enemy);
+                }
+            }
+        }
+
+        Attack(hitableEnemy, out _player.enemyNormalHitDuplicateChecker);
     }
 
     private void ComboAttack()
