@@ -9,6 +9,9 @@ public class RuneManager : MonoSingleton<RuneManager>
 {
     [SerializeField]
     private RuneListSO _runeList;
+    [field: SerializeField]
+    public float UnequipWaitTime { get; private set; }
+    public float UnequipWaitTimer { get; set; }
 
     private List<RuneDataSO> _equipedRunes = Enumerable.Repeat<RuneDataSO>(null, 5).ToList();
     private BuffType _synergizeRuneType;
@@ -73,10 +76,15 @@ public class RuneManager : MonoSingleton<RuneManager>
 
         CheckRuneSynergy(runeData.synergyType);
 
+        for (int i = 0; i < 2; ++i)
+        {
+            UIManager.Instance.TogglePopupUniquely("Inventory");
+        }
+
         return true;
     }
 
-    public bool UnequipRune(int index)
+    public bool TryUnequipRune(int index)
     {
         if (!_equipedRunes[index])
         {
@@ -85,12 +93,22 @@ public class RuneManager : MonoSingleton<RuneManager>
 
         _equipedRunes[index] = null;
 
+        for (int i = 0; i < 2; ++i)
+        {
+            UIManager.Instance.TogglePopupUniquely("Inventory");
+        }
+
         return true;
     }
 
     public RuneDataSO GetEquipedRune(int index)
     {
         return _equipedRunes[index];
+    }
+
+    public int GetEquipedRuneIndex(RuneDataSO runeData)
+    {
+        return _equipedRunes.IndexOf(runeData);
     }
 
     public void CheckRuneSynergy(BuffType runeSynergyType)

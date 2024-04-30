@@ -6,7 +6,8 @@ public class PoolableMonoEffect : PoolableMono
 {
     public EffectType EffectType;
 
-    private void Awake()
+
+    protected virtual void Awake()
     {
         RegisterEffect();
     }
@@ -24,7 +25,8 @@ public class PoolableMonoEffect : PoolableMono
     {
         if (EffectType == EffectType.Particle)
         {
-            if (this.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
+            ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem particle in particles)
             {
                 particle.Play();
             }
