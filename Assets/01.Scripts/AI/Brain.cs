@@ -99,7 +99,7 @@ public abstract class Brain : PoolableMono
 
         AnimatorCompo.SetAnimationState("Hit", AnimationStateMode.SavePreviousState);
 
-        if (RuneManager.Instance.isDebuff)
+        if (GameManager.Instance.PlayerInstance.BuffCompo.GetBuffState(BuffType.Rune_Debuff_Synergy))
         {
             float previousSpeed = AnimatorCompo._animator.speed;
 
@@ -128,7 +128,7 @@ public abstract class Brain : PoolableMono
 
     public void FindNearbyEnemies()
     {
-        nearbyEnemies.Clear(); 
+        nearbyEnemies.Clear();
 
         Brain[] allEnemies = FindObjectsOfType<Brain>();
 
@@ -143,7 +143,7 @@ public abstract class Brain : PoolableMono
 
     public virtual void EnemyDistance(float minDistance)
     {
-        List<Brain> enemiesCopy = new List<Brain>(nearbyEnemies); 
+        List<Brain> enemiesCopy = new List<Brain>(nearbyEnemies);
 
         foreach (Brain enemy in enemiesCopy)
         {

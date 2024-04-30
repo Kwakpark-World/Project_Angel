@@ -1,7 +1,9 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,30 +14,31 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private float _fadeDuration;
     [SerializeField]
-    private GameObject _volumeSetting;
-    [SerializeField]
-    private GameObject ESCPage;
+    private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
 
     protected override void Awake()
     {
+        base.Awake();
+
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoaded();
+
+        foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
+        {
+            popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
+            popup.TogglePopup(false);
+        }
     }
 
-    protected void Update()
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) && ESCPage.activeSelf == false) 
-        { 
-            ESCPage.SetActive(true);
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            TogglePopupUniquely("Inventory");
         }
 
-        else if(Input.GetKeyDown(KeyCode.Escape) && ESCPage.activeSelf == true)
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            ESCPage.SetActive(false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && _volumeSetting.activeSelf)
-        {
-            _volumeSetting.SetActive(false);
+            TogglePopupUniquely("Pause");
         }
     }
 
@@ -52,10 +55,12 @@ public class UIManager : MonoSingleton<UIManager>
             });
     }
 
-    public void Setting()
+    public void TogglePopupUniquely(string popupName)
     {
-        _volumeSetting.SetActive(true);
-
+        foreach (var popup in popups)
+        {
+            popup.Value.TogglePopup(popup.Key == popupName && !popup.Value.gameObject.activeInHierarchy);
+        }
     }
 
     public void Quit()

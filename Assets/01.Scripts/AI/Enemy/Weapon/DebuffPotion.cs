@@ -31,17 +31,17 @@ public class DebuffPotion : PoolableMono
             switch (_debuffType)
             {
                 case BuffType.Poison:
-                    GameManager.Instance.PlayerInstance.BuffCompo.SetBuff(_debuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
+                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_debuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
 
                     break;
 
                 case BuffType.Freeze:
-                    GameManager.Instance.PlayerInstance.BuffCompo.SetBuff(_debuffType, owner.BuffCompo.BuffStatData.freezeDuration, owner);
+                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_debuffType, owner.BuffCompo.BuffStatData.freezeDuration, owner);
 
                     break;
 
                 case BuffType.Knockback:
-                    GameManager.Instance.PlayerInstance.BuffCompo.SetBuff(_debuffType, owner);
+                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_debuffType, owner);
 
                     break;
             }

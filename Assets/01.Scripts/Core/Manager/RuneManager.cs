@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,19 +10,19 @@ public class RuneManager : MonoSingleton<RuneManager>
     [SerializeField]
     private RuneListSO _runeList;
 
-    public Dictionary<RuneType, List<Rune>> collectedRunes = new Dictionary<RuneType, List<Rune>>();
-    public bool isLastDance = false;
-    public bool isDebuff = false;
+    private List<RuneDataSO> _equipedRunes = Enumerable.Repeat<RuneDataSO>(null, 5).ToList();
+    private BuffType _synergizeRuneType;
 
-
-    private void Awake()
+    protected override void Awake()
     {
-        foreach (RuneType type in Enum.GetValues(typeof(RuneType)))
-        {
-            collectedRunes[type] = new List<Rune>();
-        }
+        base.Awake();
 
         _runeList = Instantiate(_runeList);
+
+        for (int i = 0; i < _equipedRunes.Count; ++i)
+        {
+            _equipedRunes[i] = null;
+        }
     }
 
     public void Update()
@@ -29,7 +30,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 #if UNITY_EDITOR // Debug
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
-            CreateRune(GameManager.Instance.PlayerInstance.transform.position + Vector3.forward * 5f);
+            SpawnRune(GameManager.Instance.PlayerInstance.transform.position + Vector3.forward * 5f);
         }
 #endif
     }
@@ -39,70 +40,73 @@ public class RuneManager : MonoSingleton<RuneManager>
         _runeList = list;
     }
 
-    public Rune CreateRune(Vector3 runeSpawnPos)
+    public void SpawnRune(Vector3 runeSpawnPos)
     {
         Rune rune = PoolManager.Instance.Pop(PoolingType.Rune, runeSpawnPos) as Rune;
         RuneDataSO runeData = _runeList.list[UnityEngine.Random.Range(0, _runeList.list.Count)];
 
-        rune.SetRuneData(runeData);
-        rune.InitializeRune();
+        rune.InitializeRune(runeData);
         _runeList.list.Remove(runeData);
-
-        return rune;
     }
 
-    public void CheckRuneSynergy()
+    public bool TryEquipRune(RuneDataSO runeData)
     {
-        foreach (var rune in collectedRunes)
+        if (!runeData)
         {
-            if (rune.Value.Count < 3)
+            return false;
+        }
+
+        for (int i = 0; i < _equipedRunes.Count; ++i)
+        {
+            if (!_equipedRunes[i])
             {
-                return;
+                _equipedRunes[i] = runeData;
+
+                break;
             }
 
-            switch (rune.Key)
+            if (i == 4)
             {
-
-                case RuneType.Acceleration:
-                    break;
-
-                case RuneType.Attack:
-                    break;
-
-                case RuneType.Debuff:
-                    if (UnityEngine.Random.value <= 0.5f)
-                    {
-                        //준호가 공격 만들면 여기다가 할 예정
-                    }
-
-                    break;
-
-                case RuneType.Defense:
-                    isDebuff = false;
-
-                    break;
-
-                case RuneType.Health:
-                    Debug.Log("3");
-                    StartCoroutine(LastDance(5f));
-
-                    break;
-
-                default:
-                    break;
+                return false;
             }
         }
+
+        CheckRuneSynergy(runeData.synergyType);
+
+        return true;
     }
 
-    private IEnumerator LastDance(float time)
+    public bool UnequipRune(int index)
     {
-        if (GameManager.Instance.PlayerInstance.CurrentHealth <= 1 && isLastDance == false)
+        if (!_equipedRunes[index])
         {
-            isLastDance = true;
+            return false;
         }
 
-        yield return new WaitForSeconds(time);
+        _equipedRunes[index] = null;
 
-        isLastDance = false;
+        return true;
+    }
+
+    public RuneDataSO GetEquipedRune(int index)
+    {
+        return _equipedRunes[index];
+    }
+
+    public void CheckRuneSynergy(BuffType runeSynergyType)
+    {
+        if (_equipedRunes.FindAll((runeData) => runeData && (runeData.synergyType == runeSynergyType)).Count >= 3)
+        {
+            GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_synergizeRuneType);
+            GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(runeSynergyType);
+
+            _synergizeRuneType = runeSynergyType;
+        }
+        else if (_equipedRunes.FindAll((runeData) => runeData && (runeData.synergyType == _synergizeRuneType)).Count < 3)
+        {
+            GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_synergizeRuneType);
+
+            _synergizeRuneType = BuffType.None;
+        }
     }
 }

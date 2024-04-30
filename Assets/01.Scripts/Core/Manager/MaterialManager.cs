@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor.AddressableAssets;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public class MaterialManager : MonoSingleton<MaterialManager>
 {

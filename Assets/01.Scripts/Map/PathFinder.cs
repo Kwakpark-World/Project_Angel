@@ -1,61 +1,82 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(LineRenderer))]
 public class PathFinder : MonoBehaviour
 {
-    public GameObject player;
-    public List<GameObject> targets;
-    public LineRenderer playerLineRenderer; // Player¿« LineRenderer
-    // public List<LineRenderer> targetLineRenderers; // ∞¢ ø¿∫Í¡ß∆Æ¿« LineRenderer (¡¶∞≈)
+    private LineRenderer _lineRender;
+    private NavMeshAgent _navMashAgent;
 
-    public float distanceThreshold = 1f; // «√∑π¿ÃæÓ∞° ≈∏∞Ÿø° µµ¥ﬁ«œ¥¬ ∞≈∏Æ ¿”∞Ë∞™
+    public List<Vector3> _targetList; //ÏãúÏûëÏùÑ 0
 
-    // Start is called before the first frame update
-    void Start()
+    private int _targetIndex;
+
+    private void Start()
     {
-        // Player¿« LineRenderer √ ±‚»≠
-        playerLineRenderer.startWidth = playerLineRenderer.endWidth = 0.5f;
-        playerLineRenderer.material.color = Color.blue;
-        playerLineRenderer.enabled = false;
+        InitNaviManager(0.01f);
     }
 
-    private void Update()
+    public void InitNaviManager(float updateDelay)
     {
-        DrawPath();
+        //SetOriginTransform(trans);
+
+        _lineRender = GetComponent<LineRenderer>();
+        _lineRender.positionCount = 0;
+
+        _navMashAgent = transform.Find("NavMesh").GetComponent<NavMeshAgent>();
+        _navMashAgent.isStopped = true;
+        _navMashAgent.radius = 1;
+        _navMashAgent.height = 1;
+
+        StartCoroutine(UpdateNavi(updateDelay));
     }
 
-    public void DrawPath()
+    IEnumerator UpdateNavi(float delay)
     {
-        playerLineRenderer.enabled = true;
+        WaitForSeconds delayTime = new WaitForSeconds(delay);
 
-        // «√∑π¿ÃæÓ¿« LineRenderer º≥¡§
-        playerLineRenderer.positionCount = targets.Count + 1;
-        playerLineRenderer.SetPosition(0, transform.position);
-
-        // ø¿∫Í¡ß∆ÆµÈ¿« LineRenderer º≥¡§
-        for (int i = 0; i < targets.Count; i++)
+        while (true)
         {
-            if (targets[i] != null)
+            if (Vector3.Distance(transform.position, _targetList[_targetIndex]) <= 2f)
             {
-                // «√∑π¿ÃæÓøÕ ≈∏∞Ÿ ªÁ¿Ã¿« LineRenderer∏∏ ±◊∏Æ±‚
-                // playerLineRenderer.SetPosition(i + 1, targets[i].transform.position); // ¿Ã ¡Ÿ ¡÷ºÆ √≥∏Æ
-
-                // «√∑π¿ÃæÓ∞° ≈∏∞Ÿø° ∞°±Ó¿Ã ¿÷¥¬¡ˆ »Æ¿Œ
-                if (Vector3.Distance(player.transform.position, targets[i].transform.position) < distanceThreshold)
-                {
-                    // ≈∏∞Ÿ¿« LineRenderer ∫Ò»∞º∫»≠
-                    // targetLineRenderers[i].enabled = false; // ¿Ã ¡Ÿ ¡÷ºÆ √≥∏Æ
-                    Debug.Log("3");
-                }
-                else
-                {
-                    Debug.Log("999");
-                    // ≈∏∞Ÿ¿« LineRenderer »∞º∫»≠
-                    // targetLineRenderers[i].enabled = true; // ¿Ã ¡Ÿ ¡÷ºÆ √≥∏Æ
-                }
+                PassToNextDestination();
             }
+
+            if (_targetIndex >= _targetList.Count)
+            {
+                _lineRender.enabled = false;
+
+                break;
+            }
+
+            transform.position = GameManager.Instance.PlayerInstance.transform.position;
+            _navMashAgent.SetDestination(_targetList[_targetIndex]);
+            DrawPath();
+            yield return delayTime;
+        }
+    }
+
+    public void PassToNextDestination()
+    {
+        _targetIndex++;
+    }
+
+    private void DrawPath()
+    {
+        _lineRender.positionCount = _navMashAgent.path.corners.Length;
+        _lineRender.SetPosition(0, transform.position);
+
+        if (_navMashAgent.path.corners.Length < 2)
+        {
+            return;
+        }
+
+        for (int i = 1; i < _navMashAgent.path.corners.Length; ++i)
+        {
+            _lineRender.SetPosition(i, _navMashAgent.path.corners[i]);
         }
     }
 }

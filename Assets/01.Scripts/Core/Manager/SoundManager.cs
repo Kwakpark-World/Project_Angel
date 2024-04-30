@@ -19,10 +19,14 @@ public enum ENVType
 
 public enum SFXType
 {
+    Enemy_Attack_Knight,
+    Enemy_Attack_Ranger,
+    Enemy_Attack_Ranger_Reload,
+    Enemy_Attack_Witch,
+    Enemy_Hit,
+    Enemy_Die,
     UI_Button_Hover,
     UI_Button_Click,
-    Scroll,
-    Buy,
 }
 
 [Serializable]
@@ -43,7 +47,7 @@ public struct ENVTypeSource
 public struct SFXTypeClip
 {
     public SFXType type;
-    public AudioSource clip;
+    public AudioClip clip;
 }
 
 public class SoundManager : MonoSingleton<SoundManager>
@@ -54,10 +58,10 @@ public class SoundManager : MonoSingleton<SoundManager>
     public AudioMixer audioMixer;
     private Dictionary<BGMMode, AudioSource> _bgmDictionary = new Dictionary<BGMMode, AudioSource>();
     private Dictionary<ENVType, AudioSource> _envDictionary = new Dictionary<ENVType, AudioSource>();
-    private Dictionary<SFXType, AudioSource> _sfxDicionary = new Dictionary<SFXType, AudioSource>();
+    private Dictionary<SFXType, AudioClip> _sfxDicionary = new Dictionary<SFXType, AudioClip>();
     private BGMMode _soundMode = BGMMode.None;
 
-    private void Awake()
+    protected override void Awake()
     {
         foreach (BGMModeSource bgm in bgmList)
         {
@@ -127,7 +131,13 @@ public class SoundManager : MonoSingleton<SoundManager>
             return;
         }
 
-        _sfxDicionary[type].Play();
-        
+        GameObject gameObject = new GameObject("One shot audio");
+        gameObject.transform.position = transform.position;
+        AudioSource audioSource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        audioSource.clip = _sfxDicionary[type];
+        audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
+        audioSource.Play();
+        Destroy(gameObject, _sfxDicionary[type].length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+        // Change to pool.
     }
 }
