@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebuffPotion : PoolableMono
+public class EnemyPotion : PoolableMono
 {
     [HideInInspector]
     public EnemyBrain owner;
     [SerializeField]
-    private BuffType _debuffType;
+    private BuffType _potionBuffType;
     [SerializeField]
     private int _lifetime = 5;
     [SerializeField]
@@ -28,21 +28,20 @@ public class DebuffPotion : PoolableMono
     {
         if (other.gameObject == GameManager.Instance.PlayerInstance.gameObject)
         {
-            switch (_debuffType)
+            switch (_potionBuffType)
             {
                 case BuffType.Poison:
-                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_debuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
+                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
 
                     break;
 
                 case BuffType.Freeze:
-                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_debuffType, owner.BuffCompo.BuffStatData.freezeDuration, owner);
+                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.freezeDuration, owner);
 
                     break;
 
                 case BuffType.Knockback:
-                    Debug.Log(owner);
-                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_debuffType, owner);
+                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner);
 
                     break;
             }

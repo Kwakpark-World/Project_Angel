@@ -12,10 +12,10 @@ public enum EnemyStatType
     attackPower,
     attackRange,
     attackDelay,
+    skillCooldown,
     moveSpeed,
     rotateSpeed,
     patternAmount,
-    initialPatternCooldown,
 }
 
 public class EnemyStat : ScriptableObject
@@ -30,6 +30,7 @@ public class EnemyStat : ScriptableObject
     public Stat attackPower; // 공격력
     public Stat attackRange; // 공격 범위
     public Stat attackDelay; // 공격 딜레이
+    public Stat skillCooldown; // 스킬 쿨다운
 
     [Header("Move stats")]
     public Stat moveSpeed; // 이동 속도
@@ -37,7 +38,6 @@ public class EnemyStat : ScriptableObject
 
     [Header("Boss stats")]
     public Stat patternAmount; // 패턴 개수
-    public Stat initialPatternCooldown; // 초기 패턴 쿨다운
 
     protected Brain owner;
 
@@ -83,6 +83,11 @@ public class EnemyStat : ScriptableObject
         return attackDelay.GetValue();
     }
 
+    public float GetSkillCooldown()
+    {
+        return skillCooldown.GetValue();
+    }
+
     public float GetMoveSpeed()
     {
         return moveSpeed.GetValue();
@@ -96,10 +101,5 @@ public class EnemyStat : ScriptableObject
     public int GetPatternAmount()
     {
         return (int)patternAmount.GetValue();
-    }
-
-    public float GetInitialPatternCooldown()
-    {
-        return initialPatternCooldown.GetValue();
     }
 }

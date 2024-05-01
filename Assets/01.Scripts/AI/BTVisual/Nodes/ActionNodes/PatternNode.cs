@@ -7,7 +7,7 @@ namespace BTVisual
     public class PatternNode : ActionNode
     {
         public GameObject patternObject;
-        private Pattern _pattern = null;
+        private EnemyAttack _pattern = null;
 
         public float nextPatternCooldown;
 
@@ -15,7 +15,7 @@ namespace BTVisual
         {
             if (_pattern == null)
             {
-                _pattern = patternObject.GetComponent<Pattern>();
+                _pattern = patternObject.GetComponent<EnemyAttack>();
             }
 
             if (_pattern.OwnerNode == null)

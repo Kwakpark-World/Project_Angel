@@ -22,7 +22,7 @@ public class BossBrain : Brain
     {
         base.InitializePoolingItem();
 
-        treeRunner.tree.blackboard.nextPatternCooldown = EnemyStatData.GetInitialPatternCooldown();
+        treeRunner.tree.blackboard.nextPatternCooldown = EnemyStatData.GetSkillCooldown();
         _patternTimer = Time.time;
     }
 

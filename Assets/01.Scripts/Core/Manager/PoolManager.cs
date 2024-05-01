@@ -9,8 +9,10 @@ public class PoolManager : MonoSingleton<PoolManager>
     [SerializeField]
     private PoolingListSO _poolingList;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         foreach (var poolingObject in _poolingList.poolingList)
         {
             CreatePool(poolingObject.prefab, poolingObject.type, poolingObject.itemAmount);
@@ -24,7 +26,7 @@ public class PoolManager : MonoSingleton<PoolManager>
         _pools.Add(poolingType, pool);
     }
 
-    public void Push(PoolableMono item, bool resetParent =  false)
+    public void Push(PoolableMono item, bool resetParent = false)
     {
         if (resetParent)
         {

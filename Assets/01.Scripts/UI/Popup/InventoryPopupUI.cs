@@ -32,7 +32,13 @@ public class InventoryPopupUI : PopupUI
     {
         if (value && SceneManager.GetActiveScene().name != "GameScene")
         {
-            return;
+            // Debug
+            if (SceneManager.GetActiveScene().name != "EnemyScene")
+            {
+                return;
+            }
+
+            //return;
         }
 
         base.TogglePopup(value);
