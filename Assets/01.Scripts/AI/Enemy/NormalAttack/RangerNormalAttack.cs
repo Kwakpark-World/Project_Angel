@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangerNormalAttack : Pattern
+public class RangerNormalAttack : EnemyAttack
 {
     public override void OnStart()
     {

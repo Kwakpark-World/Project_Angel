@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AzazelSecondPattern : Pattern
+public class AzazelSecondPattern : EnemyAttack
 {
     [SerializeField]
     private List<PoolingType> grigoris;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BTVisual
 {
-    public abstract class Pattern : MonoBehaviour
+    public abstract class EnemyAttack : MonoBehaviour
     {
         public Node OwnerNode { get; set; }
 

@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8465181217331714866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901a731da74368f47a7e5cdac77dc3ca, type: 3}
+  m_Name: InRangeNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 34852717630e3e747b08e82cfa5ed6bc
+  position: {x: -622.80005, y: 537.6}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    home: {x: 0, y: 0, z: 0}
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  isDetect: 0
 --- !u!114 &-7697372696288469399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,7 +42,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 3be516a3913bb5a47bad9a1285a67efd
-  position: {x: 448.28152, y: 536}
+  position: {x: 638.1093, y: 539.04175}
   blackboard:
     enemyLayer:
       serializedVersion: 2
@@ -42,7 +69,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 8048781f555ed2540b00fcad5b9e69fe
-  position: {x: -462.4, y: 535.77594}
+  position: {x: -272.29065, y: 538.2417}
   blackboard:
     enemyLayer:
       serializedVersion: 2
@@ -81,6 +108,7 @@ MonoBehaviour:
   brain: {fileID: 0}
   description: 
   children:
+  - {fileID: 5135831895988258152}
   - {fileID: -888577517424413357}
   - {fileID: 7969767748012299539}
   - {fileID: 7145335801812905989}
@@ -99,7 +127,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 61d60bb1fddeb0d4b8f31168de2c7ff4
-  position: {x: -75.2, y: 535.1999}
+  position: {x: 114.90938, y: 538.2417}
   blackboard:
     enemyLayer:
       serializedVersion: 2
@@ -126,7 +154,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 0a1bb5980aed4e448a5e7ebc1f6ed7fe
-  position: {x: -386.74997, y: 394.30008}
+  position: {x: -196.29065, y: 396.64175}
   blackboard:
     enemyLayer:
       serializedVersion: 2
@@ -150,7 +178,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a310246ca011401097a098354ca424fb, type: 3}
-  m_Name: ArchgerTree
+  m_Name: ArcherTree
   m_EditorClassIdentifier: 
   treeRoot: {fileID: 7596451792901449130}
   treeState: 0
@@ -158,6 +186,9 @@ MonoBehaviour:
   - {fileID: 7596451792901449130}
   - {fileID: 1562868946696797983}
   - {fileID: -4350903166723297274}
+  - {fileID: 5135831895988258152}
+  - {fileID: -8465181217331714866}
+  - {fileID: 4796887438782487038}
   - {fileID: -888577517424413357}
   - {fileID: -4363032221952688361}
   - {fileID: 4295539009617331278}
@@ -218,7 +249,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: eecbe1312bdf41442a2f6877beca6679
-  position: {x: 298.68152, y: 536}
+  position: {x: 488.50937, y: 539.04175}
   blackboard:
     enemyLayer:
       serializedVersion: 2
@@ -245,7 +276,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 94ac6e6c1f3e4464fa9423476e5f2617
-  position: {x: 75.00001, y: 536}
+  position: {x: 265.3094, y: 539.04175}
   blackboard:
     enemyLayer:
       serializedVersion: 2
@@ -271,7 +302,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: b324bbef91ece7a438a509bab3d5188d
-  position: {x: 298.68152, y: 639.19995}
+  position: {x: 488.50937, y: 642.24164}
   blackboard:
     enemyLayer:
       serializedVersion: 2
@@ -298,7 +329,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 590c17803288a2747b2ac0e1de9215d3
-  position: {x: -312.8, y: 535.77594}
+  position: {x: -122.690674, y: 538.2417}
   blackboard:
     enemyLayer:
       serializedVersion: 2
@@ -309,8 +340,66 @@ MonoBehaviour:
     nextPatternCooldown: 0
   brain: {fileID: 0}
   description: 
-  normalAttackObject: {fileID: 3041867924622210329, guid: 2f7f5e9926fcbd847be5082eceb8b736,
+  isSkillAttack: 0
+  attackObject: {fileID: 3041867924622210329, guid: 2f7f5e9926fcbd847be5082eceb8b736,
     type: 3}
+--- !u!114 &4796887438782487038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec6c8849b3c40f40b689fe08f2c8ef6, type: 3}
+  m_Name: AttackNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ffa0488e82fb3c442a16abf08d8446f3
+  position: {x: -473.6, y: 537.6}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    home: {x: 0, y: 0, z: 0}
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  isSkillAttack: 1
+  attackObject: {fileID: 0}
+--- !u!114 &5135831895988258152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ff18e011eb4e1ba59c08354a7ff280, type: 3}
+  m_Name: SequenceNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 1bf49e73001fec146843bcc3ca975190
+  position: {x: -548.3602, y: 396}
+  blackboard:
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    home: {x: 0, y: 0, z: 0}
+    destination: {x: 0, y: 0, z: 0}
+    selectedPattern: 0
+    nextPatternCooldown: 0
+  brain: {fileID: 0}
+  description: 
+  children:
+  - {fileID: -8465181217331714866}
+  - {fileID: 4796887438782487038}
 --- !u!114 &7145335801812905989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,7 +415,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 1805305eaf480424ba03964d374a8052
-  position: {x: 373.88147, y: 393.60004}
+  position: {x: 563.70935, y: 396.64175}
   blackboard:
     enemyLayer:
       serializedVersion: 2
@@ -382,7 +471,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 4f386f56f0fa33e46a81702709947e16
-  position: {x: -0.00004005432, y: 394.4}
+  position: {x: 190.10933, y: 397.44174}
   blackboard:
     enemyLayer:
       serializedVersion: 2

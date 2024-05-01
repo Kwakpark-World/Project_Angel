@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BTVisual
 {
-    public class PatternSelectedNode : ActionNode
+    public class CheckPatternConditionNode : ActionNode
     {
         public int conditioningPattern;
 

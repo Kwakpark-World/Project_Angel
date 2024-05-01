@@ -4,23 +4,24 @@ using UnityEngine;
 
 namespace BTVisual
 {
-    public class NormalAttackNode : ActionNode
+    public class AttackNode : ActionNode
     {
-        public GameObject normalAttackObject;
-        private Pattern _normalAttack = null;
+        public bool isSkillAttack;
+        public GameObject attackObject;
+        private EnemyAttack _attackScript = null;
         private float _attackRange;
 
         protected override void OnStart()
         {
-            if (_normalAttack == null)
+            if (_attackScript == null)
             {
-                normalAttackObject = Instantiate(normalAttackObject, brain.transform);
-                _normalAttack = normalAttackObject.GetComponent<Pattern>();
+                attackObject = Instantiate(attackObject, brain.transform);
+                _attackScript = attackObject.GetComponent<EnemyAttack>();
             }
 
-            if (_normalAttack.OwnerNode == null)
+            if (_attackScript.OwnerNode == null)
             {
-                _normalAttack.OwnerNode = this;
+                _attackScript.OwnerNode = this;
             }
 
             if (_attackRange <= 0f)
@@ -28,12 +29,12 @@ namespace BTVisual
                 _attackRange = brain.EnemyStatData.GetAttackRange();
             }
 
-            _normalAttack.OnStart();
+            _attackScript.OnStart();
         }
 
         protected override void OnStop()
         {
-            _normalAttack.OnStop();
+            _attackScript.OnStop();
         }
 
         protected override State OnUpdate()
@@ -47,12 +48,16 @@ namespace BTVisual
             {
                 return State.Failure;
             }
-            else if (Time.time <= brain.NormalAttackTimer + brain.EnemyStatData.GetAttackDelay())
+            else if (isSkillAttack && Time.time <= brain.SkillAttackTimer + brain.EnemyStatData.GetSkillCooldown())
+            {
+                return State.Failure;
+            }
+            else if (!isSkillAttack && Time.time <= brain.NormalAttackTimer + brain.EnemyStatData.GetAttackDelay())
             {
                 return State.Running;
             }
 
-            return _normalAttack.OnUpdate();
+            return _attackScript.OnUpdate();
         }
     }
 }

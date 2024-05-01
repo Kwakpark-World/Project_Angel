@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class WitchNormalAttack : Pattern
+public class WitchNormalAttack : EnemyAttack
 {
     public override void OnStart()
     {

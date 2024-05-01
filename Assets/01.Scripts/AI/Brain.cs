@@ -21,6 +21,7 @@ public abstract class Brain : PoolableMono
     public MonsterStat EnemyStatData { get; private set; }
     public float CurrentHealth { get; set; }
     public float NormalAttackTimer { get; set; }
+    public float SkillAttackTimer { get; set; }
     [HideInInspector]
     public EnemyMannequin enemySpawn;
 
@@ -66,6 +67,7 @@ public abstract class Brain : PoolableMono
 
         CurrentHealth = EnemyStatData.GetMaxHealth();
         NormalAttackTimer = Time.time;
+        SkillAttackTimer = Time.time;
     }
 
     protected virtual void Initialize()
