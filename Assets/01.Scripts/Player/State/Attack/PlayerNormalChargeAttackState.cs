@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerNormalChargeAttackState : PlayerChargeState
 {
@@ -93,20 +94,8 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         Quaternion rot = Quaternion.Euler((_player.transform.forward * _hitDist) - _player.transform.position);
         
         Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
-        List<Collider> hitableEnemy = new List<Collider>();
-        foreach (var enemy in enemies)
-        {
-            if (enemy.TryGetComponent(out Brain brain))
-            {
-                if (!_player.enemyNormalHitDuplicateChecker.Contains(brain))
-                {
-                    hitableEnemy.Add(enemy);
-                }
-            }
-        }
-        
 
-        Attack(hitableEnemy, out _player.enemyNormalHitDuplicateChecker);
+        Attack(enemies.ToList());
     }
 
 }

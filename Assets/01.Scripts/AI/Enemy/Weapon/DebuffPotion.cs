@@ -41,6 +41,7 @@ public class DebuffPotion : PoolableMono
                     break;
 
                 case BuffType.Knockback:
+                    Debug.Log(owner);
                     GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_debuffType, owner);
 
                     break;

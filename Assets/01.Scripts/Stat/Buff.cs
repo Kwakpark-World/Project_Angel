@@ -275,7 +275,7 @@ public class Buff : MonoBehaviour
             }
 
             Brain attacker = _attackers[BuffType.Knockback] as Brain;
-
+            
             _ownerController.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.knockbackForce, ForceMode.Impulse);
         }
         else

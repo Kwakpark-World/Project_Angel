@@ -61,28 +61,7 @@ public class PlayerNormalSlamState : PlayerAttackState
 
     private void SlamAttack()
     {
-        _isAttacked = true;
-
-        Vector3 pos = _player.transform.position;
-        pos.y += _attackHeight / 2f;
-
-        Vector3 size = new Vector3(_hitDist, _attackHeight, _hitDist);
-
-        Collider[] enemies = Physics.OverlapBox(pos, size, Quaternion.identity, _player._enemyLayer);
-
-        List<Collider> hitableEnemy = new List<Collider>();
-        foreach (var enemy in enemies)
-        {
-            if (enemy.TryGetComponent(out Brain brain))
-            {
-                if (!_player.enemyNormalHitDuplicateChecker.Contains(brain))
-                {
-                    hitableEnemy.Add(enemy);
-                }
-            }
-        }
-
-        Attack(hitableEnemy, out _player.enemyNormalHitDuplicateChecker);
+        
     }
 
     private void JumpToFront()
