@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerAttackState : PlayerState
 {
@@ -62,7 +63,6 @@ public class PlayerAttackState : PlayerState
     {
         foreach (var enemy in enemies)
         {
-            if (enemy.collider.CompareTag("Shield"))
             if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
@@ -93,22 +93,13 @@ public class PlayerAttackState : PlayerState
         foreach (var enemy in enemiesL) enemies.Add(enemy);
         foreach (var enemy in enemiesR) enemies.Add(enemy);
 
-        List<RaycastHit> shieldEnemies = ShieldEnemyCheck();
-        foreach (var shieldEnemy in shieldEnemies)
-        {
-            if (enemies.Contains(shieldEnemy))
-            {
-                enemies.Remove(shieldEnemy);
-            }
-        }
+        ShieldEnemyCheck();
 
         return enemies;
     }
 
-    public List<RaycastHit> ShieldEnemyCheck()
+    public void ShieldEnemyCheck()
     {
-        List<RaycastHit> shieldEnemy = new List<RaycastHit>();
-
         Vector3 pos = _player.transform.position;
         Vector3 dir = _player.transform.forward;
 
@@ -116,19 +107,26 @@ public class PlayerAttackState : PlayerState
         RaycastHit[] enemies = Physics.RaycastAll(pos, dir, _shieldEnemyCheckDist, _player._enemyLayer);
         for (int i = enemies.Length - 1; i >= 0; i--)
         {
-            if (enemies[i].collider.gameObject.CompareTag(_shieldTagString))
-                break;
-
             index = i;
-            if (i == 0) index = -1;
+            
+            if (enemies[i].collider.gameObject.CompareTag(_shieldTagString))
+            {
+                if (enemies[i].transform.TryGetComponent<Brain>(out Brain brain))
+                    _player.enemyNormalHitDuplicateChecker.Add(brain);
+
+                break;
+            }
+
+            if (index == 0) return;
         }
 
-
-        for (int i = index; i >= 0; i--)
+        for (int i = 0; i < index; i++)
         {
-            shieldEnemy.Add(enemies[i]);
+            if (enemies[i].transform.TryGetComponent<Brain>(out Brain brain))
+            {
+                _player.enemyNormalHitDuplicateChecker.Add(brain);
+            }
         }
-        return shieldEnemy;
     }
 
     public Collider[] GetEnemyByRange(Vector3 startPos, Vector3 direction)

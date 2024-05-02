@@ -16,8 +16,8 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
 
     public event Action DashEvent;
     public event Action MeleeAttackEvent;
-    public event Action QSkillEvent;
-    public event Action ESkillEvent;
+    public event Action SlamSkillEvent;
+    public event Action AwakeningSkillEvent;
 
 
     private Controls _controls;
@@ -67,7 +67,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     {
         if (context.performed)
         {
-            QSkillEvent?.Invoke();
+            SlamSkillEvent?.Invoke();
         }
     }
 
@@ -75,7 +75,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     {
         if (context.performed)
         {
-            ESkillEvent?.Invoke();
+            AwakeningSkillEvent?.Invoke();
         }
     }
 

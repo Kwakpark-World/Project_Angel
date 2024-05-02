@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class PlayerGroundState : PlayerState
+public class PlayerGroundState : PlayerState
 {
-    private float _slamPrevTime = 0f;
-
     protected PlayerGroundState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -18,8 +16,8 @@ public abstract class PlayerGroundState : PlayerState
         base.Enter();
         _player.IsGroundState = true;
 
-        _player.PlayerInput.QSkillEvent += QSkillHandle;
-        _player.PlayerInput.ESkillEvent += ESkillHandle;
+        _player.PlayerInput.SlamSkillEvent += SlamSkillHandle;
+        _player.PlayerInput.AwakeningSkillEvent += AwakeningSkillHandle;
         _player.PlayerInput.MeleeAttackEvent += HandlePrimaryAttackEvent;
     }
 
@@ -27,8 +25,8 @@ public abstract class PlayerGroundState : PlayerState
     {
         _player.IsGroundState = true;
 
-        _player.PlayerInput.QSkillEvent -= QSkillHandle;
-        _player.PlayerInput.ESkillEvent -= ESkillHandle;
+        _player.PlayerInput.SlamSkillEvent -= SlamSkillHandle;
+        _player.PlayerInput.AwakeningSkillEvent -= AwakeningSkillHandle;
         _player.PlayerInput.MeleeAttackEvent -= HandlePrimaryAttackEvent;
         base.Exit();
     }
@@ -57,7 +55,7 @@ public abstract class PlayerGroundState : PlayerState
         _stateMachine.ChangeState(PlayerStateEnum.Charging);
     }
 
-    private void ESkillHandle()
+    private void AwakeningSkillHandle()
     {
         if (_player.IsAwakening) return;
         if (_player.awakenCurrentGauge < _player.PlayerStatData.GetMaxAwakenGauge()) return;
@@ -65,11 +63,11 @@ public abstract class PlayerGroundState : PlayerState
         _stateMachine.ChangeState(PlayerStateEnum.Awakening);
     }
 
-    private void QSkillHandle()
+    private void SlamSkillHandle()
     {
-        if (_slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
+        if (_player._slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
 
-        _slamPrevTime = Time.time;
+        _player._slamPrevTime = Time.time;
 
         if (_player.IsAwakening)
             _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);

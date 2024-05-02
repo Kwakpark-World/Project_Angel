@@ -20,7 +20,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
-        _player.PlayerInput.QSkillEvent += ComboSkill;
+        _player.PlayerInput.SlamSkillEvent += ComboSkill;
         _player.RotateToMousePos();
 
         SetCombo();
