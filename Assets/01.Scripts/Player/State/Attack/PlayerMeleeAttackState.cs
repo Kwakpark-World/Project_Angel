@@ -14,7 +14,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     private float _comboWindow = 0.8f;
 
     private float _awakenAttackDist = 4.4f;
-    private float _normalAttackDist = 1.6f;
+    private float _normalAttackDist = 1.8f;
 
 
     private bool _isCombo;

@@ -19,6 +19,8 @@ public class PlayerAttackState : PlayerState
     {
         base.Enter();
 
+        SetAttackSetting();
+
         _weaponRT = _player._weapon.transform.Find("RightPointTop");
         _weaponRB = _player._weapon.transform.Find("RightPointBottom");
         _weaponLT = _player._weapon.transform.Find("LeftPointTop");
@@ -33,11 +35,6 @@ public class PlayerAttackState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-    }
-
-    public void Attack(HashSet<Brain> enemies)
-    {
-
     }
 
     public void Attack(List<Collider> enemies)
@@ -91,4 +88,6 @@ public class PlayerAttackState : PlayerState
 
         return enemies;
     }
+
+    protected virtual void SetAttackSetting(){}
 }

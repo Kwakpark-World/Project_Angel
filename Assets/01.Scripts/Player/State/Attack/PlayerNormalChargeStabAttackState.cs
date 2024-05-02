@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerNormalChargeStabAttackState : PlayerChargeState
 {
+    private float _width = 10f;
+    private float _height = 5f;
+    private float _dist = 5f;
+
     private bool _isStabMove;
     private bool _isEffectOn = false;
 
@@ -15,6 +20,8 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     public override void Enter()
     {
         base.Enter();
+
+        SetAttackSetting();
 
         _isEffectOn = false;
         _isStabMove = false;
@@ -34,18 +41,26 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     {
         base.UpdateState();
 
-        MoveToFront();
+        if (_isHitAbleTriggerCalled)
+        {
+            ChargeAttackStab();
+        }
 
         if (_effectTriggerCalled)
         {
             if (!_isEffectOn)
             {
                 _isEffectOn = true;
-                Vector3 pos = _player._weapon.transform.position;
-                EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Stab_Normal, pos);
+                ChargeAttackStabEffect();
             }
         }
 
+        
+
+        if (_actionTriggerCalled)
+        {
+            MoveToFront();
+        }
 
         if (_endTriggerCalled)
         {
@@ -53,14 +68,49 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         }
     }
 
+
     private void MoveToFront()
     {
-        if (_actionTriggerCalled && !_isStabMove)
+        if (!_isStabMove)
         {
             _isStabMove = true;
 
             float stabDistance = _player.ChargingGauge * _player.PlayerStatData.GetChargingAttackDistance();
             _player.SetVelocity(_player.transform.forward * stabDistance);
         }
+    }
+
+    protected override void SetAttackSetting()
+    {
+        _hitDist = _dist;
+        _hitHeight = _height;
+        _hitWidth = _width;
+
+        Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
+
+        Vector3 offset = Vector3.zero;
+
+        _attackOffset = offset;
+        _attackSize = size;
+    }
+
+    private void ChargeAttackStabEffect()
+    {
+        Vector3 pos = _player._weapon.transform.position;
+        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Stab_Normal, pos);
+
+    }
+
+    private void ChargeAttackStab()
+    {
+        Vector3 pos = _player.transform.position + _attackOffset;
+
+        Vector3 halfSize = _attackSize * 0.5f;
+
+        Quaternion rot = Quaternion.Euler((_player.transform.forward * _hitDist) - _player.transform.position).normalized;
+
+        Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
+
+        Attack(enemies.ToList());
     }
 }
