@@ -101,6 +101,8 @@ public class PlayerAttackState : PlayerState
     public void ShieldEnemyCheck()
     {
         Vector3 pos = _player.transform.position;
+        pos.y += 0.5f;
+
         Vector3 dir = _player.transform.forward;
 
         int index = 0;
