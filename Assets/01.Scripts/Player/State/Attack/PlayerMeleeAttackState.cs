@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +14,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     private float _comboWindow = 0.8f;
 
     private float _awakenAttackDist = 4.4f;
-    private float _normalAttackDist = 3f;
+    private float _normalAttackDist = 1.6f;
 
 
     private bool _isCombo;
@@ -25,6 +24,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     }
 
+    
+
     public override void Enter()
     {
         base.Enter();
@@ -32,7 +33,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _player.IsAttack = true;
         
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
-
+        
         SetCombo();
 
         _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
@@ -56,7 +57,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _attackPrevTime = Time.time;
 
         ++_comboCounter;
-
+        _player.enemyNormalHitDuplicateChecker.Clear();
     }
 
     public override void UpdateState()

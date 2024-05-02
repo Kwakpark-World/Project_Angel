@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerNormalChargeAttackState : PlayerChargeState
 {
@@ -53,6 +54,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
     {
         base.UpdateState();
         
+        // 가설. 여기서 이게 계속 돎 그렇기에 때리는 함수에 값을 넘기고 
         ChargeAttack();
 
         ChargeAttackEffect();
@@ -90,10 +92,9 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         Vector3 halfSize = _attackSize * 0.5f;
 
         Quaternion rot = Quaternion.Euler((_player.transform.forward * _hitDist) - _player.transform.position);
-
         
         Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
-        
+
         Attack(enemies.ToList());
     }
 

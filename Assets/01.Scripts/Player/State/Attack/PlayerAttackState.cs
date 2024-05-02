@@ -35,17 +35,21 @@ public class PlayerAttackState : PlayerState
         base.UpdateState();
     }
 
+    public void Attack(HashSet<Brain> enemies)
+    {
+
+    }
+
     public void Attack(List<Collider> enemies)
     {
-        HashSet<Collider> enemyDuplicateCheck = new HashSet<Collider>();
-
         foreach (var enemy in enemies)
         {
-            if (enemyDuplicateCheck.Add(enemy))
+            if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
             {
-                if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
+                if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
                     brain.OnHit(_player.PlayerStatData.GetAttackPower());
+
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
                 }
@@ -55,15 +59,14 @@ public class PlayerAttackState : PlayerState
 
     public void Attack(List<RaycastHit> enemies)
     {
-        HashSet<RaycastHit> enemyDuplicateCheck = new HashSet<RaycastHit>();
-
         foreach (var enemy in enemies)
         {
-            if (enemyDuplicateCheck.Add(enemy))
+            if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
             {
-                if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
+                if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
                     brain.OnHit(_player.PlayerStatData.GetAttackPower());
+
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
                 }
@@ -73,15 +76,16 @@ public class PlayerAttackState : PlayerState
 
     public List<RaycastHit> GetEnemyByWeapon()
     {
-        Vector3 rightDir = (_weaponRB.position - _weaponRT.position).normalized;
-        Vector3 leftDir = (_weaponLB.position - _weaponLT.position).normalized;
+        Vector3 dir = (_weaponRT.position - _weaponRB.position).normalized;
 
-        Vector3 weaponPos = _player._weapon.transform.position;
+        Vector3 weaponRPos = _weaponRB.position;
+        Vector3 weaponLPos = _weaponLB.position;
+
+        RaycastHit[] enemiesR = Physics.RaycastAll(weaponRPos, dir, _hitDist, _player._enemyLayer);
+        RaycastHit[] enemiesL = Physics.RaycastAll(weaponLPos, dir, _hitDist, _player._enemyLayer);
 
         List<RaycastHit> enemies = new List<RaycastHit>();
-        RaycastHit[] enemiesR = Physics.RaycastAll(weaponPos, rightDir, _hitDist, _player._enemyLayer);
-        RaycastHit[] enemiesL = Physics.RaycastAll(weaponPos, leftDir, _hitDist, _player._enemyLayer);
-
+        
         foreach (var enemy in enemiesL) enemies.Add(enemy);
         foreach (var enemy in enemiesR) enemies.Add(enemy);
 

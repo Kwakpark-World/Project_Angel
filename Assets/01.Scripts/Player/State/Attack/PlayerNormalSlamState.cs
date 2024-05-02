@@ -61,16 +61,7 @@ public class PlayerNormalSlamState : PlayerAttackState
 
     private void SlamAttack()
     {
-        _isAttacked = true;
-
-        Vector3 pos = _player.transform.position;
-        pos.y += _attackHeight / 2f;
-
-        Vector3 size = new Vector3(_hitDist, _attackHeight, _hitDist);
-
-        Collider[] enemies = Physics.OverlapBox(pos, size, Quaternion.identity, _player._enemyLayer);
-
-        Attack(enemies.ToList());
+        
     }
 
     private void JumpToFront()
