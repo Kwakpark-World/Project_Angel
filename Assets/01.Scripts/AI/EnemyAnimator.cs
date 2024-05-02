@@ -189,6 +189,33 @@ public class EnemyAnimator : MonoBehaviour
         }
 
     }
+
+    public void ArcherSkillAttack()
+    {
+        //StartCoroutine(ArcherSkill(3));
+    }
+
+    IEnumerator ArcherSkill(int duration)
+    {
+        for(int i =0; i < 5; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                int arrowCount = 5;
+                float angleRange = 45;
+                float angleIncrement = angleRange / (arrowCount - 1);
+
+                float angle = -angleIncrement + angleIncrement * i;
+                Vector3 direction = Quaternion.Euler(0, angle, 0) * -transform.forward;
+
+                EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Arrow, _weaponTransform.position) as EnemyArrow;
+                arrow.transform.forward = direction;
+                arrow.owner = _owner as EnemyBrain;
+                //arrowObject.transform.forward = direction;
+            }
+        }
+        yield return new WaitForSeconds(duration);
+    }
     #endregion
 
     #region Enemy Die Function
