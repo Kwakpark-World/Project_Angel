@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KnightEnemy
   m_EditorClassIdentifier: 
   maxHealth:
-    _baseValue: 500
+    _baseValue: 50
     modifiers: []
   lifetime:
     _baseValue: 0
@@ -33,6 +33,9 @@ MonoBehaviour:
   attackDelay:
     _baseValue: 1
     modifiers: []
+  skillCooldown:
+    _baseValue: 0
+    modifiers: []
   moveSpeed:
     _baseValue: 5
     modifiers: []
@@ -40,8 +43,5 @@ MonoBehaviour:
     _baseValue: 15
     modifiers: []
   patternAmount:
-    _baseValue: 0
-    modifiers: []
-  initialPatternCooldown:
     _baseValue: 0
     modifiers: []

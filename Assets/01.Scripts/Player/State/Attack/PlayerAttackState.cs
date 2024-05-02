@@ -62,6 +62,7 @@ public class PlayerAttackState : PlayerState
     {
         foreach (var enemy in enemies)
         {
+            if (enemy.collider.CompareTag("Shield"))
             if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
