@@ -53,6 +53,8 @@ public abstract class Brain : PoolableMono
         {
             OnHit(15f);
         }
+
+        Debug.Log(CurrentHealth);
     }
 
     public override void InitializePoolingItem()
