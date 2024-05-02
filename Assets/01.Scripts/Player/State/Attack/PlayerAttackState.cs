@@ -110,16 +110,23 @@ public class PlayerAttackState : PlayerState
 
         Vector3 pos = _player.transform.position;
         Vector3 dir = _player.transform.forward;
-        
+
+        int index = 0;
         RaycastHit[] enemies = Physics.RaycastAll(pos, dir, _shieldEnemyCheckDist, _player._enemyLayer);
-        foreach(var enemy in enemies)
+        for (int i = enemies.Length - 1; i >= 0; i--)
         {
-            if (enemy.collider.gameObject.CompareTag(_shieldTagString))
+            if (enemies[i].collider.gameObject.CompareTag(_shieldTagString))
                 break;
 
-            shieldEnemy.Add(enemy);
+            index = i;
+            if (i == 0) index = -1;
         }
 
+
+        for (int i = index; i >= 0; i--)
+        {
+            shieldEnemy.Add(enemies[i]);
+        }
         return shieldEnemy;
     }
 
