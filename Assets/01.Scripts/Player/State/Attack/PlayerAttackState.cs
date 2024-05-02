@@ -11,6 +11,9 @@ public class PlayerAttackState : PlayerState
     protected Vector3 _attackOffset = Vector3.zero;
     protected Vector3 _attackSize = Vector3.one;
 
+    private float _shieldEnemyCheckDist = 30f;
+    private const string _shieldTagString = "Shield";
+
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -35,6 +38,7 @@ public class PlayerAttackState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
+
     }
 
     public void Attack(List<Collider> enemies)
@@ -73,6 +77,8 @@ public class PlayerAttackState : PlayerState
 
     public List<RaycastHit> GetEnemyByWeapon()
     {
+        // 상시 레이캐스트 올 쏘고 거기 방패병 있으면 방패병 뒤 부터 쭉 데미지 받는 곳에서 뺴주기
+
         Vector3 dir = (_weaponRT.position - _weaponRB.position).normalized;
 
         Vector3 weaponRPos = _weaponRB.position;
@@ -86,7 +92,46 @@ public class PlayerAttackState : PlayerState
         foreach (var enemy in enemiesL) enemies.Add(enemy);
         foreach (var enemy in enemiesR) enemies.Add(enemy);
 
+        List<RaycastHit> shieldEnemies = ShieldEnemyCheck();
+        foreach (var shieldEnemy in shieldEnemies)
+        {
+            if (enemies.Contains(shieldEnemy))
+            {
+                enemies.Remove(shieldEnemy);
+            }
+        }
+
         return enemies;
+    }
+
+    public List<RaycastHit> ShieldEnemyCheck()
+    {
+        List<RaycastHit> shieldEnemy = new List<RaycastHit>();
+
+        Vector3 pos = _player.transform.position;
+        Vector3 dir = _player.transform.forward;
+        
+        RaycastHit[] enemies = Physics.RaycastAll(pos, dir, _shieldEnemyCheckDist, _player._enemyLayer);
+        foreach(var enemy in enemies)
+        {
+            if (enemy.collider.gameObject.CompareTag(_shieldTagString))
+                break;
+
+            shieldEnemy.Add(enemy);
+        }
+
+        return shieldEnemy;
+    }
+
+    public Collider[] GetEnemyByRange(Vector3 startPos, Vector3 direction)
+    {
+        Vector3 pos = startPos + _attackOffset;
+
+        Vector3 halfSize = _attackSize * 0.5f;
+
+        Quaternion rot = Quaternion.Euler((direction * _hitDist) - startPos).normalized;
+
+        return Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
     }
 
     protected virtual void SetAttackSetting(){}

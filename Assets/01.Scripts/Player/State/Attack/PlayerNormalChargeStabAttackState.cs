@@ -53,9 +53,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
                 _isEffectOn = true;
                 ChargeAttackStabEffect();
             }
-        }
-
-        
+        }        
 
         if (_actionTriggerCalled)
         {
@@ -103,13 +101,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
     private void ChargeAttackStab()
     {
-        Vector3 pos = _player.transform.position + _attackOffset;
-
-        Vector3 halfSize = _attackSize * 0.5f;
-
-        Quaternion rot = Quaternion.Euler((_player.transform.forward * _hitDist) - _player.transform.position).normalized;
-
-        Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
+        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.forward);
 
         Attack(enemies.ToList());
     }

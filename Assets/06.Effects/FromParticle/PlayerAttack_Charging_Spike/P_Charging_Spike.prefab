@@ -39047,6 +39047,7 @@ GameObject:
   - component: {fileID: 121336916830918914}
   - component: {fileID: 5207466024761996558}
   - component: {fileID: 2348301950371415095}
+  - component: {fileID: -2232659382428511412}
   m_Layer: 0
   m_Name: P_Charging_Spike
   m_TagString: Untagged
@@ -43874,6 +43875,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-2232659382428511412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5129531164163385797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27d695bae8752f4bb9ef4713c84f774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolingType: 20
+  EffectType: 0
+  _playerState: 8
 --- !u!1 &7887541000322010619
 GameObject:
   m_ObjectHideFlags: 0
