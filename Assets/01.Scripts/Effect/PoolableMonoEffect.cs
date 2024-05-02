@@ -5,6 +5,7 @@ using UnityEngine;
 public class PoolableMonoEffect : PoolableMono
 {
     public EffectType EffectType;
+    protected float duration = 0f;
 
 
     protected virtual void Awake()
@@ -28,6 +29,7 @@ public class PoolableMonoEffect : PoolableMono
             ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
             foreach (ParticleSystem particle in particles)
             {
+                duration = Mathf.Max(particle.main.duration, duration); 
                 particle.Play();
             }
         }

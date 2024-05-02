@@ -13,11 +13,14 @@ public class PlayerNormalDashState : PlayerDashState
     public override void Enter()
     {
         base.Enter();
+
+        _player.PlayerInput.SlamSkillEvent += SlamSkillHandle;
     }
 
     public override void Exit()
     {
         base.Exit();
+        _player.PlayerInput.SlamSkillEvent -= SlamSkillHandle;
     }
 
     public override void UpdateState()
@@ -34,5 +37,15 @@ public class PlayerNormalDashState : PlayerDashState
         }
     }
 
+    private void SlamSkillHandle()
+    {
+        if (_player._slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
 
+        _player._slamPrevTime = Time.time;
+
+        if (_player.IsAwakening)
+            _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
+        else
+            _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
+    }
 }

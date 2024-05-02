@@ -18,7 +18,7 @@ public class Player : PlayerController
 
     [Header("CoolTime Settings")]
     private float dashPrevTime = 0f;
-
+    public float _slamPrevTime = 0f;
     public float defensePrevTime = 0f;
 
     public float awakenCurrentGauge = 0f;

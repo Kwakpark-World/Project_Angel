@@ -190,10 +190,10 @@ public class EnemyAnimator : MonoBehaviour
 
     }
 
-    public void ArcherSkillAttack()
+    /*public void ArcherSkillAttack()
     {
         //StartCoroutine(ArcherSkill(3));
-    }
+    }*/
 
     IEnumerator ArcherSkill(int duration)
     {
