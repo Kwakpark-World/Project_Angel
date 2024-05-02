@@ -17,6 +17,9 @@ public class PlayerNormalChargeAttackStabEffect : PlayerEffect
             return;
         }
 
+        // 이 이펙트 끝나면 지울거임
+        PoolManager.Instance.Push(this, duration);
+
     }
 
     protected override void Update()

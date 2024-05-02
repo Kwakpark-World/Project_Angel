@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerNormalChargeAttackEffect : PlayerEffect
 {
-    Quaternion _defaultRot;
 
     public override void InitializePoolingItem()
     {
@@ -17,6 +16,9 @@ public class PlayerNormalChargeAttackEffect : PlayerEffect
             PoolManager.Instance.Push(this);
             return;
         }
+
+        // 이 이펙트 끝나면 지울거임
+        PoolManager.Instance.Push(this, duration, true);
 
         transform.parent = _player.transform;
         transform.localRotation = _defaultRot;
@@ -40,7 +42,6 @@ public class PlayerNormalChargeAttackEffect : PlayerEffect
     public override void RegisterEffect()
     {
         base.RegisterEffect();
-        _defaultRot = transform.rotation;
     }
     
     private void OnTriggerEnter(Collider other)

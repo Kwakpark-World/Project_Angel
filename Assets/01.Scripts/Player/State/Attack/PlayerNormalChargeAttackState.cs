@@ -5,18 +5,11 @@ using UnityEngine;
 
 public class PlayerNormalChargeAttackState : PlayerChargeState
 {
-    private float _normalWidth = 11f;
-    private float _awakenWidth = 11f;
-
-    private float _normalHeight = 3f;
-    private float _awakenHeight = 3f;
-
-    private float _normalDist = 6;
-    private float _awakenDist = 10;
-
-    private Vector3 _normalAttackOffset = Vector3.forward;
-    private Vector3 _awakenAttackOffset;
-
+    private float _width = 11f;
+    private float _height = 3f;
+    private float _dist = 6f;
+    private Vector3 _offset;
+    
     private bool _isEffectOn = false;
 
     public PlayerNormalChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -29,15 +22,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         base.Enter();
         _isEffectOn = false;
 
-        _hitDist = _player.IsAwakening ? _awakenDist : _normalDist;
-        _hitHeight = _player.IsAwakening ? _awakenHeight : _normalHeight;
-        _hitWidth = _player.IsAwakening ? _awakenWidth : _normalWidth;
-
-        Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
-        Vector3 offset = _player.IsAwakening ? _awakenAttackOffset : _normalAttackOffset;
-
-        _attackOffset = offset;
-        _attackSize = size;
+        SetAttackSetting();
 
         _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
     }
@@ -67,8 +52,24 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
         if (_endTriggerCalled)                                                                                
         {
-            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+            _stateMachine.ChangeState(PlayerStateEnum.NormalChargeStabAttack);
         }
+    }
+
+    protected override void SetAttackSetting()
+    {
+        _offset = _player.transform.forward;
+
+        _hitDist = _dist;
+        _hitHeight = _height;
+        _hitWidth = _width;
+
+        Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
+
+        Vector3 offset = _offset;
+
+        _attackOffset = offset;
+        _attackSize = size;
     }
 
     private void ChargeAttackEffect()
@@ -79,20 +80,9 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
     }
 
     private void ChargeAttack()
-    {
-        Vector3 offset = _player.transform.forward;
-        offset.x += _attackOffset.x;
-        offset.y += _attackOffset.y;
-        offset.z += _attackOffset.z;
-
-        Vector3 pos = _weaponRT.position + offset;
-
-        Vector3 halfSize = _attackSize * 0.5f;
-
-        Quaternion rot = Quaternion.Euler((_player.transform.forward * _hitDist) - _player.transform.position).normalized;
-        
-        Collider[] enemies = Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
-
+    { 
+        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.forward);
+      
         Attack(enemies.ToList());
     }
 
