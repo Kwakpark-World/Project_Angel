@@ -203,7 +203,7 @@ MonoBehaviour:
     enemyLayer:
       serializedVersion: 2
       m_Bits: 64
-    home: {x: 0, y: 0, z: 0}
+    home: {x: -5.7, y: -0.4, z: 1.1}
     destination: {x: 0, y: 0, z: 0}
     selectedPattern: 0
     nextPatternCooldown: 0
@@ -370,7 +370,8 @@ MonoBehaviour:
   brain: {fileID: 0}
   description: 
   isSkillAttack: 1
-  attackObject: {fileID: 0}
+  attackObject: {fileID: 4525166192077212777, guid: cd5ac1affeff8a14da48cd40540efc95,
+    type: 3}
 --- !u!114 &5135831895988258152
 MonoBehaviour:
   m_ObjectHideFlags: 0
