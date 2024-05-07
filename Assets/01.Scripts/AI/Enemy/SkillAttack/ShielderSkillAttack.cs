@@ -16,7 +16,6 @@ public class ShielderSkillAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // 3초마다 지속되는 쉴드를 적에게 적용
         StartCoroutine(ApplyShieldToEnemies());
     }
 

@@ -11,4 +11,5 @@ public class BuffStat : ScriptableObject
     public float freezeMoveSpeedModifier = -2f;
     public float freezeDuration = 3f;
     public float knockbackForce = 5f;
+    public float shieldDuration = 3f;
 }

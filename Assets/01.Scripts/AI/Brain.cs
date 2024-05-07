@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
 [RequireComponent(typeof(Buff), typeof(EnemyAnimator))]
@@ -49,12 +50,18 @@ public abstract class Brain : PoolableMono
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(NavMeshAgentCompo.steeringTarget - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        // Debug
+        #region Debug
+        if (Keyboard.current.lKey.wasPressedThisFrame)
         {
             OnHit(15f);
         }
 
-        //Debug.Log(CurrentHealth);
+        if (Keyboard.current.mKey.wasPressedThisFrame)
+        {
+            BuffCompo.PlayBuff(BuffType.Shield, 3f, this);
+        }
+        #endregion
     }
 
     public override void InitializePoolingItem()
@@ -96,6 +103,11 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage)
     {
+        if(BuffCompo.GetBuffState(BuffType.Shield))
+        {
+            return;
+        }
+
         if (AnimatorCompo.GetCurrentAnimationState() == "Die")
         {
             return;

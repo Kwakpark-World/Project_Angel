@@ -1,14 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class ShieldEffect : PoolableMonoEffect
 {
-    private Transform bloodTransform;
+    float time;
+    bool isDownEffect;
 
-    public void ViewPlayerBlood()
+    public override void InitializePoolingItem()
     {
-        //일단 맞은 적에게 해야하고 5초뒤에 없어져야하니깐 그걸 여기서 해야하나?
-        float duration = Time.deltaTime;
+        base.InitializePoolingItem();
+
+        PoolManager.Instance.Push(this, duration, true);
+/*        EnemyBrain enemy = new EnemyBrain();
+        Vector3 pos = enemy.transform.position;
+        EffectManager.Instance.PlayEffect(PoolingType.Effect_Shield, pos);*/
+
+        StartCoroutine(DoScale());
+    }
+
+    protected override void Update()
+    {
+        
+        base.Update();
+    }
+
+    public override void RegisterEffect()
+    {
+        base.RegisterEffect();
+    }
+
+    private Transform _shieldTransform;
+
+/*    IEnumerator Shield(float duration)
+    {
+        EnemyBrain enemyBrain = new EnemyBrain();
+        Vector3 enemyPos = enemyBrain.transform.position;
+
+        Vector3 dirction = enemyPos - _shieldTransform.position;
+        dirction.Normalize();
+        yield return new WaitForSeconds(duration);
+    }*/
+
+    private IEnumerator DoScale()
+    {
+        //StartCoroutine(Shield(3f));
+        while (transform.localScale.y < 1)
+        {
+            transform.localScale += Vector3.one * 0.1f;
+            yield return new WaitForSeconds(0.01f);
+        }
+        yield return null;
     }
 }

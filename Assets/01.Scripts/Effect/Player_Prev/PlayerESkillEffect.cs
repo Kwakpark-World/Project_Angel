@@ -24,7 +24,6 @@ public class PlayerESkillEffect : PoolableMonoEffect
     {
         base.Update();
         time += Time.deltaTime;
-
         if (time > 2.3f && !isDownEffect)
         {
             isDownEffect = true;
