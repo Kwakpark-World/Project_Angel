@@ -32,6 +32,7 @@ public enum PoolingType
     Effect_PlayerAttack_Charging_Awaken,
     Effect_PlayerAttack_Charged_Awaken,
     Effect_PlayerAttack_Slam_Awaken,
+    Effect_Shield,
     Rune
 }
 

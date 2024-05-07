@@ -31,6 +31,7 @@ public enum BuffType
     Rune_Health_MaxHealth,
     Rune_Health_Recovery,
     Rune_Health_Synergy,
+    Shield,
     // Fill here.
 }
 
@@ -63,6 +64,7 @@ public class Buff : MonoBehaviour
     private Brain _ownerBrain;
 
     private float _poisonDelayTimer = -1f;
+    private bool _isPlayer;
 
     private void Awake()
     {
@@ -107,16 +109,18 @@ public class Buff : MonoBehaviour
     public void SetOwner(Player owner)
     {
         _ownerController = owner;
+        _isPlayer = true;
     }
 
     public void SetOwner(Brain owner)
     {
         _ownerBrain = owner;
+        _isPlayer = false;
     }
 
     public void PlayBuff(BuffType buffType)
     {
-        if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
+        if (_isPlayer && _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
         }
@@ -128,7 +132,7 @@ public class Buff : MonoBehaviour
 
     public void PlayBuff(BuffType buffType, object attacker)
     {
-        if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
+        if (_isPlayer && _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
         }
@@ -140,7 +144,7 @@ public class Buff : MonoBehaviour
 
     public void PlayBuff(BuffType buffType, float duration, object attacker)
     {
-        if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
+        if (_isPlayer && _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Die))
         {
             return;
         }
@@ -190,7 +194,7 @@ public class Buff : MonoBehaviour
     #region Poison Functions
     public void PoisonBegin()
     {
-        if (_ownerController)
+        if (_isPlayer)
         {
             _poisonDelayTimer = Time.time - (_attackers[BuffType.Poison] as Brain).BuffCompo.BuffStatData.poisonDelay;
             //Debug.Log(RuneManager.Instance.isArmor);
@@ -203,7 +207,7 @@ public class Buff : MonoBehaviour
 
     public void PoisonPlaying()
     {
-        if (_ownerController)
+        if (_isPlayer)
         {
             Brain attacker = _attackers[BuffType.Poison] as Brain;
 
@@ -231,7 +235,7 @@ public class Buff : MonoBehaviour
     #region Freeze Functions
     public void FreezeBegin()
     {
-        if (_ownerController)
+        if (_isPlayer)
         {
             Brain attacker = _attackers[BuffType.Freeze] as Brain;
 
@@ -249,7 +253,7 @@ public class Buff : MonoBehaviour
 
     public void FreezeEnd()
     {
-        if (_ownerController)
+        if (_isPlayer)
         {
             Brain attacker = _attackers[BuffType.Freeze] as Brain;
 
@@ -267,7 +271,7 @@ public class Buff : MonoBehaviour
     #region Knockback Functions
     public void KnockbackBegin()
     {
-        if (_ownerController)
+        if (_isPlayer)
         {
             if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.NormalSlam) || _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.AwakenSlam) || _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Awakening))
             {
@@ -284,6 +288,13 @@ public class Buff : MonoBehaviour
 
             _ownerBrain.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.knockbackForce, ForceMode.Impulse);
         }
+    }
+    #endregion
+
+    #region Shield Functions
+    public void ShieldBegin()
+    {
+        EffectManager.Instance.PlayEffect(PoolingType.Effect_Shield, transform.position + transform.up * 1.5f, transform);
     }
     #endregion
 }

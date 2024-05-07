@@ -1,20 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class ShieldEffect : PoolableMonoEffect
 {
-    private Transform bloodTransform;
+    float time;
+    bool isDownEffect;
 
-    public void ViewPlayerBlood()
+    public override void InitializePoolingItem()
     {
-        //일단 맞은 적에게 해야하고 5초뒤에 없어져야하니깐 그걸 여기서 해야하나?
-        //Vector3 playerPosition = GameManager.Instance.PlayerInstance.transform.position;
+        base.InitializePoolingItem();
 
-        //Vector3 direction = playerPosition - bloodTransform.position;
-        //direction.Normalize();
+        PoolManager.Instance.Push(this, duration, true);
+    }
 
-        //float moveSpeed = 1.0f;
-        //transform.position += direction * moveSpeed * Time.deltaTime;
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    public override void RegisterEffect()
+    {
+        base.RegisterEffect();
     }
 }

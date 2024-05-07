@@ -1,33 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class ShielderSkillAttack : MonoBehaviour
 {
-    public float shieldDuration = 3f; 
+
+    private Transform m_transform;
     public LayerMask enemyLayer;
-    public int maxEnemiesToShield = 5; 
-    public float shieldRange = 10f; 
+    private int maxEnemiesToShield = 5; 
 
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        // 3초마다 지속되는 쉴드를 적에게 적용
-        StartCoroutine(ApplyShieldToEnemies());
-    }
-
-    IEnumerator ApplyShieldToEnemies()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(shieldDuration);
-            ApplyShield();
-        }
+        ApplyShield();
     }
 
     void ApplyShield()
     {
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.forward, shieldRange, enemyLayer);
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.forward, 5, enemyLayer);
 
         int enemiesShielded = 0;
         foreach (RaycastHit hit in hits)
@@ -36,6 +28,7 @@ public class ShielderSkillAttack : MonoBehaviour
                 break;
 
             GameObject enemy = hit.collider.gameObject;
+            Debug.Log(enemy);
 
             //shieldEffect.duration = shieldDuration;
         }
