@@ -21,8 +21,6 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     {
         base.Enter();
 
-        SetAttackSetting();
-
         _isEffectOn = false;
         _isStabMove = false;
     }
@@ -101,7 +99,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
     private void ChargeAttackStab()
     {
-        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.forward);
+        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
     }

@@ -6,6 +6,8 @@ using UnityEngine.AddressableAssets;
 
 public class Player : PlayerController
 {
+    public GameObject cube;
+
     [Space(30f), Header("Attack Settings")]
     public GameObject _weapon;
 

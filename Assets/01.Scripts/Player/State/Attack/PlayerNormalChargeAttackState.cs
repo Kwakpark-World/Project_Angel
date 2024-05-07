@@ -22,8 +22,6 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         base.Enter();
         _isEffectOn = false;
 
-        SetAttackSetting();
-
         _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
     }
 
@@ -58,17 +56,15 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
     protected override void SetAttackSetting()
     {
-        _offset = _player.transform.forward;
-
         _hitDist = _dist;
         _hitHeight = _height;
         _hitWidth = _width;
 
         Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
 
-        Vector3 offset = _offset;
+        _offset = _player.transform.forward;
 
-        _attackOffset = offset;
+        _attackOffset = _offset;
         _attackSize = size;
     }
 
@@ -81,7 +77,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
     private void ChargeAttack()
     { 
-        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.forward);
+        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
       
         Attack(enemies.ToList());
     }
