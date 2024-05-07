@@ -6,39 +6,20 @@ using UnityEngine.PlayerLoop;
 
 public class ShielderSkillAttack : MonoBehaviour
 {
-    public float shieldDuration = 3f; 
-    public LayerMask enemyLayer;
-    public int maxEnemiesToShield = 5; 
-    public float shieldRange = 10f;
 
-    public GameObject shieldEffectPrefab;
+    private Transform m_transform;
+    public LayerMask enemyLayer;
+    private int maxEnemiesToShield = 5; 
 
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        StartCoroutine(ApplyShieldToEnemies());
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Z))
-        {
-            StartCoroutine(ApplyShieldToEnemies());
-        }
-    }
-
-    IEnumerator ApplyShieldToEnemies()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(shieldDuration);
-            ApplyShield();
-        }
+        ApplyShield();
     }
 
     void ApplyShield()
     {
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.forward, shieldRange, enemyLayer);
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.forward, 5, enemyLayer);
 
         int enemiesShielded = 0;
         foreach (RaycastHit hit in hits)
@@ -47,9 +28,7 @@ public class ShielderSkillAttack : MonoBehaviour
                 break;
 
             GameObject enemy = hit.collider.gameObject;
-
-            GameObject shieldEffect = Instantiate(shieldEffectPrefab, enemy.transform.position, Quaternion.identity);
-            Destroy(shieldEffect, shieldDuration);
+            Debug.Log(enemy);
 
             //shieldEffect.duration = shieldDuration;
         }

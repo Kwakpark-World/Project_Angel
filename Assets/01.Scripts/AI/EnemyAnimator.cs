@@ -216,6 +216,11 @@ public class EnemyAnimator : MonoBehaviour
         }
         yield return new WaitForSeconds(duration);
     }
+
+    public void ShieldNormalAttack()
+    {
+        _owner.FindNearbyEnemies(5);
+    }
     #endregion
 
     #region Enemy Die Function
