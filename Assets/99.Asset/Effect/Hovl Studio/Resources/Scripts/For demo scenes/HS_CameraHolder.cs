@@ -26,6 +26,7 @@ public class HS_CameraHolder : MonoBehaviour
     private float StartColor;
     private float HueColor;
     public Texture HueTexture;
+    public bool disableHue = false; 
 
     void Start()
     {
@@ -52,19 +53,21 @@ public class HS_CameraHolder : MonoBehaviour
         {
             Counter(+1);
         }
-
-        StartColor = HueColor;
-        HueColor = GUI.HorizontalSlider(new Rect(5 * windowDpi, 45 * windowDpi, 340 * windowDpi, 35 * windowDpi), HueColor, 0, 1);
-        GUI.DrawTexture(new Rect(5 * windowDpi, 65 * windowDpi, 340 * windowDpi, 15 * windowDpi), HueTexture, ScaleMode.StretchToFill, false, 0);
-        if (HueColor != StartColor)
+        if (!disableHue)
         {
-            int i = 0;
-            foreach (var ps in particleSystems)
+            StartColor = HueColor;
+            HueColor = GUI.HorizontalSlider(new Rect(5 * windowDpi, 45 * windowDpi, 340 * windowDpi, 35 * windowDpi), HueColor, 0, 1);
+            GUI.DrawTexture(new Rect(5 * windowDpi, 65 * windowDpi, 340 * windowDpi, 15 * windowDpi), HueTexture, ScaleMode.StretchToFill, false, 0);
+            if (HueColor != StartColor)
             {
-                var main = ps.main;
-                Color colorHSV = Color.HSVToRGB(HueColor + H * 0, svList[i].S, svList[i].V);
-                main.startColor = new Color(colorHSV.r, colorHSV.g, colorHSV.b, svList[i].A);
-                i++;
+                int i = 0;
+                foreach (var ps in particleSystems)
+                {
+                    var main = ps.main;
+                    Color colorHSV = Color.HSVToRGB(HueColor + H * 0, svList[i].S, svList[i].V);
+                    main.startColor = new Color(colorHSV.r, colorHSV.g, colorHSV.b, svList[i].A);
+                    i++;
+                }
             }
         }
     }
