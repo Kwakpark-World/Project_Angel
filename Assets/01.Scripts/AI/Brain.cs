@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
 [RequireComponent(typeof(Buff), typeof(EnemyAnimator))]
@@ -24,8 +25,6 @@ public abstract class Brain : PoolableMono
     public float SkillAttackTimer { get; set; }
     [HideInInspector]
     public EnemyMannequin enemySpawn;
-
-    public List<Brain> nearbyEnemies = new List<Brain>();
 
 
     protected virtual void Start()
@@ -49,12 +48,18 @@ public abstract class Brain : PoolableMono
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(NavMeshAgentCompo.steeringTarget - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        // Debug
+        #region Debug
+        if (Keyboard.current.lKey.wasPressedThisFrame)
         {
             OnHit(15f);
         }
 
-        //Debug.Log(CurrentHealth);
+        if (Keyboard.current.mKey.wasPressedThisFrame)
+        {
+            BuffCompo.PlayBuff(BuffType.Shield, 3f, this);
+        }
+        #endregion
     }
 
     public override void InitializePoolingItem()
@@ -96,6 +101,11 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage)
     {
+        if(BuffCompo.GetBuffState(BuffType.Shield))
+        {
+            return;
+        }
+
         if (AnimatorCompo.GetCurrentAnimationState() == "Die")
         {
             return;
@@ -132,9 +142,9 @@ public abstract class Brain : PoolableMono
         AnimatorCompo.SetAnimationState("Die");
     }
 
-    public void FindNearbyEnemies()
+    public List<Brain> FindNearbyEnemies(int enemyAmount)
     {
-        nearbyEnemies.Clear();
+        /*nearbyEnemies.Clear();
 
         Brain[] allEnemies = FindObjectsOfType<Brain>();
 
@@ -144,12 +154,14 @@ public abstract class Brain : PoolableMono
             {
                 nearbyEnemies.Add(enemy);
             }
-        }
+        }*/
+
+        return new List<Brain>();
     }
 
     public virtual void EnemyDistance(float minDistance)
     {
-        List<Brain> enemiesCopy = new List<Brain>(nearbyEnemies);
+        /*List<Brain> enemiesCopy = new List<Brain>(nearbyEnemies);
 
         foreach (Brain enemy in enemiesCopy)
         {
@@ -159,6 +171,6 @@ public abstract class Brain : PoolableMono
             {
                 CurrentHealth -= Mathf.Max(1 - EnemyStatData.GetDefensivePower(), 0f);
             }
-        }
+        }*/
     }
 }

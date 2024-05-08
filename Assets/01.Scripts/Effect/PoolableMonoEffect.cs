@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PoolableMonoEffect : PoolableMono
 {
-    public EffectType EffectType;
+    [HideInInspector]
+    public ParticleSystem[] particles;
     protected float duration = 0f;
-
 
     protected virtual void Awake()
     {
@@ -24,20 +24,18 @@ public class PoolableMonoEffect : PoolableMono
     /// </summary>
     public override void InitializePoolingItem()
     {
-        if (EffectType == EffectType.Particle)
+        foreach (ParticleSystem particle in particles)
         {
-            ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
-            foreach (ParticleSystem particle in particles)
-            {
-                duration = Mathf.Max(particle.main.duration, duration); 
-                particle.Play();
-            }
+            duration = Mathf.Max(particle.main.duration, duration);
+
+            particle.Play();
         }
     }
 
     public virtual void RegisterEffect()
     {
-        EffectManager.Instance.RegisterEffect(poolingType);  
-    }
+        EffectManager.Instance.RegisterEffect(poolingType);
 
+        particles = GetComponentsInChildren<ParticleSystem>();
+    }
 }

@@ -2810,7 +2810,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6a623fbadf0cb4bacff7c4f8f4a59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffTriggers: []
+  buffTriggers:
+  - buffType: 25
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4795403527296716066}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: ShieldBegin
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls: []
   <BuffStatData>k__BackingField: {fileID: 0}
 --- !u!1 &4696186980529978264
 GameObject:
