@@ -1,10 +1,9 @@
+using BTVisual;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-public class ShielderSkillAttack : MonoBehaviour
+public class ShielderSkillAttack : EnemyAttack
 {
 
     private Transform m_transform;
@@ -32,5 +31,22 @@ public class ShielderSkillAttack : MonoBehaviour
 
             //shieldEffect.duration = shieldDuration;
         }
+    }
+
+    // Fill down.
+
+    public override void OnStart()
+    {
+
+    }
+
+    public override void OnStop()
+    {
+
+    }
+
+    public override Node.State OnUpdate()
+    {
+        return Node.State.Success;
     }
 }
