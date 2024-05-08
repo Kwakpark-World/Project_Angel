@@ -145,7 +145,7 @@ public class EnemyAnimator : MonoBehaviour
         arrow.owner = _owner as EnemyBrain;
     }
 
-    public void WitchNormalAttack()
+    public void AlchemistNormalAttack()
     {
         PoolingType potionType = PoolingType.None;
 

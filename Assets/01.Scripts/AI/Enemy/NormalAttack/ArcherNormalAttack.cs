@@ -7,7 +7,7 @@ public class ArcherNormalAttack : EnemyAttack
 {
     public override void OnStart()
     {
-        OwnerNode.brain.AnimatorCompo.SetAnimationState("Reload");
+        OwnerNode.brain.AnimatorCompo.SetAnimationState("NormalReload");
     }
 
     public override void OnStop()
@@ -17,7 +17,7 @@ public class ArcherNormalAttack : EnemyAttack
 
     public override Node.State OnUpdate()
     {
-        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState() == "Attack")
+        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState() == "NormalAttack")
         {
             return Node.State.Running;
         }

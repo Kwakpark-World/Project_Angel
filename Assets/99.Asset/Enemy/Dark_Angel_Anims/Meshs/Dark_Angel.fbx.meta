@@ -14,7 +14,7 @@ ModelImporter:
     second: Attack_2.1
   - first:
       74: -5579599594208017201
-    second: Attack_2.1_To_Idle_2
+    second: EnemyAttack_Normal_Knight
   - first:
       74: 7204108427254732798
     second: Attack_2.2
@@ -44,7 +44,7 @@ ModelImporter:
     second: Combo_3
   - first:
       74: -8079408971285907983
-    second: Damage_2
+    second: EnemyHit
   - first:
       74: -5199077803881956379
     second: Damage_3
@@ -398,7 +398,7 @@ ModelImporter:
     second: Death_1.1
   - first:
       74: -7036101655599433920
-    second: Death_2
+    second: EnemyHit_Die
   - first:
       74: -3957946749124942033
     second: Death_2.1
@@ -407,7 +407,7 @@ ModelImporter:
     second: Death_3.1
   - first:
       74: -5533903024747340832
-    second: Idle_1
+    second: EnemyMove_Idle
   - first:
       74: -2437750757855199961
     second: Idle_1_To_Fly
@@ -482,7 +482,7 @@ ModelImporter:
     second: Sprint_Right_2
   - first:
       74: -1224406944768067581
-    second: Fly_2
+    second: EnemyMove
   - first:
       74: -6515557738700997077
     second: Attack_3.1
@@ -527,51 +527,6 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations:
-    - serializedVersion: 16
-      name: Float_Attack_2.1_To_Idle_2
-      takeName: Float_Attack_2.1_To_Idle_2
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 29
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 0.5482758
-        functionName: OnAnimationPlaying
-        data: 
-        objectReferenceParameter: {fileID: 7234891252622568735, guid: c9c4d1b35bede634987b294233cf4273,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: OnAnimationEnd
-        data: 
-        objectReferenceParameter: {fileID: 7234891252622568735, guid: c9c4d1b35bede634987b294233cf4273,
-          type: 3}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Attack_1.1
       takeName: MyCharacter|Float_Attack_1.1
@@ -783,7 +738,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Attack_2.1_To_Idle_2
+      name: EnemyAttack_Normal_Knight
       takeName: Float_Attack_2.1_To_Idle_2
       internalID: 0
       firstFrame: 0
@@ -796,9 +751,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -1537,7 +1492,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Damage_2
+      name: EnemyHit
       takeName: Float_Damage_2
       internalID: 0
       firstFrame: 0
@@ -1706,7 +1661,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Death_2
+      name: EnemyHit_Die
       takeName: MyCharacter|Float_Death_2
       internalID: 0
       firstFrame: 0
@@ -1896,7 +1851,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Idle_1
+      name: EnemyMove_Idle
       takeName: MyCharacter|Float_Idle_1
       internalID: 0
       firstFrame: 0
@@ -3520,7 +3475,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Fly_2
+      name: EnemyMove
       takeName: MyCharacter|Fly_2
       internalID: 0
       firstFrame: 0
