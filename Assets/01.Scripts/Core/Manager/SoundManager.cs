@@ -22,7 +22,7 @@ public enum SFXType
     Enemy_Attack_Knight,
     Enemy_Attack_Ranger,
     Enemy_Attack_Ranger_Reload,
-    Enemy_Attack_Witch,
+    Enemy_Attack_Alchemist,
     Enemy_Hit,
     Enemy_Die,
     UI_Button_Hover,

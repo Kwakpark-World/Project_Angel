@@ -69,15 +69,6 @@ public class EnemyAnimator : MonoBehaviour
         _owner = owner;
     }
 
-    public void SetAnimationState(string stateName)
-    {
-        _animator.SetBool(_parameterHashes["is" + _currentState], false);
-
-        _currentState = stateName;
-
-        _animator.SetBool(_parameterHashes["is" + _currentState], true);
-    }
-
     public void SetAnimationState(string stateName = "Idle", AnimationStateMode stateMode = AnimationStateMode.None)
     {
         _animator.SetBool(_parameterHashes["is" + _currentState], false);
@@ -103,6 +94,11 @@ public class EnemyAnimator : MonoBehaviour
         }
 
         _animator.SetBool(_parameterHashes["is" + _currentState], true);
+    }
+
+    public bool GetCurrentAnimationState(string stateName)
+    {
+        return _currentState == stateName;
     }
 
     public string GetCurrentAnimationState()
@@ -145,7 +141,7 @@ public class EnemyAnimator : MonoBehaviour
         arrow.owner = _owner as EnemyBrain;
     }
 
-    public void WitchNormalAttack()
+    public void AlchemistNormalAttack()
     {
         PoolingType potionType = PoolingType.None;
 

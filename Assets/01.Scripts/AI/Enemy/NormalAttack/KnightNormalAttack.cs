@@ -7,7 +7,7 @@ public class KnightNormalAttack : EnemyAttack
 {
     public override void OnStart()
     {
-        OwnerNode.brain.AnimatorCompo.SetAnimationState("Attack");
+        OwnerNode.brain.AnimatorCompo.SetAnimationState("NormalAttack");
     }
 
     public override void OnStop()
@@ -17,7 +17,7 @@ public class KnightNormalAttack : EnemyAttack
 
     public override Node.State OnUpdate()
     {
-        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState() == "Attack")
+        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState() == "NormalAttack")
         {
             return Node.State.Running;
         }

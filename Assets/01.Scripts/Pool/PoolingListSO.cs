@@ -8,7 +8,7 @@ public enum PoolingType
     None,
     Enemy_Knight,
     Enemy_Ranger,
-    Enemy_Witch,
+    Enemy_Alchemist,
     Enemy_Shielder,
     Enemy_Archer,
     Enemy_Wizard,

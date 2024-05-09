@@ -18,11 +18,13 @@ public class MaterialManager : MonoSingleton<MaterialManager>
     private async Task LoadMaterial()
     {
         List<string> labelList = AddressableAssetSettingsDefaultObject.Settings.GetLabels();
-
+        
         foreach (var label in labelList)
         {
             List<Material> _getMats;
             _getMats = await AddressableManager.Instance.GetAssetsByLabelToLabelName<Material>(label);
+
+            if (_getMats.Count == 0) continue;
 
             _materials.Add(label, _getMats);
         }

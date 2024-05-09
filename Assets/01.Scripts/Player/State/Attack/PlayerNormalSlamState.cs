@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class PlayerNormalSlamState : PlayerAttackState
 {
-    private float _width = 11f;
-    private float _height = 3f;
-    private float _dist = 6f;
+    private float _width = 3f;
+    private float _height = 4f;
+    private float _dist = 8f;
     private Vector3 _offset;
 
     private float _jumpForce = 10f;
     private float _dropForce = 22f;
     private float _forwardDist = 20f;
 
-    private float _awakenAttackDist = 15f;
     private float _normalAttackDist = 12f;
 
     private bool _isEffectOn = false;
@@ -26,11 +25,12 @@ public class PlayerNormalSlamState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
+
         _player.StopImmediately(false);
         _player.RotateToMousePos();
         _isEffectOn = false;
 
-        _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
+        _hitDist = _normalAttackDist;
 
         JumpToFront();
     }
@@ -38,12 +38,16 @@ public class PlayerNormalSlamState : PlayerAttackState
     public override void Exit()
     {
         base.Exit();
+
+        _player.enemyNormalHitDuplicateChecker.Clear();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
+        Debug.Log(_player.transform.forward * 2);
+        
         if (_actionTriggerCalled )
         {
             AttackDrop();
@@ -64,35 +68,38 @@ public class PlayerNormalSlamState : PlayerAttackState
             {
                 SlamAttack();   
 
-                _stateMachine.ChangeState(PlayerStateEnum.Idle);
             } 
+            _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
 
     protected override void SetAttackSetting()
     {
-        _offset = _player.transform.forward;
-
         _hitDist = _dist;
         _hitHeight = _height;
         _hitWidth = _width;
 
         Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
 
-        Vector3 offset = _offset;
+        _offset = _player.transform.forward * 3;
+        _offset.y += 1f;
 
-        _attackOffset = offset;
+        _attackOffset = _offset;
         _attackSize = size;
     }
 
     private void SlamAttack()
     {
-        
+        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
+
+        Attack(enemies.ToList());
     }
 
     private void SlamEffect()
     {
-        Vector3 pos = _player.transform.position + _offset;
+        Vector3 pos = _player.transform.position + _attackOffset;
+        pos.y = 0;
+
         EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Slam_Normal, pos);
     }
 

@@ -11,8 +11,8 @@ public class PlayerAttackRangeEditor : MonoBehaviour
 
     #region Toggle Boolean
     public bool MeleeAttack_Normal = false;
-    public bool ChargeAttack_Normal = false;
-    public bool ChargeAttack_Stab_Normal = false;
+    public bool AttackRange_Weapon = false;
+    public bool AttackRange_Player = false;
     #endregion
 
     private Player Player;
@@ -36,10 +36,10 @@ public class PlayerAttackRangeEditor : MonoBehaviour
         if (MeleeAttack_Normal)
             MeleeAttack();
 
-        if (ChargeAttack_Normal)
-            ChargeAttackNormal();
-        if (ChargeAttack_Stab_Normal)
-            ChargeAttackStabNormal();
+        if (AttackRange_Weapon)
+            AttackRangeWeapon();
+        if (AttackRange_Player)
+            AttackRangePlayer();
     }
 #endif
     private void MeleeAttack()
@@ -53,13 +53,19 @@ public class PlayerAttackRangeEditor : MonoBehaviour
         Gizmos.DrawRay(weaponLPos, dir * value);
     }
 
-    private void ChargeAttackNormal()
+    private void AttackRangeWeapon()
     {
         Gizmos.DrawCube(WeaponRT.transform.position + offset, size);
     }
 
-    private void ChargeAttackStabNormal()
+    private void AttackRangePlayer()
     {
-        Gizmos.DrawCube(WeaponRT.transform.position + offset, size);
+        Gizmos.matrix = Matrix4x4.TRS(Player.transform.TransformPoint(Player.transform.position + offset), Player.transform.rotation, Player.transform.lossyScale);
+        Gizmos.color = Color.white;
+        Gizmos.DrawCube(-Player.transform.position + offset, size);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(-Player.transform.position + offset, size);
+
+        //Gizmos.DrawCube(Player.transform.position + offset, size);
     }
 }
