@@ -113,7 +113,14 @@ public abstract class Brain : PoolableMono
 
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
 
-        AnimatorCompo.SetAnimationState("Hit", AnimationStateMode.SavePreviousState);
+        if (AnimatorCompo.GetCurrentAnimationState() == "Hit")
+        {
+            AnimatorCompo.SetAnimationState("Hit");
+        }
+        else
+        {
+            AnimatorCompo.SetAnimationState("Hit", AnimationStateMode.SavePreviousState);
+        }
 
         if (GameManager.Instance.PlayerInstance.BuffCompo.GetBuffState(BuffType.Rune_Debuff_Synergy))
         {
