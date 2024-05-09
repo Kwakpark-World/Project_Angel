@@ -64,4 +64,22 @@ public class PoolManager : MonoSingleton<PoolManager>
 
         return item;
     }
+
+    public PoolableMono Pop(PoolingType poolingType, Vector3 position, Transform parent)
+    {
+        if (!_pools.ContainsKey(poolingType))
+        {
+            Debug.LogError("Pooling object doesn't exist on pool.");
+
+            return null;
+        }
+
+        PoolableMono item = _pools[poolingType].Pop();
+        item.transform.position = position;
+        item.transform.parent = parent;
+
+        item.InitializePoolingItem();
+
+        return item;
+    }
 }

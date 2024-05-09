@@ -41,4 +41,17 @@ public class EffectManager : MonoSingleton<EffectManager>
 
         PoolManager.Instance.Pop(type, pos);
     }
+
+    public void PlayEffect(PoolingType type, Vector3 pos, Transform parent)
+    {
+        string effectName = type.ToString();
+
+        if (!_effects.ContainsKey(effectName))
+        {
+            Debug.LogError($"{effectName} is Not Contain _effects");
+            return;
+        }
+
+        PoolManager.Instance.Pop(type, pos, parent);
+    }
 }

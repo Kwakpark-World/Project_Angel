@@ -93,7 +93,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     private void ChargeAttackStabEffect()
     {
         Vector3 pos = _player._weapon.transform.position;
-        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Stab_Normal, pos);
+        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Sting_Normal, pos);
 
     }
 
