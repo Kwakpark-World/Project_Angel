@@ -6,22 +6,33 @@ namespace BTVisual
 {
     public class AttackNode : ActionNode
     {
-        public bool isSkillAttack;
-        public GameObject attackObject;
-        private EnemyAttack _attackScript = null;
+        public bool hasSkillAttack;
+        public GameObject normalAttackObject;
+        public GameObject skillAttackObject;
+        private EnemyAttack _normalAttackScript = null;
+        private EnemyAttack _skillAttackScript = null;
         private float _attackRange;
 
         protected override void OnStart()
         {
-            if (_attackScript == null)
+            if (!_normalAttackScript)
             {
-                attackObject = Instantiate(attackObject, brain.transform);
-                _attackScript = attackObject.GetComponent<EnemyAttack>();
+                normalAttackObject = Instantiate(normalAttackObject, brain.transform);
+
+                if (normalAttackObject.TryGetComponent(out _normalAttackScript))
+                {
+                    _normalAttackScript.OwnerNode = this;
+                }
             }
 
-            if (_attackScript.OwnerNode == null)
+            if (hasSkillAttack && !_skillAttackScript)
             {
-                _attackScript.OwnerNode = this;
+                skillAttackObject = Instantiate(skillAttackObject, brain.transform);
+
+                if (skillAttackObject.TryGetComponent(out _skillAttackScript))
+                {
+                    _skillAttackScript.OwnerNode = this;
+                }
             }
 
             if (_attackRange <= 0f)
@@ -29,12 +40,14 @@ namespace BTVisual
                 _attackRange = brain.EnemyStatData.GetAttackRange();
             }
 
-            _attackScript.OnStart();
+            _normalAttackScript?.OnStart();
+            _skillAttackScript?.OnStart();
         }
 
         protected override void OnStop()
         {
-            _attackScript.OnStop();
+            _normalAttackScript?.OnStop();
+            _skillAttackScript?.OnStop();
         }
 
         protected override State OnUpdate()
@@ -48,16 +61,17 @@ namespace BTVisual
             {
                 return State.Failure;
             }
-            else if (isSkillAttack && Time.time <= brain.SkillAttackTimer + brain.EnemyStatData.GetSkillCooldown())
-            {
-                return State.Failure;
-            }
-            else if (!isSkillAttack && Time.time <= brain.NormalAttackTimer + brain.EnemyStatData.GetAttackDelay())
+            else if (Time.time <= brain.NormalAttackTimer + brain.EnemyStatData.GetAttackDelay())
             {
                 return State.Running;
             }
 
-            return _attackScript.OnUpdate();
+            if (hasSkillAttack && (Time.time > brain.SkillAttackTimer + brain.EnemyStatData.GetSkillCooldown()))
+            {
+                return _skillAttackScript.OnUpdate();
+            }
+
+            return _normalAttackScript.OnUpdate();
         }
     }
 }

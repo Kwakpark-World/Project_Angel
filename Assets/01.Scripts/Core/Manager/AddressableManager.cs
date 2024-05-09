@@ -70,11 +70,20 @@ public class AddressableManager : MonoSingleton<AddressableManager>
     {
         foreach (var item in objs)
         {
+            if (item.ResourceType != typeof(T))
+            {
+                return;
+            }
+
             var handle = Addressables.LoadAssetAsync<T>(item.PrimaryKey);
             await handle.Task;
 
-            list.Add(handle.Result);
-            _handles.Add(handle);
+            if (handle.Result != null)
+            {
+                list.Add(handle.Result);
+                _handles.Add(handle);
+            }
+
         }
 
     }

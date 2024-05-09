@@ -13,6 +13,9 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     private bool _isStabMove;
     private bool _isEffectOn = false;
 
+    private ParticleSystem _thisParticle;
+
+
     public PlayerNormalChargeStabAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -20,8 +23,6 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     public override void Enter()
     {
         base.Enter();
-
-        SetAttackSetting();
 
         _isEffectOn = false;
         _isStabMove = false;
@@ -35,6 +36,9 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         _player.ChargingGauge = 0;
         _player.AnimatorCompo.speed = 1;
+
+        _thisParticle.Stop();
+
     }
 
     public override void UpdateState()
@@ -94,14 +98,20 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
     private void ChargeAttackStabEffect()
     {
-        Vector3 pos = _player._weapon.transform.position;
-        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Sting_Normal, pos);
+        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        
+        Vector3 pos = _weaponRB.transform.position;
+        _thisParticle.transform.position = pos;
+
+        _thisParticle.Play();
+        //Vector3 pos = _player._weapon.transform.position;
+        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Sting_Normal, pos);
 
     }
 
     private void ChargeAttackStab()
     {
-        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.forward);
+        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
     }

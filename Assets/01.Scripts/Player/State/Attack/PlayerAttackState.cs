@@ -12,8 +12,7 @@ public class PlayerAttackState : PlayerState
     protected Vector3 _attackOffset = Vector3.zero;
     protected Vector3 _attackSize = Vector3.one;
 
-    private float _shieldEnemyCheckDist = 30f;
-    private const string _shieldTagString = "Shield";
+    private bool _isAttackSetting = false;
 
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -22,8 +21,7 @@ public class PlayerAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-
-        SetAttackSetting();
+        _isAttackSetting = false;
 
         _weaponRT = _player._weapon.transform.Find("RightPointTop");
         _weaponRB = _player._weapon.transform.Find("RightPointBottom");
@@ -39,7 +37,18 @@ public class PlayerAttackState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
+        
+        /*Gizmos.matrix = Matrix4x4.TRS(_player.transform.TransformPoint(_player.transform.position + _attackOffset), _player.transform.rotation, _player.transform.lossyScale);
+        Gizmos.color = Color.white;
+        Gizmos.DrawCube(-_player.transform.position + _attackOffset, _attackSize);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(-_player.transform.position + _attackOffset, _attackSize);*/
 
+        if (!_isAttackSetting)
+        {
+            _isAttackSetting = true;
+            SetAttackSetting();
+        }
     }
 
     public void Attack(List<Collider> enemies)
@@ -78,8 +87,6 @@ public class PlayerAttackState : PlayerState
 
     public List<RaycastHit> GetEnemyByWeapon()
     {
-        // 상시 레이캐스트 올 쏘고 거기 방패병 있으면 방패병 뒤 부터 쭉 데미지 받는 곳에서 뺴주기
-
         Vector3 dir = (_weaponRT.position - _weaponRB.position).normalized;
 
         Vector3 weaponRPos = _weaponRB.position;
@@ -93,53 +100,16 @@ public class PlayerAttackState : PlayerState
         foreach (var enemy in enemiesL) enemies.Add(enemy);
         foreach (var enemy in enemiesR) enemies.Add(enemy);
 
-        ShieldEnemyCheck();
-
         return enemies;
     }
 
-    public void ShieldEnemyCheck()
-    {
-        Vector3 pos = _player.transform.position;
-        pos.y += 0.5f;
-
-        Vector3 dir = _player.transform.forward;
-
-        int index = 0;
-        RaycastHit[] enemies = Physics.RaycastAll(pos, dir, _shieldEnemyCheckDist, _player._enemyLayer);
-        for (int i = enemies.Length - 1; i >= 0; i--)
-        {
-            index = i;
-            
-            if (enemies[i].collider.gameObject.CompareTag(_shieldTagString))
-            {
-                if (enemies[i].transform.TryGetComponent<Brain>(out Brain brain))
-                    _player.enemyNormalHitDuplicateChecker.Add(brain);
-
-                break;
-            }
-
-            if (index == 0) return;
-        }
-
-        for (int i = 0; i < index; i++)
-        {
-            if (enemies[i].transform.TryGetComponent<Brain>(out Brain brain))
-            {
-                _player.enemyNormalHitDuplicateChecker.Add(brain);
-            }
-        }
-    }
-
-    public Collider[] GetEnemyByRange(Vector3 startPos, Vector3 direction)
+    public Collider[] GetEnemyByRange(Vector3 startPos, Quaternion direction)
     {
         Vector3 pos = startPos + _attackOffset;
 
         Vector3 halfSize = _attackSize * 0.5f;
 
-        Quaternion rot = Quaternion.Euler((direction * _hitDist) - startPos).normalized;
-
-        return Physics.OverlapBox(pos, halfSize, rot, _player._enemyLayer);
+        return Physics.OverlapBox(pos, halfSize, direction, _player._enemyLayer);
     }
 
     protected virtual void SetAttackSetting(){}

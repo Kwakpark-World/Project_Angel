@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerChargingState : PlayerChargeState
 {
+    private ParticleSystem _thisParticle;
+
     public PlayerChargingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -16,20 +18,21 @@ public class PlayerChargingState : PlayerChargeState
 
         _player.ChargingGauge = 0;
 
-        Vector3 pos = Vector3.zero;
-        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, pos);
+        ChargingEffect();
     }
 
     public override void Exit()
     {
         base.Exit();
         _player.PlayerInput.isCharge = false;
+        _thisParticle.Stop();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
+        SetEffectPos();
         SetChargingGauge();
         ChargeToNextState();
     }
@@ -64,5 +67,19 @@ public class PlayerChargingState : PlayerChargeState
             _player.ChargingGauge += Time.deltaTime * 1.5f;
 
 
+    }
+
+    private void ChargingEffect()
+    {
+        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        _thisParticle.Play();
+
+        //Vector3 pos = Vector3.zero;
+        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, pos);
+    }
+
+    private void SetEffectPos()
+    {
+        _thisParticle.transform.position = _weaponRT.position;
     }
 }

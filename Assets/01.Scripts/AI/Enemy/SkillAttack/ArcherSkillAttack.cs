@@ -7,7 +7,7 @@ public class ArcherSkillAttack : EnemyAttack
 {
     public override void OnStart()
     {
-        OwnerNode.brain.AnimatorCompo.SetAnimationState("Reload");
+        OwnerNode.brain.AnimatorCompo.SetAnimationState("SkillReload");
     }
 
     public override void OnStop()
@@ -17,12 +17,12 @@ public class ArcherSkillAttack : EnemyAttack
 
     public override Node.State OnUpdate()
     {
-        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState() == "Attack")
+        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState() == "SkillAttack")
         {
             return Node.State.Running;
         }
 
-        OwnerNode.brain.NormalAttackTimer = Time.time;
+        OwnerNode.brain.NormalAttackTimer = OwnerNode.brain.SkillAttackTimer = Time.time;
 
         return Node.State.Success;
     }
