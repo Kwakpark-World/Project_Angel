@@ -4915,9 +4915,8 @@ GameObject:
   - component: {fileID: 4991809441089378325}
   - component: {fileID: 8260119936905691201}
   - component: {fileID: 7463526437442419543}
-  - component: {fileID: 2102474208290135458}
   m_Layer: 0
-  m_Name: PlayerAttack_Charged_Normal
+  m_Name: PlayerNormalChargeAttackEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9735,21 +9734,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &2102474208290135458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8801258489678643693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8337f9cc3e04049b7bd70bc82fbb10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poolingType: 18
-  EffectType: 0
-  _playerState: 11
 --- !u!1 &9150180288233879478
 GameObject:
   m_ObjectHideFlags: 0

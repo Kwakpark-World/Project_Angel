@@ -9,8 +9,8 @@ public class PlayerState
     protected Player _player;
     protected Rigidbody _rigidbody;
 
-    protected int _animBoolHash; // 각 상태별 애니메이션 해시값
-    protected string _effectString; 
+    protected int _animBoolHash; // 각 상태별 애니메이션 해시값 StateEnumString
+    protected string _effectString;
     protected readonly int _yVelocityHash = Animator.StringToHash("y_velocity");
 
     public bool _actionTriggerCalled { get; private set; } = false;
@@ -22,8 +22,8 @@ public class PlayerState
     {
         _player = player;
         _stateMachine = stateMachine;
-        _animBoolHash = Animator.StringToHash(animBoolName);
         _effectString = $"Player{animBoolName}Effect";
+        _animBoolHash = Animator.StringToHash(animBoolName);
         _rigidbody = _player.RigidbodyCompo;
     }
 
