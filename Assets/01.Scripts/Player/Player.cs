@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -39,6 +40,8 @@ public class Player : PlayerController
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
     public PlayerStateMachine StateMachine { get; private set; }
+    public AnimationClip[] _playerAnims;
+
 
     public bool IsAttack { get; set; }
     public bool IsDefense { get; set; }
@@ -77,6 +80,8 @@ public class Player : PlayerController
         }
 
         _weapon = GameObject.FindGameObjectWithTag("Weapon");
+        _playerAnims = AnimatorCompo.runtimeAnimatorController.animationClips;
+
     }
 
     protected void OnEnable()
