@@ -16,8 +16,10 @@ public class PlayerMeleeAttackState : PlayerAttackState
     private float _awakenAttackDist = 4.4f;
     private float _normalAttackDist = 1.8f;
 
-
     private bool _isCombo;
+    private bool _isEffectOn;
+
+    private ParticleSystem _thisParticle;
 
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -31,7 +33,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.IsAttack = true;
-        
+        _isEffectOn = false;
+
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
         
         SetCombo();
@@ -43,6 +46,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
             _player.StopImmediately(false);
         });
 
+        //_thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
 
     }
 
@@ -70,6 +74,15 @@ public class PlayerMeleeAttackState : PlayerAttackState
             MeleeAttack();
         }
 
+        //if (_effectTriggerCalled)
+        //{
+        //    if (!_isEffectOn)
+        //    {
+        //        _isEffectOn = true;
+        //        ChargingEffect();
+        //    }
+        //}
+
         if (_actionTriggerCalled)
         {
             if (_player.IsGroundDetected())
@@ -95,6 +108,25 @@ public class PlayerMeleeAttackState : PlayerAttackState
         Attack(enemies);
     }
 
+    private void ChargingEffect()
+    {
+        _thisParticle.Play();
+
+        //Vector3 pos = Vector3.zero;
+        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, pos);
+    }
+
+    private void SetCombo()
+    {
+        _isCombo = false;
+
+        if (_comboCounter >= 7 || Time.time >= _attackPrevTime + _comboWindow)
+            _comboCounter = 0;
+
+        _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
+
+    }
+
     private void ComboAttack()
     {
         _isCombo = true;
@@ -110,14 +142,5 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     }
 
-    private void SetCombo()
-    {
-        _isCombo = false;
-
-        if (_comboCounter >= 7 || Time.time >= _attackPrevTime + _comboWindow)
-            _comboCounter = 0;
-
-        _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
-
-    }
+    
 }

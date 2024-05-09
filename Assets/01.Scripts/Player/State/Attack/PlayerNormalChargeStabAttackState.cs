@@ -26,6 +26,8 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         _isEffectOn = false;
         _isStabMove = false;
+        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+
     }
 
     public override void Exit()
@@ -98,7 +100,6 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
     private void ChargeAttackStabEffect()
     {
-        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         
         Vector3 pos = _weaponRB.transform.position;
         _thisParticle.transform.position = pos;

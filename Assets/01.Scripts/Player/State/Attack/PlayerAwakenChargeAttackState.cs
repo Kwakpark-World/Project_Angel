@@ -19,6 +19,8 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
+        _thisParticles = _player._effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
+
     }
 
     public override void Exit()
@@ -63,7 +65,6 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
 
     private void ChargeAttackEffect()
     {
-        _thisParticles = _player._effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
 
         float playerDuration = float.MaxValue;
         foreach (var anim in _player._playerAnims)

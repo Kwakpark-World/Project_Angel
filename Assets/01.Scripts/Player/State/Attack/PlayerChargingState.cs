@@ -18,7 +18,9 @@ public class PlayerChargingState : PlayerChargeState
 
         _player.ChargingGauge = 0;
 
+        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         ChargingEffect();
+
     }
 
     public override void Exit()
@@ -71,7 +73,6 @@ public class PlayerChargingState : PlayerChargeState
 
     private void ChargingEffect()
     {
-        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         _thisParticle.Play();
 
         //Vector3 pos = Vector3.zero;
