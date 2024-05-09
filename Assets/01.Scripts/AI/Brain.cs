@@ -101,26 +101,19 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage)
     {
-        if(BuffCompo.GetBuffState(BuffType.Shield))
+        if (BuffCompo.GetBuffState(BuffType.Shield))
         {
             return;
         }
 
-        if (AnimatorCompo.GetCurrentAnimationState() == "Die")
+        if (AnimatorCompo.GetCurrentAnimationState("Die"))
         {
             return;
         }
 
         CurrentHealth -= Mathf.Max(incomingDamage - EnemyStatData.GetDefensivePower(), 0f);
 
-        if (AnimatorCompo.GetCurrentAnimationState() == "Hit")
-        {
-            AnimatorCompo.SetAnimationState("Hit");
-        }
-        else
-        {
-            AnimatorCompo.SetAnimationState("Hit", AnimationStateMode.SavePreviousState);
-        }
+        AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
 
         if (GameManager.Instance.PlayerInstance.BuffCompo.GetBuffState(BuffType.Rune_Debuff_Synergy))
         {
