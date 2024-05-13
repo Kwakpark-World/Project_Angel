@@ -170,15 +170,15 @@ public class EnemyAnimator : MonoBehaviour
     public void ArcherNormalAttack()
     {
         int arrowCount = 3;
-        float angleRange = 45;
+        float angleRange = 30;
         float angleIncrement = angleRange / (arrowCount - 1);
 
         for (int i = 0; i < arrowCount; i++)
         {
             float angle = -angleIncrement + angleIncrement * i;
-            Vector3 direction = Quaternion.Euler(0, angle, 0) * -transform.forward;
 
             EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
+            Vector3 direction = Quaternion.Euler(1, angle, 1) * arrow.transform.forward;
             arrow.transform.forward = direction;
             arrow.owner = _owner as EnemyBrain;
             //arrowObject.transform.forward = direction;
@@ -186,31 +186,23 @@ public class EnemyAnimator : MonoBehaviour
 
     }
 
-    /*public void ArcherSkillAttack()
+    public void ArcherSkillAttack()
     {
-        //StartCoroutine(ArcherSkill(3));
-    }*/
+        int arrowCount = 5;
+        float angleRange = 30;
+        float angleIncrement = angleRange / (arrowCount - 1);
 
-    IEnumerator ArcherSkill(int duration)
-    {
-        for(int i =0; i < 5; i++)
+        for (int i = 0; i < arrowCount; i++)
         {
-            for (int j = 0; j < 5; j++)
-            {
-                int arrowCount = 5;
-                float angleRange = 45;
-                float angleIncrement = angleRange / (arrowCount - 1);
+            float angle = -angleIncrement + angleIncrement * i;
 
-                float angle = -angleIncrement + angleIncrement * i;
-                Vector3 direction = Quaternion.Euler(0, angle, 0) * -transform.forward;
-
-                EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
-                arrow.transform.forward = direction;
-                arrow.owner = _owner as EnemyBrain;
-                //arrowObject.transform.forward = direction;
-            }
+            EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
+            Vector3 direction = Quaternion.Euler(0, angle, 0) * arrow.transform.forward;
+            arrow.transform.forward = direction;
+            arrow.owner = _owner as EnemyBrain;
+            //Debug.Log(arrow);
+            //arrowObject.transform.forward = direction;
         }
-        yield return new WaitForSeconds(duration);
     }
 
     public void ShieldNormalAttack()

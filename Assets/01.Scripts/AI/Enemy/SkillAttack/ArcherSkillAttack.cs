@@ -1,13 +1,17 @@
 using BTVisual;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ArcherSkillAttack : EnemyAttack
 {
+    private bool _canSkillPlay;
+    private bool _isSkillPlaying;
+
     public override void OnStart()
     {
-        OwnerNode.brain.AnimatorCompo.SetAnimationState("SkillReload");
+        _canSkillPlay = true;
     }
 
     public override void OnStop()
@@ -17,7 +21,11 @@ public class ArcherSkillAttack : EnemyAttack
 
     public override Node.State OnUpdate()
     {
-        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState() == "SkillAttack")
+        if (_canSkillPlay)
+        {
+            StartCoroutine(ArcherSkillCoroutine());
+        }
+        else if (_isSkillPlaying)
         {
             return Node.State.Running;
         }
@@ -25,5 +33,20 @@ public class ArcherSkillAttack : EnemyAttack
         OwnerNode.brain.NormalAttackTimer = OwnerNode.brain.SkillAttackTimer = Time.time;
 
         return Node.State.Success;
+    }
+
+    private IEnumerator ArcherSkillCoroutine()
+    {
+        _canSkillPlay = false;
+        _isSkillPlaying = true;
+
+        for (int i = 0; i < 5; ++i)
+        {
+            OwnerNode.brain.AnimatorCompo.SetAnimationState("SkillReload");
+
+            yield return new WaitUntil(() => OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState("Idle"));
+        }
+
+        _isSkillPlaying = false;
     }
 }
