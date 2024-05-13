@@ -28,6 +28,8 @@ public class PoolManager : MonoSingleton<PoolManager>
 
     public void Push(PoolableMono item, bool resetParent = false)
     {
+        item.sameLifeCycle = false;
+
         if (resetParent)
         {
             item.transform.parent = transform;
@@ -38,7 +40,14 @@ public class PoolManager : MonoSingleton<PoolManager>
 
     public async void Push(PoolableMono item, float secondsDelay, bool resetParent = false)
     {
+        item.sameLifeCycle = true;
+
         await Task.Delay((int)(secondsDelay * 1000));
+
+        if (!item.sameLifeCycle)
+        {
+            return;
+        }
 
         if (resetParent)
         {
