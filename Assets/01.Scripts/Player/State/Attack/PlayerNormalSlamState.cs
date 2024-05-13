@@ -67,7 +67,6 @@ public class PlayerNormalSlamState : PlayerAttackState
             if (_player.IsGroundDetected())
             {
                 SlamAttack();   
-
             } 
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
@@ -81,7 +80,7 @@ public class PlayerNormalSlamState : PlayerAttackState
 
         Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
 
-        _offset = _player.transform.forward * 3;
+        _offset = _player.transform.forward * 5;
         _offset.y += 1f;
 
         _attackOffset = _offset;
