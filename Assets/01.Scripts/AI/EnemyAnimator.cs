@@ -166,16 +166,20 @@ public class EnemyAnimator : MonoBehaviour
         EnemyPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as EnemyPotion;
         debuffPotion.owner = _owner as EnemyBrain;
     }
+    public void ShieldNormalAttack()
+    {
+        _owner.FindNearbyEnemies(5);
+    }
 
     public void ArcherNormalAttack()
     {
         int arrowCount = 3;
-        float angleRange = 30;
+        float angleRange = 45;
         float angleIncrement = angleRange / (arrowCount - 1);
 
         for (int i = 0; i < arrowCount; i++)
         {
-            float angle = -angleIncrement + angleIncrement * i;
+            float angle = -angleIncrement * (arrowCount * 0.5f - 0.5f) + angleIncrement * i;
 
             EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
             Vector3 direction = Quaternion.Euler(1, angle, 1) * arrow.transform.forward;
@@ -189,12 +193,12 @@ public class EnemyAnimator : MonoBehaviour
     public void ArcherSkillAttack()
     {
         int arrowCount = 5;
-        float angleRange = 30;
+        float angleRange = 45;
         float angleIncrement = angleRange / (arrowCount - 1);
 
         for (int i = 0; i < arrowCount; i++)
         {
-            float angle = -angleIncrement + angleIncrement * i;
+            float angle = -angleIncrement * (arrowCount * 0.5f - 0.5f) + angleIncrement * i;
 
             EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
             Vector3 direction = Quaternion.Euler(0, angle, 0) * arrow.transform.forward;
@@ -205,9 +209,31 @@ public class EnemyAnimator : MonoBehaviour
         }
     }
 
-    public void ShieldNormalAttack()
+
+    public void ChemistNormalAttack()
     {
-        _owner.FindNearbyEnemies(5);
+        PoolingType potionType = PoolingType.None;
+
+        switch (UnityEngine.Random.Range(0, 3))
+        {
+            case 0:
+                potionType = PoolingType.Weapon_Potion_Poison;
+
+                break;
+
+            case 1:
+                potionType = PoolingType.Weapon_Potion_Freeze;
+
+                break;
+
+            case 2:
+                potionType = PoolingType.Weapon_Potion_Knockback;
+
+                break;
+        }
+
+        EnemyPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as EnemyPotion;
+        debuffPotion.owner = _owner as EnemyBrain;
     }
     #endregion
 

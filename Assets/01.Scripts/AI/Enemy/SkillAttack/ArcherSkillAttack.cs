@@ -24,6 +24,8 @@ public class ArcherSkillAttack : EnemyAttack
         if (_canSkillPlay)
         {
             StartCoroutine(ArcherSkillCoroutine());
+
+            return Node.State.Running;
         }
         else if (_isSkillPlaying)
         {

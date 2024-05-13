@@ -45,7 +45,7 @@ public class EnemyArrow : PoolableMono
     public override void InitializePoolingItem()
     {
         //Vector3 direction = new Vector3(GameManager.Instance.PlayerInstance.transform.position.x - transform.position.x, 0f, GameManager.Instance.PlayerInstance.transform.position.z - transform.position.z).normalized;
-        Vector3 direction = (GameManager.Instance.PlayerInstance.transform.position - transform.position).normalized;
+        Vector3 direction = (GameManager.Instance.PlayerInstance._playerCenter.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = lookRotation;
 
