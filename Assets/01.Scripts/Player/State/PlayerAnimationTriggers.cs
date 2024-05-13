@@ -30,4 +30,9 @@ public class PlayerAnimationTriggers : MonoBehaviour
     {
         _player.AnimationEffectTrigger();
     }
+
+    private void AnimationTickCheckTrigger()
+    {
+        _player.AnimationTickCheckTrigger();
+    }
 }

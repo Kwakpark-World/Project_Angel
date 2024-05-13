@@ -5,16 +5,14 @@ using UnityEngine;
 
 public class PlayerNormalSlamState : PlayerAttackState
 {
-    private float _width = 3f;
-    private float _height = 4f;
-    private float _dist = 8f;
+    private float _width = 5f;
+    private float _height = 10f;
+    private float _dist = 13f;
     private Vector3 _offset;
 
     private float _jumpForce = 10f;
     private float _dropForce = 22f;
     private float _forwardDist = 20f;
-
-    private float _normalAttackDist = 12f;
 
     private bool _isEffectOn = false;
     
@@ -29,8 +27,6 @@ public class PlayerNormalSlamState : PlayerAttackState
         _player.StopImmediately(false);
         _player.RotateToMousePos();
         _isEffectOn = false;
-
-        _hitDist = _normalAttackDist;
 
         JumpToFront();
     }
