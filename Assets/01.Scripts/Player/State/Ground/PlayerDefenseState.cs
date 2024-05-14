@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerDefenseState : PlayerGroundState
 {
     private float _defenseTimer;
-    private bool _isDefenseRotatable;
+
+    private ParticleSystem _thisParticle;
 
     public PlayerDefenseState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -14,40 +15,54 @@ public class PlayerDefenseState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+        _player.PlayerInput.MeleeAttackEvent += EndDefenseToAttack;
+
         _player.IsDefense = true;
         _player.StopImmediately(false);
 
-        if (!_isDefenseRotatable)
-        {
-            _isDefenseRotatable = true;
-            _player.RotateToMousePos();
-        }
+        
+        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        _thisParticle.Play();
+    
+        _player.RotateToMousePos();
+        
     }
 
     public override void Exit()
     {
         base.Exit();
+        _player.PlayerInput.MeleeAttackEvent -= EndDefenseToAttack;
+
         _player.IsDefense = false;
+
+        EndDefense();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        _defenseTimer += Time.deltaTime;
+        _defenseTimer += Time.deltaTime;        
 
-        EndDefense();
+        if (!_player.PlayerInput.isDefense || _defenseTimer >= _player.defenseTime)
+        {
+            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+        }
     }
 
     private void EndDefense()
     {
-        if (!_player.PlayerInput.isDefense || _defenseTimer >= _player.defenseTime)
-        {
-            _defenseTimer = 0;
-            _player.defensePrevTime = Time.time;
+        _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
-            _isDefenseRotatable = false;
-            _stateMachine.ChangeState(PlayerStateEnum.Idle);
-        }
+        _defenseTimer = 0;
+        _player.defensePrevTime = Time.time;
+
+    }
+
+    private void EndDefenseToAttack()
+    {
+        EndDefense();
+
+        _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
     }
 }
