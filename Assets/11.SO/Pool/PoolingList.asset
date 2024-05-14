@@ -23,7 +23,7 @@ MonoBehaviour:
     prefab: {fileID: 4190259864597979883, guid: 12db93ad1e6cd5848a28310b883f729a,
       type: 3}
     itemAmount: 10
-  - name: Enemy_Witch
+  - name: Enemy_Alchemist
     type: 3
     prefab: {fileID: 4227931294706521803, guid: 806f2fe2106151b4e88cda77716cce18,
       type: 3}
@@ -53,12 +53,27 @@ MonoBehaviour:
     prefab: {fileID: 240716459235156515, guid: 136fdbb66f4eb9b4fba20260b9c98a2e, type: 3}
     itemAmount: 10
   - name: Effect_PlayerAttack_Slam_Normal
-    type: 20
+    type: 16
     prefab: {fileID: -2232659382428511412, guid: cd3665ce6f21bf245a6835caf3ed9391,
       type: 3}
     itemAmount: 10
   - name: Effect_Shield
-    type: 27
+    type: 20
     prefab: {fileID: 7294500814286204256, guid: 80612ac72e5e366478437414a7ea7f87,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Slam_Awaken_1
+    type: 17
+    prefab: {fileID: -845340087175452748, guid: b0554fdafabce024db3ccbf422d62e8f,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Slam_Awaken_2
+    type: 18
+    prefab: {fileID: -4185366331618628098, guid: a61e48a71022b5b43bbd5af0e12fe9c9,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Slam_Awaken_3
+    type: 19
+    prefab: {fileID: 8126803602185676822, guid: b5fb10a75ae7a35459c0e3a862dbc965,
       type: 3}
     itemAmount: 10

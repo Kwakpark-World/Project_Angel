@@ -34270,8 +34270,9 @@ GameObject:
   - component: {fileID: 2815514338048632816}
   - component: {fileID: 1608927375290972915}
   - component: {fileID: 6018024956323691447}
+  - component: {fileID: -845340087175452748}
   m_Layer: 6
-  m_Name: P_EQSkill_01
+  m_Name: PlayerAwakenSlam_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39093,6 +39094,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-845340087175452748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8749537124658969566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51384d7dbfa3e643a8bc4af8c5cd161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolingType: 17
+  particles: []
+  _playerState: 9
 --- !u!1 &9193364926095773468
 GameObject:
   m_ObjectHideFlags: 0
