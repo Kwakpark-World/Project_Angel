@@ -5,6 +5,10 @@ using UnityEngine;
 public abstract class PoolableMono : MonoBehaviour
 {
     public PoolingType poolingType;
+    public bool sameLifeCycle;
 
-    public abstract void InitializePoolingItem();
+    public virtual void InitializePoolingItem()
+    {
+        sameLifeCycle = false;
+    }
 }

@@ -64,6 +64,8 @@ public abstract class Brain : PoolableMono
 
     public override void InitializePoolingItem()
     {
+        base.InitializePoolingItem();
+
         if (NavMeshAgentCompo)
         {
             NavMeshAgentCompo.isStopped = false;

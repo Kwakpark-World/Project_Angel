@@ -17,7 +17,7 @@ public class AlchemistNormalAttack : EnemyAttack
 
     public override Node.State OnUpdate()
     {
-        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState() == "NormalAttack")
+        if (OwnerNode.brain.AnimatorCompo.GetCurrentAnimationState("NormalAttack"))
         {
             return Node.State.Running;
         }

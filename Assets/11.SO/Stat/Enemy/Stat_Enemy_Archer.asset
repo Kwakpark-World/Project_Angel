@@ -22,16 +22,19 @@ MonoBehaviour:
     _baseValue: 0
     modifiers: []
   detectRange:
-    _baseValue: 30
+    _baseValue: 40
     modifiers: []
   attackPower:
     _baseValue: 10
     modifiers: []
   attackRange:
-    _baseValue: 15
+    _baseValue: 25
     modifiers: []
   attackDelay:
-    _baseValue: 1
+    _baseValue: 2
+    modifiers: []
+  skillCooldown:
+    _baseValue: 60
     modifiers: []
   moveSpeed:
     _baseValue: 5
@@ -40,8 +43,5 @@ MonoBehaviour:
     _baseValue: 0
     modifiers: []
   patternAmount:
-    _baseValue: 0
-    modifiers: []
-  initialPatternCooldown:
     _baseValue: 0
     modifiers: []

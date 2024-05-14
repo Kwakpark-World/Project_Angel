@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1893578572884720715}
   - component: {fileID: 522120160208836455}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,10 +121,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8141328260450841314, guid: d173c9bee66fb564b92fb9ebfb847547,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -790570518714480303, guid: d173c9bee66fb564b92fb9ebfb847547,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d173c9bee66fb564b92fb9ebfb847547,
         type: 3}
       propertyPath: m_Name
       value: Trim_FenceStone_half_C
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d173c9bee66fb564b92fb9ebfb847547,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
