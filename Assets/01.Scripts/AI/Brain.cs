@@ -1,6 +1,7 @@
 using BTVisual;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -26,6 +27,7 @@ public abstract class Brain : PoolableMono
     [HideInInspector]
     public EnemyMannequin enemySpawn;
 
+    static private List<Brain> enemyChain = new List<Brain>();
 
     protected virtual void Start()
     {
@@ -34,7 +36,7 @@ public abstract class Brain : PoolableMono
 
     protected virtual void Update()
     {
-        if (AnimatorCompo.GetCurrentAnimationState() == "Die")
+        if (AnimatorCompo.GetCurrentAnimationState("Die"))
         {
             return;
         }
@@ -115,26 +117,10 @@ public abstract class Brain : PoolableMono
 
         AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
 
-        if (GameManager.Instance.PlayerInstance.BuffCompo.GetBuffState(BuffType.Rune_Debuff_Synergy))
-        {
-            float previousSpeed = AnimatorCompo._animator.speed;
-
-            AnimatorCompo._animator.speed = 0;
-
-            StartCoroutine(RestoreAnimationSpeedAfterDelay(previousSpeed, 2f));
-        }
-
         if (CurrentHealth <= 0f)
         {
             OnDie();
         }
-    }
-
-    IEnumerator RestoreAnimationSpeedAfterDelay(float previousSpeed, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        AnimatorCompo._animator.speed = previousSpeed;
     }
 
     public virtual void OnDie()
@@ -142,35 +128,75 @@ public abstract class Brain : PoolableMono
         AnimatorCompo.SetAnimationState("Die");
     }
 
-    public List<Brain> FindNearbyEnemies(int enemyAmount)
+    public List<Brain> FindNearbyEnemies(int maxEnemyAmount, float nearbyRange)
     {
-        /*nearbyEnemies.Clear();
-
-        Brain[] allEnemies = FindObjectsOfType<Brain>();
-
-        foreach (Brain enemy in allEnemies)
+        if (maxEnemyAmount < 1 || nearbyRange <= 0f)
         {
-            if (enemy != this && Vector3.Distance(transform.position, enemy.transform.position) < 7)
-            {
-                nearbyEnemies.Add(enemy);
-            }
-        }*/
+            return null;
+        }
 
-        return new List<Brain>();
+        List<Brain> enemies = FindObjectsOfType<Brain>().OrderBy(enemy => (transform.position - enemy.transform.position).sqrMagnitude).ToList();
+
+        if (enemies.Count < 2)
+        {
+            return null;
+        }
+
+        enemies.RemoveAt(0);
+
+        int maxEnemy = enemies.FindIndex(enemy => (transform.position - enemy.transform.position).sqrMagnitude > (nearbyRange * nearbyRange));
+
+        return enemies.GetRange(0, Mathf.Min(maxEnemyAmount, maxEnemy == -1 ? enemies.Count : maxEnemy));
     }
 
-    public virtual void EnemyDistance(float minDistance)
+    public List<Brain> FindAllNearbyEnemies(float nearbyRange)
     {
-        /*List<Brain> enemiesCopy = new List<Brain>(nearbyEnemies);
-
-        foreach (Brain enemy in enemiesCopy)
+        if (nearbyRange <= 0f)
         {
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            return null;
+        }
 
-            if (distance < minDistance)
+        List<Brain> enemies = FindObjectsOfType<Brain>().OrderBy(enemy => (transform.position - enemy.transform.position).sqrMagnitude).ToList();
+
+        if (enemies.Count < 2)
+        {
+            return null;
+        }
+
+        enemies.RemoveAt(0);
+
+        int maxEnemy = enemies.FindIndex(enemy => (transform.position - enemy.transform.position).sqrMagnitude > (nearbyRange * nearbyRange));
+
+        return maxEnemy == -1 ? enemies : enemies.GetRange(0, maxEnemy);
+    }
+
+    public List<Brain> ChainNearbyEnemies(int maxEnemyAmount, float nearbyRange, int enemyCount = 1)
+    {
+        if (enemyCount == 1)
+        {
+            enemyChain.Clear();
+        }
+
+        enemyChain.Add(this);
+
+        if (enemyCount == maxEnemyAmount)
+        {
+            return enemyChain;
+        }
+
+        List<Brain> nearbyEnemies = FindAllNearbyEnemies(nearbyRange);
+
+        if (nearbyEnemies != null && nearbyEnemies.Count > 0)
+        {
+            foreach (Brain nearbyEnemy in nearbyEnemies)
             {
-                CurrentHealth -= Mathf.Max(1 - EnemyStatData.GetDefensivePower(), 0f);
+                if (!enemyChain.Contains(nearbyEnemy))
+                {
+                    return nearbyEnemy.ChainNearbyEnemies(maxEnemyAmount, nearbyRange, enemyCount + 1);
+                }
             }
-        }*/
+        }
+
+        return enemyChain;
     }
 }
