@@ -1085,6 +1085,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0
+        functionName: AnimationEffectTrigger
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 1954e786418713148840153cfd72eceb,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.29338843
         functionName: AnimationHitAbleTrigger
         data: 
@@ -1101,16 +1109,16 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.46001658
-        functionName: AnimationEffectTrigger
+      - time: 0.7056814
+        functionName: AnimationEndTrigger
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 1954e786418713148840153cfd72eceb,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.7056814
-        functionName: AnimationEndTrigger
+      - time: 0.5294806
+        functionName: AnimationEffectEndTrigger
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 1954e786418713148840153cfd72eceb,
           type: 3}

@@ -17,6 +17,7 @@ public class PlayerState
     public bool _endTriggerCalled { get; private set; } = false;
     public bool _isHitAbleTriggerCalled { get; private set; } = false;
     public bool _effectTriggerCalled { get; private set; } = false;
+    public bool _effectTriggerEndCalled { get; private set; } = false;
     public bool _TickCheckTriggerCalled;
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, string animBoolName)
@@ -35,6 +36,7 @@ public class PlayerState
         _isHitAbleTriggerCalled = false;
         _effectTriggerCalled = false;
         _TickCheckTriggerCalled = false;
+        _effectTriggerEndCalled = false;
 
         _player.AnimatorCompo.SetBool(_animBoolHash, true);
     }
@@ -72,6 +74,11 @@ public class PlayerState
     public void AnimationEffectTrigger()
     {
         _effectTriggerCalled = true;
+    }
+
+    public void AnimationEffectEndTrigger()
+    {
+        _effectTriggerEndCalled = true;
     }
 
     public void AnimationTickCheckTrigger()

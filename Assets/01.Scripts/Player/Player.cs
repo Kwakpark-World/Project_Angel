@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class Player : PlayerController
 {
@@ -58,6 +61,9 @@ public class Player : PlayerController
     public Renderer[] renderers;
     public Material freezeMaterial;
     private bool _isFreezing;
+
+    private Volume _playerOnHitVolume;
+    private Coroutine _playerOnHitVolumeCoroutine;
 
     protected override void Awake()
     {
@@ -137,8 +143,10 @@ public class Player : PlayerController
             return;
         if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening))
             return;
-       
-        if(BuffCompo.GetBuffState(BuffType.Rune_Defense_Synergy) && CurrentHealth <= 1f)
+
+        PlayerOnHitVolume();
+
+        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Synergy) && CurrentHealth <= 1f)
         {
             CurrentHealth -= Mathf.Max(0, 0f);
         }
@@ -218,6 +226,11 @@ public class Player : PlayerController
     public void AnimationEffectTrigger()
     {
         StateMachine.CurrentState.AnimationEffectTrigger();
+    }
+
+    public void AnimationEffectEndTrigger()
+    {
+        StateMachine.CurrentState.AnimationEffectEndTrigger();
     }
 
     public void AnimationTickCheckTrigger()
@@ -302,5 +315,55 @@ public class Player : PlayerController
         _materials[(int)PlayerMaterialIndex.Hair_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, hairMatName);
         _materials[(int)PlayerMaterialIndex.Armor_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, armorMatName);
     }
+    #endregion
+
+    #region Impact
+    private void PlayerOnHitVolume()
+    {
+        if (_playerOnHitVolume == null)
+        {
+            _playerOnHitVolume = new GameObject().AddComponent<Volume>();
+            _playerOnHitVolume.name = "PlayerOnHitVolume";
+        }
+
+        if (!_playerOnHitVolume.profile.TryGet<Vignette>(out var vignette))
+            _playerOnHitVolume.profile.Add<Vignette>();
+
+        if (_playerOnHitVolumeCoroutine != null)
+        {
+            StopCoroutine(_playerOnHitVolumeCoroutine);
+            _playerOnHitVolumeCoroutine = null;
+        }
+
+        if (_playerOnHitVolume.profile.TryGet<Vignette>(out var volume))
+        {
+            volume.color.overrideState = true;
+            volume.intensity.overrideState = true;
+            volume.rounded.overrideState = true;
+        }
+    
+        volume.color.value = Color.red;
+        volume.intensity.value = 0.3f;
+        volume.rounded.value = true;
+
+        _playerOnHitVolumeCoroutine = StartCoroutine(PlayerOnHitVolumeFade());
+    }
+
+    private IEnumerator PlayerOnHitVolumeFade()
+    {
+        if (_playerOnHitVolume.profile.TryGet<Vignette>(out var volume))
+        {
+            while(volume.intensity.value > 0f)
+            {
+                volume.intensity.value -= 0.01f;
+                yield return null;
+            }
+
+            if (volume.intensity.value < 0f)
+                volume.intensity.value = 0f;
+        }
+        yield return null;
+    }
+
     #endregion
 }
