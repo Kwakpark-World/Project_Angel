@@ -207,7 +207,7 @@ public class EnemyAnimator : MonoBehaviour
 
     public void ShieldNormalAttack()
     {
-        _owner.FindNearbyEnemies(5);
+        _owner.FindNearbyEnemies(5, 0f);
     }
     #endregion
 
