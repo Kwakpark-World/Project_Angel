@@ -6,7 +6,10 @@ public class PlayerDefenseState : PlayerGroundState
 {
     private float _defenseTimer;
 
-    private ParticleSystem _thisParticle;
+    private ParticleSystem[] _thisParticles;
+
+    private Color _normalColor = new Color(1, 0.9592881f, 0.4858491f, 1f);
+    private Color _awakenColor = Color.red;
 
     public PlayerDefenseState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -21,8 +24,13 @@ public class PlayerDefenseState : PlayerGroundState
         _player.StopImmediately(false);
 
         
-        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
-        _thisParticle.Play();
+        _thisParticles = _player._effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
+        foreach (var particle in _thisParticles)
+        {
+            var main = particle.main;
+            main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
+            particle.Play();
+        }
     
         _player.RotateToMousePos();
         
@@ -52,7 +60,10 @@ public class PlayerDefenseState : PlayerGroundState
 
     private void EndDefense()
     {
-        _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        foreach (var particle in _thisParticles)
+        {
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
 
         _defenseTimer = 0;
         _player.defensePrevTime = Time.time;
