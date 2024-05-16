@@ -104,6 +104,17 @@ public class PlayerAttackState : PlayerState
 
         Vector3 halfSize = _attackSize * 0.5f;
 
+        // Debug
+        /*{
+            GameObject obj = GameManager.Instantiate<GameObject>(new GameObject());
+            obj.transform.position = pos;
+            obj.transform.localScale = halfSize * 2;
+            obj.transform.rotation = direction;
+            obj.transform.AddComponent<MeshRenderer>();
+            obj.transform.AddComponent<MeshFilter>();
+            Time.timeScale = 0f;
+        }*/
+
         return Physics.OverlapBox(pos, halfSize, direction, _player._enemyLayer);
     }
 

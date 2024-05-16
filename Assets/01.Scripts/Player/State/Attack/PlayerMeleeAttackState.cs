@@ -13,13 +13,13 @@ public class PlayerMeleeAttackState : PlayerAttackState
     private float _attackPrevTime;
     private float _comboWindow = 0.8f;
 
-    private float _width = 0.5f;
-    private float _height = 2.5f;
-    private float _dist = 0.2f;
+    private float _width = 0.8f;
+    private float _height = 0.2f;
+    private float _dist = 2.5f;
     private Vector3 _offset;
 
     private float _awakenAttackDist = 4.4f;
-    private float _normalAttackDist = 1.8f;
+    private float _normalAttackDist = 2.5f;
 
     private bool _isCombo;
     private bool _isEffectOn;
@@ -113,9 +113,9 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _hitHeight = _height;
         _hitWidth = _width;
 
-        Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
+        Vector3 size = new Vector3(_hitWidth, _hitDist, _hitHeight);
 
-        _offset = _player._weapon.transform.up * 0.3f;
+        _offset = _player._weapon.transform.up;
 
         _attackOffset = _offset;
         _attackSize = size;
