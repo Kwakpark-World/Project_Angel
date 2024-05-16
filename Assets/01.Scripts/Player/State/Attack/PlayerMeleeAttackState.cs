@@ -9,9 +9,14 @@ public class PlayerMeleeAttackState : PlayerAttackState
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
     private int _comboCounter;
-    
+
     private float _attackPrevTime;
     private float _comboWindow = 0.8f;
+
+    private float _width = 0.5f;
+    private float _height = 2.5f;
+    private float _dist = 0.2f;
+    private Vector3 _offset;
 
     private float _awakenAttackDist = 4.4f;
     private float _normalAttackDist = 1.8f;
@@ -26,17 +31,18 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     }
 
-    
+
 
     public override void Enter()
     {
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
+
         _player.IsAttack = true;
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
-        
+
         SetCombo();
 
         _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
@@ -68,7 +74,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         base.UpdateState();
 
-        
+
         if (_isHitAbleTriggerCalled)
         {
             MeleeAttack();
@@ -101,11 +107,29 @@ public class PlayerMeleeAttackState : PlayerAttackState
         }
     }
 
+    protected override void SetAttackSetting()
+    {
+        _hitDist = _dist;
+        _hitHeight = _height;
+        _hitWidth = _width;
+
+        Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
+
+        _offset = _player._weapon.transform.up * 0.3f;
+
+        _attackOffset = _offset;
+        _attackSize = size;
+    }
+
     private void MeleeAttack()
     {
-        List<RaycastHit> enemies = GetEnemyByWeapon();
+        //List<RaycastHit> enemies = GetEnemyByWeapon();
+        //
+        //Attack(enemies);
 
-        Attack(enemies);
+        Collider[] enemies = GetEnemyByRange(_player._weapon.transform.position, _player._weapon.transform.rotation);
+
+        Attack(enemies.ToList());
     }
 
     private void ChargingEffect()
@@ -142,5 +166,5 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     }
 
-    
+
 }

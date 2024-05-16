@@ -23,7 +23,6 @@ public class PlayerNormalSlamState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
-
         _player.StopImmediately(false);
         _player.RotateToMousePos();
         _isEffectOn = false;
