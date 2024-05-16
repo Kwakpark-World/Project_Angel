@@ -219,6 +219,11 @@ public class Player : PlayerController
     {
         StateMachine.CurrentState.AnimationEffectTrigger();
     }
+
+    public void AnimationTickCheckTrigger()
+    {
+        StateMachine.CurrentState.AnimationTickCheckTrigger();
+    }
     #endregion
 
     #region Mouse Control

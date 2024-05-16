@@ -7,14 +7,17 @@ public class PlayerAwakenSlamState : PlayerAttackState
 {
     private readonly int _comboCounterHash = Animator.StringToHash("SlamComboCounter");
     private int _comboCounter;
+    private string _comboEffectString;
 
     private float _attackPrevTime;
     private float _comboWindow = 0.8f;
 
     private bool _isCombo = false;
+    private bool _isEffectOn = false;
 
     public PlayerAwakenSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
+        
     }
 
     public override void Enter()
@@ -23,7 +26,13 @@ public class PlayerAwakenSlamState : PlayerAttackState
         _player.PlayerInput.SlamSkillEvent += ComboSkill;
         _player.RotateToMousePos();
 
+        _isEffectOn = false;
+
+        _player.SetVelocity(_player.transform.forward * (_comboCounter + 1) * 5f);
+
         SetCombo();
+
+        _comboEffectString = $"Effect_PlayerAttack_Slam_Awaken_{_comboCounter}";
 
         _player.StartDelayAction(0.1f, () =>
         {
@@ -43,6 +52,17 @@ public class PlayerAwakenSlamState : PlayerAttackState
     {
         base.UpdateState();
 
+        if (_effectTriggerCalled)
+        {
+            if (!_isEffectOn)
+            {
+                _isEffectOn = true;
+
+                Vector3 pos = _player.transform.position;
+                EffectManager.Instance.PlayEffect((PoolingType)Enum.Parse(typeof(PoolingType), _comboEffectString), pos);
+            }
+        }
+
         if (_endTriggerCalled)
         {
             if (_isCombo)
@@ -54,6 +74,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
 
     private void ComboSkill()
     {
+        if (_comboCounter >= 2) return;
         _isCombo = true;
     }
 

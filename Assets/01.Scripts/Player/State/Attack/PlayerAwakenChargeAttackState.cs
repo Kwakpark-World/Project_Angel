@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerAwakenChargeAttackState : PlayerChargeState
 {
+    private float _width = 10f;
+    private float _height = 3f;
+    private float _dist = 10f;
+    private Vector3 _offset;
+
     private const string _animName = "PlayerAttack_Charged_Awaken";
 
     private bool _isEffectOn = false;
@@ -19,6 +25,8 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
+        _thisParticles = _player._effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
+
     }
 
     public override void Exit()
@@ -26,6 +34,8 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         base.Exit();
 
         _player.AnimatorCompo.speed = 1;
+        _player.enemyNormalHitDuplicateChecker.Clear();
+
         foreach (var particle in _thisParticles)
         {
             particle.Stop();
@@ -58,12 +68,20 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
 
     protected override void SetAttackSetting()
     {
+        _hitDist = _dist;
+        _hitHeight = _height;
+        _hitWidth = _width;
 
+        Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
+
+        _offset = Vector3.zero;
+
+        _attackOffset = _offset;
+        _attackSize = size;
     }
 
     private void ChargeAttackEffect()
     {
-        _thisParticles = _player._effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
 
         float playerDuration = float.MaxValue;
         foreach (var anim in _player._playerAnims)
@@ -93,6 +111,14 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
 
     private void ChargeAttack()
     {
+        if (_TickCheckTriggerCalled) // default One Hit + Tick(Anim Event)
+        {
+            _TickCheckTriggerCalled = false;
+            _player.enemyNormalHitDuplicateChecker.Clear();
+        }
 
+        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
+
+        Attack(enemies.ToList());
     }
 }

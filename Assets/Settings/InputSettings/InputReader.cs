@@ -18,6 +18,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action MeleeAttackEvent;
     public event Action SlamSkillEvent;
     public event Action AwakeningSkillEvent;
+    public event Action DefenseEvenet;
 
 
     private Controls _controls;
@@ -61,6 +62,10 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public void OnDefense(InputAction.CallbackContext context)
     {
         isDefense = context.performed;
+        if (context.started)
+        {
+            DefenseEvenet?.Invoke();
+        }
     }
 
     public void OnQSkill(InputAction.CallbackContext context)

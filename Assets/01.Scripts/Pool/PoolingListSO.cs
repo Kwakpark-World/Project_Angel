@@ -21,21 +21,14 @@ public enum PoolingType
     Weapon_Potion_Poison,
     Weapon_Potion_Freeze,
     Weapon_Potion_Knockback,
-    Effect_PlayerAttack_Normal,
-    Effect_PlayerAttack_Charging_Normal,
-    Effect_PlayerAttack_Charged_Normal,
-    Effect_PlayerAttack_Charged_Sting_Normal,
     Effect_PlayerAttack_Slam_Normal,
-    Effect_PlayerAwakening,
-    Effect_PlayerAwakened,
-    Effect_PlayerAttack_Awaken,
-    Effect_PlayerAttack_Charging_Awaken,
-    Effect_PlayerAttack_Charged_Awaken,
-    Effect_PlayerAttack_Slam_Awaken,
+    Effect_PlayerAttack_Slam_Awaken_0,
+    Effect_PlayerAttack_Slam_Awaken_1,
+    Effect_PlayerAttack_Slam_Awaken_2,
     Effect_Shield,
     Rune
 }
-
+//
 [Serializable]
 public class PoolingObject
 {
