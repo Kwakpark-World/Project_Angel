@@ -220,6 +220,11 @@ public class Player : PlayerController
         StateMachine.CurrentState.AnimationEffectTrigger();
     }
 
+    public void AnimationEffectEndTrigger()
+    {
+        StateMachine.CurrentState.AnimationEffectEndTrigger();
+    }
+
     public void AnimationTickCheckTrigger()
     {
         StateMachine.CurrentState.AnimationTickCheckTrigger();

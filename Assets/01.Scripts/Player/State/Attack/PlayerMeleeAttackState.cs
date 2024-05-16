@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMeleeAttackState : PlayerAttackState
 {
@@ -31,8 +30,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     }
 
-
-
     public override void Enter()
     {
         base.Enter();
@@ -60,7 +57,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
     public override void Exit()
     {
         base.Exit();
-        _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear); 
 
         _player.PlayerInput.MeleeAttackEvent -= ComboAttack;
         _player.IsAttack = false;
@@ -90,6 +86,11 @@ public class PlayerMeleeAttackState : PlayerAttackState
                 _isEffectOn = true;
                 ChargingEffect();
             }
+        }
+
+        if (_effectTriggerEndCalled)
+        {
+            _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
         if (_actionTriggerCalled)
@@ -167,6 +168,4 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
 
     }
-
-
 }
