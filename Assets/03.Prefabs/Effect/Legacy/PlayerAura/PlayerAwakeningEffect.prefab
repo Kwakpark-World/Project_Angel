@@ -4777,7 +4777,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cf1a1f2ac78109f4aa0e33c822ef2ecf, type: 2}
+  - {fileID: 2100000, guid: d78ee4ea05212344891c988be5c611e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4840,7 +4840,7 @@ GameObject:
   - component: {fileID: 5880579998518558278}
   - component: {fileID: 7637894684179372635}
   m_Layer: 0
-  m_Name: P_Aura
+  m_Name: PlayerAwakeningEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4861,7 +4861,7 @@ Transform:
   m_Children:
   - {fileID: 9015399849997526623}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &5880579998518558278
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -9607,7 +9607,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f14e09eb8213a8841939777880ab2cc0, type: 2}
-  - {fileID: 2100000, guid: d57dd850095c85f43896e2d674df21c4, type: 2}
+  - {fileID: 2100000, guid: 4d8ca1d84ba25cc46ab0d85fe66610ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
