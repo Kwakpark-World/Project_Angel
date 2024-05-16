@@ -13,7 +13,7 @@ public class PlayerNormalSlamSkillEffect : PlayerEffect
             PoolManager.Instance.Push(this);
         }
 
-        PoolManager.Instance.Push(this, duration, true);
+        PoolManager.Instance.Push(this, duration);
 
         Vector3 dir = Vector3.zero;
         dir.x = -90f; // default Effect angle

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -12,8 +13,6 @@ public class PlayerAttackState : PlayerState
     protected Vector3 _attackOffset = Vector3.zero;
     protected Vector3 _attackSize = Vector3.one;
 
-    private bool _isAttackSetting = false;
-
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -21,7 +20,6 @@ public class PlayerAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        _isAttackSetting = false;
 
         _weaponRT = _player._weapon.transform.Find("RightPointTop");
         _weaponRB = _player._weapon.transform.Find("RightPointBottom");
@@ -44,11 +42,8 @@ public class PlayerAttackState : PlayerState
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(-_player.transform.position + _attackOffset, _attackSize);*/
 
-        if (!_isAttackSetting)
-        {
-            _isAttackSetting = true;
-            SetAttackSetting();
-        }
+        SetAttackSetting();
+        
     }
 
     public void Attack(List<Collider> enemies)
@@ -108,6 +103,17 @@ public class PlayerAttackState : PlayerState
         Vector3 pos = startPos + _attackOffset;
 
         Vector3 halfSize = _attackSize * 0.5f;
+
+        // Debug
+        /*{
+            GameObject obj = GameManager.Instantiate<GameObject>(new GameObject());
+            obj.transform.position = pos;
+            obj.transform.localScale = halfSize * 2;
+            obj.transform.rotation = direction;
+            obj.transform.AddComponent<MeshRenderer>();
+            obj.transform.AddComponent<MeshFilter>();
+            Time.timeScale = 0f;
+        }*/
 
         return Physics.OverlapBox(pos, halfSize, direction, _player._enemyLayer);
     }

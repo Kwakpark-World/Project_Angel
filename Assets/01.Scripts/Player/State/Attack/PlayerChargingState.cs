@@ -3,6 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerChargingState : PlayerChargeState
 {
+    private ParticleSystem _thisParticle;
+
+    private Color _normalColor = new Color(1, 0.9592881f, 0.4858491f, 1f);
+    private Color _awakenColor = Color.red;
+
     public PlayerChargingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -16,20 +21,27 @@ public class PlayerChargingState : PlayerChargeState
 
         _player.ChargingGauge = 0;
 
-        Vector3 pos = Vector3.zero;
-        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, pos);
+        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        var main = _thisParticle.main;
+        main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
+        
+        ChargingEffect();
+
+        
     }
 
     public override void Exit()
     {
         base.Exit();
         _player.PlayerInput.isCharge = false;
+        _thisParticle.Stop();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
+        SetEffectPos();
         SetChargingGauge();
         ChargeToNextState();
     }
@@ -64,5 +76,18 @@ public class PlayerChargingState : PlayerChargeState
             _player.ChargingGauge += Time.deltaTime * 1.5f;
 
 
+    }
+
+    private void ChargingEffect()
+    {
+        _thisParticle.Play();
+
+        //Vector3 pos = Vector3.zero;
+        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, pos);
+    }
+
+    private void SetEffectPos()
+    {
+        _thisParticle.transform.position = _weaponRT.position;
     }
 }

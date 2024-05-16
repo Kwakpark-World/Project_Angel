@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5098335236940107889}
   - component: {fileID: 8041154242276364083}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Collider (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3786211096555825584}
   - component: {fileID: 5294908953103688843}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Collider (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5040272333716734177}
   - component: {fileID: 3912572833935253209}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Collider (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1249903021717438769}
   - component: {fileID: 7962560526486894389}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Collider (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8524703195300610510}
   - component: {fileID: 4185419955134765506}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Collider (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1027556635923920498}
   - component: {fileID: 4427264654850376119}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Collider (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5128827647390767551}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4325837419587727488}
   - component: {fileID: 8274073510875630632}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3076761315963358933}
   - component: {fileID: 4333619449551197618}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}
@@ -494,27 +494,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
-        type: 3}
-      propertyPath: m_LocalRotation.y
+      propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
+        type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}
@@ -524,7 +524,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}
@@ -544,7 +544,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}
       propertyPath: m_Name
-      value: Trim_Stairs_simple_8x4x2
+      value: Trim_Stairs_simple_8x4x2_C
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d4584708f906ea740a56f8a6898b7af4,
         type: 3}

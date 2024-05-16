@@ -24,6 +24,8 @@ public class PoolableMonoEffect : PoolableMono
     /// </summary>
     public override void InitializePoolingItem()
     {
+        base.InitializePoolingItem();
+
         foreach (ParticleSystem particle in particles)
         {
             duration = Mathf.Max(particle.main.duration, duration);

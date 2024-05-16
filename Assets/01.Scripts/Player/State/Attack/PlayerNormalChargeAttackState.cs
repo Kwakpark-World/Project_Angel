@@ -12,6 +12,8 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
     
     private bool _isEffectOn = false;
 
+    private ParticleSystem _thisParticle;
+
     public PlayerNormalChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -23,12 +25,16 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
+        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+
     }
 
     public override void Exit()
     {
         base.Exit();
         _player.enemyNormalHitDuplicateChecker.Clear();
+        _thisParticle.Stop();
+
     }
 
     public override void UpdateState()
@@ -70,8 +76,10 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
     private void ChargeAttackEffect()
     {
-        Vector3 pos = _player._weapon.transform.position;
-        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Normal, pos);
+        _thisParticle.Play();
+
+        //Vector3 pos = _player._weapon.transform.position;
+        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Normal, pos);
 
     }
 

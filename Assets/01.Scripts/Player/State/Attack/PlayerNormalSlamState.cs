@@ -5,16 +5,14 @@ using UnityEngine;
 
 public class PlayerNormalSlamState : PlayerAttackState
 {
-    private float _width = 3f;
-    private float _height = 4f;
-    private float _dist = 8f;
+    private float _width = 5f;
+    private float _height = 10f;
+    private float _dist = 13f;
     private Vector3 _offset;
 
     private float _jumpForce = 10f;
     private float _dropForce = 22f;
     private float _forwardDist = 20f;
-
-    private float _normalAttackDist = 12f;
 
     private bool _isEffectOn = false;
     
@@ -25,12 +23,9 @@ public class PlayerNormalSlamState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
-
         _player.StopImmediately(false);
         _player.RotateToMousePos();
         _isEffectOn = false;
-
-        _hitDist = _normalAttackDist;
 
         JumpToFront();
     }
@@ -67,7 +62,6 @@ public class PlayerNormalSlamState : PlayerAttackState
             if (_player.IsGroundDetected())
             {
                 SlamAttack();   
-
             } 
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
@@ -81,7 +75,7 @@ public class PlayerNormalSlamState : PlayerAttackState
 
         Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
 
-        _offset = _player.transform.forward * 3;
+        _offset = _player.transform.forward * 5;
         _offset.y += 1f;
 
         _attackOffset = _offset;

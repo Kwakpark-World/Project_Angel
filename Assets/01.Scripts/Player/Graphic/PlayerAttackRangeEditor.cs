@@ -55,7 +55,13 @@ public class PlayerAttackRangeEditor : MonoBehaviour
 
     private void AttackRangeWeapon()
     {
-        Gizmos.DrawCube(WeaponRT.transform.position + offset, size);
+        Gizmos.DrawRay(Player._weapon.transform.position, Player._weapon.transform.up * value);
+
+        Gizmos.matrix = Matrix4x4.TRS(Player._weapon.transform.TransformPoint(Player._weapon.transform.position + offset), Player._weapon.transform.rotation, Player._weapon.transform.lossyScale);
+        Gizmos.color = Color.white;
+        Gizmos.DrawCube(-Player._weapon.transform.position + offset, size);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(-Player._weapon.transform.position + offset, size);
     }
 
     private void AttackRangePlayer()

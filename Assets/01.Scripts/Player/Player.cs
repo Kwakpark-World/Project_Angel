@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
-    public GameObject cube;
-
     [Space(30f), Header("Attack Settings")]
     public GameObject _weapon;
 
@@ -29,16 +28,18 @@ public class Player : PlayerController
     [field: SerializeField] public AssetLabelReference normalStateLabel { get; private set; }
     [field: SerializeField] public AssetLabelReference awakenStateLabel { get; private set; }
 
-    #region Material Parameters
     public Material[] _materials { get; private set; } = new Material[6];
 
     public const string weaponMatName = "PlayerWeaponMat";
     public const string hairMatName = "PlayerHairMat";
     public const string armorMatName = "PlayerArmorMat";
-    #endregion
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
     public PlayerStateMachine StateMachine { get; private set; }
+    public AnimationClip[] _playerAnims;
+
+    public Transform _effectParent;
+    public Transform _playerCenter;
 
     public bool IsAttack { get; set; }
     public bool IsDefense { get; set; }
@@ -77,6 +78,10 @@ public class Player : PlayerController
         }
 
         _weapon = GameObject.FindGameObjectWithTag("Weapon");
+        _effectParent = transform.Find("Effects");
+        _playerCenter = transform.Find("PlayerCenter");
+        _playerAnims = AnimatorCompo.runtimeAnimatorController.animationClips;
+
     }
 
     protected void OnEnable()
@@ -213,6 +218,11 @@ public class Player : PlayerController
     public void AnimationEffectTrigger()
     {
         StateMachine.CurrentState.AnimationEffectTrigger();
+    }
+
+    public void AnimationTickCheckTrigger()
+    {
+        StateMachine.CurrentState.AnimationTickCheckTrigger();
     }
     #endregion
 

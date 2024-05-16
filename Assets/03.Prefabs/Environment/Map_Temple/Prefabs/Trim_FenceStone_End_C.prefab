@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2564879659006120265}
   - component: {fileID: 2058857368487851628}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3884906423164583662}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2bc2b4c0e1e4e224885c49e37940f7f0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -51,8 +51,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.75, y: 1.5, z: 0.75}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.75, y: 5, z: 0.75}
+  m_Center: {x: 0, y: 1.75, z: 0}
 --- !u!1 &9217202583805829212
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3368962232779800368}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,12 +106,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 903c092ab452e5b4799e1108a7f5c740,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 903c092ab452e5b4799e1108a7f5c740,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 903c092ab452e5b4799e1108a7f5c740,
         type: 3}
@@ -153,10 +153,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8141328260450841314, guid: 903c092ab452e5b4799e1108a7f5c740,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -3617836173288568, guid: 903c092ab452e5b4799e1108a7f5c740,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 903c092ab452e5b4799e1108a7f5c740,
         type: 3}
       propertyPath: m_Name
-      value: Trim_FenceStone_End
+      value: Trim_FenceStone_End_C
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 903c092ab452e5b4799e1108a7f5c740,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
