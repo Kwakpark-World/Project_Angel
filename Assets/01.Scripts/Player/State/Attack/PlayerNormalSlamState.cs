@@ -12,7 +12,6 @@ public class PlayerNormalSlamState : PlayerAttackState
 
     private float _jumpForce = 10f;
     private float _dropForce = 22f;
-    private float _forwardDist = 20f;
 
     private bool _isEffectOn = false;
     
@@ -102,7 +101,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         Vector3 move = Vector3.one;
         move.y *= _jumpForce;
 
-        move += _player.transform.forward * _forwardDist;
+        move += _player.transform.forward * _player.PlayerStatData.GetSlamSkillDistance();
         _player.SetVelocity(move);
     }
 
