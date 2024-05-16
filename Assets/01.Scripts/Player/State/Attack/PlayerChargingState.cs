@@ -8,6 +8,8 @@ public class PlayerChargingState : PlayerChargeState
     private Color _normalColor = new Color(1, 0.9592881f, 0.4858491f, 1f);
     private Color _awakenColor = Color.red;
 
+    private const string _awakenEffectString = "PlayerAwakenChargingEffect";
+
     public PlayerChargingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -21,7 +23,7 @@ public class PlayerChargingState : PlayerChargeState
 
         _player.ChargingGauge = 0;
 
-        _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        _thisParticle = _player._effectParent.Find(_player.IsAwakening ? _awakenEffectString : _effectString).GetComponent<ParticleSystem>();
         var main = _thisParticle.main;
         main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
         
