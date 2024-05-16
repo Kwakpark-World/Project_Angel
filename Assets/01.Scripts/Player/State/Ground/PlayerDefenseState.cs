@@ -24,7 +24,7 @@ public class PlayerDefenseState : PlayerGroundState
         _player.StopImmediately(false);
 
         
-        _thisParticles = _player._effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
+        _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
         foreach (var particle in _thisParticles)
         {
             var main = particle.main;

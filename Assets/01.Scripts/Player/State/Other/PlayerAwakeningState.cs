@@ -85,7 +85,7 @@ public class PlayerAwakeningState : PlayerState
                         continue;
                 }
 
-                mats[j] = _player._materials[index];
+                mats[j] = _player.materials[index];
             }
 
             _player.renderers[i].SetMaterials(mats);

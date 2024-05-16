@@ -115,7 +115,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         Vector3 size = new Vector3(_hitWidth, _hitDist, _hitHeight);
 
-        _offset = _player._weapon.transform.up;
+        _offset = _player.weapon.transform.up;
 
         _attackOffset = _offset;
         _attackSize = size;
@@ -127,7 +127,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         //
         //Attack(enemies);
 
-        Collider[] enemies = GetEnemyByRange(_player._weapon.transform.position, _player._weapon.transform.rotation);
+        Collider[] enemies = GetEnemyByRange(_player.weapon.transform.position, _player.weapon.transform.rotation);
 
         Attack(enemies.ToList());
     }

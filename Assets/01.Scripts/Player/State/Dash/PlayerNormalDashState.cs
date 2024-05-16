@@ -39,9 +39,9 @@ public class PlayerNormalDashState : PlayerDashState
 
     private void SlamSkillHandle()
     {
-        if (_player._slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
+        if (_player.slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
 
-        _player._slamPrevTime = Time.time;
+        _player.slamPrevTime = Time.time;
 
         if (_player.IsAwakening)
             _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);

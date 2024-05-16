@@ -21,7 +21,7 @@ public class PlayerChargingState : PlayerChargeState
 
         _player.ChargingGauge = 0;
 
-        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         var main = _thisParticle.main;
         main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
         
