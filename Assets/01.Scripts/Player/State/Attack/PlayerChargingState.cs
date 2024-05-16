@@ -19,8 +19,12 @@ public class PlayerChargingState : PlayerChargeState
         _player.ChargingGauge = 0;
 
         _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        var main = _thisParticle.main;
+        main.startColor = _player.IsAwakening ? new Color(1, 0, 0, 1) : new Color(1, 0.9592881f, 0.4858491f, 1f);
+        
         ChargingEffect();
 
+        
     }
 
     public override void Exit()
