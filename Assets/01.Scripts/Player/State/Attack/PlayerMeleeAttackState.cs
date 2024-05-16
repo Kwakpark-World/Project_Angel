@@ -24,7 +24,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     private bool _isCombo;
     private bool _isEffectOn;
 
-    private ParticleSystem _thisParticle;
+    private ParticleSystem _thisParticle; 
 
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -52,13 +52,16 @@ public class PlayerMeleeAttackState : PlayerAttackState
             _player.StopImmediately(false);
         });
 
-        //_thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        _thisParticle = _player._weapon.transform.Find(_effectString).GetComponent<ParticleSystem>(); 
+
 
     }
 
     public override void Exit()
     {
         base.Exit();
+        _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear); 
+
         _player.PlayerInput.MeleeAttackEvent -= ComboAttack;
         _player.IsAttack = false;
 
@@ -80,14 +83,14 @@ public class PlayerMeleeAttackState : PlayerAttackState
             MeleeAttack();
         }
 
-        //if (_effectTriggerCalled)
-        //{
-        //    if (!_isEffectOn)
-        //    {
-        //        _isEffectOn = true;
-        //        ChargingEffect();
-        //    }
-        //}
+        if (_effectTriggerCalled)
+        {
+            if (!_isEffectOn)
+            {
+                _isEffectOn = true;
+                ChargingEffect();
+            }
+        }
 
         if (_actionTriggerCalled)
         {
@@ -135,7 +138,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
     private void ChargingEffect()
     {
         _thisParticle.Play();
-
         //Vector3 pos = Vector3.zero;
         //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, pos);
     }
