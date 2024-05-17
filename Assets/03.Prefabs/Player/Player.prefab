@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4722560026557706396}
   - component: {fileID: 9166074286034648693}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: SKM_BarbarianWarrior_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5714926190188356583}
   - component: {fileID: 228622949411185127}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: SKM_BarbarianWarrior_TorsoA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1129,7 +1129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8111999667140013854}
   - component: {fileID: 7512572313320182013}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: SKM_BarbarianWarrior_Harness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11457,7 +11457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4568779809773104991}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RightPointBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11552,7 +11552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2989979412386184232}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RightPointTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11854,7 +11854,7 @@ GameObject:
   - component: {fileID: 5148070190169840706}
   - component: {fileID: 2866051191039960501}
   - component: {fileID: 4993321129147705403}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: SKM_BarbarianWarrior_Cloth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15446,7 +15446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3170152550293239029}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LeftPointBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15709,7 +15709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5477505402214536929}
   - component: {fileID: 8214724939459909532}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: SKM_BarbarianWarrior_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16061,7 +16061,7 @@ GameObject:
   - component: {fileID: 5842328331091244379}
   - component: {fileID: 1528887400613975396}
   - component: {fileID: 8590556825814068079}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: Sword
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -16243,7 +16243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6192374951781227075}
   - component: {fileID: 5422177800281125075}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: SKM_BarbarianWarrior_Hair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16734,7 +16734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6242456477587420264}
   - component: {fileID: 8348956577880548871}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: SKM_BarbarianWarrior_Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16976,7 +16976,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3219856268562956970}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LeftPointTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17240,6 +17240,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerMeleeAttackEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 986864643320003426, guid: 284eedaed749f4944b3ae0af9f660036,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1259482207248366548, guid: 284eedaed749f4944b3ae0af9f660036,
         type: 3}
