@@ -21,10 +21,10 @@ public class PlayerAttackState : PlayerState
     {
         base.Enter();
 
-        _weaponRT = _player._weapon.transform.Find("RightPointTop");
-        _weaponRB = _player._weapon.transform.Find("RightPointBottom");
-        _weaponLT = _player._weapon.transform.Find("LeftPointTop");
-        _weaponLB = _player._weapon.transform.Find("LeftPointBottom");
+        _weaponRT = _player.weapon.transform.Find("RightPointTop");
+        _weaponRB = _player.weapon.transform.Find("RightPointBottom");
+        _weaponLT = _player.weapon.transform.Find("LeftPointTop");
+        _weaponLB = _player.weapon.transform.Find("LeftPointBottom");
     }
 
     public override void Exit()
@@ -87,8 +87,8 @@ public class PlayerAttackState : PlayerState
         Vector3 weaponRPos = _weaponRB.position;
         Vector3 weaponLPos = _weaponLB.position;
 
-        RaycastHit[] enemiesR = Physics.RaycastAll(weaponRPos, dir, _hitDist, _player._enemyLayer);
-        RaycastHit[] enemiesL = Physics.RaycastAll(weaponLPos, dir, _hitDist, _player._enemyLayer);
+        RaycastHit[] enemiesR = Physics.RaycastAll(weaponRPos, dir, _hitDist, _player.enemyLayer);
+        RaycastHit[] enemiesL = Physics.RaycastAll(weaponLPos, dir, _hitDist, _player.enemyLayer);
 
         List<RaycastHit> enemies = new List<RaycastHit>();
         
@@ -115,7 +115,7 @@ public class PlayerAttackState : PlayerState
             Time.timeScale = 0f;
         }*/
 
-        return Physics.OverlapBox(pos, halfSize, direction, _player._enemyLayer);
+        return Physics.OverlapBox(pos, halfSize, direction, _player.enemyLayer);
     }
 
     protected virtual void SetAttackSetting(){}

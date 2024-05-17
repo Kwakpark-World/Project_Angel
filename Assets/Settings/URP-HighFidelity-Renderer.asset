@@ -62,7 +62,7 @@ MonoBehaviour:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 8384
+        m_Bits: 24768
       PassNames: []
     overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
@@ -94,17 +94,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: BehindTheWalllPlayer
+  m_Name: OutlinePlayer
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: BehindTheWalllPlayer
+    passTag: OutlinePlayer
     Event: 300
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 64
+        m_Bits: 8192
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 696e786c8652acf4198de47c58d7caf5, type: 2}
     overrideMaterialPassIndex: 0
@@ -238,17 +238,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: BehindTheWalll2 Enemy
+  m_Name: SilhouetteEnemy
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: BehindTheWalll2 Enemy
+    passTag: SilhouetteEnemy
     Event: 300
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 8320
+        m_Bits: 16384
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 2b07efb907fbca34080f06935c9b6ce9, type: 2}
     overrideMaterialPassIndex: 0
@@ -280,17 +280,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: Behind The Wall2 Player
+  m_Name: SilhouettePlayer
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: Behind The Wall2 Player
+    passTag: SilhouettePlayer
     Event: 300
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 64
+        m_Bits: 8192
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 2b07efb907fbca34080f06935c9b6ce9, type: 2}
     overrideMaterialPassIndex: 0
@@ -322,17 +322,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: BehindTheWalllEnemy
+  m_Name: OutlineEnemy
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: BehindTheWalllEnemy
+    passTag: OutlineEnemy
     Event: 300
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 8320
+        m_Bits: 16384
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 8e39bb8c12bae6e479501a7146a27c45, type: 2}
     overrideMaterialPassIndex: 0
