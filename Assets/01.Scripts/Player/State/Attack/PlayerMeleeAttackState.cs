@@ -49,7 +49,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
             _player.StopImmediately(false);
         });
 
-        _thisParticle = _player._weapon.transform.Find(_effectString).GetComponent<ParticleSystem>(); 
+        _thisParticle = _player.weapon.transform.Find(_effectString).GetComponent<ParticleSystem>(); 
 
 
     }
