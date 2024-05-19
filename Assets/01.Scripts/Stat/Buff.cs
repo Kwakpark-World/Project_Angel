@@ -66,6 +66,8 @@ public class Buff : MonoBehaviour
     private float _poisonDelayTimer = -1f;
     private bool _isPlayer;
 
+   
+
     private void Awake()
     {
         foreach (BuffTrigger buffTrigger in buffTriggers)

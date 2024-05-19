@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class EnemyFlooring : MonoBehaviour
 {
-   
+
     public float radius = 5f; // 원의 반지름 설정
+    private bool shouldDrawGizmos = false;
+    public Vector3 collisionPoint;
+
+    public EnemyAnimator enemyAnimator;
+
+/*    private void Update()
+    {
+        shouldDrawGizmos = true;
+    }*/
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red; 
-        float angleStep = 10f; 
-        Vector3 center = transform.position;
+        //if (!shouldDrawGizmos) return;
+
+        Gizmos.color = Color.red;
+        float angleStep = 10f;
+        Vector3 center = collisionPoint;
 
         for (float angle = 0; angle < 360; angle += angleStep)
         {
@@ -24,13 +35,20 @@ public class EnemyFlooring : MonoBehaviour
             Vector3 endPoint = new Vector3(endX, center.y, endZ);
             Gizmos.DrawLine(startPoint, endPoint);
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-       if(collision.collider.CompareTag("Player"))
-        { 
-            //여기서 플레이어 데미지 입히게 하긴 
+        if (GameManager.Instance.PlayerInstance.transform != null)
+        {
+            Vector3 playerPosition = GameManager.Instance.PlayerInstance.transform.position;
+            float distance = Vector3.Distance(center, playerPosition);
+
+            if (distance <= radius)
+            {
+                Debug.Log("플레이어가 원 안에 있습니다.");
+            }
+            else
+            {
+                Debug.Log("플레이어가 원 밖에 있습니다.");
+            }
         }
     }
 }

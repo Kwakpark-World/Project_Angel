@@ -319,8 +319,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f69016d2e233242be2b0dff29f5b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
-  radius: 2
+  radius: 8
+  collisionPoint: {x: 1, y: 3, z: 1}
+  enemyAnimator: {fileID: 0}
 --- !u!4 &335575791
 Transform:
   m_ObjectHideFlags: 0
@@ -330,7 +331,7 @@ Transform:
   m_GameObject: {fileID: 335575789}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.76, z: 0}
+  m_LocalPosition: {x: 0, y: 1.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
