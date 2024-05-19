@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EnemyFlooring : MonoBehaviour
@@ -9,12 +10,10 @@ public class EnemyFlooring : MonoBehaviour
     private bool shouldDrawGizmos = false;
     public Vector3 collisionPoint;
 
-    public EnemyAnimator enemyAnimator;
+    private Dictionary<BuffType, object> _attackers = new Dictionary<BuffType, object>();
+    public Buff BuffCompo { get; private set; }
 
-/*    private void Update()
-    {
-        shouldDrawGizmos = true;
-    }*/
+    //public EnemyAnimator enemyAnimator;
 
     private void OnDrawGizmos()
     {
@@ -43,7 +42,10 @@ public class EnemyFlooring : MonoBehaviour
 
             if (distance <= radius)
             {
-                Debug.Log("플레이어가 원 안에 있습니다.");
+                //여기서 데미지 넣기
+                //brain = _attackers[BuffType.Poison] as Brain;
+                //GameManager.Instance.PlayerInstance.OnHit(brain.BuffCompo.BuffStatData.poisonDamage);
+                
             }
             else
             {
