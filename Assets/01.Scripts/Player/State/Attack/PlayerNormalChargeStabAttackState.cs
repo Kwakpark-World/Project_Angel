@@ -25,7 +25,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         _isEffectOn = false;
         _isStabMove = false;
-        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
     }
 
     public override void Exit()

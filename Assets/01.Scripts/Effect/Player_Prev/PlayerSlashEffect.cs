@@ -17,7 +17,7 @@ public class PlayerSlashEffect : PoolableMonoEffect
     {
         base.Update();
 
-        transform.position = GameManager.Instance.PlayerInstance._weapon.transform.position;
+        transform.position = GameManager.Instance.PlayerInstance.weapon.transform.position;
 
         if (GameManager.Instance.PlayerInstance.StateMachine.CurrentState == GameManager.Instance.PlayerInstance.StateMachine.GetState(PlayerStateEnum.Idle))
         {

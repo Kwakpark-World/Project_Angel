@@ -10,7 +10,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Buff), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {
+    static private List<Brain> enemyChain = new List<Brain>();
+
     public BehaviourTreeRunner treeRunner;
+    public Transform enemyCenter;
 
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -26,8 +29,6 @@ public abstract class Brain : PoolableMono
     public float SkillAttackTimer { get; set; }
     [HideInInspector]
     public EnemyMannequin enemySpawn;
-
-    static private List<Brain> enemyChain = new List<Brain>();
 
     protected virtual void Start()
     {
@@ -128,6 +129,11 @@ public abstract class Brain : PoolableMono
     public virtual void OnDie()
     {
         AnimatorCompo.SetAnimationState("Die");
+    }
+
+    public void Knockback()
+    {
+
     }
 
     public List<Brain> FindNearbyEnemies(int maxEnemyAmount, float nearbyRange)

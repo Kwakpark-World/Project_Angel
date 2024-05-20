@@ -18,7 +18,7 @@ public class PlayerAwakeningState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         _player.StopImmediately(true);
         _isAwakenOn = false;
     }
@@ -89,7 +89,7 @@ public class PlayerAwakeningState : PlayerState
                         continue;
                 }
 
-                mats[j] = _player._materials[index];
+                mats[j] = _player.materials[index];
             }
 
             _player.renderers[i].SetMaterials(mats);

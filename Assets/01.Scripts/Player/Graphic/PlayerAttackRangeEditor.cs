@@ -25,11 +25,11 @@ public class PlayerAttackRangeEditor : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (Player == null) Player = GetComponent<Player>();
-        if (Player._weapon == null) Player._weapon = GameObject.FindGameObjectWithTag("Weapon");
-        if (WeaponRT == null) WeaponRT = Player._weapon.transform.Find("RightPointTop");
-        if (WeaponRB == null) WeaponRB = Player._weapon.transform.Find("RightPointBottom");
-        if (WeaponLT == null) WeaponLT = Player._weapon.transform.Find("LeftPointTop");
-        if (WeaponLB == null) WeaponLB = Player._weapon.transform.Find("LeftPointBottom");
+        if (Player.weapon == null) Player.weapon = GameObject.FindGameObjectWithTag("Weapon");
+        if (WeaponRT == null) WeaponRT = Player.weapon.transform.Find("RightPointTop");
+        if (WeaponRB == null) WeaponRB = Player.weapon.transform.Find("RightPointBottom");
+        if (WeaponLT == null) WeaponLT = Player.weapon.transform.Find("LeftPointTop");
+        if (WeaponLB == null) WeaponLB = Player.weapon.transform.Find("LeftPointBottom");
 
         Gizmos.color = Color.red;
 
@@ -55,13 +55,13 @@ public class PlayerAttackRangeEditor : MonoBehaviour
 
     private void AttackRangeWeapon()
     {
-        Gizmos.DrawRay(Player._weapon.transform.position, Player._weapon.transform.up * value);
+        Gizmos.DrawRay(Player.weapon.transform.position, Player.weapon.transform.up * value);
 
-        Gizmos.matrix = Matrix4x4.TRS(Player._weapon.transform.TransformPoint(Player._weapon.transform.position + offset), Player._weapon.transform.rotation, Player._weapon.transform.lossyScale);
+        Gizmos.matrix = Matrix4x4.TRS(Player.weapon.transform.TransformPoint(Player.weapon.transform.position + offset), Player.weapon.transform.rotation, Player.weapon.transform.lossyScale);
         Gizmos.color = Color.white;
-        Gizmos.DrawCube(-Player._weapon.transform.position + offset, size);
+        Gizmos.DrawCube(-Player.weapon.transform.position + offset, size);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(-Player._weapon.transform.position + offset, size);
+        Gizmos.DrawWireCube(-Player.weapon.transform.position + offset, size);
     }
 
     private void AttackRangePlayer()

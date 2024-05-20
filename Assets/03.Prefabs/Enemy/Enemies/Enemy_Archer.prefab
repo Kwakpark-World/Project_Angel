@@ -1633,7 +1633,7 @@ GameObject:
   - component: {fileID: 1218347100290497508}
   - component: {fileID: 859321143127905474}
   - component: {fileID: 1127534683258616537}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: _Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1947,7 +1947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6289003404171207447}
   - component: {fileID: 7812384187436188654}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: Boots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3128,7 +3128,7 @@ GameObject:
   - component: {fileID: 3408018569789575687}
   - component: {fileID: 3471778059956398318}
   - component: {fileID: 2323225686221996377}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: Hair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3370,7 +3370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7097848572052105232}
   - component: {fileID: 901693596169672215}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: _eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4179,7 +4179,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingType: 2
+  sameLifeCycle: 0
   treeRunner: {fileID: 8989133874273436439}
+  enemyCenter: {fileID: 0}
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 8723194aea9bd724286c728d567ed41c,
     type: 2}
   enemySpawn: {fileID: 0}
@@ -4705,6 +4707,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bow
       objectReference: {fileID: 0}
+    - target: {fileID: 6274657207693427582, guid: c50ed3c545e7c854392ee7c2b94d4a7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 9115633467872167039, guid: c50ed3c545e7c854392ee7c2b94d4a7e,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -5203,7 +5210,7 @@ PrefabInstance:
     - target: {fileID: 8251213666112474787, guid: fc32b4d5ca49c5e4c9307ec278ca075a,
         type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8496568819047043565, guid: fc32b4d5ca49c5e4c9307ec278ca075a,
         type: 3}
@@ -5333,6 +5340,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ring
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 43b799b44dfeb1a4aaeac5ee932d42ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
