@@ -1,6 +1,7 @@
 using BTVisual;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -104,7 +105,7 @@ public abstract class Brain : PoolableMono
         NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
     }
 
-    public virtual void OnHit(float incomingDamage, bool isHitPhysically = false)
+    public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, float knockbackPower = 0f)
     {
         if (BuffCompo.GetBuffState(BuffType.Shield))
         {
@@ -122,7 +123,7 @@ public abstract class Brain : PoolableMono
 
         if (isHitPhysically)
         {
-            Knockback();
+            StartCoroutine(Knockback(knockbackPower));
         }
 
         if (CurrentHealth <= 0f)
@@ -136,12 +137,19 @@ public abstract class Brain : PoolableMono
         AnimatorCompo.SetAnimationState("Die");
     }
 
-    public void Knockback()
+    public IEnumerator Knockback(float knockbackPower)
     {
-        Vector3 knockbackDirection = (GameManager.Instance.PlayerInstance.transform.position - transform.position).normalized;
+        Vector3 knockbackDirection = (transform.position - GameManager.Instance.PlayerInstance.playerCenter.position).normalized;
         knockbackDirection.y = 0f;
-        float knockbackSpeed = 0.5f;
-        transform.position = Vector3.Lerp(transform.position, transform.position + knockbackDirection * knockbackSpeed, 5 * Time.deltaTime);
+        float timer = 0f;
+
+        while (timer <= 0.5f)
+        {
+            transform.position = Vector3.Lerp(transform.position, transform.position + knockbackDirection * knockbackPower, timer);
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
     }
 
     public List<Brain> FindNearbyEnemies(int maxEnemyAmount, float nearbyRange)
