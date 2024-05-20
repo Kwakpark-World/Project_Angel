@@ -104,7 +104,7 @@ public abstract class Brain : PoolableMono
         NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
     }
 
-    public virtual void OnHit(float incomingDamage)
+    public virtual void OnHit(float incomingDamage, bool isHitPhysically = false)
     {
         if (BuffCompo.GetBuffState(BuffType.Shield))
         {
@@ -120,6 +120,11 @@ public abstract class Brain : PoolableMono
 
         AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
 
+        if (isHitPhysically)
+        {
+            Knockback();
+        }
+
         if (CurrentHealth <= 0f)
         {
             OnDie();
@@ -133,7 +138,10 @@ public abstract class Brain : PoolableMono
 
     public void Knockback()
     {
-
+        Vector3 knockbackDirection = (GameManager.Instance.PlayerInstance.transform.position - transform.position).normalized;
+        knockbackDirection.y = 0f;
+        float knockbackSpeed = 0.5f;
+        transform.position = Vector3.Lerp(transform.position, transform.position + knockbackDirection * knockbackSpeed, 5 * Time.deltaTime);
     }
 
     public List<Brain> FindNearbyEnemies(int maxEnemyAmount, float nearbyRange)
