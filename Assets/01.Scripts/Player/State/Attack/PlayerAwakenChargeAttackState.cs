@@ -117,7 +117,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
             _player.enemyNormalHitDuplicateChecker.Clear();
         }
 
-        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
+        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
     }

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PlayerAwakenDashState : PlayerDashState
 {
-    private float _dashDistMax = 10f;
-
     public PlayerAwakenDashState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -35,10 +33,10 @@ public class PlayerAwakenDashState : PlayerDashState
 
     private float CalcDistance()
     {
-        float dashDistance = _dashDistMax;
+        float dashDistance = _player.PlayerStatData.GetDashMaxDistance();
 
         RaycastHit hit;
-        if (Physics.Raycast(_player.transform.position, _player.transform.forward, out hit, _dashDistMax))
+        if (Physics.Raycast(_player.transform.position, _player.transform.forward, out hit, _player.PlayerStatData.GetDashMaxDistance()))
         {
             dashDistance = hit.distance;
         }

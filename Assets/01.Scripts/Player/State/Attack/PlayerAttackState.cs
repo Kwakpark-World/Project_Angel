@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -21,10 +22,10 @@ public class PlayerAttackState : PlayerState
     {
         base.Enter();
 
-        _weaponRT = _player.weapon.transform.Find("RightPointTop");
-        _weaponRB = _player.weapon.transform.Find("RightPointBottom");
-        _weaponLT = _player.weapon.transform.Find("LeftPointTop");
-        _weaponLB = _player.weapon.transform.Find("LeftPointBottom");
+        _weaponRT = _player._weapon.transform.Find("RightPointTop");
+        _weaponRB = _player._weapon.transform.Find("RightPointBottom");
+        _weaponLT = _player._weapon.transform.Find("LeftPointTop");
+        _weaponLB = _player._weapon.transform.Find("LeftPointBottom");
     }
 
     public override void Exit()
@@ -80,15 +81,15 @@ public class PlayerAttackState : PlayerState
         }
     }
 
-    public List<RaycastHit> GetEnemyByWeapon()
+    public List<RaycastHit> GetEnemyByRaycast()
     {
         Vector3 dir = (_weaponRT.position - _weaponRB.position).normalized;
 
         Vector3 weaponRPos = _weaponRB.position;
         Vector3 weaponLPos = _weaponLB.position;
 
-        RaycastHit[] enemiesR = Physics.RaycastAll(weaponRPos, dir, _hitDist, _player.enemyLayer);
-        RaycastHit[] enemiesL = Physics.RaycastAll(weaponLPos, dir, _hitDist, _player.enemyLayer);
+        RaycastHit[] enemiesR = Physics.RaycastAll(weaponRPos, dir, _hitDist, _player._enemyLayer);
+        RaycastHit[] enemiesL = Physics.RaycastAll(weaponLPos, dir, _hitDist, _player._enemyLayer);
 
         List<RaycastHit> enemies = new List<RaycastHit>();
         
@@ -98,24 +99,13 @@ public class PlayerAttackState : PlayerState
         return enemies;
     }
 
-    public Collider[] GetEnemyByRange(Vector3 startPos, Quaternion direction)
+    public Collider[] GetEnemyByOverlapBox(Vector3 startPos, Quaternion direction)
     {
         Vector3 pos = startPos + _attackOffset;
 
         Vector3 halfSize = _attackSize * 0.5f;
 
-        // Debug
-        /*{
-            GameObject obj = GameManager.Instantiate<GameObject>(new GameObject());
-            obj.transform.position = pos;
-            obj.transform.localScale = halfSize * 2;
-            obj.transform.rotation = direction;
-            obj.transform.AddComponent<MeshRenderer>();
-            obj.transform.AddComponent<MeshFilter>();
-            Time.timeScale = 0f;
-        }*/
-
-        return Physics.OverlapBox(pos, halfSize, direction, _player.enemyLayer);
+        return Physics.OverlapBox(pos, halfSize, direction, _player._enemyLayer);
     }
 
     protected virtual void SetAttackSetting(){}
