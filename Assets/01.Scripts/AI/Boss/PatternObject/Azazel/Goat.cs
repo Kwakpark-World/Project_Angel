@@ -55,7 +55,7 @@ public class Goat : Brain
         _lifetime = EnemyStatData.GetLifetime();
     }
 
-    public override void OnHit(float incomingDamage)
+    public override void OnHit(float incomingDamage, bool isHitPhysically = false)
     {
         // Do nothing.
     }

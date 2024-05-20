@@ -54,7 +54,7 @@ public class PlayerAttackState : PlayerState
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
-                    brain.OnHit(_player.PlayerStatData.GetAttackPower());
+                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true);
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
@@ -71,7 +71,7 @@ public class PlayerAttackState : PlayerState
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
-                    brain.OnHit(_player.PlayerStatData.GetAttackPower());
+                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true);
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
