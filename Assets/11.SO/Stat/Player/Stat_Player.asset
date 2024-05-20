@@ -48,6 +48,9 @@ MonoBehaviour:
   dashSpeed:
     _baseValue: 20
     modifiers: []
+  dashMaxDistance:
+    _baseValue: 10
+    modifiers: []
   dashDuration:
     _baseValue: 0.4
     modifiers: []
@@ -55,7 +58,10 @@ MonoBehaviour:
     _baseValue: 2
     modifiers: []
   slamCooldown:
-    _baseValue: 5
+    _baseValue: 0
+    modifiers: []
+  slamDistance:
+    _baseValue: 15
     modifiers: []
   maxAwakenGauge:
     _baseValue: 100

@@ -132,7 +132,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         //
         //Attack(enemies);
 
-        Collider[] enemies = GetEnemyByRange(_player.weapon.transform.position, _player.weapon.transform.rotation);
+        Collider[] enemies = GetEnemyByOverlapBox(_player.weapon.transform.position, _player.weapon.transform.rotation);
 
         Attack(enemies.ToList());
     }

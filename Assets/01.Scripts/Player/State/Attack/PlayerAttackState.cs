@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -54,7 +55,7 @@ public class PlayerAttackState : PlayerState
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
-                    brain.OnHit(_player.PlayerStatData.GetAttackPower());
+                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true);
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
@@ -71,7 +72,7 @@ public class PlayerAttackState : PlayerState
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
-                    brain.OnHit(_player.PlayerStatData.GetAttackPower());
+                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true);
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
@@ -80,7 +81,7 @@ public class PlayerAttackState : PlayerState
         }
     }
 
-    public List<RaycastHit> GetEnemyByWeapon()
+    public List<RaycastHit> GetEnemyByRaycast()
     {
         Vector3 dir = (_weaponRT.position - _weaponRB.position).normalized;
 
@@ -98,22 +99,11 @@ public class PlayerAttackState : PlayerState
         return enemies;
     }
 
-    public Collider[] GetEnemyByRange(Vector3 startPos, Quaternion direction)
+    public Collider[] GetEnemyByOverlapBox(Vector3 startPos, Quaternion direction)
     {
         Vector3 pos = startPos + _attackOffset;
 
         Vector3 halfSize = _attackSize * 0.5f;
-
-        // Debug
-        /*{
-            GameObject obj = GameManager.Instantiate<GameObject>(new GameObject());
-            obj.transform.position = pos;
-            obj.transform.localScale = halfSize * 2;
-            obj.transform.rotation = direction;
-            obj.transform.AddComponent<MeshRenderer>();
-            obj.transform.AddComponent<MeshFilter>();
-            Time.timeScale = 0f;
-        }*/
 
         return Physics.OverlapBox(pos, halfSize, direction, _player.enemyLayer);
     }
