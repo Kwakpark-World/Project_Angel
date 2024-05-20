@@ -108,7 +108,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
     private void ChargeAttackStab()
     {
-        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
+        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
     }

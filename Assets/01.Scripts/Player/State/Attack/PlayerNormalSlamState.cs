@@ -40,7 +40,6 @@ public class PlayerNormalSlamState : PlayerAttackState
     {
         base.UpdateState();
 
-        Debug.Log(_player.transform.forward * 2);
         
         if (_actionTriggerCalled )
         {
@@ -83,7 +82,7 @@ public class PlayerNormalSlamState : PlayerAttackState
 
     private void SlamAttack()
     {
-        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
+        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
     }
@@ -101,7 +100,9 @@ public class PlayerNormalSlamState : PlayerAttackState
         Vector3 move = Vector3.one;
         move.y *= _jumpForce;
 
-        move += _player.transform.forward * _player.PlayerStatData.GetSlamSkillDistance();
+        float slamDist = Vector3.Distance(_player.transform.position, _player.MousePosInWorld) * 2f;
+
+        move += _player.transform.forward * Mathf.Min(slamDist, _player.PlayerStatData.GetSlamSkillDistance());
         _player.SetVelocity(move);
     }
 
