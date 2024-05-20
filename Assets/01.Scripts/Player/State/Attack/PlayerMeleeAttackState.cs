@@ -11,6 +11,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private float _attackPrevTime;
     private float _comboWindow = 0.8f;
+    private float _comboAttackAddtiveDamage = 2f;
 
     private float _width = 0.8f;
     private float _height = 0.2f;
@@ -34,6 +35,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
+        _player.PlayerStatData.attackPower.InitializeModifier();
 
         _player.IsAttack = true;
         _isEffectOn = false;
@@ -41,6 +43,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
 
         SetCombo();
+        _player.PlayerStatData.attackPower.AddModifier(_comboAttackAddtiveDamage * _comboCounter);
 
         _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
 
