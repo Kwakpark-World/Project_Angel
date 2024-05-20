@@ -11,6 +11,8 @@ public class CameraManager : MonoSingleton<CameraManager>
     [SerializeField]
     private NoiseSettings shake6DSettings;
 
+    private const float DefaultOrthoSize = 7.5f;
+
     public void AddCamera(CameraState addCamera)
     {
         if (addCamera._type == CameraType.None)
@@ -70,7 +72,7 @@ public class CameraManager : MonoSingleton<CameraManager>
         _ShakeCameraCoroutine = StartCoroutine(ShakeCamera(duration, frequency, amplitude));
     }
 
-    public void ZoomCam(float minZoom, float maxZoom, float addValue)
+    public void ZoomCam(float addValuePerTick, float minZoom = 5, float maxZoom = 7.5f)
     {
         if (_currentCam == null)
         {
@@ -79,7 +81,14 @@ public class CameraManager : MonoSingleton<CameraManager>
         }
         CinemachineVirtualCamera vCam = _currentCam._camera.GetComponent<CinemachineVirtualCamera>();
 
-        StartCoroutine(ZoomCamera(vCam, minZoom, maxZoom, addValue));
+        StartCoroutine(ZoomCamera(vCam, minZoom, maxZoom, addValuePerTick));
+    }
+
+    public void ResetCameraZoom()
+    {
+        CinemachineVirtualCamera vCam = _currentCam._camera.GetComponent<CinemachineVirtualCamera>();
+
+        vCam.m_Lens.OrthographicSize = DefaultOrthoSize;
     }
 
     private IEnumerator ShakeCamera(float duration, float frequency, float amplitude)
@@ -112,15 +121,15 @@ public class CameraManager : MonoSingleton<CameraManager>
         noise.m_AmplitudeGain = 0;
     }    
 
-    private IEnumerator ZoomCamera(CinemachineVirtualCamera vCam, float minZoom, float maxZoom, float addValue)
+    private IEnumerator ZoomCamera(CinemachineVirtualCamera vCam, float minZoom, float maxZoom, float addValuePerTick)
     {
-        float whileValue = Mathf.Abs(addValue);
+        float whileValue = Mathf.Abs(addValuePerTick);
 
         while (whileValue > 0f)
         {
             vCam.m_Lens.OrthographicSize = Mathf.Clamp(vCam.m_Lens.OrthographicSize, minZoom, maxZoom);
-            vCam.m_Lens.OrthographicSize += addValue * Time.deltaTime;
-            whileValue -= Mathf.Abs(addValue) * Time.deltaTime;   
+            vCam.m_Lens.OrthographicSize += addValuePerTick * Time.deltaTime;
+            whileValue -= Mathf.Abs(addValuePerTick) * Time.deltaTime;   
             yield return null;
         }
     }

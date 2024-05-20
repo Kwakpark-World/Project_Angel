@@ -49,7 +49,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
             _player.StopImmediately(false);
         });
 
-        _thisParticle = _player._weapon.transform.Find(_effectString).GetComponent<ParticleSystem>(); 
+        _thisParticle = _player.weapon.transform.Find(_effectString).GetComponent<ParticleSystem>(); 
 
 
     }
@@ -120,7 +120,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         Vector3 size = new Vector3(_hitWidth, _hitDist, _hitHeight);
 
-        _offset = _player._weapon.transform.up;
+        _offset = _player.weapon.transform.up;
 
         _attackOffset = _offset;
         _attackSize = size;
@@ -132,7 +132,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         //
         //Attack(enemies);
 
-        Collider[] enemies = GetEnemyByOverlapBox(_player._weapon.transform.position, _player._weapon.transform.rotation);
+        Collider[] enemies = GetEnemyByOverlapBox(_player.weapon.transform.position, _player.weapon.transform.rotation);
 
         Attack(enemies.ToList());
     }

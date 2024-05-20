@@ -10,6 +10,8 @@ public class PlayerChargingState : PlayerChargeState
 
     private const string _awakenEffectString = "PlayerAwakenChargingEffect";
 
+    private float _addCameraZoomValuePerTick = -0.5f;
+
     public PlayerChargingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -28,20 +30,21 @@ public class PlayerChargingState : PlayerChargeState
         main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
         
         ChargingEffect();
-
-        
     }
 
     public override void Exit()
     {
         base.Exit();
-        _player.PlayerInput.isCharge = false;
         _thisParticle.Stop();
+
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        //if (_player.PlayerInput.isCharge)
+        //    CameraManager.Instance.ZoomCam(_addCameraZoomValuePerTick);
 
         SetEffectPos();
         SetChargingGauge();
@@ -52,6 +55,9 @@ public class PlayerChargingState : PlayerChargeState
     {
         if (_player.PlayerInput.isCharge) return;
         
+        //_player.PlayerInput.isCharge = false;
+        //CameraManager.Instance.ResetCameraZoom();
+
         if (_player.ChargingGauge < _minChargeTime)
         {
             _player.ChargingGauge = 0;

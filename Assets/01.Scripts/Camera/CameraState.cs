@@ -18,10 +18,20 @@ public class CameraState : MonoBehaviour
         {
             Debug.LogError($"CameraState Init Error : {gameObject.name} is not Cinemachine. Value Return Null. => Attatch Component VirtualCam");
         }
-        
+
+        if (CameraManager.Instance._currentCam == null )
+        {
+            CameraManager.Instance.SetCamera(this);
+        }
+
         // Add Event In Child Component
 
         return this;
+    }
+
+    protected virtual void Start()
+    {
+        CameraManager.Instance.AddCamera(this);
     }
 
     public void CameraEvent()
