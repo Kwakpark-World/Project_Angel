@@ -21,7 +21,7 @@ public enum PlayerStatType
     dashMaxDistance,
     dashDuration,
     dashCooldown,
-    slamDistance,
+    slamMaxDistance,
     slamCooldown,
     maxAwakenGauge,
 }
