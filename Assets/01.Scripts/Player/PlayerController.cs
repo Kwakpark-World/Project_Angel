@@ -29,7 +29,7 @@ public abstract class PlayerController : MonoBehaviour
 
     public Buff BuffCompo { get; private set; }
     [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
-    [field: SerializeField] public float CurrentHealth { get; set; }
+    [field: SerializeField] public float CurrentHealth;
     
     private float _gravity = -9.8f;
     #endregion
