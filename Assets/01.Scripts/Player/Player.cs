@@ -129,6 +129,8 @@ public class Player : PlayerController
 
     private void IsClimbStair()
     {
+        if (!StateMachine.CompareState(PlayerStateEnum.Walk)) return;
+
         if (CheckStair(Vector3.forward))
             IsStair = true;
         if (CheckStair(new Vector3(1.5f, 0, 1)))
