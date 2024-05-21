@@ -158,7 +158,7 @@ public class EnemyAnimator : MonoBehaviour
                 break;
 
             case 2:
-                potionType = PoolingType.Weapon_Potion_Knockback;
+                potionType = PoolingType.Weapon_Potion_Paralysis;
 
                 break;
         }
@@ -178,7 +178,7 @@ public class EnemyAnimator : MonoBehaviour
             float angle = -angleIncrement + angleIncrement * i;
 
             EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
-            Vector3 direction = Quaternion.Euler(1, angle, 1) * arrow.transform.forward;
+            Vector3 direction = Quaternion.Euler(0f, angle, 0f) * arrow.transform.forward;
             arrow.transform.forward = direction;
             arrow.owner = _owner as EnemyBrain;
             //arrowObject.transform.forward = direction;
@@ -197,7 +197,7 @@ public class EnemyAnimator : MonoBehaviour
             float angle = -angleIncrement + angleIncrement * i;
 
             EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
-            Vector3 direction = Quaternion.Euler(0, angle, 0) * arrow.transform.forward;
+            Vector3 direction = Quaternion.Euler(0f, angle, 0f) * arrow.transform.forward;
             arrow.transform.forward = direction;
             arrow.owner = _owner as EnemyBrain;
             //Debug.Log(arrow);

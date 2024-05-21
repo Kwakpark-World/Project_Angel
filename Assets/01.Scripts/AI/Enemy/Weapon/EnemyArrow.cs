@@ -12,8 +12,6 @@ public class EnemyArrow : PoolableMono
     private int _lifetime = 5;
     [SerializeField]
     private float _speed = 10f;
-    [SerializeField]
-    private float _rotateSpeed = 100f;
     private Rigidbody _rigidbody;
 
     private void Awake()

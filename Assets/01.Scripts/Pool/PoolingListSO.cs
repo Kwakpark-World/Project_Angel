@@ -20,7 +20,7 @@ public enum PoolingType
     Weapon_Arrow,
     Weapon_Potion_Poison,
     Weapon_Potion_Freeze,
-    Weapon_Potion_Knockback,
+    Weapon_Potion_Paralysis,
     Effect_PlayerAttack_Slam_Normal,
     Effect_PlayerAttack_Slam_Awaken_0,
     Effect_PlayerAttack_Slam_Awaken_1,
