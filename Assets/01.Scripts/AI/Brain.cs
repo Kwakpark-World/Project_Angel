@@ -143,7 +143,7 @@ public abstract class Brain : PoolableMono
         knockbackDirection.y = 0f;
         float timer = 0f;
 
-        while (timer <= 0.5f)
+        while (timer <= 0.4f)
         {
             transform.position = Vector3.Lerp(transform.position, transform.position + knockbackDirection * knockbackPower, timer);
             timer += Time.deltaTime;
