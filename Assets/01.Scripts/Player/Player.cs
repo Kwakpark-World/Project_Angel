@@ -1,16 +1,19 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class Player : PlayerController
 {
     [Space(30f), Header("Attack Settings")]
-    public GameObject _weapon;
+    public GameObject weapon;
 
-    public LayerMask _enemyLayer;
+    public LayerMask enemyLayer;
 
     public float ChargingGauge;
 
@@ -18,8 +21,8 @@ public class Player : PlayerController
     public float defenseTime = 3f;
 
     [Header("CoolTime Settings")]
-    private float dashPrevTime = 0f;
-    public float _slamPrevTime = 0f;
+    private float _dashPrevTime = 0f;
+    public float slamPrevTime = 0f;
     public float defensePrevTime = 0f;
 
     public float awakenCurrentGauge = 0f;
@@ -28,7 +31,7 @@ public class Player : PlayerController
     [field: SerializeField] public AssetLabelReference normalStateLabel { get; private set; }
     [field: SerializeField] public AssetLabelReference awakenStateLabel { get; private set; }
 
-    public Material[] _materials { get; private set; } = new Material[6];
+    public Material[] materials { get; private set; } = new Material[6];
 
     public const string weaponMatName = "PlayerWeaponMat";
     public const string hairMatName = "PlayerHairMat";
@@ -36,10 +39,10 @@ public class Player : PlayerController
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
     public PlayerStateMachine StateMachine { get; private set; }
-    public AnimationClip[] _playerAnims;
+    public AnimationClip[] playerAnims;
 
-    public Transform _effectParent;
-    public Transform _playerCenter;
+    public Transform effectParent;
+    public Transform playerCenter;
 
     public bool IsAttack { get; set; }
     public bool IsDefense { get; set; }
@@ -59,6 +62,9 @@ public class Player : PlayerController
     public Material freezeMaterial;
     private bool _isFreezing;
 
+    private Volume _playerOnHitVolume;
+    private Coroutine _playerOnHitVolumeCoroutine;
+
     protected override void Awake()
     {
         base.Awake();
@@ -77,10 +83,10 @@ public class Player : PlayerController
             StateMachine.AddState(stateEnum, newState);
         }
 
-        _weapon = GameObject.FindGameObjectWithTag("Weapon");
-        _effectParent = transform.Find("Effects");
-        _playerCenter = transform.Find("PlayerCenter");
-        _playerAnims = AnimatorCompo.runtimeAnimatorController.animationClips;
+        weapon = GameObject.FindGameObjectWithTag("Weapon");
+        effectParent = transform.Find("Effects");
+        playerCenter = transform.Find("PlayerCenter");
+        playerAnims = AnimatorCompo.runtimeAnimatorController.animationClips;
 
     }
 
@@ -137,8 +143,10 @@ public class Player : PlayerController
             return;
         if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening))
             return;
-       
-        if(BuffCompo.GetBuffState(BuffType.Rune_Defense_Synergy) && CurrentHealth <= 1f)
+
+        PlayerOnHitVolume();
+
+        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Synergy) && CurrentHealth <= 1f)
         {
             CurrentHealth -= Mathf.Max(0, 0f);
         }
@@ -179,10 +187,10 @@ public class Player : PlayerController
 
     private void HandleDashEvent()
     {
-        if (PlayerStatData.GetDefenseCooldown() + dashPrevTime > Time.time) return;
+        if (PlayerStatData.GetDefenseCooldown() + _dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
 
-        dashPrevTime = Time.time;
+        _dashPrevTime = Time.time;
 
         if (!IsAwakening)
         {
@@ -219,6 +227,16 @@ public class Player : PlayerController
     {
         StateMachine.CurrentState.AnimationEffectTrigger();
     }
+
+    public void AnimationEffectEndTrigger()
+    {
+        StateMachine.CurrentState.AnimationEffectEndTrigger();
+    }
+
+    public void AnimationTickCheckTrigger()
+    {
+        StateMachine.CurrentState.AnimationTickCheckTrigger();
+    }
     #endregion
 
     #region Mouse Control
@@ -239,6 +257,7 @@ public class Player : PlayerController
         {
             MousePosInWorld = hit.point;
         }
+
 
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
@@ -290,12 +309,62 @@ public class Player : PlayerController
         string normalLabel = normalStateLabel.labelString;
         string awakenLabel = awakenStateLabel.labelString;
 
-        _materials[(int)PlayerMaterialIndex.Weapon_Normal] = MaterialManager.Instance.GetMaterial(normalLabel, weaponMatName);
-        _materials[(int)PlayerMaterialIndex.Hair_Normal] = MaterialManager.Instance.GetMaterial(normalLabel, hairMatName);
-        _materials[(int)PlayerMaterialIndex.Armor_Normal] = MaterialManager.Instance.GetMaterial(normalLabel, armorMatName);
-        _materials[(int)PlayerMaterialIndex.Weapon_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, weaponMatName);
-        _materials[(int)PlayerMaterialIndex.Hair_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, hairMatName);
-        _materials[(int)PlayerMaterialIndex.Armor_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, armorMatName);
+        materials[(int)PlayerMaterialIndex.Weapon_Normal] = MaterialManager.Instance.GetMaterial(normalLabel, weaponMatName);
+        materials[(int)PlayerMaterialIndex.Hair_Normal] = MaterialManager.Instance.GetMaterial(normalLabel, hairMatName);
+        materials[(int)PlayerMaterialIndex.Armor_Normal] = MaterialManager.Instance.GetMaterial(normalLabel, armorMatName);
+        materials[(int)PlayerMaterialIndex.Weapon_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, weaponMatName);
+        materials[(int)PlayerMaterialIndex.Hair_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, hairMatName);
+        materials[(int)PlayerMaterialIndex.Armor_Awaken] = MaterialManager.Instance.GetMaterial(awakenLabel, armorMatName);
     }
+    #endregion
+
+    #region Impact
+    private void PlayerOnHitVolume()
+    {
+        if (_playerOnHitVolume == null)
+        {
+            _playerOnHitVolume = new GameObject().AddComponent<Volume>();
+            _playerOnHitVolume.name = "PlayerOnHitVolume";
+        }
+
+        if (!_playerOnHitVolume.profile.TryGet<Vignette>(out var vignette))
+            _playerOnHitVolume.profile.Add<Vignette>();
+
+        if (_playerOnHitVolumeCoroutine != null)
+        {
+            StopCoroutine(_playerOnHitVolumeCoroutine);
+            _playerOnHitVolumeCoroutine = null;
+        }
+
+        if (_playerOnHitVolume.profile.TryGet<Vignette>(out var volume))
+        {
+            volume.color.overrideState = true;
+            volume.intensity.overrideState = true;
+            volume.rounded.overrideState = true;
+        }
+    
+        volume.color.value = Color.red;
+        volume.intensity.value = 0.3f;
+        volume.rounded.value = true;
+
+        _playerOnHitVolumeCoroutine = StartCoroutine(PlayerOnHitVolumeFade());
+    }
+
+    private IEnumerator PlayerOnHitVolumeFade()
+    {
+        if (_playerOnHitVolume.profile.TryGet<Vignette>(out var volume))
+        {
+            while(volume.intensity.value > 0f)
+            {
+                volume.intensity.value -= 0.01f;
+                yield return null;
+            }
+
+            if (volume.intensity.value < 0f)
+                volume.intensity.value = 0f;
+        }
+        yield return null;
+    }
+
     #endregion
 }

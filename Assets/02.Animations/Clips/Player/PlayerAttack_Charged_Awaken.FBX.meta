@@ -1081,7 +1081,7 @@ ModelImporter:
       keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
       heightFromFeet: 1
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
@@ -1095,6 +1095,30 @@ ModelImporter:
         messageOptions: 0
       - time: 0.047642708
         functionName: AnimationHitAbleTrigger
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 1954e786418713148840153cfd72eceb,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.23134406
+        functionName: AnimationTickCheckTrigger
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 1954e786418713148840153cfd72eceb,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.37148574
+        functionName: AnimationTickCheckTrigger
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 1954e786418713148840153cfd72eceb,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5290509
+        functionName: AnimationTickCheckTrigger
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 1954e786418713148840153cfd72eceb,
           type: 3}

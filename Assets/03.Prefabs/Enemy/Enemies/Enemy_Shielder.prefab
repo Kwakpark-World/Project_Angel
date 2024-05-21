@@ -668,7 +668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3169533086746790770}
   - component: {fileID: 5022985829875762743}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: Boots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1375,7 +1375,7 @@ GameObject:
   - component: {fileID: 7893401923479144858}
   - component: {fileID: 4922033461596554008}
   - component: {fileID: 5315867608527077655}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: _Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2028,7 +2028,7 @@ GameObject:
   - component: {fileID: 8793162512166344460}
   - component: {fileID: 10926972713791369}
   - component: {fileID: 5901951860565606517}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: Hair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3090,11 +3090,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingType: 1
+  sameLifeCycle: 0
   treeRunner: {fileID: 5062443879734286216}
+  enemyCenter: {fileID: 0}
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 3f6896010401f6f4984bc063d48abf93,
     type: 2}
   enemySpawn: {fileID: 0}
-  nearbyEnemies: []
 --- !u!114 &8909113713508752019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3816,7 +3817,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2237628759555524303}
   - component: {fileID: 836183561485334705}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: _eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5328,7 +5329,7 @@ PrefabInstance:
     - target: {fileID: 8251213666112474787, guid: fc32b4d5ca49c5e4c9307ec278ca075a,
         type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8496568819047043565, guid: fc32b4d5ca49c5e4c9307ec278ca075a,
         type: 3}
@@ -5457,7 +5458,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 43b799b44dfeb1a4aaeac5ee932d42ce,
         type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5556,7 +5557,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7b0796ec82f75754695b206bcb482e7f,
         type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7b0796ec82f75754695b206bcb482e7f,
         type: 3}
@@ -5660,7 +5661,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7b0796ec82f75754695b206bcb482e7f,
         type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7b0796ec82f75754695b206bcb482e7f,
         type: 3}

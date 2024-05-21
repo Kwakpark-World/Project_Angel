@@ -5,16 +5,13 @@ using UnityEngine;
 
 public class PlayerNormalSlamState : PlayerAttackState
 {
-    private float _width = 3f;
-    private float _height = 4f;
-    private float _dist = 8f;
+    private float _width = 5f;
+    private float _height = 10f;
+    private float _dist = 13f;
     private Vector3 _offset;
 
     private float _jumpForce = 10f;
     private float _dropForce = 22f;
-    private float _forwardDist = 20f;
-
-    private float _normalAttackDist = 12f;
 
     private bool _isEffectOn = false;
     
@@ -25,12 +22,9 @@ public class PlayerNormalSlamState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
-
         _player.StopImmediately(false);
         _player.RotateToMousePos();
         _isEffectOn = false;
-
-        _hitDist = _normalAttackDist;
 
         JumpToFront();
     }
@@ -46,7 +40,6 @@ public class PlayerNormalSlamState : PlayerAttackState
     {
         base.UpdateState();
 
-        Debug.Log(_player.transform.forward * 2);
         
         if (_actionTriggerCalled )
         {
@@ -89,7 +82,7 @@ public class PlayerNormalSlamState : PlayerAttackState
 
     private void SlamAttack()
     {
-        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
+        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
     }
@@ -107,7 +100,9 @@ public class PlayerNormalSlamState : PlayerAttackState
         Vector3 move = Vector3.one;
         move.y *= _jumpForce;
 
-        move += _player.transform.forward * _forwardDist;
+        float slamDist = Vector3.Distance(_player.transform.position, _player.MousePosInWorld) * 2f;
+
+        move += _player.transform.forward * Mathf.Min(slamDist, _player.PlayerStatData.GetSlamSkillDistance());
         _player.SetVelocity(move);
     }
 

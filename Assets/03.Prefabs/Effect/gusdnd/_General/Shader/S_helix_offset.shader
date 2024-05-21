@@ -481,7 +481,7 @@ Shader "1_fx/helix"
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
 				float3 Color = ( IN.ase_color * ( ( _subs_color * ( saturate( pow( tex2D( _sub_tex, panner47 ).r , _subs_pow ) ) * _subs_ins ) ) + ( temp_output_22_0 * _main_color ) ) ).rgb;
-				float Alpha = saturate( ( temp_output_22_0 * ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - fresnelNode70 ) ) ) ) );
+				float Alpha = saturate( ( temp_output_22_0 * saturate( ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - saturate( fresnelNode70 ) ) ) ) ) ) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -778,7 +778,7 @@ Shader "1_fx/helix"
 				float fresnelNode70 = ( 0.0 + _fresnel_scale * pow( 1.0 - fresnelNdotV70, _fresnel_pow ) );
 				
 
-				float Alpha = saturate( ( temp_output_22_0 * ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - fresnelNode70 ) ) ) ) );
+				float Alpha = saturate( ( temp_output_22_0 * saturate( ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - saturate( fresnelNode70 ) ) ) ) ) ) );
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1043,7 +1043,7 @@ Shader "1_fx/helix"
 				float fresnelNode70 = ( 0.0 + _fresnel_scale * pow( 1.0 - fresnelNdotV70, _fresnel_pow ) );
 				
 
-				surfaceDescription.Alpha = saturate( ( temp_output_22_0 * ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - fresnelNode70 ) ) ) ) );
+				surfaceDescription.Alpha = saturate( ( temp_output_22_0 * saturate( ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - saturate( fresnelNode70 ) ) ) ) ) ) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1303,7 +1303,7 @@ Shader "1_fx/helix"
 				float fresnelNode70 = ( 0.0 + _fresnel_scale * pow( 1.0 - fresnelNdotV70, _fresnel_pow ) );
 				
 
-				surfaceDescription.Alpha = saturate( ( temp_output_22_0 * ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - fresnelNode70 ) ) ) ) );
+				surfaceDescription.Alpha = saturate( ( temp_output_22_0 * saturate( ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - saturate( fresnelNode70 ) ) ) ) ) ) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1580,7 +1580,7 @@ Shader "1_fx/helix"
 				float fresnelNode70 = ( 0.0 + _fresnel_scale * pow( 1.0 - fresnelNdotV70, _fresnel_pow ) );
 				
 
-				surfaceDescription.Alpha = saturate( ( temp_output_22_0 * ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - fresnelNode70 ) ) ) ) );
+				surfaceDescription.Alpha = saturate( ( temp_output_22_0 * saturate( ( saturate( pow( ( ( texCoord24.x * saturate( ( 1.0 - texCoord24.x ) ) ) * 4.0 ) , _mask_pow ) ) * saturate( ( 1.0 - saturate( fresnelNode70 ) ) ) ) ) ) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1687,16 +1687,18 @@ Node;AmplifyShaderEditor.PowerNode;18;-1194.761,294.4671;Inherit;False;False;2;0
 Node;AmplifyShaderEditor.SaturateNode;67;-1024.652,332.6254;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;68;-855.9001,-341.8792;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.FresnelNode;70;-824.0371,1173.929;Inherit;False;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;5;False;1;FLOAT;0
-Node;AmplifyShaderEditor.OneMinusNode;78;-605.1333,1174.83;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SaturateNode;76;-478.5787,1173.032;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.WorldNormalVector;72;-1107.986,1169.059;Inherit;False;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.ViewDirInputsCoordNode;73;-1090.986,1306.059;Inherit;False;World;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.RangedFloatNode;75;-1085.986,1446.059;Inherit;False;Property;_fresnel_scale;fresnel_scale;20;0;Create;True;0;0;0;False;0;False;0;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;74;-1085.986,1513.059;Inherit;False;Property;_fresnel_pow;fresnel_pow;19;0;Create;True;0;0;0;False;0;False;0;1.88;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;75;-1085.986,1446.059;Inherit;False;Property;_fresnel_scale;fresnel_scale;20;0;Create;True;0;0;0;False;0;False;0;0.4;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;74;-1085.986,1513.059;Inherit;False;Property;_fresnel_pow;fresnel_pow;19;0;Create;True;0;0;0;False;0;False;0;1.1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;77;-206.5786,786.0319;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;30;-17.0326,289.9427;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;412.7154,266.0587;Float;False;True;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;1_fx/helix;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;True;True;2;5;False;;10;False;;2;5;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;True;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForwardOnly;False;False;0;;0;0;Standard;23;Surface;1;638453103160785167;  Blend;0;0;Two Sided;0;638453118171217691;Forward Only;0;0;Cast Shadows;0;638453103194207487;  Use Shadow Threshold;0;0;Receive Shadows;0;638453103201028601;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;10;False;True;False;True;False;False;True;True;True;False;False;;False;0
 Node;AmplifyShaderEditor.SaturateNode;69;181.5606,326.156;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.OneMinusNode;78;-498.1333,1165.83;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SaturateNode;76;-371.5787,1164.032;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SaturateNode;79;-617.5718,1167.295;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SaturateNode;80;-49.26904,734.6534;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 WireConnection;36;1;37;0
 WireConnection;37;0;35;0
 WireConnection;37;2;40;0
@@ -1753,14 +1755,16 @@ WireConnection;70;0;72;0
 WireConnection;70;4;73;0
 WireConnection;70;2;75;0
 WireConnection;70;3;74;0
-WireConnection;78;0;70;0
-WireConnection;76;0;78;0
 WireConnection;77;0;65;0
 WireConnection;77;1;76;0
 WireConnection;30;0;22;0
-WireConnection;30;1;77;0
+WireConnection;30;1;80;0
 WireConnection;1;2;32;0
 WireConnection;1;3;69;0
 WireConnection;69;0;30;0
+WireConnection;78;0;79;0
+WireConnection;76;0;78;0
+WireConnection;79;0;70;0
+WireConnection;80;0;77;0
 ASEEND*/
-//CHKSM=1D500EFF0E617AB793559BB143CFB41CF3D8C4DA
+//CHKSM=567B32667ECEF2982A53432B3F769DBF1C1C9331

@@ -5,6 +5,13 @@ public class PlayerChargingState : PlayerChargeState
 {
     private ParticleSystem _thisParticle;
 
+    private Color _normalColor = new Color(1, 0.9592881f, 0.4858491f, 1f);
+    private Color _awakenColor = Color.red;
+
+    private const string _awakenEffectString = "PlayerAwakenChargingEffect";
+
+    private float _addCameraZoomValuePerTick = -0.5f;
+
     public PlayerChargingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -18,19 +25,26 @@ public class PlayerChargingState : PlayerChargeState
 
         _player.ChargingGauge = 0;
 
+        _thisParticle = _player.effectParent.Find(_player.IsAwakening ? _awakenEffectString : _effectString).GetComponent<ParticleSystem>();
+        var main = _thisParticle.main;
+        main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
+        
         ChargingEffect();
     }
 
     public override void Exit()
     {
         base.Exit();
-        _player.PlayerInput.isCharge = false;
         _thisParticle.Stop();
+
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        //if (_player.PlayerInput.isCharge)
+        //    CameraManager.Instance.ZoomCam(_addCameraZoomValuePerTick);
 
         SetEffectPos();
         SetChargingGauge();
@@ -41,6 +55,9 @@ public class PlayerChargingState : PlayerChargeState
     {
         if (_player.PlayerInput.isCharge) return;
         
+        //_player.PlayerInput.isCharge = false;
+        //CameraManager.Instance.ResetCameraZoom();
+
         if (_player.ChargingGauge < _minChargeTime)
         {
             _player.ChargingGauge = 0;
@@ -71,7 +88,6 @@ public class PlayerChargingState : PlayerChargeState
 
     private void ChargingEffect()
     {
-        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         _thisParticle.Play();
 
         //Vector3 pos = Vector3.zero;

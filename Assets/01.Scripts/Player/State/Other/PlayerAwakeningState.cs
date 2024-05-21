@@ -8,6 +8,8 @@ public class PlayerAwakeningState : PlayerState
 {
     private bool _isAwakenOn;
 
+    private ParticleSystem _thisParticle;
+
     public PlayerAwakeningState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         
@@ -16,6 +18,7 @@ public class PlayerAwakeningState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         _player.StopImmediately(true);
         _isAwakenOn = false;
     }
@@ -44,6 +47,7 @@ public class PlayerAwakeningState : PlayerState
         _isAwakenOn = true;
         _player.IsAwakening = true;
 
+        AwakeningEffect();
         ChangeModelMaterial();
         
         _player.StartCoroutine(PlayerAwakening());
@@ -85,13 +89,18 @@ public class PlayerAwakeningState : PlayerState
                         continue;
                 }
 
-                mats[j] = _player._materials[index];
+                mats[j] = _player.materials[index];
             }
 
             _player.renderers[i].SetMaterials(mats);
         }
         
 
+    }
+
+    private void AwakeningEffect()
+    {
+        _thisParticle.Play();
     }
 
     private IEnumerator PlayerAwakening()
@@ -110,6 +119,7 @@ public class PlayerAwakeningState : PlayerState
 
         if (!_player.IsDie)
         {
+            _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             _player.IsAwakening = false;
             ChangeModelMaterial();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);

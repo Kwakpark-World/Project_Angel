@@ -25,6 +25,8 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
+        _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+
     }
 
     public override void Exit()
@@ -74,7 +76,6 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
     private void ChargeAttackEffect()
     {
-        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         _thisParticle.Play();
 
         //Vector3 pos = _player._weapon.transform.position;
@@ -84,7 +85,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
     private void ChargeAttack()
     { 
-        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
+        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
       
         Attack(enemies.ToList());
     }

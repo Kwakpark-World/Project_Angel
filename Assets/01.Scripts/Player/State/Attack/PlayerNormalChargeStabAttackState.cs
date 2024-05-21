@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerNormalChargeStabAttackState : PlayerChargeState
 {
-    private float _width = 10f;
-    private float _height = 5f;
-    private float _dist = 5f;
+    private float _width = 6f;
+    private float _height = 8f;
+    private float _dist = 12f;
 
     private bool _isStabMove;
     private bool _isEffectOn = false;
@@ -26,6 +25,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         _isEffectOn = false;
         _isStabMove = false;
+        _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
     }
 
     public override void Exit()
@@ -90,15 +90,12 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
 
-        Vector3 offset = Vector3.zero;
-
-        _attackOffset = offset;
+        _attackOffset = _player.transform.forward * 3f;
         _attackSize = size;
     }
 
     private void ChargeAttackStabEffect()
     {
-        _thisParticle = _player._effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         
         Vector3 pos = _weaponRB.transform.position;
         _thisParticle.transform.position = pos;
@@ -111,7 +108,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
     private void ChargeAttackStab()
     {
-        Collider[] enemies = GetEnemyByRange(_player.transform.position, _player.transform.rotation);
+        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
     }
