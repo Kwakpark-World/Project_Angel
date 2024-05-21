@@ -151,7 +151,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         _isCombo = false;
 
-        if (_comboCounter >= 7 || Time.time >= _attackPrevTime + _comboWindow)
+        if (_comboCounter >= 4 || Time.time >= _attackPrevTime + _comboWindow)
             _comboCounter = 0;
 
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
