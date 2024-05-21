@@ -66,8 +66,8 @@ public class PlayerStat : ScriptableObject
     public Stat dashCooldown;
 
     [Header("Skill stats")]
-    [Tooltip("Q 스킬 이동 거리")]
-    public Stat slamDistance;
+    [Tooltip("Q 스킬 최대 이동 거리")]
+    public Stat slamMaxDistance;
     [Tooltip("Q 스킬 쿨다운")]
     public Stat slamCooldown;
     [Tooltip("최대 각성 게이지")]
@@ -190,9 +190,9 @@ public class PlayerStat : ScriptableObject
         return dashCooldown.GetValue();
     }
 
-    public float GetSlamDistance()
+    public float GetSlamMaxDistance()
     {
-        return slamDistance.GetValue();
+        return slamMaxDistance.GetValue();
     }
 
     public float GetSlamCooldown()

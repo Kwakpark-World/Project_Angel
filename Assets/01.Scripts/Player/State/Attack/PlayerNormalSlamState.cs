@@ -102,7 +102,7 @@ public class PlayerNormalSlamState : PlayerAttackState
 
         float slamDist = Vector3.Distance(_player.transform.position, _player.MousePosInWorld) * 2f;
 
-        move += _player.transform.forward * Mathf.Min(slamDist, _player.PlayerStatData.GetSlamDistance());
+        move += _player.transform.forward * Mathf.Min(slamDist, _player.PlayerStatData.GetSlamMaxDistance());
         _player.SetVelocity(move);
     }
 
