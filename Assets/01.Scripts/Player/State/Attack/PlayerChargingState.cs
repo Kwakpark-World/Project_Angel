@@ -10,7 +10,9 @@ public class PlayerChargingState : PlayerChargeState
 
     private const string _awakenEffectString = "PlayerAwakenChargingEffect";
 
-    private float _addCameraZoomValuePerTick = -0.5f;
+    private bool _isEffectOn;
+
+    private float _cameraZoomChangePerTick = 0.1f;
 
     public PlayerChargingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -24,27 +26,27 @@ public class PlayerChargingState : PlayerChargeState
         _player.RotateToMousePos();
 
         _player.ChargingGauge = 0;
+        _isEffectOn = false;
 
         _thisParticle = _player.effectParent.Find(_player.IsAwakening ? _awakenEffectString : _effectString).GetComponent<ParticleSystem>();
         var main = _thisParticle.main;
         main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
         
-        ChargingEffect();
     }
 
     public override void Exit()
     {
         base.Exit();
         _thisParticle.Stop();
+        _player.PlayerInput.isCharge = false;
+
+        CameraManager.Instance.ResetCameraZoom();
 
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-
-        //if (_player.PlayerInput.isCharge)
-        //    CameraManager.Instance.ZoomCam(_addCameraZoomValuePerTick);
 
         SetEffectPos();
         SetChargingGauge();
@@ -54,9 +56,6 @@ public class PlayerChargingState : PlayerChargeState
     private void ChargeToNextState()
     {
         if (_player.PlayerInput.isCharge) return;
-        
-        //_player.PlayerInput.isCharge = false;
-        //CameraManager.Instance.ResetCameraZoom();
 
         if (_player.ChargingGauge < _minChargeTime)
         {
@@ -81,13 +80,21 @@ public class PlayerChargingState : PlayerChargeState
         if (_player.ChargingGauge < _minChargeTime)
             _player.ChargingGauge += Time.deltaTime;
         else
+        {
+            ChargingEffect();
+            CameraManager.Instance.ZoomCam(5f, _cameraZoomChangePerTick);
+
             _player.ChargingGauge += Time.deltaTime * 1.5f;
+        }
 
 
     }
 
     private void ChargingEffect()
     {
+        if (_isEffectOn) return;
+
+        _isEffectOn = true;
         _thisParticle.Play();
 
         //Vector3 pos = Vector3.zero;

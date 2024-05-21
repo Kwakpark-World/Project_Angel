@@ -5735,7 +5735,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8523927444897520135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5753,6 +5753,9 @@ MonoBehaviour:
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  _whatIsStair:
+    serializedVersion: 2
+    m_Bits: 512
   _stairUpperChecker: {fileID: 4722773300619679098}
   _stairLowerChecker: {fileID: 5636604740231949277}
   _stairUpperCheckDistance: 0.4
@@ -5762,7 +5765,7 @@ MonoBehaviour:
   AnimatorCompo: {fileID: 0}
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: 2d8f987c0db816249b696fc32bb953cc,
     type: 2}
-  <CurrentHealth>k__BackingField: 0
+  CurrentHealth: 0
   weapon: {fileID: 7559007113953224229}
   enemyLayer:
     serializedVersion: 2
@@ -5781,6 +5784,12 @@ MonoBehaviour:
   playerAnims: []
   effectParent: {fileID: 0}
   playerCenter: {fileID: 0}
+  IsAttack: 0
+  IsDefense: 0
+  IsDie: 0
+  IsAwakening: 0
+  IsPlayerStop: 0
+  IsGroundState: 0
   renderers:
   - {fileID: 9166074286034648693}
   - {fileID: 2866051191039960501}

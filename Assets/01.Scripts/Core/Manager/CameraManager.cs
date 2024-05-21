@@ -57,7 +57,7 @@ public class CameraManager : MonoSingleton<CameraManager>
         _currentCam?.CameraEvent();
     }
 
-    private Coroutine _ShakeCameraCoroutine = null;
+    private Coroutine _shakeCameraCoroutine = null;
     public void ShakeCam(float duration, float frequency, float amplitude)
     {
         if (_currentCam == null)
@@ -65,28 +65,52 @@ public class CameraManager : MonoSingleton<CameraManager>
             Debug.LogError("Current Camera is Null");
         }
 
-        if (_ShakeCameraCoroutine != null)
-            StopCoroutine(ShakeCamera(duration, frequency, amplitude));
+        if (_shakeCameraCoroutine != null)
+            StopCoroutine(_shakeCameraCoroutine);
 
 
-        _ShakeCameraCoroutine = StartCoroutine(ShakeCamera(duration, frequency, amplitude));
+        _shakeCameraCoroutine = StartCoroutine(ShakeCamera(duration, frequency, amplitude));
     }
 
+    private bool _isZoomStop = false;
+
     public void ZoomCam(float addValuePerTick, float minZoom = 5, float maxZoom = 7.5f)
+    {
+        _isZoomStop = false;
+        if (_currentCam == null)
+        {
+            Debug.LogError("CurrentCamera is Null");
+            return;
+        }
+
+        CinemachineVirtualCamera vCam = _currentCam._camera.GetComponent<CinemachineVirtualCamera>();
+
+        StartCoroutine(ZoomCamera(vCam, minZoom, maxZoom, addValuePerTick));
+    }
+
+    public void ZoomCam(float targetValue, float changeValuePerTick)
     {
         if (_currentCam == null)
         {
             Debug.LogError("CurrentCamera is Null");
             return;
         }
+
         CinemachineVirtualCamera vCam = _currentCam._camera.GetComponent<CinemachineVirtualCamera>();
 
-        StartCoroutine(ZoomCamera(vCam, minZoom, maxZoom, addValuePerTick));
+        StartCoroutine(ZoomCamera(vCam, targetValue, changeValuePerTick));
+    }
+
+    public void StopZoomCam()
+    {
+        _isZoomStop = true;
     }
 
     public void ResetCameraZoom()
     {
         CinemachineVirtualCamera vCam = _currentCam._camera.GetComponent<CinemachineVirtualCamera>();
+
+        StopZoomCam();
 
         vCam.m_Lens.OrthographicSize = DefaultOrthoSize;
     }
@@ -127,9 +151,23 @@ public class CameraManager : MonoSingleton<CameraManager>
 
         while (whileValue > 0f)
         {
+            if (_isZoomStop) break;
+
             vCam.m_Lens.OrthographicSize = Mathf.Clamp(vCam.m_Lens.OrthographicSize, minZoom, maxZoom);
             vCam.m_Lens.OrthographicSize += addValuePerTick * Time.deltaTime;
             whileValue -= Mathf.Abs(addValuePerTick) * Time.deltaTime;   
+            yield return null;
+        }
+    }
+
+    private IEnumerator ZoomCamera(CinemachineVirtualCamera vCam, float targetValue, float changeValuePerTick)
+    {
+
+        while (!Mathf.Approximately(vCam.m_Lens.OrthographicSize, targetValue))
+        {
+            if (_isZoomStop) break;
+
+            vCam.m_Lens.OrthographicSize = Mathf.MoveTowards(vCam.m_Lens.OrthographicSize, targetValue, changeValuePerTick * Time.deltaTime);
             yield return null;
         }
     }
