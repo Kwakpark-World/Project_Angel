@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class EnemyFlooring : MonoBehaviour
+public class EnemyBuffArea : MonoBehaviour
 {
-
+    [SerializeField]
+    private BuffType BuffType;
+    [SerializeField]
+    private EnemyBrain _ownet;
     public float radius = 5f; // 원의 반지름 설정
     private bool shouldDrawGizmos = false;
     public Vector3 collisionPoint;
-
-    private Dictionary<BuffType, object> _attackers = new Dictionary<BuffType, object>();
-    public Buff BuffCompo { get; private set; }
 
     //public EnemyAnimator enemyAnimator;
 
@@ -37,14 +36,13 @@ public class EnemyFlooring : MonoBehaviour
 
         if (GameManager.Instance.PlayerInstance.transform != null)
         {
-            Vector3 playerPosition = GameManager.Instance.PlayerInstance.transform.position;
-            float distance = Vector3.Distance(center, playerPosition);
+            Player player = GameManager.Instance.PlayerInstance;
+            float distance = Vector3.Distance(center, player.transform.position);
 
             if (distance <= radius)
             {
-                //여기서 데미지 넣기
-                //brain = _attackers[BuffType.Poison] as Brain;
-                //GameManager.Instance.PlayerInstance.OnHit(brain.BuffCompo.BuffStatData.poisonDamage);
+                
+                 player.BuffCompo.PlayBuff(BuffType,_ownet.BuffCompo.BuffStatData.poisonDuration, _ownet);
                 
             }
             else

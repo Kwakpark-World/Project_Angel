@@ -127,6 +127,11 @@ public class Buff : MonoBehaviour
             return;
         }
 
+        if (_buffStates[buffType])
+        {
+            return;
+        }
+
         _buffStates[buffType] = true;
 
         _buffTriggersByType[buffType].onBuffBegin?.Invoke();
@@ -151,7 +156,13 @@ public class Buff : MonoBehaviour
             return;
         }
 
-        _attackers[buffType] = attacker;
+        if (!_buffStates[buffType])
+        {
+            _attackers[buffType] = attacker;
+            _buffStates[buffType] = true;
+
+            _buffTriggersByType[buffType].onBuffBegin?.Invoke();
+        }
 
         if (_coroutines[buffType] != null)
         {
@@ -163,15 +174,15 @@ public class Buff : MonoBehaviour
 
     public void StopBuff(BuffType buffType)
     {
-        if (_coroutines[buffType] != null)
-        {
-            StopCoroutine(_coroutines[buffType]);
-        }
-
         _buffTriggersByType[buffType].onBuffEnd?.Invoke();
 
         _buffStates[buffType] = false;
         _coroutines[buffType] = null;
+
+        if (_coroutines[buffType] != null)
+        {
+            StopCoroutine(_coroutines[buffType]);
+        }
     }
 
     public bool GetBuffState(BuffType buffType)
@@ -181,16 +192,9 @@ public class Buff : MonoBehaviour
 
     private IEnumerator BuffCoroutine(BuffType buffType, float duration)
     {
-        _buffStates[buffType] = true;
-
-        _buffTriggersByType[buffType].onBuffBegin?.Invoke();
-
         yield return new WaitForSeconds(duration);
 
-        _buffTriggersByType[buffType].onBuffEnd?.Invoke();
-
-        _buffStates[buffType] = false;
-        _coroutines[buffType] = null;
+        StopBuff(buffType);
     }
 
     #region Poison Functions
