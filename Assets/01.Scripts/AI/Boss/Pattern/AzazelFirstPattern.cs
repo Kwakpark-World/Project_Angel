@@ -18,7 +18,7 @@ public class AzazelFirstPattern : EnemyAttack
     public override Node.State OnUpdate()
     {
         Debug.Log("Use first pattern.");
-        PoolManager.Instance.Pop(PoolingType.Enemy_Goat, OwnerNode.brain.transform.position);
+        PoolManager.Instance.Pop(PoolType.Enemy_Goat, OwnerNode.brain.transform.position);
 
         return Node.State.Success;
     }

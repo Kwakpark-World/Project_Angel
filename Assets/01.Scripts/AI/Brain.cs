@@ -66,9 +66,9 @@ public abstract class Brain : PoolableMono
         #endregion
     }
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         if (NavMeshAgentCompo)
         {

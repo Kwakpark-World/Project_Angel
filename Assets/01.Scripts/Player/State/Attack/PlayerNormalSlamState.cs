@@ -92,7 +92,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         Vector3 pos = _player.transform.position + _attackOffset;
         pos.y = 0;
 
-        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Slam_Normal, pos);
+        EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Slam_Normal, pos);
     }
 
     private void JumpToFront()

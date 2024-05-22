@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerNormalSlamSkillEffect : PlayerEffect
 {
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
         
         if (GameManager.Instance.PlayerInstance.IsAwakening)
         {

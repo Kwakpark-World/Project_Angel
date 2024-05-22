@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66eb065be78cba847a29fb53bfc60eb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cf0ba6f45209124fa8ddee3551bbf1f, type: 3}
   m_Name: Stat_Enemy_Goat
   m_EditorClassIdentifier: 
   maxHealth:
-    _baseValue: 0
-    modifiers: []
-  currentHealth:
     _baseValue: 0
     modifiers: []
   lifetime:
@@ -23,9 +20,6 @@ MonoBehaviour:
     modifiers: []
   defensivePower:
     _baseValue: 0
-    modifiers: []
-  moveSpeed:
-    _baseValue: 5
     modifiers: []
   detectRange:
     _baseValue: 0
@@ -39,9 +33,15 @@ MonoBehaviour:
   attackDelay:
     _baseValue: 0
     modifiers: []
-  patternAmount:
+  skillCooldown:
     _baseValue: 0
     modifiers: []
-  initialPatternCooldown:
+  moveSpeed:
+    _baseValue: 5
+    modifiers: []
+  rotateSpeed:
+    _baseValue: 0
+    modifiers: []
+  patternAmount:
     _baseValue: 0
     modifiers: []

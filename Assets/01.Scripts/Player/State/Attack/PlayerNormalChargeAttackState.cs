@@ -79,7 +79,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         _thisParticle.Play();
 
         //Vector3 pos = _player._weapon.transform.position;
-        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Normal, pos);
+        //EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Charged_Normal, pos);
 
     }
 

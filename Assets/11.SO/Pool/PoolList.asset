@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0273e26f246b84682e9e9310bc434b, type: 3}
+  m_Name: PoolList
+  m_EditorClassIdentifier: 
+  poolList:
+  - name: Rune
+    type: 1
+    prefab: {fileID: 4537098756171562567, guid: 677abf98808284244b968df1536f3930,
+      type: 3}
+    itemAmount: 10
+  - name: Enemy_Knight
+    type: 100
+    prefab: {fileID: 7700814571572305591, guid: c9c4d1b35bede634987b294233cf4273,
+      type: 3}
+    itemAmount: 10
+  - name: Enemy_Ranger
+    type: 101
+    prefab: {fileID: 4190259864597979883, guid: 12db93ad1e6cd5848a28310b883f729a,
+      type: 3}
+    itemAmount: 10
+  - name: Enemy_Alchemist
+    type: 102
+    prefab: {fileID: 4227931294706521803, guid: 806f2fe2106151b4e88cda77716cce18,
+      type: 3}
+    itemAmount: 10
+  - name: Enemy_Shielder
+    type: 103
+    prefab: {fileID: 7700814571572305591, guid: f67201113f5bd5346a61dc16bbc6f873,
+      type: 3}
+    itemAmount: 10
+  - name: Enemy_Archer
+    type: 104
+    prefab: {fileID: 7781143045359994050, guid: f24b6396b1d289043b193b774d41fdca,
+      type: 3}
+    itemAmount: 10
+  - name: Enemy_Chemist
+    type: 105
+    prefab: {fileID: 4227931294706521803, guid: a401d90cf3bd0aa40be8094d78adfbc1,
+      type: 3}
+    itemAmount: 10
+  - name: Weapon_Arrow
+    type: 1000
+    prefab: {fileID: 4516160759283133642, guid: bfdc021c67c22324a94a9817e8657a5a,
+      type: 3}
+    itemAmount: 10
+  - name: Weapon_Potion_Poison
+    type: 1100
+    prefab: {fileID: 2176695869782302635, guid: 4adc040bbe6756149871689233e1bb53,
+      type: 3}
+    itemAmount: 10
+  - name: Weapon_Potion_Freeze
+    type: 1101
+    prefab: {fileID: 1533331605407807258, guid: 9c21e83ab70c3d34eb23d0dbd4c4f93b,
+      type: 3}
+    itemAmount: 10
+  - name: Weapon_Potion_Paralysis
+    type: 1102
+    prefab: {fileID: 240716459235156515, guid: 136fdbb66f4eb9b4fba20260b9c98a2e, type: 3}
+    itemAmount: 10
+  - name: Effect_Shield
+    type: 2000
+    prefab: {fileID: 7294500814286204256, guid: 80612ac72e5e366478437414a7ea7f87,
+      type: 3}
+    itemAmount: 10
+  - name: Effect_PlayerAttack_Slam_Normal
+    type: 2100
+    prefab: {fileID: -2232659382428511412, guid: cd3665ce6f21bf245a6835caf3ed9391,
+      type: 3}
+    itemAmount: 10

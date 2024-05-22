@@ -137,28 +137,28 @@ public class EnemyAnimator : MonoBehaviour
     #region Enemy Normal Attack Functions
     public void RangerNormalAttack()
     {
-        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
+        EnemyArrow arrow = PoolManager.Instance.Pop(PoolType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
         arrow.owner = _owner as EnemyBrain;
     }
 
     public void AlchemistNormalAttack()
     {
-        PoolingType potionType = PoolingType.None;
+        PoolType potionType = PoolType.None;
 
         switch (UnityEngine.Random.Range(0, 3))
         {
             case 0:
-                potionType = PoolingType.Weapon_Potion_Poison;
+                potionType = PoolType.Weapon_Potion_Poison;
 
                 break;
 
             case 1:
-                potionType = PoolingType.Weapon_Potion_Freeze;
+                potionType = PoolType.Weapon_Potion_Freeze;
 
                 break;
 
             case 2:
-                potionType = PoolingType.Weapon_Potion_Paralysis;
+                potionType = PoolType.Weapon_Potion_Paralysis;
 
                 break;
         }
@@ -177,7 +177,7 @@ public class EnemyAnimator : MonoBehaviour
         {
             float angle = -angleIncrement + angleIncrement * i;
 
-            EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
+            EnemyArrow arrow = PoolManager.Instance.Pop(PoolType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
             Vector3 direction = Quaternion.Euler(0f, angle, 0f) * arrow.transform.forward;
             arrow.transform.forward = direction;
             arrow.owner = _owner as EnemyBrain;
@@ -196,7 +196,7 @@ public class EnemyAnimator : MonoBehaviour
         {
             float angle = -angleIncrement + angleIncrement * i;
 
-            EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
+            EnemyArrow arrow = PoolManager.Instance.Pop(PoolType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
             Vector3 direction = Quaternion.Euler(0f, angle, 0f) * arrow.transform.forward;
             arrow.transform.forward = direction;
             arrow.owner = _owner as EnemyBrain;

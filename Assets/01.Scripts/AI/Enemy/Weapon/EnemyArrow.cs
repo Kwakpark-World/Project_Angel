@@ -37,7 +37,7 @@ public class EnemyArrow : PoolableMono
         }
     }
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
         //Vector3 direction = new Vector3(GameManager.Instance.PlayerInstance.transform.position.x - transform.position.x, 0f, GameManager.Instance.PlayerInstance.transform.position.z - transform.position.z).normalized;
         Vector3 direction = (GameManager.Instance.PlayerInstance.playerCenter.position - transform.position).normalized;
