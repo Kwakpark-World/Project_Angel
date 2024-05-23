@@ -5,9 +5,9 @@ using UnityEngine;
 public class EnemyBuffArea : MonoBehaviour
 {
     [SerializeField]
-    private BuffType BuffType;
+    private BuffType _buffType;
     [SerializeField]
-    private EnemyBrain _ownet;
+    private EnemyBrain _owner;
     public float radius = 5f; // 원의 반지름 설정
     private bool shouldDrawGizmos = false;
     public Vector3 collisionPoint;
@@ -42,7 +42,7 @@ public class EnemyBuffArea : MonoBehaviour
             if (distance <= radius)
             {
                 
-                 player.BuffCompo.PlayBuff(BuffType,_ownet.BuffCompo.BuffStatData.poisonDuration, _ownet);
+                 player.BuffCompo.PlayBuff(_buffType,_owner.BuffCompo.BuffStatData.poisonDuration, _owner);
                 
             }
             else

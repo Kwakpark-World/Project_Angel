@@ -235,6 +235,40 @@ public class EnemyAnimator : MonoBehaviour
         EnemyPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as EnemyPotion;
         debuffPotion.owner = _owner as EnemyBrain;
     }
+
+    public void ChemistSkillAttack()
+    {
+     
+        int randomPostion = UnityEngine.Random.Range(5,10);
+        for(int i =0; i < randomPostion; i++)
+        {
+            Vector2 randomPos = UnityEngine.Random.insideUnitCircle * 10f;
+            Vector3 spawnPotion = transform.position + new Vector3(randomPos.x,10,randomPos.y);
+
+            PoolType potionType = PoolType.None;
+
+            switch (UnityEngine.Random.Range(0, 3))
+            {
+                case 0:
+                    potionType = PoolType.Weapon_Potion_Poison;
+
+                    break;
+
+                case 1:
+                    potionType = PoolType.Weapon_Potion_Freeze;
+
+                    break;
+
+                case 2:
+                    potionType = PoolType.Weapon_Potion_Paralysis;
+
+                    break;
+            }
+
+            EnemyPotion debuffPotion = PoolManager.Instance.Pop(potionType, spawnPotion) as EnemyPotion;
+            debuffPotion.owner = _owner as EnemyBrain;
+        }
+    }
     #endregion
 
     #region Enemy Die Function
