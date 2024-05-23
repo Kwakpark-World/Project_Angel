@@ -36,7 +36,7 @@ public class PlayerAttackState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        
+
         /*Gizmos.matrix = Matrix4x4.TRS(_player.transform.TransformPoint(_player.transform.position + _attackOffset), _player.transform.rotation, _player.transform.lossyScale);
         Gizmos.color = Color.white;
         Gizmos.DrawCube(-_player.transform.position + _attackOffset, _attackSize);
@@ -44,7 +44,7 @@ public class PlayerAttackState : PlayerState
         Gizmos.DrawWireCube(-_player.transform.position + _attackOffset, _attackSize);*/
 
         SetAttackSetting();
-        
+
     }
 
     public void Attack(List<Collider> enemies)
@@ -55,7 +55,7 @@ public class PlayerAttackState : PlayerState
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
-                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true, 0.3f);
+                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true, _player.PlayerStatData.GetKnockbackPower());
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
@@ -72,7 +72,7 @@ public class PlayerAttackState : PlayerState
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
-                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true, 0.3f);
+                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true, _player.PlayerStatData.GetKnockbackPower());
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
@@ -92,7 +92,7 @@ public class PlayerAttackState : PlayerState
         RaycastHit[] enemiesL = Physics.RaycastAll(weaponLPos, dir, _hitDist, _player.enemyLayer);
 
         List<RaycastHit> enemies = new List<RaycastHit>();
-        
+
         foreach (var enemy in enemiesL) enemies.Add(enemy);
         foreach (var enemy in enemiesR) enemies.Add(enemy);
 
@@ -108,5 +108,5 @@ public class PlayerAttackState : PlayerState
         return Physics.OverlapBox(pos, halfSize, direction, _player.enemyLayer);
     }
 
-    protected virtual void SetAttackSetting(){}
+    protected virtual void SetAttackSetting() { }
 }
