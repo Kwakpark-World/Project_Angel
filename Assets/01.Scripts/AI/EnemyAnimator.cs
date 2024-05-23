@@ -168,7 +168,7 @@ public class EnemyAnimator : MonoBehaviour
     }
     public void ShieldNormalAttack()
     {
-        _owner.FindNearbyEnemies(5);
+        _owner.FindNearbyEnemies(5, 5f);
     }
 
     public void ArcherNormalAttack()
@@ -212,22 +212,22 @@ public class EnemyAnimator : MonoBehaviour
 
     public void ChemistNormalAttack()
     {
-        PoolingType potionType = PoolingType.None;
+        PoolType potionType = PoolType.None;
 
         switch (UnityEngine.Random.Range(0, 3))
         {
             case 0:
-                potionType = PoolingType.Weapon_Potion_Poison;
+                potionType = PoolType.Weapon_Potion_Poison;
 
                 break;
 
             case 1:
-                potionType = PoolingType.Weapon_Potion_Freeze;
+                potionType = PoolType.Weapon_Potion_Freeze;
 
                 break;
 
             case 2:
-                potionType = PoolingType.Weapon_Potion_Knockback;
+                potionType = PoolType.Weapon_Potion_Paralysis;
 
                 break;
         }
