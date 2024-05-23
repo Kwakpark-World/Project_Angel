@@ -11,7 +11,7 @@ public class CameraManager : MonoSingleton<CameraManager>
     [SerializeField]
     private NoiseSettings shake6DSettings;
 
-    private const float DefaultOrthoSize = 7.5f;
+    private float DefaultOrthoSize;
 
     public void AddCamera(CameraState addCamera)
     {
@@ -33,6 +33,12 @@ public class CameraManager : MonoSingleton<CameraManager>
 
         _currentCam?.UnSelectCamera();
         _currentCam = selectCam;
+
+        _currentCam._camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera vCam);
+        if (vCam != null)
+            DefaultOrthoSize = vCam.m_Lens.OrthographicSize;
+
+
         _currentCam?.SelectCamera();
     }
 
