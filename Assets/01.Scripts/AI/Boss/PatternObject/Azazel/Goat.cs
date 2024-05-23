@@ -39,9 +39,9 @@ public class Goat : Brain
         }
     }
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         _isLiving = true;
         _lifetimer = Time.time;

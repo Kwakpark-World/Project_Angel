@@ -6,7 +6,7 @@ using UnityEngine;
 public class AzazelSecondPattern : EnemyAttack
 {
     [SerializeField]
-    private List<PoolingType> grigoris;
+    private List<PoolType> grigoris;
 
     public override void OnStart()
     {
@@ -22,7 +22,7 @@ public class AzazelSecondPattern : EnemyAttack
     {
         Debug.Log("Use second pattern.");
 
-        PoolingType grigoriType = grigoris[Random.Range(0, grigoris.Count)];
+        PoolType grigoriType = grigoris[Random.Range(0, grigoris.Count)];
 
         if (PoolManager.Instance.Pop(grigoriType, OwnerNode.brain.transform.position).TryGetComponent(out Grigori grigori))
         {

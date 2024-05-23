@@ -106,7 +106,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         }
 
         //Vector3 pos = _player.transform.position;
-        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charged_Awaken, pos);
+        //EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Charged_Awaken, pos);
     }
 
     private void ChargeAttack()

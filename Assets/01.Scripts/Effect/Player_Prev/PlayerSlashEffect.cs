@@ -6,9 +6,9 @@ public class PlayerSlashEffect : PoolableMonoEffect
 {
     ParticleSystem particle;
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         particle = transform.GetComponentInChildren<ParticleSystem>();
     }
