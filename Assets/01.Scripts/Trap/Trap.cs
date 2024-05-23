@@ -23,14 +23,18 @@ public abstract class Trap : MonoBehaviour
 
     protected void OnTrap()
     {
+        StartTrap();
         _isPlayTrap = true;
 
         PlayTrap();
 
         _isPlayTrap = false;
+        EndTrap();
     }
 
+    protected virtual void StartTrap(){}
     protected abstract void PlayTrap();
+    protected virtual void EndTrap(){}
 
     protected void Attack(EnemyBrain[] enemies, Player player)
     {

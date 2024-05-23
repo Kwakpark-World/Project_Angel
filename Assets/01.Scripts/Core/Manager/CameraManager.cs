@@ -74,7 +74,7 @@ public class CameraManager : MonoSingleton<CameraManager>
 
     private bool _isZoomStop = false;
 
-    public void ZoomCam(float addValuePerTick, float minZoom = 5, float maxZoom = 7.5f)
+    public void ZoomCam(float addValuePerTick, float minZoom = 6, float maxZoom = 7.5f)
     {
         _isZoomStop = false;
         if (_currentCam == null)
@@ -90,6 +90,7 @@ public class CameraManager : MonoSingleton<CameraManager>
 
     public void ZoomCam(float targetValue, float changeValuePerTick)
     {
+        _isZoomStop = false;
         if (_currentCam == null)
         {
             Debug.LogError("CurrentCamera is Null");

@@ -39,18 +39,13 @@ public abstract class HitableTrap : InteractableTrap
     }
 
     protected abstract void SetPlayerAttackParameter();
-    public void HitTrap() // Player∞° »£√‚«ÿ¡‡æﬂ µ 
+    public void HitTrap()
     {
         _isHitTrap = true;
     }
 
-    public void EndHit() // ∞¯∞› ≥°≥µ¿ª ∂ß Player∞° »£√‚«ÿ¡‡æﬂµ 
+    public void EndHit()
     {
         _isHitTrap = false;
-    }
-
-    protected void GetHitableObject()
-    {
-        // hit
     }
 }
