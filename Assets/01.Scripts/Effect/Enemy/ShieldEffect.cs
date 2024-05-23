@@ -8,9 +8,9 @@ public class ShieldEffect : PoolableMonoEffect
     float time;
     bool isDownEffect;
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         PoolManager.Instance.Push(this, duration, true);
     }

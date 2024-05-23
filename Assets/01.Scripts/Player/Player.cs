@@ -44,13 +44,13 @@ public class Player : PlayerController
     public Transform effectParent;
     public Transform playerCenter;
 
-    public bool IsAttack { get; set; }
-    public bool IsDefense { get; set; }
-    public bool IsDie { get; set; }
+    public bool IsAttack;
+    public bool IsDefense;
+    public bool IsDie;
     public bool IsStair { get; private set; }
-    public bool IsAwakening { get; set; }
-    public bool IsPlayerStop { get; set; }
-    public bool IsGroundState { get; set; }
+    public bool IsAwakening;
+    public bool IsPlayerStop;
+    public bool IsGroundState;
 
     public Vector3 MousePosInWorld { get; private set; }
 
@@ -129,6 +129,8 @@ public class Player : PlayerController
 
     private void IsClimbStair()
     {
+        if (!StateMachine.CompareState(PlayerStateEnum.Walk)) return;
+
         if (CheckStair(Vector3.forward))
             IsStair = true;
         if (CheckStair(new Vector3(1.5f, 0, 1)))
@@ -146,15 +148,10 @@ public class Player : PlayerController
 
         PlayerOnHitVolume();
 
-        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Synergy) && CurrentHealth <= 1f)
-        {
-            CurrentHealth -= Mathf.Max(0, 0f);
-        }
-        else
+        if (!(BuffCompo.GetBuffState(BuffType.Rune_Defense_Synergy) && CurrentHealth <= 1f))
         {
             CurrentHealth -= Mathf.Max(incomingDamage - PlayerStatData.GetDefensivePower(), 0f);
         }
-        
 
         if (CurrentHealth <= 0f)
         {

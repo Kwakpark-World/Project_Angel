@@ -24,7 +24,7 @@ public abstract class Brain : PoolableMono
     #endregion
 
     [field: SerializeField]
-    public MonsterStat EnemyStatData { get; private set; }
+    public EnemyStat EnemyStatData { get; private set; }
     public float CurrentHealth { get; set; }
     public float NormalAttackTimer { get; set; }
     public float SkillAttackTimer { get; set; }
@@ -66,9 +66,9 @@ public abstract class Brain : PoolableMono
         #endregion
     }
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         if (NavMeshAgentCompo)
         {
@@ -143,7 +143,7 @@ public abstract class Brain : PoolableMono
         knockbackDirection.y = 0f;
         float timer = 0f;
 
-        while (timer <= 0.5f)
+        while (timer <= 0.4f)
         {
             transform.position = Vector3.Lerp(transform.position, transform.position + knockbackDirection * knockbackPower, timer);
             timer += Time.deltaTime;

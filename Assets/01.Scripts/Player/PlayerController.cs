@@ -8,6 +8,7 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField] protected Transform _groundChecker;
     [SerializeField] protected float _groundCheckDistance;
     [SerializeField] protected LayerMask _whatIsGround;
+    [SerializeField] protected LayerMask _whatIsStair;
 
     [Header("Stair Checker")]
     [SerializeField] private Transform _stairUpperChecker;
@@ -29,7 +30,7 @@ public abstract class PlayerController : MonoBehaviour
 
     public Buff BuffCompo { get; private set; }
     [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
-    [field: SerializeField] public float CurrentHealth { get; set; }
+    [field: SerializeField] public float CurrentHealth;
     
     private float _gravity = -9.8f;
     #endregion
@@ -114,11 +115,14 @@ public abstract class PlayerController : MonoBehaviour
 
     public bool CheckStair(Vector3 dir)
     {
+        Debug.DrawRay(_stairLowerChecker.position, transform.TransformDirection(dir) * _stairLowerCheckDistance, Color.red);
+        Debug.DrawRay(_stairUpperChecker.position, transform.TransformDirection(dir) * _stairUpperCheckDistance, Color.red);
+
         RaycastHit hitLower;
-        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(dir), out hitLower, _stairLowerCheckDistance, _whatIsGround))
+        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(dir), out hitLower, _stairLowerCheckDistance, _whatIsStair))
         {
             RaycastHit hitUpper;
-            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(dir), out hitUpper, _stairUpperCheckDistance, _whatIsGround))
+            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(dir), out hitUpper, _stairUpperCheckDistance, _whatIsStair))
             {
                 return true;
             }

@@ -45,7 +45,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     public void SpawnRune(Vector3 runeSpawnPos)
     {
-        Rune rune = PoolManager.Instance.Pop(PoolingType.Rune, runeSpawnPos) as Rune;
+        Rune rune = PoolManager.Instance.Pop(PoolType.Rune, runeSpawnPos) as Rune;
         RuneDataSO runeData = _runeList.list[UnityEngine.Random.Range(0, _runeList.list.Count)];
 
         rune.InitializeRune(runeData);

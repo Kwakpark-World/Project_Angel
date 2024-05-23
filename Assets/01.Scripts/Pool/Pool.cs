@@ -6,10 +6,10 @@ public class Pool<T> where T : PoolableMono
 {
     private Queue<T> _pool = new Queue<T>();
     private T _prefab;
-    private PoolingType _poolingType;
+    private PoolType _poolingType;
     private Transform _parent;
 
-    public Pool(T prefab, PoolingType poolingType, Transform parent, int itemAmount = 10)
+    public Pool(T prefab, PoolType poolingType, Transform parent, int itemAmount = 10)
     {
         _poolingType = poolingType;
         _prefab = prefab;
@@ -18,7 +18,7 @@ public class Pool<T> where T : PoolableMono
         for (int i = 0; i < itemAmount; ++i)
         {
             T item = GameObject.Instantiate(prefab, parent);
-            item.poolingType = poolingType;
+            item.poolType = poolingType;
             item.gameObject.name = _poolingType.ToString();
 
             Push(item);
@@ -43,7 +43,7 @@ public class Pool<T> where T : PoolableMono
         if (_pool.Count <= 0)
         {
             item = GameObject.Instantiate(_prefab, _parent);
-            item.poolingType = _poolingType;
+            item.poolType = _poolingType;
             item.gameObject.name = _poolingType.ToString();
         }
         else

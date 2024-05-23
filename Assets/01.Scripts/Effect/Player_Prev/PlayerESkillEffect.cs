@@ -8,9 +8,9 @@ public class PlayerESkillEffect : PoolableMonoEffect
     float time;
     bool isDownEffect;
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         isDownEffect = false;
 
@@ -31,7 +31,7 @@ public class PlayerESkillEffect : PoolableMonoEffect
             PoolManager.Instance.Push(this);
 
             //Vector3 pos = transform.position;
-            //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAwakened, pos);
+            //EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAwakened, pos);
 
             GameManager.Instance.PlayerInstance.IsAwakening = true;
         }

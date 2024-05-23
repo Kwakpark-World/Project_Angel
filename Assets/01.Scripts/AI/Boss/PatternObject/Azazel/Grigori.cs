@@ -14,9 +14,9 @@ public abstract class Grigori : Brain
 
     protected abstract void Debuff();
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
     }
 
     protected override void Initialize()

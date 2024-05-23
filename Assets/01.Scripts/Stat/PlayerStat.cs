@@ -4,12 +4,82 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/Stat/Player")]
-public class PlayerStat : CharacterStat
+public enum PlayerStatType
 {
-    protected void OnEnable()
+    maxHealth,
+    defensivePower,
+    defenseCooldown,
+    attackPower,
+    attackSpeed,
+    criticalChance,
+    criticalMultiplier,
+    chargingAttackSpeed,
+    chargingAttackDistance,
+    moveSpeed,
+    rotateSpeed,
+    dashSpeed,
+    dashMaxDistance,
+    dashDuration,
+    dashCooldown,
+    slamMaxDistance,
+    slamCooldown,
+    maxAwakenGauge,
+}
+
+[CreateAssetMenu(menuName = "SO/Stat/Player")]
+public class PlayerStat : ScriptableObject
+{
+    [Header("Defensive stats")]
+    [Tooltip("최대 체력")]
+    public Stat maxHealth;
+    [Tooltip("방어력")]
+    public Stat defensivePower;
+    [Tooltip("방어 쿨다운")]
+    public Stat defenseCooldown;
+
+    [Header("Offensive stats")]
+    [Tooltip("공격력")]
+    public Stat attackPower;
+    [Tooltip("공격 속도")]
+    public Stat attackSpeed;
+    [Tooltip("치명타 확률")]
+    public Stat criticalChance;
+    [Tooltip("치명타 배율 ")]
+    public Stat criticalMultiplier;
+    [Tooltip("차징 공격 속도")]
+    public Stat chargingAttackSpeed;
+    [Tooltip("차징 공격 찌르기 이동 거리")]
+    public Stat chargingAttackDistance;
+
+    [Header("Move stats")]
+    [Tooltip("이동 속도")]
+    public Stat moveSpeed;
+    [Tooltip("회전 속도")]
+    public Stat rotateSpeed;
+    [Tooltip("대시 속도")]
+    public Stat dashSpeed;
+    [Tooltip("각성 중 대시 최대 거리")]
+    public Stat dashMaxDistance;
+    [Tooltip("대시 지속 시간")]
+    public Stat dashDuration;
+    [Tooltip("대시 쿨다운")]
+    public Stat dashCooldown;
+
+    [Header("Skill stats")]
+    [Tooltip("Q 스킬 최대 이동 거리")]
+    public Stat slamMaxDistance;
+    [Tooltip("Q 스킬 쿨다운")]
+    public Stat slamCooldown;
+    [Tooltip("최대 각성 게이지")]
+    public Stat maxAwakenGauge;
+
+    private PlayerController _owner;
+
+    private Dictionary<PlayerStatType, FieldInfo> _fieldInfoDictionary = new Dictionary<PlayerStatType, FieldInfo>();
+
+    private void OnEnable()
     {
-        Type playerStatType = typeof(PlayerStat);
+        Type playerStatType = GetType();
 
         foreach (PlayerStatType statType in Enum.GetValues(typeof(PlayerStatType)))
         {
@@ -22,9 +92,14 @@ public class PlayerStat : CharacterStat
             }
             else
             {
-                fieldInfoDictionary.Add(statType, statField);
+                _fieldInfoDictionary.Add(statType, statField);
             }
         }
+    }
+
+    public void SetOwner(PlayerController owner)
+    {
+        _owner = owner;
     }
 
     public void InitializeAllModifiers()
@@ -37,7 +112,96 @@ public class PlayerStat : CharacterStat
 
     public Stat GetStatByType(PlayerStatType statType)
     {
-        return fieldInfoDictionary[statType].GetValue(this) as Stat;
+        return _fieldInfoDictionary[statType].GetValue(this) as Stat;
     }
 
+    public float GetMaxHealth()
+    {
+        return maxHealth.GetValue();
+    }
+
+    public float GetDefensivePower()
+    {
+        return defensivePower.GetValue();
+    }
+
+    public float GetDefenseCooldown()
+    {
+        return defenseCooldown.GetValue();
+    }
+
+    public float GetAttackPower()
+    {
+        return attackPower.GetValue();
+    }
+
+    public float GetAttackSpeed()
+    {
+        return attackSpeed.GetValue();
+    }
+
+    public float GetCriticalChance()
+    {
+        return criticalChance.GetValue();
+    }
+
+    public float GetCriticalMultiplier()
+    {
+        return criticalMultiplier.GetValue();
+    }
+
+    public float GetChargingAttackSpeed()
+    {
+        return chargingAttackSpeed.GetValue();
+    }
+
+    public float GetChargingAttackDistance()
+    {
+        return chargingAttackDistance.GetValue();
+    }
+
+    public float GetMoveSpeed()
+    {
+        return moveSpeed.GetValue();
+    }
+
+    public float GetRotateSpeed()
+    {
+        return rotateSpeed.GetValue();
+    }
+
+    public float GetDashSpeed()
+    {
+        return dashSpeed.GetValue();
+    }
+
+    public float GetDashMaxDistance()
+    {
+        return dashMaxDistance.GetValue();
+    }
+
+    public float GetDashDuration()
+    {
+        return dashDuration.GetValue();
+    }
+
+    public float GetDashCooldown()
+    {
+        return dashCooldown.GetValue();
+    }
+
+    public float GetSlamMaxDistance()
+    {
+        return slamMaxDistance.GetValue();
+    }
+
+    public float GetSlamCooldown()
+    {
+        return slamCooldown.GetValue();
+    }
+
+    public float GetMaxAwakenGauge()
+    {
+        return maxAwakenGauge.GetValue();
+    }
 }

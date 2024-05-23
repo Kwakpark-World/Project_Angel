@@ -18,9 +18,9 @@ public class BossBrain : Brain
         }
     }
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         treeRunner.tree.blackboard.nextPatternCooldown = EnemyStatData.GetSkillCooldown();
         _patternTimer = Time.time;

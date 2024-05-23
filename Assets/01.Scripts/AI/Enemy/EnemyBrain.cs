@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemyBrain : Brain
 {
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         treeRunner.tree.blackboard.home = transform.position;
     }

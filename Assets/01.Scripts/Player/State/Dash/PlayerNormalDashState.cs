@@ -39,7 +39,7 @@ public class PlayerNormalDashState : PlayerDashState
 
     private void SlamSkillHandle()
     {
-        if (_player.slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
+        if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
 
         _player.slamPrevTime = Time.time;
 

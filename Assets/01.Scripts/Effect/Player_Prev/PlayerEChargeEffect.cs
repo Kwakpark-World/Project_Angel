@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerEChargeEffect : PoolableMonoEffect
 {
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         Vector3 scale = Vector3.one;
         transform.localScale = scale * 0.5f;

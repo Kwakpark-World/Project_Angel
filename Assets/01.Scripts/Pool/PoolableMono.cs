@@ -4,10 +4,11 @@ using UnityEngine;
 
 public abstract class PoolableMono : MonoBehaviour
 {
-    public PoolingType poolingType;
+    public PoolType poolType;
+    [HideInInspector]
     public bool sameLifeCycle;
 
-    public virtual void InitializePoolingItem()
+    public virtual void InitializePoolItem()
     {
         sameLifeCycle = false;
     }

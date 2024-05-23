@@ -64,7 +64,7 @@ public class PlayerGroundState : PlayerState
 
     private void SlamSkillHandle()
     {
-        if (_player.slamPrevTime + _player.PlayerStatData.GetSlamSkillCooldown() > Time.time) return;
+        if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
         if (!_player.IsGroundDetected()) return;
 
         _player.slamPrevTime = Time.time;

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerMeleeAttackEffect : PoolableMonoEffect
 {
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         //
 
