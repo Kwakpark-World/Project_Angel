@@ -14,6 +14,9 @@ public class PlayerAttackState : PlayerState
     protected Vector3 _attackOffset = Vector3.zero;
     protected Vector3 _attackSize = Vector3.one;
 
+    private LayerMask _trapLayer = LayerMask.GetMask("Trap");
+    private HashSet<HitableTrap> _hitableTrapDuplicateChecker = new HashSet<HitableTrap>();
+
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -31,6 +34,8 @@ public class PlayerAttackState : PlayerState
     public override void Exit()
     {
         base.Exit();
+
+        EndHitTrap();
     }
 
     public override void UpdateState()
@@ -105,7 +110,38 @@ public class PlayerAttackState : PlayerState
 
         Vector3 halfSize = _attackSize * 0.5f;
 
+        HitTrapByOverlapBox(startPos, direction);
+
         return Physics.OverlapBox(pos, halfSize, direction, _player.enemyLayer);
+    }
+
+    public void HitTrapByOverlapBox(Vector3 startPos, Quaternion direction)
+    {
+        Vector3 pos = startPos + _attackOffset;
+        
+        Vector3 halfSize = _attackSize * 0.5f;
+
+        Collider[] traps = Physics.OverlapBox(pos, halfSize, direction, _trapLayer);
+
+        foreach(var trap in traps) 
+        {
+            if (trap.TryGetComponent<HitableTrap>(out HitableTrap hitTrap))
+            {
+                if (_hitableTrapDuplicateChecker.Add(hitTrap))
+                {
+                    hitTrap.HitTrap();
+                }
+            }
+        }
+    }
+
+    private void EndHitTrap()
+    {
+        foreach (var trap in _hitableTrapDuplicateChecker)
+        {
+            trap.EndHit();
+        }
+        _hitableTrapDuplicateChecker.Clear();
     }
 
     protected virtual void SetAttackSetting(){}

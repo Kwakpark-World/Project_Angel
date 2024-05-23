@@ -27,6 +27,7 @@ public enum PoolType
     Effect_PlayerAttack_Slam_Awaken_0 = 2101,
     Effect_PlayerAttack_Slam_Awaken_1 = 2102,
     Effect_PlayerAttack_Slam_Awaken_2 = 2203,
+    Dynamite = 3000,
 }
 
 [Serializable]

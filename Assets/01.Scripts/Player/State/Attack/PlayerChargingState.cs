@@ -39,9 +39,6 @@ public class PlayerChargingState : PlayerChargeState
         base.Exit();
         _thisParticle.Stop();
         _player.PlayerInput.isCharge = false;
-
-        CameraManager.Instance.ResetCameraZoom();
-
     }
 
     public override void UpdateState()
@@ -56,6 +53,8 @@ public class PlayerChargingState : PlayerChargeState
     private void ChargeToNextState()
     {
         if (_player.PlayerInput.isCharge) return;
+
+        CameraManager.Instance.ResetCameraZoom();
 
         if (_player.ChargingGauge < _minChargeTime)
         {
@@ -80,9 +79,9 @@ public class PlayerChargingState : PlayerChargeState
         if (_player.ChargingGauge < _minChargeTime)
             _player.ChargingGauge += Time.deltaTime;
         else
-        {
+        {            
             ChargingEffect();
-            CameraManager.Instance.ZoomCam(5f, _cameraZoomChangePerTick);
+            CameraManager.Instance.ZoomCam(6f, _cameraZoomChangePerTick);
 
             _player.ChargingGauge += Time.deltaTime * 1.5f;
         }
