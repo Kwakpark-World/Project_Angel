@@ -10,9 +10,10 @@ public abstract class HitableTrap : InteractableTrap
 
     private bool _isHitTrap;
 
-    protected override void Start()
+    public override void InitializePoolItem()
     {
-        base.Start();
+        base.InitializePoolItem();
+
         _isHitTrap = false;
 
         _playerAttackCenter = Vector3.zero;
@@ -29,14 +30,10 @@ public abstract class HitableTrap : InteractableTrap
         if (_isHitTrap && !_isPlayTrap)
         {
             OnTrap();
-            _isHitTrap = false;
         }
     }
 
-    protected override void PlayTrap()
-    {
-        Debug.Log("PlayTrap");
-    }
+    protected override void PlayTrap(){}
 
     protected abstract void SetPlayerAttackParameter();
     public void HitTrap()
@@ -48,4 +45,6 @@ public abstract class HitableTrap : InteractableTrap
     {
         _isHitTrap = false;
     }
+
+
 }

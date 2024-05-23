@@ -2,15 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Trap : MonoBehaviour
+public abstract class Trap : PoolableMono
 {
     protected float _trapDamage;
 
     protected bool _isOnTrap;
     protected bool _isPlayTrap { get; private set; }
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
+        _isOnTrap = false;
+        _isPlayTrap = false;
+    }
+
+    public override void InitializePoolItem()
+    {
+        base.InitializePoolItem();
+
         _isOnTrap = true;
         _isPlayTrap = false;
     }
