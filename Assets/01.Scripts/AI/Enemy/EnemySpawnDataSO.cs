@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class EnemyToSpawn
 {
-    public PoolingType enemyType;
+    public PoolType enemyType;
     public bool canSpawn;
     public float spawnRatio;
 }

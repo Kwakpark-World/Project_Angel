@@ -22,9 +22,9 @@ public class PoolableMonoEffect : PoolableMono
     /// Setting parentTrm, rotation, scale, etc.. , 
     /// If the type is particle, it basically starts here.
     /// </summary>
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         foreach (ParticleSystem particle in particles)
         {
@@ -36,7 +36,7 @@ public class PoolableMonoEffect : PoolableMono
 
     public virtual void RegisterEffect()
     {
-        EffectManager.Instance.RegisterEffect(poolingType);
+        EffectManager.Instance.RegisterEffect(poolType);
 
         particles = GetComponentsInChildren<ParticleSystem>();
     }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerESkillDownEffect : PoolableMonoEffect
 {
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
     }
 
     protected override void Update()

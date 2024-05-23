@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class EffectManager : MonoSingleton<EffectManager>
 {
-    private Dictionary<string, PoolingType> _effects = new Dictionary<string, PoolingType>();
+    private Dictionary<string, PoolType> _effects = new Dictionary<string, PoolType>();
 
-    public void RegisterEffect(PoolingType type)
+    public void RegisterEffect(PoolType type)
     {
         string effectName = type.ToString();
         if (!_effects.ContainsKey(effectName))
@@ -15,21 +15,21 @@ public class EffectManager : MonoSingleton<EffectManager>
             _effects.Add(effectName, type);
         }
         //else
-            //Debug.Log($"This Object already contain effect. Object Pooling Type : {type}");
+            //Debug.Log($"This Object already contain effect. Object Pool Type : {type}");
     }
 
-    public PoolingType GetEffectType(string effectName)
+    public PoolType GetEffectType(string effectName)
     {
         if (!_effects.ContainsKey(effectName))
         {
             Debug.Log($"{effectName} is not Contain _effects");
-            return PoolingType.None;
+            return PoolType.None;
         }
 
         return _effects[effectName];
     }
 
-    public void PlayEffect(PoolingType type, Vector3 pos)
+    public void PlayEffect(PoolType type, Vector3 pos)
     {
         string effectName = type.ToString();
 
@@ -42,7 +42,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         PoolManager.Instance.Pop(type, pos);
     }
 
-    public void PlayEffect(PoolingType type, Vector3 pos, Transform parent)
+    public void PlayEffect(PoolType type, Vector3 pos, Transform parent)
     {
         string effectName = type.ToString();
 

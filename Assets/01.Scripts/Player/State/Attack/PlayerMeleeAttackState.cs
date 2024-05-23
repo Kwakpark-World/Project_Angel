@@ -144,7 +144,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         _thisParticle.Play();
         //Vector3 pos = Vector3.zero;
-        //EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Charging_Normal, pos);
+        //EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Charging_Normal, pos);
     }
 
     private void SetCombo()
