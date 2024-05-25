@@ -22,6 +22,8 @@ public class ChemistSkillAttack : EnemyAttack
             return Node.State.Running;
         }
 
+        OwnerNode.brain.NormalAttackTimer = OwnerNode.brain.SkillAttackTimer = Time.time;
+
         return Node.State.Success;
     }
 }

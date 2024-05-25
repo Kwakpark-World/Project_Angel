@@ -70,6 +70,7 @@ namespace BTVisual
             {
                 return _skillAttackScript.OnUpdate();
             }
+            Debug.Log("¿©±â2");
 
             return _normalAttackScript.OnUpdate();
         }
