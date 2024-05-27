@@ -6,7 +6,61 @@ using UnityEngine;
 
 public abstract class InteractableTrap : Trap
 {
-    protected bool _isDelay;
+    public LayerMask hitableLayer;
+    
+    private bool _isDelay;
+
+    protected Vector3 _attackCenter = Vector3.zero;
+    protected Vector3 _attackHalfSize = Vector3.zero;
+    protected Quaternion _attackRotation = Quaternion.identity;
+
+    protected HashSet<Brain> _enemyDuplicateCheck = new HashSet<Brain>();
+    protected HashSet<Player> _playerDuplicateCheck = new HashSet<Player>();
+
+    public override void InitializePoolItem()
+    {
+        base.InitializePoolItem();
+
+        SetPlayerRangeParameter();
+    }
+
+    protected override void EndTrap()
+    {
+        base.EndTrap();
+
+        _enemyDuplicateCheck.Clear();
+        _playerDuplicateCheck.Clear();
+    }
+
+    private Collider[] GetHitableObject()
+    {
+        return Physics.OverlapBox(_attackCenter, _attackHalfSize, _attackRotation, hitableLayer);
+    }
+
+    protected void AttackObject()
+    {
+        Collider[] hitableObj = GetHitableObject();
+
+        foreach (var obj in hitableObj)
+        {
+            if (obj.TryGetComponent<Brain>(out Brain enemy))
+            {
+                if (_enemyDuplicateCheck.Add(enemy))
+                {
+                    Attack(enemy);
+                }
+            }
+            else if (obj.TryGetComponent<Player>(out Player player))
+            {
+                if (_playerDuplicateCheck.Add(player))
+                {
+                    Attack(player);
+                }
+            }
+        }
+    }
+
+    protected abstract void SetPlayerRangeParameter();
 
     public void StartDelayAction(float delayTime, Action todoAction)
     {
@@ -17,6 +71,11 @@ public abstract class InteractableTrap : Trap
     {
         _isDelay = true;
         StartCoroutine(DelayAction(todoAction));
+    }
+
+    public void DelayActionStart()
+    {
+        _isDelay = false;
     }
 
     protected IEnumerator DelayAction(float time, Action action)
@@ -33,4 +92,6 @@ public abstract class InteractableTrap : Trap
         }
         action?.Invoke();
     }
+
+
 }

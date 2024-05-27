@@ -4,12 +4,6 @@ using UnityEngine;
 
 public abstract class HitableTrap : InteractableTrap
 {
-    public LayerMask hitableLayer;
-
-    protected Vector3 _playerAttackCenter;
-    protected Vector3 _playerAttackHalfSize;
-    protected Quaternion _playerAttackRotation;
-
     private bool _isHitTrap;
 
 
@@ -18,12 +12,6 @@ public abstract class HitableTrap : InteractableTrap
         base.InitializePoolItem();
 
         _isHitTrap = false;
-
-        _playerAttackCenter = Vector3.zero;
-        _playerAttackHalfSize = Vector3.zero;
-        _playerAttackRotation = Quaternion.identity;
-
-        SetPlayerAttackParameter();
     }
 
     protected override void Update()
@@ -36,9 +24,6 @@ public abstract class HitableTrap : InteractableTrap
         }
     }
 
-    protected override void PlayTrap(){}
-
-    protected abstract void SetPlayerAttackParameter();
     public void HitTrap()
     {
         _isHitTrap = true;

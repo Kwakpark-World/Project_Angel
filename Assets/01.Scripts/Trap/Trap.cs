@@ -21,6 +21,7 @@ public abstract class Trap : PoolableMono
 
         _isOnTrap = true;
         _isPlayTrap = false;
+
     }
 
     protected virtual void Update()
