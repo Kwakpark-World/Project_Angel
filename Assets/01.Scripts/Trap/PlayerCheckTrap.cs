@@ -4,11 +4,18 @@ using UnityEngine;
 
 public abstract class PlayerCheckTrap : InteractableTrap
 {
-    private readonly LayerMask _playerLayer = LayerMask.GetMask("Player");
+    private LayerMask _playerLayer;
 
     protected Vector3 _playerCheckCenter = Vector3.zero;
     protected Vector3 _playerCheckHalfSize = Vector3.zero;
     protected Quaternion _playerCheckRotation = Quaternion.identity;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _playerLayer = LayerMask.GetMask("Player");
+    }
 
     protected override void Update()
     {

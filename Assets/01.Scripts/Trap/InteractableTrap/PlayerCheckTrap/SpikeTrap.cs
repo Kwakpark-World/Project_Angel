@@ -20,14 +20,27 @@ public class SpikeTrap : PlayerCheckTrap
     protected override void StartTrap()
     {
         // 올라오기
+        OnSpike();
+    }
+
+    protected override void PlayTrap()
+    {
         AttackObject();
     }
 
-    protected override void PlayTrap(){}
-
     protected override void EndTrap()
     {
-        // 내려가기
+        OffSpike();
+    }
+
+    private void OnSpike()
+    {
+        
+    }
+    
+    private void OffSpike()
+    {
+
     }
 
     protected override void SetPlayerRangeParameter()
