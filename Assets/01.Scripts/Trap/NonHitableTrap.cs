@@ -4,9 +4,10 @@ using UnityEngine;
 
 public abstract class NonHitableTrap : Trap
 {
-    protected override void Start()
+
+    public override void InitializePoolItem()
     {
-        base.Start();
+        base.InitializePoolItem();
     }
 
     protected override void Update()
@@ -19,8 +20,5 @@ public abstract class NonHitableTrap : Trap
         }
     }
 
-    protected override void PlayTrap()
-    {
-        Debug.Log("PlayTrap");
-    }
+    protected override void PlayTrap(){}
 }

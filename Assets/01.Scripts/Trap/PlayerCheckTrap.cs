@@ -10,9 +10,9 @@ public abstract class PlayerCheckTrap : InteractableTrap
 
     private readonly LayerMask _playerLayer = LayerMask.GetMask("Player");
 
-    protected override void Start()
+    public override void InitializePoolItem()
     {
-        base.Start();
+        base.InitializePoolItem();
 
         _playerCheckCenter = Vector3.zero;
         _playerCheckHalfSize = Vector3.zero;
@@ -31,10 +31,7 @@ public abstract class PlayerCheckTrap : InteractableTrap
         }
     }
 
-    protected override void PlayTrap()
-    {
-        Debug.Log("PlayTrap");
-    }
+    protected override void PlayTrap(){}
 
     protected abstract void SetPlayerCheckParameter();
     protected bool PlayerCheck()

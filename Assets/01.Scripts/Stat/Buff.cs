@@ -7,31 +7,31 @@ using UnityEngine.Events;
 public enum BuffType
 {
     None = 0,
-    Scapegoat = 1,
-    Shield = 2,
+    Scapegoat,
+    Shield,
     Rune_Acceleration_DefenseCooldown = 100,
-    Rune_Acceleration_MoveSpeed = 101,
-    Rune_Acceleration_SkillCooldown = 102,
+    Rune_Acceleration_MoveSpeed,
+    Rune_Acceleration_SkillCooldown,
     Rune_Acceleration_Synergy = 150,
     Rune_Attack_AttackPower = 200,
-    Rune_Attack_AttackSpeed = 201,
-    Rune_Attack_CriticalChance = 202,
+    Rune_Attack_AttackSpeed,
+    Rune_Attack_CriticalChance,
     Rune_Attack_Synergy = 250,
     Rune_Debuff_Freeze = 300,
-    Rune_Debuff_Paralysis = 301,
-    Rune_Debuff_Poison = 302,
+    Rune_Debuff_Paralysis,
+    Rune_Debuff_Poison,
     Rune_Debuff_Synergy = 350,
     Rune_Defense_DefensivePower = 400,
-    Rune_Defense_Reflection = 401,
-    Rune_Defense_Shield = 402,
+    Rune_Defense_Reflection,
+    Rune_Defense_Shield,
     Rune_Defense_Synergy = 450,
     Rune_Health_Absorb = 500,
-    Rune_Health_MaxHealth = 501,
-    Rune_Health_Recovery = 502,
+    Rune_Health_MaxHealth,
+    Rune_Health_Recovery,
     Rune_Health_Synergy = 550,
-    Potion_Poison = 1001,
-    Potion_Freeze = 1002,
-    Potion_Paralysis = 1003,
+    Potion_Poison = 1000,
+    Potion_Freeze,
+    Potion_Paralysis
 }
 
 [Serializable]
@@ -64,6 +64,8 @@ public class Buff : MonoBehaviour
 
     private float _poisonDelayTimer = -1f;
     private bool _isPlayer;
+
+   
 
     private void Awake()
     {
@@ -124,6 +126,11 @@ public class Buff : MonoBehaviour
             return;
         }
 
+        if (_buffStates[buffType])
+        {
+            return;
+        }
+
         _buffStates[buffType] = true;
 
         _buffTriggersByType[buffType].onBuffBegin?.Invoke();
@@ -148,7 +155,13 @@ public class Buff : MonoBehaviour
             return;
         }
 
-        _attackers[buffType] = attacker;
+        if (!_buffStates[buffType])
+        {
+            _attackers[buffType] = attacker;
+            _buffStates[buffType] = true;
+
+            _buffTriggersByType[buffType].onBuffBegin?.Invoke();
+        }
 
         if (_coroutines[buffType] != null)
         {
@@ -160,15 +173,15 @@ public class Buff : MonoBehaviour
 
     public void StopBuff(BuffType buffType)
     {
-        if (_coroutines[buffType] != null)
-        {
-            StopCoroutine(_coroutines[buffType]);
-        }
-
         _buffTriggersByType[buffType].onBuffEnd?.Invoke();
 
         _buffStates[buffType] = false;
         _coroutines[buffType] = null;
+
+        if (_coroutines[buffType] != null)
+        {
+            StopCoroutine(_coroutines[buffType]);
+        }
     }
 
     public bool GetBuffState(BuffType buffType)
@@ -178,16 +191,9 @@ public class Buff : MonoBehaviour
 
     private IEnumerator BuffCoroutine(BuffType buffType, float duration)
     {
-        _buffStates[buffType] = true;
-
-        _buffTriggersByType[buffType].onBuffBegin?.Invoke();
-
         yield return new WaitForSeconds(duration);
 
-        _buffTriggersByType[buffType].onBuffEnd?.Invoke();
-
-        _buffStates[buffType] = false;
-        _coroutines[buffType] = null;
+        StopBuff(buffType);
     }
 
     #region Poison Functions
