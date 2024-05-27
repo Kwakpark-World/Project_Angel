@@ -25,7 +25,7 @@ public abstract class PlayerCheckTrap : InteractableTrap
     {
         base.Update();
 
-        if (PlayerCheck() && !_isPlayTrap)
+        if (PlayerCheck())
         {
             OnTrap();
         }

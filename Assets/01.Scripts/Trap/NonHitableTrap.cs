@@ -13,11 +13,9 @@ public abstract class NonHitableTrap : Trap
     protected override void Update()
     {
         base.Update();
-
-        if (!_isPlayTrap)
-        {
-            OnTrap();
-        }
+        
+        OnTrap();
+        
     }
 
     protected override void PlayTrap(){}

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public abstract class HitableTrap : InteractableTrap
 {
+    public LayerMask hitableLayer;
+
     protected Vector3 _playerAttackCenter;
     protected Vector3 _playerAttackHalfSize;
     protected Quaternion _playerAttackRotation;
 
     private bool _isHitTrap;
+
 
     public override void InitializePoolItem()
     {
@@ -27,7 +30,7 @@ public abstract class HitableTrap : InteractableTrap
     {
         base.Update();
 
-        if (_isHitTrap && !_isPlayTrap)
+        if (_isHitTrap)
         {
             OnTrap();
         }

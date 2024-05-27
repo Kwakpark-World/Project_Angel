@@ -6,6 +6,6 @@ public class SpikeTrap : PlayerCheckTrap
 {
     protected override void SetPlayerCheckParameter()
     {
-        throw new System.NotImplementedException();
+
     }
 }

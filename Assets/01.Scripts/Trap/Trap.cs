@@ -31,6 +31,8 @@ public abstract class Trap : PoolableMono
 
     protected void OnTrap()
     {
+        if (_isPlayTrap) return;
+
         StartTrap();
         _isPlayTrap = true;
 
@@ -44,7 +46,7 @@ public abstract class Trap : PoolableMono
     protected abstract void PlayTrap();
     protected virtual void EndTrap(){}
 
-    protected void Attack(EnemyBrain[] enemies, Player player)
+    protected void Attack(Brain[] enemies, Player player)
     {
         if (enemies.Length > 0)
         {
@@ -56,10 +58,9 @@ public abstract class Trap : PoolableMono
 
         if (player != null)
             player.OnHit(_trapDamage);
-
     }
 
-    protected void Attack(EnemyBrain enemy)
+    protected void Attack(Brain enemy)
     {
         if (enemy != null)
             enemy.OnHit(_trapDamage);

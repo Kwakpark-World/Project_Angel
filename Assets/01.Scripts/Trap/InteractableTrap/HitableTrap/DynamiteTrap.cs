@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,9 +26,9 @@ public class DynamiteTrap : HitableTrap
     protected override void PlayTrap()
     {
         base.PlayTrap();
-
-        // 공격 범위 안에 오브젝트 가져와서 딜 넣고
+        AttackObject();
     }
+
 
     protected override void EndTrap()
     {
@@ -35,6 +36,28 @@ public class DynamiteTrap : HitableTrap
         PoolManager.Instance.Push(this);
 
         EndHit();
+    }
+
+    private Collider[] GetHitableObject()
+    {
+        return Physics.OverlapBox(_playerAttackCenter, _playerAttackHalfSize, _playerAttackRotation, hitableLayer);
+    }
+
+    private void AttackObject()
+    {
+        Collider[] hitableObj = GetHitableObject();
+
+        foreach(var obj in hitableObj)
+        {
+            if (obj.TryGetComponent<Brain>(out Brain enemy))
+            {
+                Attack(enemy);
+            }
+            else if (obj.TryGetComponent<Player>(out Player player))
+            {
+                Attack(player);
+            }
+        }    
     }
 
     protected override void SetPlayerAttackParameter()
