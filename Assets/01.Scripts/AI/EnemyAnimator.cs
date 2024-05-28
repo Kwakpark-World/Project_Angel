@@ -209,7 +209,6 @@ public class EnemyAnimator : MonoBehaviour
         }
     }
 
-
     public void ChemistNormalAttack()
     {
         PoolType potionType = PoolType.None;
@@ -217,56 +216,61 @@ public class EnemyAnimator : MonoBehaviour
         switch (UnityEngine.Random.Range(0, 3))
         {
             case 0:
-                potionType = PoolType.Weapon_Potion_Poison;
+                potionType = PoolType.Weapon_AreaPotion_Poison;
 
                 break;
 
             case 1:
-                potionType = PoolType.Weapon_Potion_Freeze;
+                potionType = PoolType.Weapon_AreaPotion_Freeze;
 
                 break;
 
             case 2:
-                potionType = PoolType.Weapon_Potion_Paralysis;
+                potionType = PoolType.Weapon_AreaPotion_Paralysis;
 
                 break;
         }
 
-        EnemyPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as EnemyPotion;
+        EnemyAreaPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as EnemyAreaPotion;
         debuffPotion.owner = _owner as EnemyBrain;
+        debuffPotion.direction = new Vector3(GameManager.Instance.PlayerInstance.playerCenter.position.x - debuffPotion.transform.position.x, 0f, GameManager.Instance.PlayerInstance.playerCenter.position.z - debuffPotion.transform.position.z).normalized;
+
+        debuffPotion.SetDefaultSpeed();
     }
 
     public void ChemistSkillAttack()
     {
-     
-        int randomPostion = UnityEngine.Random.Range(5,10);
-        for(int i =0; i < randomPostion; i++)
+        int randomPotion = UnityEngine.Random.Range(5, 10);
+
+        for (int i = 0; i < randomPotion; i++)
         {
             Vector2 randomPos = UnityEngine.Random.insideUnitCircle * 10f;
-            Vector3 spawnPotion = transform.position + new Vector3(randomPos.x,10,randomPos.y);
+            Vector3 spawnPos = transform.position + new Vector3(randomPos.x, 10, randomPos.y);
 
             PoolType potionType = PoolType.None;
 
             switch (UnityEngine.Random.Range(0, 3))
             {
                 case 0:
-                    potionType = PoolType.Weapon_Potion_Poison;
+                    potionType = PoolType.Weapon_AreaPotion_Poison;
 
                     break;
 
                 case 1:
-                    potionType = PoolType.Weapon_Potion_Freeze;
+                    potionType = PoolType.Weapon_AreaPotion_Freeze;
 
                     break;
 
                 case 2:
-                    potionType = PoolType.Weapon_Potion_Paralysis;
+                    potionType = PoolType.Weapon_AreaPotion_Paralysis;
 
                     break;
             }
 
-            EnemyPotion debuffPotion = PoolManager.Instance.Pop(potionType, spawnPotion) as EnemyPotion;
+            EnemyAreaPotion debuffPotion = PoolManager.Instance.Pop(potionType, spawnPos) as EnemyAreaPotion;
             debuffPotion.owner = _owner as EnemyBrain;
+            debuffPotion.direction = Vector3.down;
+            debuffPotion.speed = 9.8f;
         }
     }
     #endregion

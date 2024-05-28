@@ -3698,7 +3698,7 @@ Animator:
   m_GameObject: {fileID: 6888110812244894876}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: caf50a4b1220c2649a12a698f4fe4bc4, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3e7b98703979e0e43b0fc74e546a1b24, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8dffa31d9f857be4f938b067c2080cee, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3818,7 +3818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9f15a09f32fd243bedc9c1a77b2958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 11400000, guid: 3351bf73a3a710f458defda2e5b62ef6, type: 2}
+  tree: {fileID: 11400000, guid: ffff21a6adc1ffd4d9a3a52359829095, type: 2}
   brain: {fileID: 4227931294706521803}
 --- !u!114 &4227931294706521803
 MonoBehaviour:
@@ -3836,7 +3836,7 @@ MonoBehaviour:
   sameLifeCycle: 0
   treeRunner: {fileID: 8645812089384329458}
   enemyCenter: {fileID: 8618051461803453359}
-  <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 6d1bfd057cbbddb4888586eb66a822a8,
+  <EnemyStatData>k__BackingField: {fileID: 11400000, guid: e67be70c7c4f26d42aceecb871bee1a8,
     type: 2}
   enemySpawn: {fileID: 0}
 --- !u!114 &5689474626340923534
@@ -3862,6 +3862,28 @@ MonoBehaviour:
         - m_Target: {fileID: 5689474626340923534}
           m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
           m_MethodName: ChemistNormalAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onAnimationEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - stateName: SkillAttack
+    onAnimationBegin:
+      m_PersistentCalls:
+        m_Calls: []
+    onAnimationPlaying:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5689474626340923534}
+          m_TargetAssemblyTypeName: EnemyAnimator, Assembly-CSharp
+          m_MethodName: ChemistSkillAttack
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3957,7 +3979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffTriggers:
-  - buffType: 25
+  - buffType: 2
     onBuffBegin:
       m_PersistentCalls:
         m_Calls:
