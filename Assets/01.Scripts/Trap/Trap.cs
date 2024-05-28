@@ -21,6 +21,7 @@ public abstract class Trap : PoolableMono
 
         _isOnTrap = true;
         _isPlayTrap = false;
+
     }
 
     protected virtual void Update()
@@ -31,20 +32,26 @@ public abstract class Trap : PoolableMono
 
     protected void OnTrap()
     {
+        if (_isPlayTrap) return;
+
         StartTrap();
         _isPlayTrap = true;
-
-        PlayTrap();
-
-        _isPlayTrap = false;
-        EndTrap();
     }
 
-    protected virtual void StartTrap(){}
-    protected abstract void PlayTrap();
-    protected virtual void EndTrap(){}
+    protected virtual void StartTrap()
+    {
+        PlayTrap();
+    }
+    protected virtual void PlayTrap()
+    {
+        EndTrap();
+    }
+    protected virtual void EndTrap()
+    {
+        _isPlayTrap = false;
+    }
 
-    protected void Attack(EnemyBrain[] enemies, Player player)
+    protected void Attack(Brain[] enemies, Player player)
     {
         if (enemies.Length > 0)
         {
@@ -56,10 +63,9 @@ public abstract class Trap : PoolableMono
 
         if (player != null)
             player.OnHit(_trapDamage);
-
     }
 
-    protected void Attack(EnemyBrain enemy)
+    protected void Attack(Brain enemy)
     {
         if (enemy != null)
             enemy.OnHit(_trapDamage);

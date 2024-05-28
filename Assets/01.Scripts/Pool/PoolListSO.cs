@@ -30,10 +30,12 @@ public enum PoolType
     Weapon_BuffArea_Paralysis,
     Effect_Shield = 2000,
     Effect_PlayerAttack_Slam_Normal = 2100,
-    Effect_PlayerAttack_Slam_Awaken_0,
-    Effect_PlayerAttack_Slam_Awaken_1,
-    Effect_PlayerAttack_Slam_Awaken_2,
-    Dynamite = 3000,
+    Effect_PlayerAttack_Slam_Awaken_0 = 2101,
+    Effect_PlayerAttack_Slam_Awaken_1 = 2102,
+    Effect_PlayerAttack_Slam_Awaken_2 = 2203,
+    Trap_Dynamite = 3000,
+    Trap_Spike = 3001,
+
 }
 
 [Serializable]

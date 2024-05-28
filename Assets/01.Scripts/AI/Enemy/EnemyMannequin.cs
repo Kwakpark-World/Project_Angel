@@ -58,7 +58,6 @@ public class EnemyMannequin : MonoBehaviour
             if (enemy.spawnRatio >= randomValue)
             {
                 Brain brain = PoolManager.Instance.Pop(enemy.enemyType, transform.position) as Brain;
-                brain.enemySpawn = this;
 
                 break;
             }

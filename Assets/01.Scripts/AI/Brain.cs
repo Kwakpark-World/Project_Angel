@@ -27,8 +27,6 @@ public abstract class Brain : PoolableMono
     public float CurrentHealth { get; set; }
     public float NormalAttackTimer { get; set; }
     public float SkillAttackTimer { get; set; }
-    [HideInInspector]
-    public EnemyMannequin enemySpawn;
 
     protected virtual void Start()
     {

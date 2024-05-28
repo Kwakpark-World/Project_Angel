@@ -4,39 +4,37 @@ using UnityEngine;
 
 public abstract class PlayerCheckTrap : InteractableTrap
 {
-    protected Vector3 _playerCheckCenter;
-    protected Vector3 _playerCheckHalfSize;
-    protected Quaternion _playerCheckRotation;
+    private LayerMask _playerLayer;
 
-    private readonly LayerMask _playerLayer = LayerMask.GetMask("Player");
+    protected Vector3 _playerCheckCenter = Vector3.zero;
+    protected Vector3 _playerCheckHalfSize = Vector3.zero;
+    protected Quaternion _playerCheckRotation = Quaternion.identity;
 
-    public override void InitializePoolItem()
+    protected override void Awake()
     {
-        base.InitializePoolItem();
+        base.Awake();
 
-        _playerCheckCenter = Vector3.zero;
-        _playerCheckHalfSize = Vector3.zero;
-        _playerCheckRotation = Quaternion.identity;
-
-        SetPlayerCheckParameter();
+        _playerLayer = LayerMask.GetMask("Player");
     }
 
     protected override void Update()
     {
         base.Update();
 
-        if (PlayerCheck() && !_isPlayTrap)
+        if (PlayerCheck())
         {
-            OnTrap();
+            if (CoolCheck())
+            {
+                OnTrap();
+            }
         }
     }
 
-    protected override void PlayTrap(){}
-
-    protected abstract void SetPlayerCheckParameter();
     protected bool PlayerCheck()
     {
         Collider[] playerCheck = Physics.OverlapBox(_playerCheckCenter, _playerCheckHalfSize, _playerCheckRotation, _playerLayer);
+
+        Debug.Log(playerCheck.Length);
 
         if (playerCheck.Length > 0)
             return true;
