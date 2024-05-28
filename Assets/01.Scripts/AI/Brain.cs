@@ -61,6 +61,7 @@ public abstract class Brain : PoolableMono
         if (Keyboard.current.mKey.wasPressedThisFrame)
         {
             BuffCompo.PlayBuff(BuffType.Shield, 3f, this);
+            Debug.Log("5");
         }
         #endregion
     }

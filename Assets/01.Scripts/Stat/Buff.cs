@@ -300,6 +300,7 @@ public class Buff : MonoBehaviour
     public void ShieldBegin()
     {
         EffectManager.Instance.PlayEffect(PoolType.Effect_Shield, transform.position + transform.up * 1.5f, transform);
+        Debug.Log("3");
     }
     #endregion
 }
