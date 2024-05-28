@@ -12,13 +12,44 @@ public class EnemyBuffArea : PoolableMono
     private float _radius = 5f; // 원의 반지름 설정
     [SerializeField]
     private float _height = 0.5f;
+    [SerializeField]
     private bool shouldDrawGizmos = false;
 
-    //public EnemyAnimator enemyAnimator;
+    private void Update()
+    {
+        Vector3 center = transform.position;
+
+        if (GameManager.Instance.PlayerInstance != null)
+        {
+            Player player = GameManager.Instance.PlayerInstance;
+            Vector3 direction = player.playerCenter.position - center;
+
+            float distanceXZ = new Vector3(direction.x, 0f, direction.z).sqrMagnitude;
+            float distanceY = direction.y;
+
+            if (distanceXZ <= _radius * _radius)
+            {
+                if (distanceY <= _height * 0.5f)
+                {
+                    Debug.Log(owner);
+
+                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_areaBuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
+                }
+                else
+                {
+                    Debug.Log("플레이어가 원 밖에 있습니다.");
+                }
+            }
+            else
+            {
+                Debug.Log("플레이어가 원 밖에 있습니다.");
+            }
+        }
+    }
 
     private void OnDrawGizmos()
     {
-        //if (!shouldDrawGizmos) return;
+        if (!shouldDrawGizmos) return;
 
         Gizmos.color = Color.red;
         float angleStep = 10f;
@@ -34,29 +65,6 @@ public class EnemyBuffArea : PoolableMono
             Vector3 startPoint = new Vector3(startX, center.y, startZ);
             Vector3 endPoint = new Vector3(endX, center.y, endZ);
             Gizmos.DrawLine(startPoint, endPoint);
-        }
-
-        if (GameManager.Instance.PlayerInstance.transform != null)
-        {
-            Player player = GameManager.Instance.PlayerInstance;
-            Vector3 direction = player.playerCenter.position - center;
-
-            float distanceXZ = new Vector3(direction.x, 0f, direction.z).sqrMagnitude;
-            float distanceY = direction.y;
-
-            if (distanceXZ <= _radius * _radius)
-            {
-                if (distanceY <= _height * 0.5f)
-                {
-                    player.BuffCompo.PlayBuff(_areaBuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
-                }
-
-                Debug.Log("플레이어가 원 밖에 있습니다.");
-            }
-            else
-            {
-                Debug.Log("플레이어가 원 밖에 있습니다.");
-            }
         }
     }
 }

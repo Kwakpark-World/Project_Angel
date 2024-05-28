@@ -34,10 +34,11 @@ public class EnemyAreaPotion : PoolableMono
     private void OnTriggerEnter(Collider other)
     {
         Vector3 areaPos = transform.position;
+        EnemyBuffArea buffArea = null;
 
         if ((1 << other.gameObject.layer & _environmentLayer) != 0)
         {
-            areaPos = other.transform.position;
+            areaPos = transform.position;
         }
         else if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Abs(other.transform.position.y) + 1f, _environmentLayer))
         {
@@ -47,20 +48,22 @@ public class EnemyAreaPotion : PoolableMono
         switch (_potionBuffType)
         {
             case BuffType.Potion_Poison:
-                PoolManager.Instance.Pop(PoolType.Weapon_BuffArea_Poison, areaPos);
+                buffArea = PoolManager.Instance.Pop(PoolType.Weapon_BuffArea_Poison, areaPos) as EnemyBuffArea;
 
                 break;
 
             case BuffType.Potion_Freeze:
-                PoolManager.Instance.Pop(PoolType.Weapon_BuffArea_Freeze, areaPos);
+                buffArea = PoolManager.Instance.Pop(PoolType.Weapon_BuffArea_Freeze, areaPos) as EnemyBuffArea;
 
                 break;
 
             case BuffType.Potion_Paralysis:
-                PoolManager.Instance.Pop(PoolType.Weapon_BuffArea_Paralysis, areaPos);
+                buffArea = PoolManager.Instance.Pop(PoolType.Weapon_BuffArea_Paralysis, areaPos) as EnemyBuffArea;
 
                 break;
         }
+
+        buffArea.owner = owner;
 
         if (other.gameObject == GameManager.Instance.PlayerInstance.gameObject)
         {
