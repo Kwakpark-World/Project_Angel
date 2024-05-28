@@ -13,23 +13,25 @@ public class DynamiteTrap : HitableTrap
 
     protected override void StartTrap()
     {
-        base.StartTrap();
-
         // 터지는 사운드나 이펙트?
+
+        base.StartTrap();
     }
 
     protected override void PlayTrap()
     {
         AttackObject();
+
+        base.PlayTrap();
     }
 
 
     protected override void EndTrap()
     {
-        base.EndTrap();
         PoolManager.Instance.Push(this);
 
         EndHit();
+        base.EndTrap();
     }
 
     protected override void SetPlayerRangeParameter()

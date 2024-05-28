@@ -16,26 +16,49 @@ public class SpikeTrap : PlayerCheckTrap
 
 
     private float _damage = 8f;
+    private Vector3 _defaultPosition;
+    private Coroutine _onSpikeCoroutine = null;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+// debug
+        SetPlayerRangeParameter();
+
+        _isOnTrap = true;
+// debug    
+        _defaultPosition = transform.position;
+    }
 
     protected override void StartTrap()
     {
+        // 가시 발판 빤짝하기 (나오기 전 나올거라 알림)
         // 올라오기
+
         OnSpike();
+
+        StartDelayAction(()=> base.StartTrap());
     }
 
     protected override void PlayTrap()
     {
         AttackObject();
+        base.PlayTrap();
     }
 
     protected override void EndTrap()
     {
         OffSpike();
+
+        base.EndTrap();
     }
 
     private void OnSpike()
     {
-        
+        if (_onSpikeCoroutine != null) return;
+
+        _onSpikeCoroutine = StartCoroutine(RunSpike());
     }
     
     private void OffSpike()
@@ -83,5 +106,16 @@ public class SpikeTrap : PlayerCheckTrap
         Gizmos.DrawWireCube(transform.position + attackCenter, attackSize / 2);
     }
 
+    private IEnumerator RunSpike()
+    {
+        Vector3 targetPos = transform.position + transform.up * 5f;
+        while (transform.position.y < targetPos.y)
+        {
+            transform.position = Vector3.LerpUnclamped(transform.position, targetPos, Time.deltaTime * 50);
+            yield return null;
+        }
 
+        DelayActionStop();
+        _onSpikeCoroutine = null;
+    }
 }

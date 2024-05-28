@@ -36,16 +36,20 @@ public abstract class Trap : PoolableMono
 
         StartTrap();
         _isPlayTrap = true;
-
-        PlayTrap();
-
-        _isPlayTrap = false;
-        EndTrap();
     }
 
-    protected virtual void StartTrap(){}
-    protected abstract void PlayTrap();
-    protected virtual void EndTrap(){}
+    protected virtual void StartTrap()
+    {
+        PlayTrap();
+    }
+    protected virtual void PlayTrap()
+    {
+        EndTrap();
+    }
+    protected virtual void EndTrap()
+    {
+        _isPlayTrap = false;
+    }
 
     protected void Attack(Brain[] enemies, Player player)
     {

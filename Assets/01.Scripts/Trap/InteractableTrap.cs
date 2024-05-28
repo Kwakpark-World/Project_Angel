@@ -17,6 +17,9 @@ public abstract class InteractableTrap : Trap
     protected HashSet<Brain> _enemyDuplicateCheck = new HashSet<Brain>();
     protected HashSet<Player> _playerDuplicateCheck = new HashSet<Player>();
 
+    protected float _prevRunTime;
+    protected float _trapCoolTime = 5f;
+
     public override void InitializePoolItem()
     {
         base.InitializePoolItem();
@@ -30,6 +33,14 @@ public abstract class InteractableTrap : Trap
 
         _enemyDuplicateCheck.Clear();
         _playerDuplicateCheck.Clear();
+    }
+
+    protected bool CoolCheck()
+    {
+        if (_prevRunTime + _trapCoolTime > Time.time) return false;
+
+        _prevRunTime = Time.time;
+        return true;
     }
 
     private Collider[] GetHitableObject()
@@ -73,7 +84,7 @@ public abstract class InteractableTrap : Trap
         StartCoroutine(DelayAction(todoAction));
     }
 
-    public void DelayActionStart()
+    public void DelayActionStop()
     {
         _isDelay = false;
     }

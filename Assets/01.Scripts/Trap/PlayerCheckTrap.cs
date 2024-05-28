@@ -23,13 +23,18 @@ public abstract class PlayerCheckTrap : InteractableTrap
 
         if (PlayerCheck())
         {
-            OnTrap();
+            if (CoolCheck())
+            {
+                OnTrap();
+            }
         }
     }
 
     protected bool PlayerCheck()
     {
         Collider[] playerCheck = Physics.OverlapBox(_playerCheckCenter, _playerCheckHalfSize, _playerCheckRotation, _playerLayer);
+
+        Debug.Log(playerCheck.Length);
 
         if (playerCheck.Length > 0)
             return true;
