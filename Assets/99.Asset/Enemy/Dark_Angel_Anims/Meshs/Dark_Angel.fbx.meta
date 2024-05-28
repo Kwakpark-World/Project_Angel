@@ -528,11 +528,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack_1.1
-      takeName: MyCharacter|Float_Attack_1.1
+      name: MyCharacter|Float_Attack_1.1_To_Idle_1
+      takeName: MyCharacter|Float_Attack_1.1_To_Idle_1
       internalID: 0
       firstFrame: 0
-      lastFrame: 17
+      lastFrame: 29
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -541,17 +541,24 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
+      loopBlendOrientation: 1
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.45334935
+        functionName: NewEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -761,7 +768,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.57195574
+        functionName: OnAnimationPlaying
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OnAnimationEnd
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -1519,24 +1540,21 @@ ModelImporter:
       - time: 0.30526316
         functionName: OnAnimationPlaying
         data: 
-        objectReferenceParameter: {fileID: 7234891252622568735, guid: c9c4d1b35bede634987b294233cf4273,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 1
         functionName: OnAnimationEnd
         data: 
-        objectReferenceParameter: {fileID: 7234891252622568735, guid: c9c4d1b35bede634987b294233cf4273,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 1
+        intParameter: 0
         messageOptions: 0
       - time: 0
         functionName: OnAnimationBegin
         data: 
-        objectReferenceParameter: {fileID: 7234891252622568735, guid: c9c4d1b35bede634987b294233cf4273,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -1688,16 +1706,14 @@ ModelImporter:
       - time: 0.26410303
         functionName: OnAnimationPlaying
         data: 
-        objectReferenceParameter: {fileID: 7234891252622568735, guid: c9c4d1b35bede634987b294233cf4273,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0
         functionName: OnAnimationBegin
         data: 
-        objectReferenceParameter: {fileID: 7234891252622568735, guid: c9c4d1b35bede634987b294233cf4273,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,7 @@ public class EnemyPotion : PoolableMono
 
     private void Update()
     {
-        _rigidbody.velocity = transform.forward * _speed;
+        _rigidbody.velocity = -transform.forward * _speed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,17 +31,17 @@ public class EnemyPotion : PoolableMono
         {
             switch (_potionBuffType)
             {
-                case BuffType.Poison:
+                case BuffType.Potion_Poison:
                     GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
 
                     break;
 
-                case BuffType.Freeze:
+                case BuffType.Potion_Freeze:
                     GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.freezeDuration, owner);
 
                     break;
 
-                case BuffType.Knockback:
+                case BuffType.Potion_Paralysis:
                     GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner);
 
                     break;
@@ -50,10 +51,10 @@ public class EnemyPotion : PoolableMono
         }
     }
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        Vector3 direction = new Vector3(GameManager.Instance.PlayerInstance.transform.position.x - transform.position.x, 0f, GameManager.Instance.PlayerInstance.transform.position.z - transform.position.z).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        Vector3 direction = new Vector3(GameManager.Instance.PlayerInstance.playerCenter.position.x - transform.position.x, 0f, GameManager.Instance.PlayerInstance.playerCenter.position.z - transform.position.z).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(-direction);
         transform.rotation = lookRotation;
 
         PoolManager.Instance.Push(this, _lifetime);

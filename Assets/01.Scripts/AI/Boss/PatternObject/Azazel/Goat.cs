@@ -39,9 +39,9 @@ public class Goat : Brain
         }
     }
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         _isLiving = true;
         _lifetimer = Time.time;
@@ -55,7 +55,7 @@ public class Goat : Brain
         _lifetime = EnemyStatData.GetLifetime();
     }
 
-    public override void OnHit(float incomingDamage)
+    public override void OnHit(float incomingDamage, bool isHitPhysically = false, float knockbackPower = 0f)
     {
         // Do nothing.
     }

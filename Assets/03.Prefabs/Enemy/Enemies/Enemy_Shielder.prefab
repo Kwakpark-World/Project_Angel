@@ -834,6 +834,37 @@ Transform:
   - {fileID: 3897852202548498729}
   m_Father: {fileID: 4012741449966921223}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2968915436219716889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6269706589634689334}
+  m_Layer: 7
+  m_Name: EnemyCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6269706589634689334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968915436219716889}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8744628803728053585}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2983022269086570435
 GameObject:
   m_ObjectHideFlags: 0
@@ -2893,6 +2924,7 @@ Transform:
   - {fileID: 2237628759555524303}
   - {fileID: 3169533086746790770}
   - {fileID: 4948163779093966689}
+  - {fileID: 6269706589634689334}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &8787152337149289024
@@ -2955,7 +2987,7 @@ Animator:
   m_GameObject: {fileID: 7234891252622568735}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: caf50a4b1220c2649a12a698f4fe4bc4, type: 3}
-  m_Controller: {fileID: 9100000, guid: 6d36b86f5b7c84d468358ec359fd71e1, type: 2}
+  m_Controller: {fileID: 9100000, guid: fd9af4a779fdc7b45b4cded0209c3151, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3089,10 +3121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609df6e340b50e64f887eb178025cbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolingType: 1
+  poolType: 103
   sameLifeCycle: 0
   treeRunner: {fileID: 5062443879734286216}
-  enemyCenter: {fileID: 0}
+  enemyCenter: {fileID: 6269706589634689334}
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 3f6896010401f6f4984bc063d48abf93,
     type: 2}
   enemySpawn: {fileID: 0}
@@ -3310,7 +3342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffTriggers:
-  - buffType: 25
+  - buffType: 2
     onBuffBegin:
       m_PersistentCalls:
         m_Calls:

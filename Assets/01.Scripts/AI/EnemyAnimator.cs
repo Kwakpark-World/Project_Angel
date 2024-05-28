@@ -137,28 +137,28 @@ public class EnemyAnimator : MonoBehaviour
     #region Enemy Normal Attack Functions
     public void RangerNormalAttack()
     {
-        EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
+        EnemyArrow arrow = PoolManager.Instance.Pop(PoolType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
         arrow.owner = _owner as EnemyBrain;
     }
 
     public void AlchemistNormalAttack()
     {
-        PoolingType potionType = PoolingType.None;
+        PoolType potionType = PoolType.None;
 
         switch (UnityEngine.Random.Range(0, 3))
         {
             case 0:
-                potionType = PoolingType.Weapon_Potion_Poison;
+                potionType = PoolType.Weapon_Potion_Poison;
 
                 break;
 
             case 1:
-                potionType = PoolingType.Weapon_Potion_Freeze;
+                potionType = PoolType.Weapon_Potion_Freeze;
 
                 break;
 
             case 2:
-                potionType = PoolingType.Weapon_Potion_Knockback;
+                potionType = PoolType.Weapon_Potion_Paralysis;
 
                 break;
         }
@@ -166,19 +166,23 @@ public class EnemyAnimator : MonoBehaviour
         EnemyPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as EnemyPotion;
         debuffPotion.owner = _owner as EnemyBrain;
     }
+    public void ShieldNormalAttack()
+    {
+        _owner.FindNearbyEnemies(5, 5f);
+    }
 
     public void ArcherNormalAttack()
     {
         int arrowCount = 3;
-        float angleRange = 30;
+        float angleRange = 45;
         float angleIncrement = angleRange / (arrowCount - 1);
 
         for (int i = 0; i < arrowCount; i++)
         {
-            float angle = -angleIncrement + angleIncrement * i;
+            float angle = -angleIncrement * (arrowCount * 0.5f - 0.5f) + angleIncrement * i;
 
-            EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
-            Vector3 direction = Quaternion.Euler(1, angle, 1) * arrow.transform.forward;
+            EnemyArrow arrow = PoolManager.Instance.Pop(PoolType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
+            Vector3 direction = Quaternion.Euler(0f, angle, 0f) * arrow.transform.forward;
             arrow.transform.forward = direction;
             arrow.owner = _owner as EnemyBrain;
             //arrowObject.transform.forward = direction;
@@ -189,15 +193,15 @@ public class EnemyAnimator : MonoBehaviour
     public void ArcherSkillAttack()
     {
         int arrowCount = 5;
-        float angleRange = 30;
+        float angleRange = 45;
         float angleIncrement = angleRange / (arrowCount - 1);
 
         for (int i = 0; i < arrowCount; i++)
         {
-            float angle = -angleIncrement + angleIncrement * i;
+            float angle = -angleIncrement * (arrowCount * 0.5f - 0.5f) + angleIncrement * i;
 
-            EnemyArrow arrow = PoolManager.Instance.Pop(PoolingType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
-            Vector3 direction = Quaternion.Euler(0, angle, 0) * arrow.transform.forward;
+            EnemyArrow arrow = PoolManager.Instance.Pop(PoolType.Weapon_Arrow, _weaponTransform.position) as EnemyArrow;
+            Vector3 direction = Quaternion.Euler(0f, angle, 0f) * arrow.transform.forward;
             arrow.transform.forward = direction;
             arrow.owner = _owner as EnemyBrain;
             //Debug.Log(arrow);
@@ -205,9 +209,69 @@ public class EnemyAnimator : MonoBehaviour
         }
     }
 
-    public void ShieldNormalAttack()
+    public void ChemistNormalAttack()
     {
-        _owner.FindNearbyEnemies(5, 0f);
+        PoolType potionType = PoolType.None;
+
+        switch (UnityEngine.Random.Range(0, 3))
+        {
+            case 0:
+                potionType = PoolType.Weapon_AreaPotion_Poison;
+
+                break;
+
+            case 1:
+                potionType = PoolType.Weapon_AreaPotion_Freeze;
+
+                break;
+
+            case 2:
+                potionType = PoolType.Weapon_AreaPotion_Paralysis;
+
+                break;
+        }
+
+        EnemyAreaPotion debuffPotion = PoolManager.Instance.Pop(potionType, _weaponTransform.position) as EnemyAreaPotion;
+        debuffPotion.owner = _owner as EnemyBrain;
+        debuffPotion.direction = new Vector3(GameManager.Instance.PlayerInstance.playerCenter.position.x - debuffPotion.transform.position.x, 0f, GameManager.Instance.PlayerInstance.playerCenter.position.z - debuffPotion.transform.position.z).normalized;
+
+        debuffPotion.SetDefaultSpeed();
+    }
+
+    public void ChemistSkillAttack()
+    {
+        int randomPotion = UnityEngine.Random.Range(5, 10);
+
+        for (int i = 0; i < randomPotion; i++)
+        {
+            Vector2 randomPos = UnityEngine.Random.insideUnitCircle * 10f;
+            Vector3 spawnPos = transform.position + new Vector3(randomPos.x, 10, randomPos.y);
+
+            PoolType potionType = PoolType.None;
+
+            switch (UnityEngine.Random.Range(0, 3))
+            {
+                case 0:
+                    potionType = PoolType.Weapon_AreaPotion_Poison;
+
+                    break;
+
+                case 1:
+                    potionType = PoolType.Weapon_AreaPotion_Freeze;
+
+                    break;
+
+                case 2:
+                    potionType = PoolType.Weapon_AreaPotion_Paralysis;
+
+                    break;
+            }
+
+            EnemyAreaPotion debuffPotion = PoolManager.Instance.Pop(potionType, spawnPos) as EnemyAreaPotion;
+            debuffPotion.owner = _owner as EnemyBrain;
+            debuffPotion.direction = Vector3.down;
+            debuffPotion.speed = 9.8f;
+        }
     }
     #endregion
 

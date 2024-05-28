@@ -92,7 +92,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         Vector3 pos = _player.transform.position + _attackOffset;
         pos.y = 0;
 
-        EffectManager.Instance.PlayEffect(PoolingType.Effect_PlayerAttack_Slam_Normal, pos);
+        EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Slam_Normal, pos);
     }
 
     private void JumpToFront()
@@ -102,7 +102,7 @@ public class PlayerNormalSlamState : PlayerAttackState
 
         float slamDist = Vector3.Distance(_player.transform.position, _player.MousePosInWorld) * 2f;
 
-        move += _player.transform.forward * Mathf.Min(slamDist, _player.PlayerStatData.GetSlamSkillDistance());
+        move += _player.transform.forward * Mathf.Min(slamDist, _player.PlayerStatData.GetSlamMaxDistance());
         _player.SetVelocity(move);
     }
 

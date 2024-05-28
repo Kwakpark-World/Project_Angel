@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -5,47 +6,94 @@ using UnityEngine;
 
 public enum EnemyStatType
 {
-    maxHealth,
+    maxHealth = 0,
     lifetime,
-    defensivePower,
-    detectRange,
-    attackPower,
+    defensivePower = 10,
+    detectRange = 100,
+    attackPower = 110,
     attackRange,
     attackDelay,
-    skillCooldown,
-    moveSpeed,
-    rotateSpeed,
-    patternAmount,
+    moveSpeed = 200,
+    rotateSpeed = 210,
+    skillCooldown = 300,
+    patternAmount = 400,
 }
 
+[CreateAssetMenu(menuName = "SO/Stat/Enemy")]
 public class EnemyStat : ScriptableObject
 {
     [Header("Defensive stats")]
-    public Stat maxHealth; // 최대 체력
-    public Stat lifetime; // 수명
-    public Stat defensivePower; // 방어력
+    [Tooltip("최대 체력")]
+    public Stat maxHealth;
+    [Tooltip("수명")]
+    public Stat lifetime;
+    [Tooltip("방어력")]
+    public Stat defensivePower;
 
     [Header("Offensive stats")]
-    public Stat detectRange; // 탐지 범위
-    public Stat attackPower; // 공격력
-    public Stat attackRange; // 공격 범위
-    public Stat attackDelay; // 공격 딜레이
-    public Stat skillCooldown; // 스킬 쿨다운
+    [Tooltip("탐지 범위")]
+    public Stat detectRange;
+    [Tooltip("공격력")]
+    public Stat attackPower;
+    [Tooltip("공격 범위")]
+    public Stat attackRange;
+    [Tooltip("공격 딜레이")]
+    public Stat attackDelay;
 
     [Header("Move stats")]
-    public Stat moveSpeed; // 이동 속도
-    public Stat rotateSpeed; // 회전 속도
+    [Tooltip("이동 속도")]
+    public Stat moveSpeed;
+    [Tooltip("회전 속도")]
+    public Stat rotateSpeed;
+
+    [Header("Skill stats")]
+    [Tooltip("스킬 쿨다운")]
+    public Stat skillCooldown;
 
     [Header("Boss stats")]
-    public Stat patternAmount; // 패턴 개수
+    [Tooltip("패턴 개수")]
+    public Stat patternAmount;
 
-    protected Brain owner;
+    private Brain _owner;
 
-    protected Dictionary<EnemyStatType, FieldInfo> fieldInfoDictionary = new Dictionary<EnemyStatType, FieldInfo>();
+    private Dictionary<EnemyStatType, FieldInfo> _fieldInfoDictionary = new Dictionary<EnemyStatType, FieldInfo>();
 
-    public virtual void SetOwner(Brain owner)
+    private void OnEnable()
     {
-        this.owner = owner;
+        Type enemyStatType = GetType();
+
+        foreach (EnemyStatType statType in Enum.GetValues(typeof(EnemyStatType)))
+        {
+            string statName = statType.ToString();
+            FieldInfo statField = enemyStatType.GetField(statName);
+
+            if (statField == null)
+            {
+                Debug.LogError($"{statName} stat doesn't exist.");
+            }
+            else
+            {
+                _fieldInfoDictionary.Add(statType, statField);
+            }
+        }
+    }
+
+    public void SetOwner(Brain owner)
+    {
+        _owner = owner;
+    }
+
+    public void InitializeAllModifiers()
+    {
+        foreach (EnemyStatType statType in Enum.GetValues(typeof(EnemyStatType)))
+        {
+            GetStatByType(statType).InitializeModifier();
+        }
+    }
+
+    public Stat GetStatByType(EnemyStatType statType)
+    {
+        return _fieldInfoDictionary[statType].GetValue(this) as Stat;
     }
 
     public float GetMaxHealth()
@@ -83,11 +131,6 @@ public class EnemyStat : ScriptableObject
         return attackDelay.GetValue();
     }
 
-    public float GetSkillCooldown()
-    {
-        return skillCooldown.GetValue();
-    }
-
     public float GetMoveSpeed()
     {
         return moveSpeed.GetValue();
@@ -96,6 +139,11 @@ public class EnemyStat : ScriptableObject
     public float GetRotateSpeed()
     {
         return rotateSpeed.GetValue();
+    }
+
+    public float GetSkillCooldown()
+    {
+        return skillCooldown.GetValue();
     }
 
     public int GetPatternAmount()

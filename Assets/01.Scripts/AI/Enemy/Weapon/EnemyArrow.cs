@@ -1,4 +1,3 @@
-using AmplifyShaderEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +12,6 @@ public class EnemyArrow : PoolableMono
     private int _lifetime = 5;
     [SerializeField]
     private float _speed = 10f;
-    [SerializeField]
-    private float _rotateSpeed = 100f;
     private Rigidbody _rigidbody;
 
     private void Awake()
@@ -38,14 +35,12 @@ public class EnemyArrow : PoolableMono
         {
             PoolManager.Instance.Push(this);
         }
-
-        // If arrow collision with environment, push to pool this.
     }
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
         //Vector3 direction = new Vector3(GameManager.Instance.PlayerInstance.transform.position.x - transform.position.x, 0f, GameManager.Instance.PlayerInstance.transform.position.z - transform.position.z).normalized;
-        Vector3 direction = (GameManager.Instance.PlayerInstance.transform.position - transform.position).normalized;
+        Vector3 direction = (GameManager.Instance.PlayerInstance.playerCenter.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = lookRotation;
 

@@ -7,32 +7,31 @@ using UnityEngine.Events;
 public enum BuffType
 {
     None = 0,
-    Poison,
-    Freeze,
-    Knockback,
     Scapegoat,
-    Rune_Acceleration_DefenseCooldown,
+    Shield,
+    Rune_Acceleration_DefenseCooldown = 100,
     Rune_Acceleration_MoveSpeed,
     Rune_Acceleration_SkillCooldown,
-    Rune_Acceleration_Synergy,
-    Rune_Attack_AttackPower,
+    Rune_Acceleration_Synergy = 150,
+    Rune_Attack_AttackPower = 200,
     Rune_Attack_AttackSpeed,
     Rune_Attack_CriticalChance,
-    Rune_Attack_Synergy,
-    Rune_Debuff_Freeze,
-    Rune_Debuff_Knockback,
+    Rune_Attack_Synergy = 250,
+    Rune_Debuff_Freeze = 300,
+    Rune_Debuff_Paralysis,
     Rune_Debuff_Poison,
-    Rune_Debuff_Synergy,
-    Rune_Defense_DefensivePower,
+    Rune_Debuff_Synergy = 350,
+    Rune_Defense_DefensivePower = 400,
     Rune_Defense_Reflection,
     Rune_Defense_Shield,
-    Rune_Defense_Synergy,
-    Rune_Health_Absorb,
+    Rune_Defense_Synergy = 450,
+    Rune_Health_Absorb = 500,
     Rune_Health_MaxHealth,
     Rune_Health_Recovery,
-    Rune_Health_Synergy,
-    Shield,
-    // Fill here.
+    Rune_Health_Synergy = 550,
+    Potion_Poison = 1000,
+    Potion_Freeze,
+    Potion_Paralysis
 }
 
 [Serializable]
@@ -65,6 +64,8 @@ public class Buff : MonoBehaviour
 
     private float _poisonDelayTimer = -1f;
     private bool _isPlayer;
+
+   
 
     private void Awake()
     {
@@ -125,6 +126,11 @@ public class Buff : MonoBehaviour
             return;
         }
 
+        if (_buffStates[buffType])
+        {
+            return;
+        }
+
         _buffStates[buffType] = true;
 
         _buffTriggersByType[buffType].onBuffBegin?.Invoke();
@@ -149,7 +155,13 @@ public class Buff : MonoBehaviour
             return;
         }
 
-        _attackers[buffType] = attacker;
+        if (!_buffStates[buffType])
+        {
+            _attackers[buffType] = attacker;
+            _buffStates[buffType] = true;
+
+            _buffTriggersByType[buffType].onBuffBegin?.Invoke();
+        }
 
         if (_coroutines[buffType] != null)
         {
@@ -161,15 +173,15 @@ public class Buff : MonoBehaviour
 
     public void StopBuff(BuffType buffType)
     {
-        if (_coroutines[buffType] != null)
-        {
-            StopCoroutine(_coroutines[buffType]);
-        }
-
         _buffTriggersByType[buffType].onBuffEnd?.Invoke();
 
         _buffStates[buffType] = false;
         _coroutines[buffType] = null;
+
+        if (_coroutines[buffType] != null)
+        {
+            StopCoroutine(_coroutines[buffType]);
+        }
     }
 
     public bool GetBuffState(BuffType buffType)
@@ -179,16 +191,9 @@ public class Buff : MonoBehaviour
 
     private IEnumerator BuffCoroutine(BuffType buffType, float duration)
     {
-        _buffStates[buffType] = true;
-
-        _buffTriggersByType[buffType].onBuffBegin?.Invoke();
-
         yield return new WaitForSeconds(duration);
 
-        _buffTriggersByType[buffType].onBuffEnd?.Invoke();
-
-        _buffStates[buffType] = false;
-        _coroutines[buffType] = null;
+        StopBuff(buffType);
     }
 
     #region Poison Functions
@@ -196,12 +201,12 @@ public class Buff : MonoBehaviour
     {
         if (_isPlayer)
         {
-            _poisonDelayTimer = Time.time - (_attackers[BuffType.Poison] as Brain).BuffCompo.BuffStatData.poisonDelay;
+            _poisonDelayTimer = Time.time - (_attackers[BuffType.Potion_Poison] as Brain).BuffCompo.BuffStatData.poisonDelay;
             //Debug.Log(RuneManager.Instance.isArmor);
         }
         else
         {
-            _poisonDelayTimer = Time.time - (_attackers[BuffType.Poison] as Player).BuffCompo.BuffStatData.poisonDelay;
+            _poisonDelayTimer = Time.time - (_attackers[BuffType.Potion_Poison] as Player).BuffCompo.BuffStatData.poisonDelay;
         }
     }
 
@@ -209,7 +214,7 @@ public class Buff : MonoBehaviour
     {
         if (_isPlayer)
         {
-            Brain attacker = _attackers[BuffType.Poison] as Brain;
+            Brain attacker = _attackers[BuffType.Potion_Poison] as Brain;
 
             if (Time.time > _poisonDelayTimer + attacker.BuffCompo.BuffStatData.poisonDelay)
             {
@@ -220,7 +225,7 @@ public class Buff : MonoBehaviour
         }
         else
         {
-            Player attacker = _attackers[BuffType.Poison] as Player;
+            Player attacker = _attackers[BuffType.Potion_Poison] as Player;
 
             if (Time.time > _poisonDelayTimer + attacker.BuffCompo.BuffStatData.poisonDelay)
             {
@@ -237,13 +242,13 @@ public class Buff : MonoBehaviour
     {
         if (_isPlayer)
         {
-            Brain attacker = _attackers[BuffType.Freeze] as Brain;
+            Brain attacker = _attackers[BuffType.Potion_Freeze] as Brain;
 
             _ownerController.PlayerStatData.moveSpeed.AddModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
         }
         else
         {
-            PlayerController attacker = _attackers[BuffType.Freeze] as PlayerController;
+            PlayerController attacker = _attackers[BuffType.Potion_Freeze] as PlayerController;
 
             _ownerBrain.EnemyStatData.moveSpeed.AddModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
         }
@@ -255,13 +260,13 @@ public class Buff : MonoBehaviour
     {
         if (_isPlayer)
         {
-            Brain attacker = _attackers[BuffType.Freeze] as Brain;
+            Brain attacker = _attackers[BuffType.Potion_Freeze] as Brain;
 
             _ownerController.PlayerStatData.moveSpeed.RemoveModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
         }
         else
         {
-            PlayerController attacker = _attackers[BuffType.Freeze] as PlayerController;
+            PlayerController attacker = _attackers[BuffType.Potion_Freeze] as PlayerController;
 
             _ownerBrain.EnemyStatData.moveSpeed.RemoveModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
         }
@@ -278,15 +283,15 @@ public class Buff : MonoBehaviour
                 return;
             }
 
-            Brain attacker = _attackers[BuffType.Knockback] as Brain;
+            Brain attacker = _attackers[BuffType.Potion_Paralysis] as Brain;
             
-            _ownerController.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.knockbackForce, ForceMode.Impulse);
+            _ownerController.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.paralysisDuration, ForceMode.Impulse);
         }
         else
         {
-            PlayerController attacker = _attackers[BuffType.Knockback] as PlayerController;
+            PlayerController attacker = _attackers[BuffType.Potion_Paralysis] as PlayerController;
 
-            _ownerBrain.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.knockbackForce, ForceMode.Impulse);
+            _ownerBrain.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.paralysisDuration, ForceMode.Impulse);
         }
     }
     #endregion
@@ -294,7 +299,8 @@ public class Buff : MonoBehaviour
     #region Shield Functions
     public void ShieldBegin()
     {
-        EffectManager.Instance.PlayEffect(PoolingType.Effect_Shield, transform.position + transform.up * 1.5f, transform);
+        EffectManager.Instance.PlayEffect(PoolType.Effect_Shield, transform.position + transform.up * 1.5f, transform);
+        Debug.Log("3");
     }
     #endregion
 }

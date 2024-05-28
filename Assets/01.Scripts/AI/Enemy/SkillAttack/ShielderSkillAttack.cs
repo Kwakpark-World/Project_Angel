@@ -5,10 +5,17 @@ using UnityEngine;
 
 public class ShielderSkillAttack : EnemyAttack
 {
+    private bool _canSkillPlay;
+    private bool _isSkillPlaying;
 
     private Transform m_transform;
     public LayerMask enemyLayer;
-    private int maxEnemiesToShield = 5; 
+    private int maxEnemiesToShield = 5;
+
+    public override void OnStart()
+    {
+        _canSkillPlay = true;
+    }
 
     // Start is called before the first frame update
     void Update()
@@ -23,26 +30,20 @@ public class ShielderSkillAttack : EnemyAttack
         int enemiesShielded = 0;
         foreach (RaycastHit hit in hits)
         {
+            OwnerNode.brain.AnimatorCompo.SetAnimationState("isSkillAttack");
             if (enemiesShielded >= maxEnemiesToShield)
                 break;
 
             GameObject enemy = hit.collider.gameObject;
-            Debug.Log(enemy);
-
-            //shieldEffect.duration = shieldDuration;
+            
         }
+        OwnerNode.brain.AnimatorCompo.SetAnimationState("Idle");
     }
 
-    // Fill down.
-
-    public override void OnStart()
-    {
-
-    }
 
     public override void OnStop()
     {
-
+        OwnerNode.brain.AnimatorCompo.OnAnimationEnd("");
     }
 
     public override Node.State OnUpdate()

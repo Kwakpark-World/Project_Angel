@@ -59,7 +59,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
                 _isEffectOn = true;
 
                 Vector3 pos = _player.transform.position;
-                EffectManager.Instance.PlayEffect((PoolingType)Enum.Parse(typeof(PoolingType), _comboEffectString), pos);
+                EffectManager.Instance.PlayEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), pos);
             }
         }
 

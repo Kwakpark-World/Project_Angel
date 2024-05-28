@@ -34,7 +34,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hit_Unconcious
+  m_Name: Hit_Paralysis
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -294,7 +294,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: isUnconcious
+  - m_Name: isParalysis
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -355,7 +355,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isUnconcious
+    m_ConditionEvent: isParalysis
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7585629386825609697}
@@ -391,7 +391,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: de92cd863fdef2749a9fded48b774072,
+  m_Motion: {fileID: -203655887218126122, guid: d5620459a46738e43b18ad0d82558130,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

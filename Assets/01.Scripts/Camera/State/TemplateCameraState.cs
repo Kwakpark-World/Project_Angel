@@ -12,9 +12,9 @@ public class TemplateCameraState : CameraState
         return this;
     }
 
-    private void Start()
+    protected override void Start()
     {
-        CameraManager.Instance.AddCamera(this);
+        base.Start();
     }
 
     private void Update()

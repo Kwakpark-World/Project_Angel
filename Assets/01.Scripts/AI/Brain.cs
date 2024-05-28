@@ -23,12 +23,10 @@ public abstract class Brain : PoolableMono
     #endregion
 
     [field: SerializeField]
-    public MonsterStat EnemyStatData { get; private set; }
+    public EnemyStat EnemyStatData { get; private set; }
     public float CurrentHealth { get; set; }
     public float NormalAttackTimer { get; set; }
     public float SkillAttackTimer { get; set; }
-    [HideInInspector]
-    public EnemyMannequin enemySpawn;
 
     protected virtual void Start()
     {
@@ -61,13 +59,14 @@ public abstract class Brain : PoolableMono
         if (Keyboard.current.mKey.wasPressedThisFrame)
         {
             BuffCompo.PlayBuff(BuffType.Shield, 3f, this);
+            Debug.Log("5");
         }
         #endregion
     }
 
-    public override void InitializePoolingItem()
+    public override void InitializePoolItem()
     {
-        base.InitializePoolingItem();
+        base.InitializePoolItem();
 
         if (NavMeshAgentCompo)
         {
@@ -104,7 +103,7 @@ public abstract class Brain : PoolableMono
         NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
     }
 
-    public virtual void OnHit(float incomingDamage)
+    public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, float knockbackPower = 0f)
     {
         if (BuffCompo.GetBuffState(BuffType.Shield))
         {
@@ -120,6 +119,11 @@ public abstract class Brain : PoolableMono
 
         AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
 
+        if (isHitPhysically)
+        {
+            StartCoroutine(Knockback(knockbackPower));
+        }
+
         if (CurrentHealth <= 0f)
         {
             OnDie();
@@ -131,9 +135,20 @@ public abstract class Brain : PoolableMono
         AnimatorCompo.SetAnimationState("Die");
     }
 
-    public void Knockback()
+    public IEnumerator Knockback(float knockbackPower)
     {
+        Vector3 knockbackDirection = (transform.position - GameManager.Instance.PlayerInstance.playerCenter.position).normalized;
+        knockbackDirection.y = 0f;
+        float timer = 0f;
+        float knockbackDuration = GameManager.Instance.PlayerInstance.PlayerStatData.GetKnockbackDuration();
 
+        while (timer <= knockbackDuration)
+        {
+            transform.position = Vector3.Lerp(transform.position, transform.position + knockbackDirection * knockbackPower, timer);
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
     }
 
     public List<Brain> FindNearbyEnemies(int maxEnemyAmount, float nearbyRange)

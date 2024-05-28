@@ -3264,6 +3264,37 @@ Transform:
   - {fileID: 2424231076581994688}
   m_Father: {fileID: 8383137265320170995}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7165953477827751280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4250713318875224648}
+  m_Layer: 7
+  m_Name: EnemyCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4250713318875224648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7165953477827751280}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7419153301602624207}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7216108419528669004
 GameObject:
   m_ObjectHideFlags: 0
@@ -3982,6 +4013,7 @@ Transform:
   - {fileID: 7097848572052105232}
   - {fileID: 6289003404171207447}
   - {fileID: 4652395015795087185}
+  - {fileID: 4250713318875224648}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &6445906783455513999
@@ -4178,10 +4210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609df6e340b50e64f887eb178025cbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolingType: 2
+  poolType: 104
   sameLifeCycle: 0
   treeRunner: {fileID: 8989133874273436439}
-  enemyCenter: {fileID: 0}
+  enemyCenter: {fileID: 4250713318875224648}
   <EnemyStatData>k__BackingField: {fileID: 11400000, guid: 8723194aea9bd724286c728d567ed41c,
     type: 2}
   enemySpawn: {fileID: 0}
