@@ -14,28 +14,39 @@ public class SpikeTrap : PlayerCheckTrap
     public Vector3 attackSize;
     public Vector3 attackRotation;
 
+    public float onSpikeTimeDelay = 5f;
+    public float upScale;
 
     private float _damage = 8f;
     private Vector3 _defaultPosition;
-    private Coroutine _onSpikeCoroutine = null;
+    private Coroutine _spikeCoroutine = null;
+
+    private bool _isOnSpike = false;
 
     protected override void Awake()
     {
         base.Awake();
 
-// debug
+        // debug
         SetPlayerRangeParameter();
 
         _isOnTrap = true;
-// debug    
+        _defaultPosition = transform.position;
+
+        // debug    
+    }
+
+    public override void InitializePoolItem()
+    {
+        base.InitializePoolItem();
+
+        _isOnSpike = false;
         _defaultPosition = transform.position;
     }
 
     protected override void StartTrap()
     {
         // 가시 발판 빤짝하기 (나오기 전 나올거라 알림)
-        // 올라오기
-
         OnSpike();
 
         StartDelayAction(()=> base.StartTrap());
@@ -44,7 +55,8 @@ public class SpikeTrap : PlayerCheckTrap
     protected override void PlayTrap()
     {
         AttackObject();
-        base.PlayTrap();
+
+        StartDelayAction(onSpikeTimeDelay, ()=> base.PlayTrap());
     }
 
     protected override void EndTrap()
@@ -56,14 +68,26 @@ public class SpikeTrap : PlayerCheckTrap
 
     private void OnSpike()
     {
-        if (_onSpikeCoroutine != null) return;
+        if (_spikeCoroutine != null) return;
+        if (_isOnSpike) return;
 
-        _onSpikeCoroutine = StartCoroutine(RunSpike());
+        Vector3 targetPos = transform.position + transform.up * upScale;
+        float duration = 0.5f;
+
+        _isOnSpike = true;
+        _spikeCoroutine = StartCoroutine(MoveSpike(targetPos, duration));
     }
     
     private void OffSpike()
     {
+        float duration = 50f;
 
+        _prevRunTime = Time.time;
+
+        _isOnSpike = false;
+        StartCoroutine(MoveSpike(_defaultPosition, duration));
+
+        _spikeCoroutine = null;
     }
 
     protected override void SetPlayerRangeParameter()
@@ -106,16 +130,19 @@ public class SpikeTrap : PlayerCheckTrap
         Gizmos.DrawWireCube(transform.position + attackCenter, attackSize / 2);
     }
 
-    private IEnumerator RunSpike()
+    private IEnumerator MoveSpike(Vector3 targetPos, float duration)
     {
-        Vector3 targetPos = transform.position + transform.up * 5f;
-        while (transform.position.y < targetPos.y)
+        float delta = 0;
+
+        while (Mathf.Abs(targetPos.y - transform.position.y) > 0f)
         {
-            transform.position = Vector3.LerpUnclamped(transform.position, targetPos, Time.deltaTime * 50);
+            float t = delta / duration;
+
+            transform.position = Vector3.LerpUnclamped(transform.position, targetPos, t);
+            delta += Time.deltaTime;
             yield return null;
         }
 
         DelayActionStop();
-        _onSpikeCoroutine = null;
     }
 }

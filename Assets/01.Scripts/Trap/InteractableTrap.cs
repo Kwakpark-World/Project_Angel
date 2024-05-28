@@ -39,7 +39,6 @@ public abstract class InteractableTrap : Trap
     {
         if (_prevRunTime + _trapCoolTime > Time.time) return false;
 
-        _prevRunTime = Time.time;
         return true;
     }
 
