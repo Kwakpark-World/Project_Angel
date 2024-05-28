@@ -20,7 +20,6 @@ public enum PlayerStatType
     moveSpeed = 200,
     dashSpeed = 210,
     dashMaxDistance,
-    dashDuration,
     dashCooldown,
     rotateSpeed = 220,
     slamMaxDistance = 300,
@@ -64,8 +63,6 @@ public class PlayerStat : ScriptableObject
     public Stat dashSpeed;
     [Tooltip("각성 중 대시 최대 거리")]
     public Stat dashMaxDistance;
-    [Tooltip("대시 지속 시간")]
-    public Stat dashDuration;
     [Tooltip("대시 쿨다운")]
     public Stat dashCooldown;
     [Tooltip("회전 속도")]
@@ -189,11 +186,6 @@ public class PlayerStat : ScriptableObject
     public float GetDashMaxDistance()
     {
         return dashMaxDistance.GetValue();
-    }
-
-    public float GetDashDuration()
-    {
-        return dashDuration.GetValue();
     }
 
     public float GetDashCooldown()
