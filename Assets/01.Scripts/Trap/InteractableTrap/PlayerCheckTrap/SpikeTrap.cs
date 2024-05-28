@@ -23,6 +23,7 @@ public class SpikeTrap : PlayerCheckTrap
 
     private bool _isOnSpike = false;
 
+    /* Debug
     protected override void Awake()
     {
         base.Awake();
@@ -35,6 +36,7 @@ public class SpikeTrap : PlayerCheckTrap
 
         // debug    
     }
+    */
 
     public override void InitializePoolItem()
     {
@@ -120,14 +122,18 @@ public class SpikeTrap : PlayerCheckTrap
 
         Gizmos.matrix = Matrix4x4.Rotate(transform.rotation * Quaternion.Euler(checkRotation));
 
-        Gizmos.DrawWireCube(transform.position + checkCenter, checkSize / 2);
+        Vector3 pos = transform.position + checkCenter;
+        
+        Gizmos.DrawWireCube(pos, checkSize);
 
         // PlayerAttack Range
         Gizmos.color = Color.red;
 
         Gizmos.matrix = Matrix4x4.Rotate(transform.rotation * Quaternion.Euler(attackRotation));
 
-        Gizmos.DrawWireCube(transform.position + attackCenter, attackSize / 2);
+        pos = transform.position + attackCenter;
+        
+        Gizmos.DrawWireCube(pos, attackSize);
     }
 
     private IEnumerator MoveSpike(Vector3 targetPos, float duration)

@@ -51,6 +51,6 @@ public class DynamiteTrap : HitableTrap
 
         Gizmos.matrix = Matrix4x4.Rotate(transform.rotation * Quaternion.Euler(rotation));
 
-        Gizmos.DrawWireCube(transform.position + center, size / 2);
+        Gizmos.DrawWireCube(transform.position + center, size);
     }
 }
