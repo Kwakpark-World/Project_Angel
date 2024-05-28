@@ -6,24 +6,26 @@ using UnityEngine;
 
 public enum PlayerStatType
 {
-    maxHealth,
-    defensivePower,
+    maxHealth = 0,
+    defensivePower = 10,
     defenseCooldown,
-    attackPower,
+    attackPower = 100,
     attackSpeed,
-    criticalChance,
+    criticalChance = 110,
     criticalMultiplier,
-    chargingAttackSpeed,
+    chargingAttackSpeed = 120,
     chargingAttackDistance,
-    moveSpeed,
-    rotateSpeed,
-    dashSpeed,
+    knockbackPower = 130,
+    knockbackDuration,
+    moveSpeed = 200,
+    dashSpeed = 210,
     dashMaxDistance,
     dashDuration,
     dashCooldown,
-    slamMaxDistance,
+    rotateSpeed = 220,
+    slamMaxDistance = 300,
     slamCooldown,
-    maxAwakenGauge,
+    maxAwakenGauge = 310,
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Player")]
@@ -50,12 +52,14 @@ public class PlayerStat : ScriptableObject
     public Stat chargingAttackSpeed;
     [Tooltip("차징 공격 찌르기 이동 거리")]
     public Stat chargingAttackDistance;
+    [Tooltip("넉백 위력")]
+    public Stat knockbackPower;
+    [Tooltip("넉백 지속 시간")]
+    public Stat knockbackDuration;
 
     [Header("Move stats")]
     [Tooltip("이동 속도")]
     public Stat moveSpeed;
-    [Tooltip("회전 속도")]
-    public Stat rotateSpeed;
     [Tooltip("대시 속도")]
     public Stat dashSpeed;
     [Tooltip("각성 중 대시 최대 거리")]
@@ -64,6 +68,8 @@ public class PlayerStat : ScriptableObject
     public Stat dashDuration;
     [Tooltip("대시 쿨다운")]
     public Stat dashCooldown;
+    [Tooltip("회전 속도")]
+    public Stat rotateSpeed;
 
     [Header("Skill stats")]
     [Tooltip("Q 스킬 최대 이동 거리")]
@@ -160,14 +166,19 @@ public class PlayerStat : ScriptableObject
         return chargingAttackDistance.GetValue();
     }
 
+    public float GetKnockbackPower()
+    {
+        return knockbackPower.GetValue();
+    }
+
+    public float GetKnockbackDuration()
+    {
+        return knockbackDuration.GetValue();
+    }
+
     public float GetMoveSpeed()
     {
         return moveSpeed.GetValue();
-    }
-
-    public float GetRotateSpeed()
-    {
-        return rotateSpeed.GetValue();
     }
 
     public float GetDashSpeed()
@@ -188,6 +199,11 @@ public class PlayerStat : ScriptableObject
     public float GetDashCooldown()
     {
         return dashCooldown.GetValue();
+    }
+
+    public float GetRotateSpeed()
+    {
+        return rotateSpeed.GetValue();
     }
 
     public float GetSlamMaxDistance()

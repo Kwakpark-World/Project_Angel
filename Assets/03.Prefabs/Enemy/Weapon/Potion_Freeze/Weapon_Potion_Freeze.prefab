@@ -39319,14 +39319,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8384163565879408033}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2340190614548278021}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &4844807616943369632
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -39397,9 +39397,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.18278782
-  m_Height: 0.36557564
+  m_Height: 0.1926929
   m_Direction: 1
-  m_Center: {x: 0, y: -8.560822e-16, z: 0.18975851}
+  m_Center: {x: 0, y: -2.6966298e-15, z: 0.1897585}
 --- !u!54 &8408329985184299631
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -39439,9 +39439,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d6b07c0a339824ab4a2ab43f830d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolingType: 1101
+  poolType: 1101
   sameLifeCycle: 0
   owner: {fileID: 0}
-  _potionBuffType: 1002
+  _potionBuffType: 1001
   _lifetime: 5
   _speed: 10

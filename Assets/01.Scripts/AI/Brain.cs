@@ -1,7 +1,6 @@
 using BTVisual;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,8 +27,6 @@ public abstract class Brain : PoolableMono
     public float CurrentHealth { get; set; }
     public float NormalAttackTimer { get; set; }
     public float SkillAttackTimer { get; set; }
-    [HideInInspector]
-    public EnemyMannequin enemySpawn;
 
     protected virtual void Start()
     {
@@ -142,8 +139,9 @@ public abstract class Brain : PoolableMono
         Vector3 knockbackDirection = (transform.position - GameManager.Instance.PlayerInstance.playerCenter.position).normalized;
         knockbackDirection.y = 0f;
         float timer = 0f;
+        float knockbackDuration = GameManager.Instance.PlayerInstance.PlayerStatData.GetKnockbackDuration();
 
-        while (timer <= 0.4f)
+        while (timer <= knockbackDuration)
         {
             transform.position = Vector3.Lerp(transform.position, transform.position + knockbackDirection * knockbackPower, timer);
             timer += Time.deltaTime;

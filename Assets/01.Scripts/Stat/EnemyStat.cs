@@ -6,17 +6,17 @@ using UnityEngine;
 
 public enum EnemyStatType
 {
-    maxHealth,
+    maxHealth = 0,
     lifetime,
-    defensivePower,
-    detectRange,
-    attackPower,
+    defensivePower = 10,
+    detectRange = 100,
+    attackPower = 110,
     attackRange,
     attackDelay,
-    skillCooldown,
-    moveSpeed,
-    rotateSpeed,
-    patternAmount,
+    moveSpeed = 200,
+    rotateSpeed = 210,
+    skillCooldown = 300,
+    patternAmount = 400,
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Enemy")]
@@ -39,14 +39,16 @@ public class EnemyStat : ScriptableObject
     public Stat attackRange;
     [Tooltip("공격 딜레이")]
     public Stat attackDelay;
-    [Tooltip("스킬 쿨다운")]
-    public Stat skillCooldown;
 
     [Header("Move stats")]
     [Tooltip("이동 속도")]
     public Stat moveSpeed;
     [Tooltip("회전 속도")]
     public Stat rotateSpeed;
+
+    [Header("Skill stats")]
+    [Tooltip("스킬 쿨다운")]
+    public Stat skillCooldown;
 
     [Header("Boss stats")]
     [Tooltip("패턴 개수")]
@@ -129,11 +131,6 @@ public class EnemyStat : ScriptableObject
         return attackDelay.GetValue();
     }
 
-    public float GetSkillCooldown()
-    {
-        return skillCooldown.GetValue();
-    }
-
     public float GetMoveSpeed()
     {
         return moveSpeed.GetValue();
@@ -142,6 +139,11 @@ public class EnemyStat : ScriptableObject
     public float GetRotateSpeed()
     {
         return rotateSpeed.GetValue();
+    }
+
+    public float GetSkillCooldown()
+    {
+        return skillCooldown.GetValue();
     }
 
     public int GetPatternAmount()
