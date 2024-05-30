@@ -17,6 +17,8 @@ public class PlayerAttackState : PlayerState
     private LayerMask _trapLayer = LayerMask.GetMask("Trap");
     private HashSet<HitableTrap> _hitableTrapDuplicateChecker = new HashSet<HitableTrap>();
 
+    public bool isCritical;
+
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -42,6 +44,7 @@ public class PlayerAttackState : PlayerState
     {
         base.UpdateState();
 
+        IsCritical();
         /*Gizmos.matrix = Matrix4x4.TRS(_player.transform.TransformPoint(_player.transform.position + _attackOffset), _player.transform.rotation, _player.transform.lossyScale);
         Gizmos.color = Color.white;
         Gizmos.DrawCube(-_player.transform.position + _attackOffset, _attackSize);
@@ -54,36 +57,55 @@ public class PlayerAttackState : PlayerState
 
     public void Attack(List<Collider> enemies)
     {
+        float modifierValue = _player.PlayerStatData.GetAttackPower() * _player.PlayerStatData.GetCriticalDamageMultiplier();
         foreach (var enemy in enemies)
         {
             if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
-                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true, _player.PlayerStatData.GetKnockbackPower());
+                    if (IsCritical())
+                        _player.PlayerStatData.attackPower.AddModifier(modifierValue);
+
+                    AttackBlood(); AttackExtraMaxHealth(); AttackCoolDonw();
+
+                    brain.OnHit(GetRandomDamage(), true, _player.PlayerStatData.GetKnockbackPower());
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
                 }
+                isCritical = false;
+                _player.PlayerStatData.attackPower.RemoveModifier(modifierValue);
             }
         }
+
     }
 
     public void Attack(List<RaycastHit> enemies)
     {
+        float modifierValue = _player.PlayerStatData.GetAttackPower() * _player.PlayerStatData.GetCriticalDamageMultiplier();
+        if (IsCritical())
+        {
+            _player.PlayerStatData.attackPower.AddModifier(modifierValue);
+        }
+
         foreach (var enemy in enemies)
         {
             if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
-                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true, _player.PlayerStatData.GetKnockbackPower());
+                    brain.OnHit(GetRandomDamage(), true, _player.PlayerStatData.GetKnockbackPower());
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
                 }
             }
         }
+
+
+        isCritical = false;
+        _player.PlayerStatData.attackPower.RemoveModifier(modifierValue);
     }
 
     public List<RaycastHit> GetEnemyByRaycast()
@@ -143,6 +165,55 @@ public class PlayerAttackState : PlayerState
         }
         _hitableTrapDuplicateChecker.Clear();
     }
+
+    private bool IsCritical()
+    {
+        float rand = Random.Range(0, 10000) / 100;
+        if (rand < _player.PlayerStatData.GetCriticalChance())
+        {
+            isCritical = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    private float GetRandomDamage()
+    {
+        float upDownValuePer = 0.1f;
+        upDownValuePer = Mathf.Clamp01(upDownValuePer);
+
+        float value = _player.PlayerStatData.GetAttackPower() * upDownValuePer;
+
+        return Random.Range(_player.PlayerStatData.GetAttackPower() - value, _player.PlayerStatData.GetAttackPower() + value);
+    }
+
+    #region Rune
+    private void AttackBlood()
+    {
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Raphael))
+            _player.CurrentHealth += 3f;
+    }
+
+    private void AttackExtraMaxHealth()
+    {
+        //remove를 만들어 줘야 할 수도 있음 생각을 해보고 결정을 하셈 ><
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Freyja))
+            _player.PlayerStatData.maxHealth.AddModifier(1f);
+    }
+
+    private void AttackCoolDonw()
+    {
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Heimdall))
+        {
+            _player  .PlayerStatData.defenseCooldown.AddModifier(-1f);
+            _player.PlayerStatData.slamCooldown.AddModifier(-1f);
+        }
+            
+    }
+    #endregion
+
+
 
     protected virtual void SetAttackSetting() { }
 }

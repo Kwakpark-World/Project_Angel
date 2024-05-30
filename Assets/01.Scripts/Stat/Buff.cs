@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -197,6 +198,18 @@ public class Buff : MonoBehaviour
     public void ShieldBegin()
     {
         EffectManager.Instance.PlayEffect(PoolType.Effect_Shield, transform.position + transform.up * 1.5f, transform);
+    }
+    #endregion
+
+    #region Gabriel Functions
+    public void GabrielBegin()
+    {
+        _ownerController.PlayerStatData.maxAwakenGauge.AddModifier(-25f);
+    }
+
+    public void GabrielEnd()
+    {
+        _ownerController.PlayerStatData.maxAwakenGauge.RemoveModifier(-25f);
     }
     #endregion
 

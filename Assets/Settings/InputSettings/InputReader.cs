@@ -18,7 +18,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action MeleeAttackEvent;
     public event Action SlamSkillEvent;
     public event Action AwakeningSkillEvent;
-    public event Action DefenseEvenet;
+    public event Action DefenseEvent;
 
 
     private Controls _controls;
@@ -64,7 +64,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
         isDefense = context.performed;
         if (context.started)
         {
-            DefenseEvenet?.Invoke();
+            DefenseEvent?.Invoke();
         }
     }
 

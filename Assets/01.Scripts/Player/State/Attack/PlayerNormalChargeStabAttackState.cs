@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerNormalChargeStabAttackState : PlayerChargeState
 {
@@ -77,8 +78,11 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         {
             _isStabMove = true;
 
+
             float stabDistance = _player.ChargingGauge * _player.PlayerStatData.GetChargingAttackDistance();
-            _player.SetVelocity(_player.transform.forward * stabDistance);
+            //_player.SetVelocity(_player.transform.forward * stabDistance);
+
+            _player.StartCoroutine(MoveToFrontSmooth(_player.transform.position + (_player.transform.forward * stabDistance), _player.AnimatorCompo.speed));
         }
     }
 
@@ -111,5 +115,21 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
+    }
+
+
+    private IEnumerator MoveToFrontSmooth(Vector3 targetPos, float duration)
+    {
+        float delta = 0;
+        float t = 0;
+
+        while (t <= 1)
+        {
+            t = delta / duration;
+
+            _player.transform.position = Vector3.LerpUnclamped(_player.transform.position, targetPos, t);
+            delta += Time.deltaTime;
+            yield return null;
+        }
     }
 }

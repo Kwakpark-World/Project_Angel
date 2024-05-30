@@ -19,7 +19,7 @@ public class PlayerGroundState : PlayerState
         _player.PlayerInput.SlamSkillEvent += SlamSkillHandle;
         _player.PlayerInput.AwakeningSkillEvent += AwakeningSkillHandle;
         _player.PlayerInput.MeleeAttackEvent += HandlePrimaryAttackEvent;
-        _player.PlayerInput.DefenseEvenet += PlayerDefense;
+        _player.PlayerInput.DefenseEvent += PlayerDefense;
     }
 
     public override void Exit()
@@ -30,7 +30,7 @@ public class PlayerGroundState : PlayerState
         _player.PlayerInput.SlamSkillEvent -= SlamSkillHandle;
         _player.PlayerInput.AwakeningSkillEvent -= AwakeningSkillHandle;
         _player.PlayerInput.MeleeAttackEvent -= HandlePrimaryAttackEvent;
-        _player.PlayerInput.DefenseEvenet -= PlayerDefense;
+        _player.PlayerInput.DefenseEvent -= PlayerDefense;
 
     }
 

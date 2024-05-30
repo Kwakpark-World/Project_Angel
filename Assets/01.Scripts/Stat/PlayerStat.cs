@@ -12,7 +12,7 @@ public enum PlayerStatType
     attackPower = 100,
     attackSpeed,
     criticalChance = 110,
-    criticalMultiplier,
+    criticalDamageMultiplier,
     chargingAttackSpeed = 120,
     chargingAttackDistance,
     knockbackPower = 130,
@@ -20,7 +20,6 @@ public enum PlayerStatType
     moveSpeed = 200,
     dashSpeed = 210,
     dashMaxDistance,
-    dashDuration,
     dashCooldown,
     rotateSpeed = 220,
     slamMaxDistance = 300,
@@ -46,8 +45,8 @@ public class PlayerStat : ScriptableObject
     public Stat attackSpeed;
     [Tooltip("치명타 확률")]
     public Stat criticalChance;
-    [Tooltip("치명타 배율 ")]
-    public Stat criticalMultiplier;
+    [Tooltip("치명타 데미지")]
+    public Stat criticalDamageMultiplier;
     [Tooltip("차징 공격 속도")]
     public Stat chargingAttackSpeed;
     [Tooltip("차징 공격 찌르기 이동 거리")]
@@ -64,8 +63,6 @@ public class PlayerStat : ScriptableObject
     public Stat dashSpeed;
     [Tooltip("각성 중 대시 최대 거리")]
     public Stat dashMaxDistance;
-    [Tooltip("대시 지속 시간")]
-    public Stat dashDuration;
     [Tooltip("대시 쿨다운")]
     public Stat dashCooldown;
     [Tooltip("회전 속도")]
@@ -151,9 +148,9 @@ public class PlayerStat : ScriptableObject
         return criticalChance.GetValue();
     }
 
-    public float GetCriticalMultiplier()
+    public float GetCriticalDamageMultiplier()
     {
-        return criticalMultiplier.GetValue();
+        return criticalDamageMultiplier.GetValue();
     }
 
     public float GetChargingAttackSpeed()
@@ -189,11 +186,6 @@ public class PlayerStat : ScriptableObject
     public float GetDashMaxDistance()
     {
         return dashMaxDistance.GetValue();
-    }
-
-    public float GetDashDuration()
-    {
-        return dashDuration.GetValue();
     }
 
     public float GetDashCooldown()
