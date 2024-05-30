@@ -1697,6 +1697,37 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!1 &2111095480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2111095481}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2111095481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111095480}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.356686, y: 0.03, z: 12.529461}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4254154919115711060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1768,8 +1799,13 @@ PrefabInstance:
     - target: {fileID: 6914870943259171101, guid: 781b9ae207e52984290a0c9d7bf6643b,
         type: 3}
       propertyPath: _targetList.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6914870943259171101, guid: 781b9ae207e52984290a0c9d7bf6643b,
+        type: 3}
+      propertyPath: _targetList.Array.data[0]
+      value: 
+      objectReference: {fileID: 2111095481}
     - target: {fileID: 6914870943259171101, guid: 781b9ae207e52984290a0c9d7bf6643b,
         type: 3}
       propertyPath: _targetList.Array.data[0].x
@@ -1819,3 +1855,4 @@ SceneRoots:
   - {fileID: 1644201271}
   - {fileID: 1339653119}
   - {fileID: 1544501901}
+  - {fileID: 2111095481}
