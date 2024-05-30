@@ -138,8 +138,15 @@ public class Player : PlayerController
             IsStair = true;
     }
 
-    public void OnHit(float incomingDamage)
+    public void OnHit(float incomingDamage, Brain attacker = null)
     {
+        //여기다가 플레이어 반사 룬 하기러기
+
+        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Uriel) && attacker)
+        {
+            attacker.OnHit(incomingDamage * 0.25f);
+        }
+
         if (IsDefense || IsDie)
             return;
         if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening))
@@ -147,9 +154,14 @@ public class Player : PlayerController
 
         PlayerOnHitVolume();
 
-        if (!(BuffCompo.GetBuffState(BuffType.Rune_Defense_Synergy) && CurrentHealth <= 1f))
+        if (CurrentHealth > 1f)
         {
             CurrentHealth -= Mathf.Max(incomingDamage - PlayerStatData.GetDefensivePower(), 0f);
+
+            if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
+            {
+                CurrentHealth = Mathf.Max(CurrentHealth, 1f);
+            }
         }
 
         if (CurrentHealth <= 0f)
@@ -274,7 +286,7 @@ public class Player : PlayerController
             List<Material> rendererMaterials = new List<Material>();
 
             renderer.GetMaterials(rendererMaterials);
-            rendererMaterials.Add(freezeMaterial); 
+            rendererMaterials.Add(freezeMaterial);
             renderer.SetMaterials(rendererMaterials);
         }
     }
@@ -338,7 +350,7 @@ public class Player : PlayerController
             volume.intensity.overrideState = true;
             volume.rounded.overrideState = true;
         }
-    
+
         volume.color.value = Color.red;
         volume.intensity.value = 0.3f;
         volume.rounded.value = true;
@@ -350,7 +362,7 @@ public class Player : PlayerController
     {
         if (_playerOnHitVolume.profile.TryGet<Vignette>(out var volume))
         {
-            while(volume.intensity.value > 0f)
+            while (volume.intensity.value > 0f)
             {
                 volume.intensity.value -= 0.01f;
                 yield return null;

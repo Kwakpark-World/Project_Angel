@@ -18,7 +18,7 @@ public class EnemySword : MonoBehaviour
     {
         if (other.gameObject == GameManager.Instance.PlayerInstance.gameObject)
         {
-            GameManager.Instance.PlayerInstance.OnHit(_owner.EnemyStatData.GetAttackPower());
+            GameManager.Instance.PlayerInstance.OnHit(_owner.EnemyStatData.GetAttackPower(), _owner);
 
             swordCollider.enabled = false;
         }
