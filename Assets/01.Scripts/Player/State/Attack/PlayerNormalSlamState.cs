@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerNormalSlamState : PlayerAttackState
 {
@@ -74,7 +75,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
 
         _offset = _player.transform.forward * 5;
-        _offset.y += 1f;
+        //_offset.y += 1f;
 
         _attackOffset = _offset;
         _attackSize = size;
@@ -89,8 +90,14 @@ public class PlayerNormalSlamState : PlayerAttackState
 
     private void SlamEffect()
     {
+        float yOffset = 0f;
         Vector3 pos = _player.transform.position + _attackOffset;
-        pos.y = 0;
+        RaycastHit hit;
+        if (Physics.Raycast(_player.transform.position, Vector3.down, out hit, 300f, LayerMask.GetMask("Ground")))
+        {
+            yOffset = hit.transform.position.y;
+        }
+        pos.y = yOffset;
 
         EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Slam_Normal, pos);
     }
