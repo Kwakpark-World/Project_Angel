@@ -31,8 +31,6 @@ public class EnemyBuffArea : PoolableMono
             {
                 if (distanceY <= _height * 0.5f)
                 {
-                    Debug.Log(owner);
-
                     GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_areaBuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
                 }
                 else
