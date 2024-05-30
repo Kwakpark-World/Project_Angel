@@ -41,6 +41,10 @@ public class PlayerAwakenDashState : PlayerDashState
             dashDistance = hit.distance;
         }
 
+        float mousePosDist = Vector3.Distance(_player.transform.position, _player.MousePosInWorld);
+
+        dashDistance = Mathf.Min(dashDistance, mousePosDist);
+
         return dashDistance;
     }
 }
