@@ -32,7 +32,7 @@ public abstract class PlayerController : MonoBehaviour
     [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
     [field: SerializeField] public float CurrentHealth;
     
-    private float _gravity = -98f;
+    private float _gravity = -9.8f;
     #endregion
 
 
