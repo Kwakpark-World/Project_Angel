@@ -74,7 +74,7 @@ public class RuneManager : MonoSingleton<RuneManager>
             }
         }
 
-        CheckRuneSynergy(runeData.synergyType);
+        CheckRuneSynergy(runeData.mythSynergyType);
 
         for (int i = 0; i < 2; ++i)
         {
@@ -113,14 +113,14 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     public void CheckRuneSynergy(BuffType runeSynergyType)
     {
-        if (_equipedRunes.FindAll((runeData) => runeData && (runeData.synergyType == runeSynergyType)).Count >= 3)
+        if (_equipedRunes.FindAll((runeData) => runeData && (runeData.mythSynergyType == runeSynergyType)).Count >= 3)
         {
             GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_synergizeRuneType);
             GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(runeSynergyType);
 
             _synergizeRuneType = runeSynergyType;
         }
-        else if (_equipedRunes.FindAll((runeData) => runeData && (runeData.synergyType == _synergizeRuneType)).Count < 3)
+        else if (_equipedRunes.FindAll((runeData) => runeData && (runeData.mythSynergyType == _synergizeRuneType)).Count < 3)
         {
             GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_synergizeRuneType);
 

@@ -13,13 +13,13 @@ public class PlayerMeleeAttackState : PlayerAttackState
     private float _comboWindow = 0.8f;
     private float _comboAttackAddtiveDamage = 1f;
 
-    private float _width = 0.8f;
+    private float _width = 0.5f;
     private float _height = 0.2f;
-    private float _dist = 2.5f;
+    private float _dist = 1.6f;
     private Vector3 _offset;
 
-    private float _awakenAttackDist = 4.4f;
-    private float _normalAttackDist = 2.5f;
+    private float _awakenAttackDist = 1.6f;
+    private float _normalAttackDist = 1.6f;
 
     private bool _isCombo;
     private bool _isEffectOn;
@@ -35,7 +35,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
-        _player.PlayerStatData.attackPower.InitializeModifier();
+        _player.PlayerStatData.attackPower.RemoveModifier(_comboAttackAddtiveDamage * _comboCounter);
 
         _player.IsAttack = true;
         _isEffectOn = false;
@@ -80,7 +80,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         if (_isHitAbleTriggerCalled)
         {
-            MeleeAttack();
+            if (!_actionTriggerCalled)
+                MeleeAttack();
         }
 
         if (_effectTriggerCalled)

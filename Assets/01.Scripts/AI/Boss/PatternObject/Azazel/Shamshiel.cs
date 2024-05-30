@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Shamshiel : Grigori
 {
-    [SerializeField]
+    /*[SerializeField]
     private float _slownessMultiplier = 0.75f;
     [SerializeField]
-    private float _slownessDuration = 5f;
+    private float _slownessDuration = 5f;*/
 
     protected override void Debuff()
     {

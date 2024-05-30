@@ -39,6 +39,9 @@ MonoBehaviour:
   chargingAttackDistance:
     _baseValue: 10
     modifiers: []
+  chargingAttackCooldown:
+    _baseValue: 3
+    modifiers: []
   knockbackPower:
     _baseValue: 0.2
     modifiers: []
@@ -58,7 +61,7 @@ MonoBehaviour:
     _baseValue: 0
     modifiers: []
   rotateSpeed:
-    _baseValue: 5
+    _baseValue: 30
     modifiers: []
   slamMaxDistance:
     _baseValue: 15
