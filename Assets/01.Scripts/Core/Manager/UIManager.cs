@@ -12,7 +12,6 @@ public class UIManager : MonoSingleton<UIManager>
     private Image _fadePanel;
     [SerializeField]
     private float _fadeDuration;
-    [SerializeField]
     private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
 
     protected override void Awake()
