@@ -147,7 +147,7 @@ public class Player : PlayerController
 
         PlayerOnHitVolume();
 
-        if (!(BuffCompo.GetBuffState(BuffType.Rune_Defense_Synergy) && CurrentHealth <= 1f))
+        if (!(BuffCompo.GetBuffState(BuffType.Rune_Synergy_Defense) && CurrentHealth <= 1f))
         {
             CurrentHealth -= Mathf.Max(incomingDamage - PlayerStatData.GetDefensivePower(), 0f);
         }
