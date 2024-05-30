@@ -118,6 +118,7 @@ public class Player : PlayerController
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        MoveOnStair();
         IsClimbStair();
     }
 
@@ -140,7 +141,7 @@ public class Player : PlayerController
 
     public void OnHit(float incomingDamage, Brain attacker = null)
     {
-        //����ٰ� �÷��̾� �ݻ� �� �ϱⷯ��
+        //����ٰ�?�÷��̾� �ݻ� �� �ϱⷯ��
 
         if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Uriel) && attacker)
         {
@@ -188,6 +189,26 @@ public class Player : PlayerController
         if (IsStair)
             if (IsGroundDetected())
                 IsStair = false;
+    }
+
+    private void MoveOnStair()
+    {
+        if (!StateMachine.CompareState(PlayerStateEnum.Walk)) return;
+
+        if (CheckStair(Vector3.forward))
+        {
+            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+        }
+
+        if (CheckStair(new Vector3(1.5f, 0, 1)))
+        {
+            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+        }
+
+        if (CheckStair(new Vector3(-1.5f, 0, 1)))
+        {
+            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+        }
     }
     #endregion
 
