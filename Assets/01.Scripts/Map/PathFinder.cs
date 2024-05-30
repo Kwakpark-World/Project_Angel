@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class PathFinder : MonoBehaviour
 {
     private LineRenderer _lineRenderer;
-    private NavMeshAgent _navMeshAgent;
+    public NavMeshAgent _navMeshAgent;
 
     public List<Transform> _targetList; // 시작을 0
 
@@ -15,6 +15,7 @@ public class PathFinder : MonoBehaviour
 
     private void Start()
     {
+        
         InitNaviManager(0.01f);
     }
 
@@ -23,7 +24,8 @@ public class PathFinder : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = 0;
 
-        _navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+       // _navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+
         _navMeshAgent.isStopped = true;
         _navMeshAgent.radius = 1;
         _navMeshAgent.height = 1;
