@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,10 +73,7 @@ public abstract class Trap : PoolableMono
 
     protected void Attack(Player player)
     {
-        //if (player.ÇÔÁ¤ ¹«½Ã)
-        //        return;
-
-        if (player != null)
+        if (player != null && !player.BuffCompo.GetBuffState(BuffType.Rune_Defense_TÃ½r))
             player.OnHit(_trapDamage);
     }
 }

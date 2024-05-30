@@ -28,7 +28,7 @@ public class EnemyArrow : PoolableMono
     {
         if (other.gameObject == GameManager.Instance.PlayerInstance.gameObject)
         {
-            GameManager.Instance.PlayerInstance.OnHit(owner.EnemyStatData.GetAttackPower());
+            GameManager.Instance.PlayerInstance.OnHit(owner.EnemyStatData.GetAttackPower(), owner);
             PoolManager.Instance.Push(this);
         }
         else if ((1 << other.gameObject.layer & _environmentLayer) != 0)

@@ -66,7 +66,8 @@ public class PlayerAttackState : PlayerState
                 {
                     if (IsCritical())
                         _player.PlayerStatData.attackPower.AddModifier(modifierValue);
-                    
+
+                    AttackBlood(); AttackExtraMaxHealth(); AttackCoolDonw();
 
                     brain.OnHit(GetRandomDamage(), true, _player.PlayerStatData.GetKnockbackPower());
 
@@ -186,6 +187,33 @@ public class PlayerAttackState : PlayerState
 
         return Random.Range(_player.PlayerStatData.GetAttackPower() - value, _player.PlayerStatData.GetAttackPower() + value);
     }
+
+    #region Rune
+    private void AttackBlood()
+    {
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Raphael))
+            _player.CurrentHealth += 3f;
+    }
+
+    private void AttackExtraMaxHealth()
+    {
+        //remove를 만들어 줘야 할 수도 있음 생각을 해보고 결정을 하셈 ><
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Freyja))
+            _player.PlayerStatData.maxHealth.AddModifier(1f);
+    }
+
+    private void AttackCoolDonw()
+    {
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Heimdall))
+        {
+            _player  .PlayerStatData.defenseCooldown.AddModifier(-1f);
+            _player.PlayerStatData.slamCooldown.AddModifier(-1f);
+        }
+            
+    }
+    #endregion
+
+
 
     protected virtual void SetAttackSetting() { }
 }

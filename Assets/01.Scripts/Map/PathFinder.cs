@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class PathFinder : MonoBehaviour
 {
-    private LineRenderer _lineRender;
-    private NavMeshAgent _navMashAgent;
+    private LineRenderer _lineRenderer;
+    private NavMeshAgent _navMeshAgent;
 
-    public List<Vector3> _targetList; //시작을 0
+    public List<Transform> _targetList; // 시작을 0
 
     private int _targetIndex;
 
@@ -21,15 +20,13 @@ public class PathFinder : MonoBehaviour
 
     public void InitNaviManager(float updateDelay)
     {
-        //SetOriginTransform(trans);
+        _lineRenderer = GetComponent<LineRenderer>();
+        _lineRenderer.positionCount = 0;
 
-        _lineRender = GetComponent<LineRenderer>();
-        _lineRender.positionCount = 0;
-
-        _navMashAgent = transform.Find("NavMesh").GetComponent<NavMeshAgent>();
-        _navMashAgent.isStopped = true;
-        _navMashAgent.radius = 1;
-        _navMashAgent.height = 1;
+        _navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+        _navMeshAgent.isStopped = true;
+        _navMeshAgent.radius = 1;
+        _navMeshAgent.height = 1;
 
         StartCoroutine(UpdateNavi(updateDelay));
     }
@@ -40,21 +37,23 @@ public class PathFinder : MonoBehaviour
 
         while (true)
         {
-            if (Vector3.Distance(transform.position, _targetList[_targetIndex]) <= 2f)
+            if (_targetIndex >= _targetList.Count)
+            {
+                _lineRenderer.enabled = false;
+                break;
+            }
+
+            if (Vector3.Distance(transform.position, _targetList[_targetIndex].position) <= 2f)
             {
                 PassToNextDestination();
             }
 
-            if (_targetIndex >= _targetList.Count)
+            if (_targetIndex < _targetList.Count)
             {
-                _lineRender.enabled = false;
-
-                break;
+                _navMeshAgent.SetDestination(_targetList[_targetIndex].position);
+                DrawPath();
             }
 
-            transform.position = GameManager.Instance.PlayerInstance.transform.position;
-            _navMashAgent.SetDestination(_targetList[_targetIndex]);
-            DrawPath();
             yield return delayTime;
         }
     }
@@ -66,17 +65,18 @@ public class PathFinder : MonoBehaviour
 
     private void DrawPath()
     {
-        _lineRender.positionCount = _navMashAgent.path.corners.Length;
-        _lineRender.SetPosition(0, transform.position);
-
-        if (_navMashAgent.path.corners.Length < 2)
+        if (_navMeshAgent.path.corners.Length < 2)
         {
+            _lineRenderer.positionCount = 0;
             return;
         }
 
-        for (int i = 1; i < _navMashAgent.path.corners.Length; ++i)
+        _lineRenderer.positionCount = _navMeshAgent.path.corners.Length;
+        _lineRenderer.SetPosition(0, transform.position);
+
+        for (int i = 1; i < _navMeshAgent.path.corners.Length; ++i)
         {
-            _lineRender.SetPosition(i, _navMashAgent.path.corners[i]);
+            _lineRenderer.SetPosition(i, _navMeshAgent.path.corners[i]);
         }
     }
 }

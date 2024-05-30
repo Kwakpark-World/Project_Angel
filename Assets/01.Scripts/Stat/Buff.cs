@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,22 +13,22 @@ public enum BuffType
     Rune_Attack_Heracles = 100,
     Rune_Attack_Thor,
     Rune_Attack_Michael,
-    Rune_Attack_Synergy = 150,
     Rune_Defense_Athena = 200,
     Rune_Defense_Týr,
     Rune_Defense_Uriel,
-    Rune_Defense_Synergy = 250,
     Rune_Acceleration_Hermes = 300,
     Rune_Acceleration_Heimdall,
     Rune_Acceleration_Gabriel,
-    Rune_Acceleration_Synergy = 350,
     Rune_Health_Demeter = 400,
     Rune_Health_Freyja,
     Rune_Health_Raphael,
-    Rune_Health_Synergy = 450,
-    Rune_Zeus = 500,
-    Rune_Odin,
-    Rune_Jesus,
+    Rune_Synergy_Attack = 500,
+    Rune_Synergy_Defense,
+    Rune_Synergy_Acceleration,
+    Rune_Synergy_Health,
+    Rune_Synergy_Zeus,
+    Rune_Synergy_Odin,
+    Rune_Synergy_Jesus,
     Potion_Poison = 1000,
     Potion_Freeze,
     Potion_Paralysis
@@ -63,8 +64,6 @@ public class Buff : MonoBehaviour
 
     private float _poisonDelayTimer = -1f;
     private bool _isPlayer;
-
-   
 
     private void Awake()
     {
@@ -195,6 +194,25 @@ public class Buff : MonoBehaviour
         StopBuff(buffType);
     }
 
+    #region Shield Functions
+    public void ShieldBegin()
+    {
+        EffectManager.Instance.PlayEffect(PoolType.Effect_Shield, transform.position + transform.up * 1.5f, transform);
+    }
+    #endregion
+
+    #region Gabriel Functions
+    public void GabrielBegin()
+    {
+        _ownerController.PlayerStatData.maxAwakenGauge.AddModifier(-25f);
+    }
+
+    public void GabrielEnd()
+    {
+        _ownerController.PlayerStatData.maxAwakenGauge.RemoveModifier(-25f);
+    }
+    #endregion
+
     #region Poison Functions
     public void PoisonBegin()
     {
@@ -272,33 +290,17 @@ public class Buff : MonoBehaviour
     }
     #endregion
 
-    #region Knockback Functions
-    public void KnockbackBegin()
+    #region Paralysis Functions
+    public void ParalysisBegin()
     {
         if (_isPlayer)
         {
-            if (_ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.NormalSlam) || _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.AwakenSlam) || _ownerController.StateMachine.CurrentState == _ownerController.StateMachine.GetState(PlayerStateEnum.Awakening))
-            {
-                return;
-            }
 
-            Brain attacker = _attackers[BuffType.Potion_Paralysis] as Brain;
-            
-            _ownerController.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.paralysisDuration, ForceMode.Impulse);
         }
         else
         {
-            PlayerController attacker = _attackers[BuffType.Potion_Paralysis] as PlayerController;
 
-            _ownerBrain.RigidbodyCompo.AddForce((transform.position - attacker.transform.position).normalized * attacker.BuffCompo.BuffStatData.paralysisDuration, ForceMode.Impulse);
         }
-    }
-    #endregion
-
-    #region Shield Functions
-    public void ShieldBegin()
-    {
-        EffectManager.Instance.PlayEffect(PoolType.Effect_Shield, transform.position + transform.up * 1.5f, transform);
     }
     #endregion
 }

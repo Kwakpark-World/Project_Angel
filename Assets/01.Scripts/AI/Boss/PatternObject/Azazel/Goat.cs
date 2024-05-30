@@ -31,7 +31,7 @@ public class Goat : Brain
     {
         if (other.gameObject == GameManager.Instance.PlayerInstance.gameObject)
         {
-            GameManager.Instance.PlayerInstance.OnHit(EnemyStatData.GetAttackPower());
+            GameManager.Instance.PlayerInstance.OnHit(EnemyStatData.GetAttackPower(), this);
 
             // Give scapegoat debuff.
 
