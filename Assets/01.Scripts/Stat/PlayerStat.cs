@@ -12,7 +12,7 @@ public enum PlayerStatType
     attackPower = 100,
     attackSpeed,
     criticalChance = 110,
-    criticalMultiplier,
+    criticalDamageMultiplier,
     chargingAttackSpeed = 120,
     chargingAttackDistance,
     knockbackPower = 130,
@@ -45,8 +45,8 @@ public class PlayerStat : ScriptableObject
     public Stat attackSpeed;
     [Tooltip("치명타 확률")]
     public Stat criticalChance;
-    [Tooltip("치명타 배율 ")]
-    public Stat criticalMultiplier;
+    [Tooltip("치명타 데미지")]
+    public Stat criticalDamageMultiplier;
     [Tooltip("차징 공격 속도")]
     public Stat chargingAttackSpeed;
     [Tooltip("차징 공격 찌르기 이동 거리")]
@@ -148,9 +148,9 @@ public class PlayerStat : ScriptableObject
         return criticalChance.GetValue();
     }
 
-    public float GetCriticalMultiplier()
+    public float GetCriticalDamageMultiplier()
     {
-        return criticalMultiplier.GetValue();
+        return criticalDamageMultiplier.GetValue();
     }
 
     public float GetChargingAttackSpeed()

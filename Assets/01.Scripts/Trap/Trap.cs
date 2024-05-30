@@ -73,6 +73,9 @@ public abstract class Trap : PoolableMono
 
     protected void Attack(Player player)
     {
+        //if (player.함정 무시)
+        //        return;
+
         if (player != null)
             player.OnHit(_trapDamage);
     }
