@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InventoryPopupUI : PopupUI
@@ -30,16 +29,10 @@ public class InventoryPopupUI : PopupUI
 
     public override void TogglePopup(bool value)
     {
-        if (value && SceneManager.GetActiveScene().name != "GameScene")
+        /*if (value && SceneManager.GetActiveScene().name != "GameScene")
         {
-            // Debug
-            if (SceneManager.GetActiveScene().name != "EnemyScene")
-            {
-                return;
-            }
-
-            //return;
-        }
+            return;
+        }*/
 
         base.TogglePopup(value);
     }
