@@ -17,8 +17,8 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField] private float _stairLowerCheckDistance;
 
     [Header("Stair Parameters")]
-    [SerializeField] private float _stairHeight;
-    [SerializeField] private float _stairMoveSmooth;
+    [SerializeField] protected float _stairHeight;
+    [SerializeField] protected float _stairMoveSmooth;
 
 
     #region components
@@ -32,7 +32,7 @@ public abstract class PlayerController : MonoBehaviour
     [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
     [field: SerializeField] public float CurrentHealth;
     
-    private float _gravity = -9.8f * 2;
+    private float _gravity = -98f;
     #endregion
 
 
@@ -64,8 +64,6 @@ public abstract class PlayerController : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         RigidbodyCompo.velocity += new Vector3(0, _gravity, 0) * Time.deltaTime;
-
-        MoveOnStair();
     }
 
     #region velocity control
@@ -131,23 +129,7 @@ public abstract class PlayerController : MonoBehaviour
         return false;
     }
 
-    private void MoveOnStair()
-    {
-        if (CheckStair(Vector3.forward))
-        {
-            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
-        }
 
-        if (CheckStair(new Vector3(1.5f, 0, 1)))
-        {
-            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
-        }
-        
-        if (CheckStair(new Vector3(-1.5f, 0, 1)))
-        {
-            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
-        }
-    }
     #endregion
 #if UNITY_EDITOR
     protected virtual void OnDrawGizmos()

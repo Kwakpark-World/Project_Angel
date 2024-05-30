@@ -5708,7 +5708,7 @@ CapsuleCollider:
   m_Radius: 0.14566591
   m_Height: 1.89
   m_Direction: 1
-  m_Center: {x: 0, y: 0.95, z: 0}
+  m_Center: {x: 0, y: 0.95, z: 0.1}
 --- !u!54 &5173864762241979809
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5752,7 +5752,7 @@ MonoBehaviour:
   _groundCheckDistance: 1.53
   _whatIsGround:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   _whatIsStair:
     serializedVersion: 2
     m_Bits: 512
@@ -5761,7 +5761,7 @@ MonoBehaviour:
   _stairUpperCheckDistance: 0.4
   _stairLowerCheckDistance: 0.3
   _stairHeight: 0.6
-  _stairMoveSmooth: 0.1
+  _stairMoveSmooth: 0.3
   AnimatorCompo: {fileID: 0}
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: fe593aa186f57e94195600eb5676bf58,
     type: 2}
