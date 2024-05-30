@@ -149,7 +149,7 @@ public class Player : PlayerController
 
         if (IsDefense || IsDie)
             return;
-        if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening))
+        if (StateMachine.CompareState(PlayerStateEnum.Awakening))
             return;
 
         PlayerOnHitVolume();
@@ -195,7 +195,7 @@ public class Player : PlayerController
 
     private void HandleDashEvent()
     {
-        if (PlayerStatData.GetDefenseCooldown() + _dashPrevTime > Time.time) return;
+        if (PlayerStatData.GetDashCooldown() + _dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
 
         _dashPrevTime = Time.time;
@@ -215,6 +215,9 @@ public class Player : PlayerController
             StateMachine.ChangeState(PlayerStateEnum.AwakenDash);
         }
     }
+    #endregion
+
+    #region AnimationTrigger
 
     public void AnimationEndTrigger()
     {

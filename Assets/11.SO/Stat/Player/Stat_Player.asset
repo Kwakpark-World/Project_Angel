@@ -19,7 +19,7 @@ MonoBehaviour:
     _baseValue: 0
     modifiers: []
   defenseCooldown:
-    _baseValue: 3
+    _baseValue: 2
     modifiers: []
   attackPower:
     _baseValue: 10
@@ -30,38 +30,41 @@ MonoBehaviour:
   criticalChance:
     _baseValue: 0
     modifiers: []
-  criticalMultiplier:
+  criticalDamageMultiplier:
     _baseValue: 0
     modifiers: []
   chargingAttackSpeed:
-    _baseValue: 1
+    _baseValue: 1.5
     modifiers: []
   chargingAttackDistance:
     _baseValue: 10
     modifiers: []
+  knockbackPower:
+    _baseValue: 0.2
+    modifiers: []
+  knockbackDuration:
+    _baseValue: 0
+    modifiers: []
   moveSpeed:
-    _baseValue: 5
+    _baseValue: 8
+    modifiers: []
+  dashSpeed:
+    _baseValue: 13
+    modifiers: []
+  dashMaxDistance:
+    _baseValue: 13
+    modifiers: []
+  dashCooldown:
+    _baseValue: 0
     modifiers: []
   rotateSpeed:
     _baseValue: 5
-    modifiers: []
-  dashSpeed:
-    _baseValue: 5
-    modifiers: []
-  dashMaxDistance:
-    _baseValue: 15
-    modifiers: []
-  dashDuration:
-    _baseValue: 2
-    modifiers: []
-  dashCooldown:
-    _baseValue: 3
     modifiers: []
   slamMaxDistance:
     _baseValue: 15
     modifiers: []
   slamCooldown:
-    _baseValue: 5
+    _baseValue: 10
     modifiers: []
   maxAwakenGauge:
     _baseValue: 100

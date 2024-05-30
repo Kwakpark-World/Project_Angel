@@ -11,7 +11,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private float _attackPrevTime;
     private float _comboWindow = 0.8f;
-    private float _comboAttackAddtiveDamage = 2f;
+    private float _comboAttackAddtiveDamage = 1f;
 
     private float _width = 0.8f;
     private float _height = 0.2f;
