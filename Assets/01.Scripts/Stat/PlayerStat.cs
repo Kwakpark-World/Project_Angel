@@ -15,6 +15,7 @@ public enum PlayerStatType
     criticalDamageMultiplier,
     chargingAttackSpeed = 120,
     chargingAttackDistance,
+    chargingAttackCooldown,
     knockbackPower = 130,
     knockbackDuration,
     moveSpeed = 200,
@@ -51,6 +52,8 @@ public class PlayerStat : ScriptableObject
     public Stat chargingAttackSpeed;
     [Tooltip("Â÷Â¡ °ø°Ý Âî¸£±â ÀÌµ¿ °Å¸®")]
     public Stat chargingAttackDistance;
+    [Tooltip("Â÷Â¡ °ø°Ý Äð´Ù¿î")]
+    public Stat chargingAttackCooldown;
     [Tooltip("³Ë¹é À§·Â")]
     public Stat knockbackPower;
     [Tooltip("³Ë¹é Áö¼Ó ½Ã°£")]
@@ -161,6 +164,11 @@ public class PlayerStat : ScriptableObject
     public float GetChargingAttackDistance()
     {
         return chargingAttackDistance.GetValue();
+    }
+    
+    public float GetChargingAttackCooldown()
+    {
+        return chargingAttackCooldown.GetValue();
     }
 
     public float GetKnockbackPower()

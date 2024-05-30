@@ -35,7 +35,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
-        _player.PlayerStatData.attackPower.InitializeModifier();
+        _player.PlayerStatData.attackPower.RemoveModifier(_comboAttackAddtiveDamage * _comboCounter);
 
         _player.IsAttack = true;
         _isEffectOn = false;
