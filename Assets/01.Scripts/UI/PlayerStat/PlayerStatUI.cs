@@ -12,7 +12,9 @@ public class PlayerStatUI : MonoBehaviour
 
     private void Update()
     {
-        
+        UpdateHp();
+        UpdateAwakenGage();
+        UpdateChargeGage();
     }
 
     public void UpdateHp()
@@ -22,11 +24,11 @@ public class PlayerStatUI : MonoBehaviour
 
     public void UpdateAwakenGage()
     {
-        playerAwakenGage.value = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxAwakenGauge();
+        playerAwakenGage.value = GameManager.Instance.PlayerInstance.awakenCurrentGauge;
     }
 
     public void UpdateChargeGage()
     {
-        playerAwakenGage.value = GameManager.Instance.PlayerInstance.ChargingGauge;
+        playerChargeGage.value = GameManager.Instance.PlayerInstance.ChargingGauge;
     }
 }
