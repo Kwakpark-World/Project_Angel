@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerStatUI : MonoBehaviour
 {
     [Header("PlayerStat")]
-    public Slider playerHp;
+    public Image playerHp;
     public Slider playerAwakenGage;
     public Slider playerChargeGage;
 
@@ -83,7 +83,10 @@ public class PlayerStatUI : MonoBehaviour
 
     public void UpdateHp()
     {
-        playerHp.value = GameManager.Instance.PlayerInstance.CurrentHealth;
+        float maxHealth = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxHealth();
+        float currentHealth = GameManager.Instance.PlayerInstance.CurrentHealth;
+        float healthRatio = currentHealth / maxHealth;
+        playerHp.fillAmount = healthRatio;
     }
 
     public void UpdateAwakenGage()
