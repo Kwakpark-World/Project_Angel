@@ -8,17 +8,6 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField] protected Transform _groundChecker;
     [SerializeField] protected float _groundCheckDistance;
     [SerializeField] protected LayerMask _whatIsGround;
-    [SerializeField] protected LayerMask _whatIsStair;
-
-    [Header("Stair Checker")]
-    [SerializeField] private Transform _stairUpperChecker;
-    [SerializeField] private Transform _stairLowerChecker;
-    [SerializeField] private float _stairUpperCheckDistance;
-    [SerializeField] private float _stairLowerCheckDistance;
-
-    [Header("Stair Parameters")]
-    [SerializeField] protected float _stairHeight;
-    [SerializeField] protected float _stairMoveSmooth;
 
 
     #region components
@@ -53,7 +42,6 @@ public abstract class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-        InitStairCheckPos();
     }
 
     protected virtual void Update()
@@ -102,38 +90,10 @@ public abstract class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region stair logic
-    private void InitStairCheckPos()
-    {
-        Vector3 upperCheckPos = _stairUpperChecker.localPosition;
-        upperCheckPos.y = _stairHeight;
-
-        _stairUpperChecker.localPosition = upperCheckPos;
-    }
-
-    public bool CheckStair(Vector3 dir)
-    {
-        Debug.DrawRay(_stairLowerChecker.position, transform.TransformDirection(dir) * _stairLowerCheckDistance, Color.red);
-        Debug.DrawRay(_stairUpperChecker.position, transform.TransformDirection(dir) * _stairUpperCheckDistance, Color.red);
-
-        RaycastHit hitLower;
-        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(dir), out hitLower, _stairLowerCheckDistance, _whatIsStair))
-        {
-            RaycastHit hitUpper;
-            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(dir), out hitUpper, _stairUpperCheckDistance, _whatIsStair))
-            {
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
-
-    #endregion
 #if UNITY_EDITOR
     protected virtual void OnDrawGizmos()
-    {      
+    {
+
         if (_groundChecker != null)
             Gizmos.DrawLine(_groundChecker.position, _groundChecker.position + new Vector3(0, -_groundCheckDistance, 0));
     }
