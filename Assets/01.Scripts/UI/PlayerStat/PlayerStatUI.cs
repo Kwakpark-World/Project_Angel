@@ -15,6 +15,11 @@ public class PlayerStatUI : MonoBehaviour
     public Image MouseLeftSkill;
     public Image DefenceSkill;
 
+    [Header("PlayerDebuff")]
+    public Image PosisonDebuff;
+    public Image FreezeDebuff;
+    public Image ParalysisDebuff;
+
     private void Update()
     {
         UpdateHp();
@@ -55,7 +60,25 @@ public class PlayerStatUI : MonoBehaviour
                 StartCoroutine(CoolTime(DefenceSkill, GameManager.Instance.PlayerInstance.PlayerStatData.defenseCooldown.GetValue()));
             }
         }
+    }
 
+    public void StartCoolTime(string buff)
+    {
+        switch (buff)
+        {
+            case "Poison":
+                PosisonDebuff.transform.parent.gameObject.SetActive(true);
+                StartCoroutine(CoolTime(PosisonDebuff, GameManager.Instance.PlayerInstance.BuffCompo.BuffStatData.poisonDuration));
+                break;
+            case "Freeze":
+                FreezeDebuff.transform.parent.gameObject.SetActive(true);
+                StartCoroutine(CoolTime(FreezeDebuff, GameManager.Instance.PlayerInstance.BuffCompo.BuffStatData.freezeDuration));
+                break;
+            case "Paralysis":
+                ParalysisDebuff.transform.parent.gameObject.SetActive(true);
+                StartCoroutine(CoolTime(ParalysisDebuff, GameManager.Instance.PlayerInstance.BuffCompo.BuffStatData.paralysisDuration));
+                break;
+        }
     }
 
     public void UpdateHp()
@@ -86,5 +109,7 @@ public class PlayerStatUI : MonoBehaviour
         }
 
         skillImage.fillAmount = 0f;
+
+        skillImage.transform.parent.gameObject.SetActive(false);
     }
 }
