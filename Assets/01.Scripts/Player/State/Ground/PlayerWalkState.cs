@@ -7,7 +7,7 @@ public class PlayerWalkState : PlayerGroundState
 {
     private float _movementMultiplier = 30.0f;
 
-    private float _maxStepHeight = 0.5f;
+    private float _maxStepHeight = 1f;
     private float _minStepDepth = 0.3f;
     private float _stairHeightPaddingMultiplier = 1.5f;
     private bool _isFirstStep = true;
@@ -55,8 +55,8 @@ public class PlayerWalkState : PlayerGroundState
         float yInput = _player.PlayerInput.YInput;
 
         Vector3 moveDir = SetDirection(xInput, yInput);
-        //moveDir = PlayerStair(moveDir);
-        //moveDir = PlayerSlope(moveDir);
+        moveDir = PlayerStair(moveDir);
+        moveDir = PlayerSlope(moveDir);
 
         _player.SetVelocity(moveDir);
 
