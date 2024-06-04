@@ -24,7 +24,7 @@ public class PathFinder : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = 0;
 
-       // _navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+       _navMeshAgent = GetComponentInParent<NavMeshAgent>();
 
         _navMeshAgent.isStopped = true;
         _navMeshAgent.radius = 1;

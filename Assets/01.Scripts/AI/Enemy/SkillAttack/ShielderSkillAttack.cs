@@ -35,6 +35,7 @@ public class ShielderSkillAttack : EnemyAttack
                 break;
 
             GameObject enemy = hit.collider.gameObject;
+            Debug.Log(enemy);
             
         }
         OwnerNode.brain.AnimatorCompo.SetAnimationState("Idle");
