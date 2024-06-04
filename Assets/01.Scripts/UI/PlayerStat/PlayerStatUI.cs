@@ -20,6 +20,8 @@ public class PlayerStatUI : MonoBehaviour
     public Image FreezeDebuff;
     public Image ParalysisDebuff;
 
+    private bool isDebuffer = false;
+
     private void Update()
     {
         UpdateHp();
@@ -64,6 +66,7 @@ public class PlayerStatUI : MonoBehaviour
 
     public void StartCoolTime(string buff)
     {
+        isDebuffer = true;
         switch (buff)
         {
             case "Poison":
@@ -113,6 +116,8 @@ public class PlayerStatUI : MonoBehaviour
 
         skillImage.fillAmount = 0f;
 
-        skillImage.transform.parent.gameObject.SetActive(false);
+        if(isDebuffer == true)
+            skillImage.transform.parent.gameObject.SetActive(false);
+        
     }
 }
