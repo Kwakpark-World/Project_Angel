@@ -1,14 +1,16 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public abstract class PlayerController : MonoBehaviour  
 {
     [Header("Ground Checker")]
     [SerializeField] protected Transform _groundChecker;
-    [SerializeField] protected float _groundCheckDistance;
     [SerializeField] protected LayerMask _whatIsGround;
-
+    [SerializeField] public float groundCheckDistanceTolerance;
+    [SerializeField] public float playerCenterToGroundDistance = 0.0f;
+    public RaycastHit groundCheckHit = new RaycastHit();
 
     #region components
     [Space(30f), Header("Components")]
@@ -23,6 +25,7 @@ public abstract class PlayerController : MonoBehaviour
     
     private float _gravity = -9.8f;
     #endregion
+    public Transform playerCenter;
 
 
     protected virtual void Awake()
@@ -74,7 +77,15 @@ public abstract class PlayerController : MonoBehaviour
     #endregion
 
     #region Collision Check logic
-    public virtual bool IsGroundDetected() => Physics.Raycast(_groundChecker.position, Vector3.down, _groundCheckDistance * transform.localScale.y, _whatIsGround);
+    public virtual bool IsGroundDetected()
+    {
+
+        bool groundCheck = Physics.Raycast(_groundChecker.position, Vector3.down, out groundCheckHit, groundCheckDistanceTolerance * transform.localScale.y, _whatIsGround);
+        
+        playerCenterToGroundDistance = Vector3.Distance(groundCheckHit.point, playerCenter.position);
+
+        return groundCheck;
+    }
     #endregion
 
     #region delay coroutine logic
@@ -95,7 +106,7 @@ public abstract class PlayerController : MonoBehaviour
     {
 
         if (_groundChecker != null)
-            Gizmos.DrawLine(_groundChecker.position, _groundChecker.position + new Vector3(0, -_groundCheckDistance, 0));
+            Gizmos.DrawLine(_groundChecker.position, _groundChecker.position + new Vector3(0, -groundCheckDistanceTolerance, 0));
     }
 #endif
 }

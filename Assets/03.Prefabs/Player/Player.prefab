@@ -5749,23 +5749,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundChecker: {fileID: 4342280818337386423}
-  _groundCheckDistance: 1.53
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 768
-  _whatIsStair:
-    serializedVersion: 2
-    m_Bits: 512
-  _stairUpperChecker: {fileID: 4722773300619679098}
-  _stairLowerChecker: {fileID: 5636604740231949277}
-  _stairUpperCheckDistance: 0.4
-  _stairLowerCheckDistance: 0.3
-  _stairHeight: 0.6
-  _stairMoveSmooth: 0.1
+  _groundCheckDistanceTolerance: 0
+  _playerCenterToGroundDistance: 0
   AnimatorCompo: {fileID: 0}
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: fe593aa186f57e94195600eb5676bf58,
     type: 2}
   CurrentHealth: 0
+  playerCenter: {fileID: 5140108053741916498}
   weapon: {fileID: 7559007113953224229}
   enemyLayer:
     serializedVersion: 2
@@ -5783,7 +5776,6 @@ MonoBehaviour:
     type: 2}
   playerAnims: []
   effectParent: {fileID: 0}
-  playerCenter: {fileID: 0}
   IsAttack: 0
   IsDefense: 0
   IsDie: 0

@@ -41,7 +41,6 @@ public class Player : PlayerController
     public AnimationClip[] playerAnims;
 
     public Transform effectParent;
-    public Transform playerCenter;
 
     public bool IsAttack;
     public bool IsDefense;
@@ -166,6 +165,19 @@ public class Player : PlayerController
     private void OnDie()
     {
         StateMachine.ChangeState(PlayerStateEnum.Die);
+    }
+
+    public bool IsMovePressed()
+    {
+        float xInput = PlayerInput.XInput;
+        float yInput = PlayerInput.YInput;
+
+        if (Mathf.Abs(xInput) > 0.05f || Mathf.Abs(yInput) > 0.05f)
+        {
+            return true;
+        }
+
+        return false;
     }
     #endregion
 
