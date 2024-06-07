@@ -1,30 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerWalkState : PlayerGroundState
 {
-    private float _movementMultiplier = 30.0f;
+    // Movement
+    private float   _movementMultiplier                       = 30.0f;
 
-    private float _maxStepHeight = 1f;
-    private float _minStepDepth = 0.3f;
-    private float _stairHeightPaddingMultiplier = 1.5f;
-    private bool _isFirstStep = true;
-    private float _firstStepVelocityDistanceMultiplier = 0.1f;
-    private bool _isPlayerAscendingStairs = false;
-    private bool _isPlayerDescendingStairs = false;
-    private float _ascendingStairsMovementMultiplier = 0.35f;
-    private float _descendingStairsMovementMultiplier = 0.7f;
-    private float _maximumAngleOfApproachToAscend = 45.0f;
-    private float _playerHalfHeightToGround = 0.0f;
-    private float _maxAscendRayDistance = 0.0f;
-    private float _maxDescnedRayDistance = 0.0f;
-    private int _numberOfStepDetectRays = 0;
-    private float _rayIncrementAmount = 0.0f;
+    // Stair
+    private int     _numberOfStepDetectRays                 = 0;
+    private float   _maxStepHeight                          = 0.5f;
+    private float   _minStepDepth                           = 0.3f;
+    private float   _stairHeightPaddingMultiplier           = 1.5f;
+    private float   _firstStepVelocityDistanceMultiplier    = 0.1f;
+    private float   _ascendingStairsMovementMultiplier      = 0.35f;
+    private float   _descendingStairsMovementMultiplier     = 0.7f;
+    private float   _maximumAngleOfApproachToAscend         = 45.0f;
+    private float   _playerHalfHeightToGround               = 0.0f;
+    private float   _maxAscendRayDistance                   = 0.0f;
+    private float   _maxDescnedRayDistance                  = 0.0f;
+    private float   _rayIncrementAmount                     = 0.0f;
+    private bool    _isFirstStep                            = true;
+    private bool    _isPlayerAscendingStairs                = false;
+    private bool    _isPlayerDescendingStairs               = false;
 
-    private float _gravityGrounded = -1.0f;
-    private float _maxSlopeAngle = 47.5f;
+    // other
+    private float   _gravityGrounded                        = -1.0f;
+    private float   _maxSlopeAngle                          = 47.5f;
 
     public PlayerWalkState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -93,7 +95,9 @@ public class PlayerWalkState : PlayerGroundState
         }
         calculatedStepInput = AscendStairs(calculatedStepInput, moveDir);
         if (!_isPlayerAscendingStairs)
+        {
             calculatedStepInput = DescendStairs(calculatedStepInput, moveDir);
+        }
 
         return calculatedStepInput; 
     }
@@ -106,13 +110,15 @@ public class PlayerWalkState : PlayerGroundState
 
             float ray = 0.0f;
             List<RaycastHit> raysThatHit = new List<RaycastHit>();
+            // 땅부터 플레이어 중간까지
             for (int x = 1; x <= _numberOfStepDetectRays; x++, ray += _rayIncrementAmount)
             {
-                Vector3 rayLower = new Vector3(_rigidbody.position.x, ((_rigidbody.position.y - _playerHalfHeightToGround) + ray), _rigidbody.position.z);
+                Vector3 rayLower = new Vector3(_rigidbody.position.x, (_rigidbody.position.y + ray), _rigidbody.position.z);
                 RaycastHit hitLower;
-                if (Physics.Raycast(rayLower, _rigidbody.transform.TransformDirection(moveDir), out hitLower, calculatedVelDistance + _maxAscendRayDistance))
+                if (Physics.Raycast(rayLower, _player.transform.forward, out hitLower, calculatedVelDistance + _maxAscendRayDistance, _player.whatIsStair))
                 {
                     float stairSlopeAngle = Vector3.Angle(hitLower.normal, _rigidbody.transform.up);
+                    Debug.Log(stairSlopeAngle);
                     if (stairSlopeAngle == 90.0f)
                     {
                         raysThatHit.Add(hitLower);

@@ -8,6 +8,7 @@ public abstract class PlayerController : MonoBehaviour
     [Header("Ground Checker")]
     [SerializeField] protected Transform _groundChecker;
     [SerializeField] protected LayerMask _whatIsGround;
+    [SerializeField] public LayerMask whatIsStair;
     [SerializeField] public float groundCheckDistanceTolerance;
     [SerializeField] public float playerCenterToGroundDistance = 0.0f;
     public RaycastHit groundCheckHit = new RaycastHit();
