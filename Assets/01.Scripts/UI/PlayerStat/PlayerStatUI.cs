@@ -16,6 +16,7 @@ public class PlayerStatUI : MonoBehaviour
     public Image DefenceSkillCoolDown;
     public Image QSkill;
     public Image LBSkill;
+    [Header("PlayerAwakenSkill")]
     public Image QAwkenSkill;
     public Image LBAwkenSkill;
 
