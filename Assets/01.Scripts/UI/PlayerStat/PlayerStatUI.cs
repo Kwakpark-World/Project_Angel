@@ -6,19 +6,26 @@ using UnityEngine.UI;
 public class PlayerStatUI : MonoBehaviour
 {
     [Header("PlayerStat")]
-    public Slider playerHp;
+    public Image playerHp;
     public Slider playerAwakenGage;
     public Slider playerChargeGage;
 
     [Header("PlayerSkill")]
+    public Image QSkillCoolDown;
+    public Image MouseLeftSkillCoolDown;
+    public Image DefenceSkillCoolDown;
     public Image QSkill;
-    public Image MouseLeftSkill;
-    public Image DefenceSkill;
+    public Image LBSkill;
+    [Header("PlayerAwakenSkill")]
+    public Image QAwkenSkill;
+    public Image LBAwkenSkill;
 
     [Header("PlayerDebuff")]
     public Image PosisonDebuff;
     public Image FreezeDebuff;
     public Image ParalysisDebuff;
+
+    private bool isDebuffer = false;
 
     private void Update()
     {
@@ -28,42 +35,69 @@ public class PlayerStatUI : MonoBehaviour
         
         if(!GameManager.Instance.PlayerInstance.IsAwakening)
         {
+            OnNormalSkill();
             if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.NormalChargeAttack))
             {
-                StartCoroutine(CoolTime(MouseLeftSkill, GameManager.Instance.PlayerInstance.PlayerStatData.chargingAttackCooldown.GetValue()));
+                StartCoroutine(CoolTime(MouseLeftSkillCoolDown, GameManager.Instance.PlayerInstance.PlayerStatData.chargingAttackCooldown.GetValue()));
             }
 
             if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.NormalSlam))
             {
-                StartCoroutine(CoolTime(QSkill, GameManager.Instance.PlayerInstance.PlayerStatData.slamCooldown.GetValue()));
+                StartCoroutine(CoolTime(QSkillCoolDown, GameManager.Instance.PlayerInstance.PlayerStatData.slamCooldown.GetValue()));
             }
 
             if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.Defense))
             {
-                StartCoroutine(CoolTime(DefenceSkill, GameManager.Instance.PlayerInstance.PlayerStatData.defenseCooldown.GetValue()));
+                StartCoroutine(CoolTime(DefenceSkillCoolDown, GameManager.Instance.PlayerInstance.PlayerStatData.defenseCooldown.GetValue()));
             }
         }
         else
         {
+            OffNormalSkill();
             if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.AwakenChargeAttack))
             {
-                StartCoroutine(CoolTime(MouseLeftSkill, GameManager.Instance.PlayerInstance.PlayerStatData.chargingAttackCooldown.GetValue()));
+                StartCoroutine(CoolTime(MouseLeftSkillCoolDown, GameManager.Instance.PlayerInstance.PlayerStatData.chargingAttackCooldown.GetValue()));
             }
 
             if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.AwakenSlam))
             {
-                StartCoroutine(CoolTime(QSkill, GameManager.Instance.PlayerInstance.PlayerStatData.slamCooldown.GetValue()));
+                StartCoroutine(CoolTime(QSkillCoolDown, GameManager.Instance.PlayerInstance.PlayerStatData.slamCooldown.GetValue()));
             }
 
             if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.Defense))
             {
-                StartCoroutine(CoolTime(DefenceSkill, GameManager.Instance.PlayerInstance.PlayerStatData.defenseCooldown.GetValue()));
+                StartCoroutine(CoolTime(DefenceSkillCoolDown, GameManager.Instance.PlayerInstance.PlayerStatData.defenseCooldown.GetValue()));
             }
+        }
+    }
+
+    public void OnNormalSkill()
+    {
+        QSkill.enabled = true;
+        LBSkill.enabled = true;
+
+        if (QSkill.enabled && LBSkill.enabled)
+        {
+            LBAwkenSkill.enabled = false;
+            QAwkenSkill.enabled = false;
+        }
+    }
+
+    public void OffNormalSkill()
+    {
+        QSkill.enabled = false;
+        LBSkill.enabled = false;
+
+        if(!QSkill.enabled && !LBSkill.enabled)
+        {
+            LBAwkenSkill.enabled = true;
+            QAwkenSkill.enabled = true;
         }
     }
 
     public void StartCoolTime(string buff)
     {
+        isDebuffer = true;
         switch (buff)
         {
             case "Poison":
@@ -83,7 +117,10 @@ public class PlayerStatUI : MonoBehaviour
 
     public void UpdateHp()
     {
-        playerHp.value = GameManager.Instance.PlayerInstance.CurrentHealth;
+        float maxHealth = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxHealth();
+        float currentHealth = GameManager.Instance.PlayerInstance.CurrentHealth;
+        float healthRatio = currentHealth / maxHealth;
+        playerHp.fillAmount = healthRatio;
     }
 
     public void UpdateAwakenGage()
@@ -110,6 +147,8 @@ public class PlayerStatUI : MonoBehaviour
 
         skillImage.fillAmount = 0f;
 
-        skillImage.transform.parent.gameObject.SetActive(false);
+        if(isDebuffer == true)
+            skillImage.transform.parent.gameObject.SetActive(false);
+        
     }
 }

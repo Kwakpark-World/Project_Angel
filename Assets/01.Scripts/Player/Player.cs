@@ -246,7 +246,7 @@ public class Player : PlayerController
         Vector3 dir = (MousePosInWorld - transform.position).normalized;
         dir.y = 0;
 
-        transform.transform.rotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.LookRotation(dir);
     }
 
     private void SetMousePosInWorld()
