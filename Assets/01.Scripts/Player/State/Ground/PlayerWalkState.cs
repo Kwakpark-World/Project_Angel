@@ -15,7 +15,7 @@ public class PlayerWalkState : PlayerGroundState
     private float   _firstStepVelocityDistanceMultiplier    = 0.1f;
     private float   _ascendingStairsMovementMultiplier      = 0.35f;
     private float   _descendingStairsMovementMultiplier     = 0.7f;
-    private float   _maximumAngleOfApproachToAscend         = 45.0f;
+    private float   _maximumAngleOfApproachToAscend         = 46.0f;
     private float   _playerHalfHeightToGround               = 0.0f;
     private float   _maxAscendRayDistance                   = 0.0f;
     private float   _maxDescnedRayDistance                  = 0.0f;
@@ -113,12 +113,11 @@ public class PlayerWalkState : PlayerGroundState
             // 땅부터 플레이어 중간까지
             for (int x = 1; x <= _numberOfStepDetectRays; x++, ray += _rayIncrementAmount)
             {
-                Vector3 rayLower = new Vector3(_rigidbody.position.x, (_rigidbody.position.y + ray), _rigidbody.position.z);
+                Vector3 rayLower = new Vector3(_rigidbody.position.x, _rigidbody.position.y + ray, _rigidbody.position.z);
                 RaycastHit hitLower;
                 if (Physics.Raycast(rayLower, _player.transform.forward, out hitLower, calculatedVelDistance + _maxAscendRayDistance, _player.whatIsStair))
                 {
                     float stairSlopeAngle = Vector3.Angle(hitLower.normal, _rigidbody.transform.up);
-                    Debug.Log(stairSlopeAngle);
                     if (stairSlopeAngle == 90.0f)
                     {
                         raysThatHit.Add(hitLower);
@@ -128,37 +127,37 @@ public class PlayerWalkState : PlayerGroundState
 
             if (raysThatHit.Count > 0)
             {
-                Vector3 rayUpper = new Vector3(_rigidbody.position.x, (((_rigidbody.position.y - _playerHalfHeightToGround) + _maxStepHeight) + _rayIncrementAmount), _rigidbody.position.z);
+                Vector3 rayUpper = new Vector3(_rigidbody.position.x, ((_rigidbody.position.y + _maxStepHeight) + _rayIncrementAmount), _rigidbody.position.z);
                 RaycastHit hitUpper;
-                Physics.Raycast(rayUpper, _rigidbody.transform.TransformDirection(moveDir), out hitUpper, calculatedVelDistance + (_maxAscendRayDistance * 2.0f));
+                Physics.Raycast(rayUpper, _player.transform.forward, out hitUpper, calculatedVelDistance + (_maxAscendRayDistance * 2.0f), _player.whatIsStair);
                 if (!hitUpper.collider || (hitUpper.distance - raysThatHit[0].distance) > _minStepDepth)
                 {
-                    if (Vector3.Angle(raysThatHit[0].normal, _rigidbody.transform.TransformDirection(moveDir)) <= _maximumAngleOfApproachToAscend){
-                        Debug.DrawRay(rayUpper, _rigidbody.transform.TransformDirection(moveDir), Color.red, 5.0f);
+                    if (Vector3.Angle(raysThatHit[0].normal, -_rigidbody.transform.TransformDirection(moveDir)) <= _maximumAngleOfApproachToAscend){
+                        Debug.DrawRay(rayUpper, _player.transform.forward * (calculatedVelDistance + (_maxAscendRayDistance * 2.0f)), Color.red, 5.0f);
 
                         _isPlayerAscendingStairs = true;
-                        Vector3 playerRelX = Vector3.Cross(moveDir, Vector3.up);
+                        Vector3 playerRelX = Vector3.Cross(_player.transform.forward, Vector3.up);
 
+                        float stairHeight = raysThatHit.Count * _rayIncrementAmount * _stairHeightPaddingMultiplier;
+
+                        float avgDistance = 0.0f;
+                        foreach (RaycastHit r in raysThatHit)
+                        {
+                            avgDistance += r.distance;
+                        }
+                        avgDistance /= raysThatHit.Count;
+
+                        float tanAngle = Mathf.Atan2(stairHeight, avgDistance) * Mathf.Rad2Deg;
+                        calculatedStepInput = Quaternion.AngleAxis(tanAngle, playerRelX) * calculatedStepInput;
+                        calculatedStepInput *= _ascendingStairsMovementMultiplier;
                         if (_isFirstStep)
                         {
                             calculatedStepInput = Quaternion.AngleAxis(45.0f, playerRelX) * calculatedStepInput;
                             _isFirstStep = false;
                         }
-                        else
-                        {
-                            float stairHeight = raysThatHit.Count * _rayIncrementAmount * _stairHeightPaddingMultiplier;
-
-                            float avgDistance = 0.0f;
-                            foreach (RaycastHit r in raysThatHit)
-                            {
-                                avgDistance += r.distance;
-                            }
-                            avgDistance /= raysThatHit.Count;
-
-                            float tanAngle = Mathf.Atan2(stairHeight, avgDistance) * Mathf.Rad2Deg;
-                            calculatedStepInput = Quaternion.AngleAxis(tanAngle, playerRelX) * calculatedStepInput;
-                            calculatedStepInput *= _ascendingStairsMovementMultiplier;
-                        }
+                        //else
+                        //{
+                        //}
                     }
                     else
                     {
@@ -192,11 +191,12 @@ public class PlayerWalkState : PlayerGroundState
         {
             float ray = 0.0f;
             List<RaycastHit> raysThatHit = new List<RaycastHit>();
+            // 땅부터 플레이어 중간까지
             for (int x = 1; x <= _numberOfStepDetectRays; x++, ray += _rayIncrementAmount)
             {
-                Vector3 rayLower = new Vector3(_rigidbody.position.x, ((_rigidbody.position.y - _playerHalfHeightToGround) + ray), _rigidbody.position.z);
+                Vector3 rayLower = new Vector3(_rigidbody.position.x, _rigidbody.position.y + ray, _rigidbody.position.z);
                 RaycastHit hitLower;
-                if (Physics.Raycast(rayLower, _rigidbody.transform.TransformDirection(-moveDir), out hitLower, _player.ColliderCompo.radius + _maxDescnedRayDistance))
+                if (Physics.Raycast(rayLower, -_player.transform.forward, out hitLower, _maxDescnedRayDistance, _player.whatIsStair))
                 {
                     float stairSlopeAngle = Vector3.Angle(hitLower.normal, _rigidbody.transform.up);
                     if (stairSlopeAngle == 90.0f)
@@ -208,18 +208,18 @@ public class PlayerWalkState : PlayerGroundState
 
             if (raysThatHit.Count > 0)
             {
-                Vector3 rayUpper = new Vector3(_rigidbody.position.x, (((_rigidbody.position.y - _playerHalfHeightToGround) + _maxStepHeight) + _rayIncrementAmount), _rigidbody.position.z);
+                Vector3 rayUpper = new Vector3(_rigidbody.position.x, ((_rigidbody.position.y + _maxStepHeight) + _rayIncrementAmount), _rigidbody.position.z);
                 RaycastHit hitUpper;
-                Physics.Raycast(rayUpper, _rigidbody.transform.TransformDirection(-moveDir), out hitUpper, _player.ColliderCompo.radius + (_maxDescnedRayDistance * 2.0f));
+                Physics.Raycast(rayUpper, -_player.transform.forward, out hitUpper, (_maxDescnedRayDistance * 2.0f), _player.whatIsStair);
                 if (!hitUpper.collider || (hitUpper.distance - raysThatHit[0].distance) > _minStepDepth)
                 {
-                    if (!_player.IsGroundDetected() && hitUpper.distance < _player.ColliderCompo.radius + (_maxDescnedRayDistance * 2.0f))
+                    if (_player.IsGroundDetected() && hitUpper.distance < _player.ColliderCompo.radius + (_maxDescnedRayDistance * 2.0f))
                     {
-                        Debug.DrawRay(rayUpper, _rigidbody.transform.TransformDirection(-moveDir), Color.red, 5.0f);
+                        Debug.DrawRay(rayUpper, -_player.transform.forward * (_maxDescnedRayDistance * 2.0f), Color.red, 5.0f);
 
                         _isPlayerDescendingStairs = true;
-                        Vector3 playerRelX = Vector3.Cross(moveDir, Vector3.up);
-                        
+                        Vector3 playerRelX = Vector3.Cross(_player.transform.forward, Vector3.up);
+
                         float stairHeight = raysThatHit.Count * _rayIncrementAmount * _stairHeightPaddingMultiplier;
 
                         float avgDistance = 0.0f;
@@ -230,9 +230,16 @@ public class PlayerWalkState : PlayerGroundState
                         avgDistance /= raysThatHit.Count;
 
                         float tanAngle = Mathf.Atan2(stairHeight, avgDistance) * Mathf.Rad2Deg;
-                        calculatedStepInput = Quaternion.AngleAxis(tanAngle - 90.0f, playerRelX) * calculatedStepInput;
+                        calculatedStepInput = Quaternion.AngleAxis(tanAngle, playerRelX) * calculatedStepInput;
                         calculatedStepInput *= _descendingStairsMovementMultiplier;
-                        
+                        if (_isFirstStep)
+                        {
+                            calculatedStepInput = Quaternion.AngleAxis(45.0f, playerRelX) * calculatedStepInput;
+                            _isFirstStep = false;
+                        }
+                        //else
+                        //{
+                        //}
                     }
                     else
                     {
