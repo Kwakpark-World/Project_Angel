@@ -5693,7 +5693,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494236958258072100}
-  m_Material: {fileID: 13400000, guid: 2bc2b4c0e1e4e224885c49e37940f7f0, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5752,8 +5752,11 @@ MonoBehaviour:
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 768
-  _groundCheckDistanceTolerance: 0
-  _playerCenterToGroundDistance: 0
+  whatIsStair:
+    serializedVersion: 2
+    m_Bits: 512
+  groundCheckDistanceTolerance: 1.54
+  playerCenterToGroundDistance: 0
   AnimatorCompo: {fileID: 0}
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: fe593aa186f57e94195600eb5676bf58,
     type: 2}
