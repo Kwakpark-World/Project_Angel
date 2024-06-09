@@ -10,16 +10,9 @@ public class PathFinder : MonoBehaviour
     public List<Transform> _targetList; // 시작을 0
     private int _targetIndex;
 
-    private Transform playerTRM;
-
     private void Start()
     {
         InitNaviManager(0.01f);
-    }
-
-    private void Update()
-    {
-        playerTRM = GameManager.Instance.PlayerInstance.transform;
     }
 
     public void InitNaviManager(float updateDelay)
