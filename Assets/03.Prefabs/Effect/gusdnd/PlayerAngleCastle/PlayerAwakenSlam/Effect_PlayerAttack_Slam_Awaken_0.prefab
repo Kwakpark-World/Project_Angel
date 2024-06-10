@@ -4948,6 +4948,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2797712299560906344}
+  - component: {fileID: 3226735090670830234}
   m_Layer: 6
   m_Name: Effect_PlayerAttack_Slam_Awaken_0
   m_TagString: Untagged
@@ -4974,3 +4975,19 @@ Transform:
   - {fileID: 9217130047721222188}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3226735090670830234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094628295201839650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51384d7dbfa3e643a8bc4af8c5cd161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolType: 2101
+  sameLifeCycle: 0
+  particles: []
+  _playerState: 9
