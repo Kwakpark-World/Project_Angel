@@ -7,6 +7,12 @@ public class BazierCurveEffect : MonoBehaviour
     [SerializeField] private Transform[] _trms;
     [SerializeField] private float _speed;
 
+    [ContextMenu("Reset")]
+    public void ResetPosition()
+    {
+        transform.position = new Vector3(0, 0, 0);
+    }
+
     [ContextMenu("Bazier")]
     public void StartMove()
     {
