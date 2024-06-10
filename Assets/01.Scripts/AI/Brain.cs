@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
+[RequireComponent(typeof(Rigidbody)/*, typeof(NavMeshAgent)*/)]
 [RequireComponent(typeof(Buff), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {
@@ -68,6 +68,13 @@ public abstract class Brain : PoolableMono
     {
         base.InitializePoolItem();
 
+        if (!NavMeshAgentCompo)
+        {
+            NavMeshAgentCompo = gameObject.AddComponent<NavMeshAgent>();
+            NavMeshAgentCompo.updateRotation = false;
+            NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
+        }
+
         if (NavMeshAgentCompo)
         {
             NavMeshAgentCompo.isStopped = false;
@@ -84,8 +91,8 @@ public abstract class Brain : PoolableMono
     protected virtual void Initialize()
     {
         RigidbodyCompo = GetComponent<Rigidbody>();
-        NavMeshAgentCompo = GetComponent<NavMeshAgent>();
-        NavMeshAgentCompo.updateRotation = false;
+        //NavMeshAgentCompo = GetComponent<NavMeshAgent>();
+        //NavMeshAgentCompo.updateRotation = false;
         BuffCompo = GetComponent<Buff>();
 
         CurrentHealth = EnemyStatData.GetMaxHealth();
@@ -100,7 +107,7 @@ public abstract class Brain : PoolableMono
 
         EnemyStatData.SetOwner(this);
 
-        NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
+        //NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
     }
 
     public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, float knockbackPower = 0f)
