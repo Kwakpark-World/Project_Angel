@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4431222360223073268
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -7,12 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_AngleCastle_energyball
-  m_Shader: {fileID: -6465566751694194690, guid: ff34a5cc5e850f145abd06f5f89e5474,
-    type: 3}
+  m_Name: PlayerAttack_Charged_Awaken_Side 1
+  m_Shader: {fileID: 4800000, guid: 7a3251d4c3f85e947adfcdf71b061348, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _USE_CUSTOM_ON
+  - _USE_MASK_MIRROR_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -68,20 +82,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _dissolve_tex:
-        m_Texture: {fileID: 2800000, guid: 22bef0cd2cde8d140b6668781f88f12c, type: 3}
+    - _diss_tex:
+        m_Texture: {fileID: 2800000, guid: e199ee8112362864f831425463b09fda, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _dissolve_texture:
-        m_Texture: {fileID: 2800000, guid: 22bef0cd2cde8d140b6668781f88f12c, type: 3}
-        m_Scale: {x: 1, y: 1}
+    - _main_tex:
+        m_Texture: {fileID: 2800000, guid: 04a40b50e9e63ed43af8af28f2ba4f86, type: 3}
+        m_Scale: {x: -0.06, y: 0.54}
         m_Offset: {x: 0, y: 0}
     - _normal_tex:
-        m_Texture: {fileID: 2800000, guid: eb27a364e08d2d24c97d64b9e8611ec4, type: 3}
-        m_Scale: {x: 2, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _normal_texture:
         m_Texture: {fileID: 2800000, guid: c4209b04f8d222c45acb912784553e02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _slash_tex:
+        m_Texture: {fileID: 2800000, guid: 4c3688b2901c98141a4995b5fb0ade78, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -107,6 +121,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
+    - _CullMode: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -116,7 +131,6 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Keyword0: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -131,48 +145,28 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - _diss_upanner: 0.48
+    - _diss_vpanner: -0.95
     - _dissolve: 1
-    - _dissolve_amount: 1
-    - _dissolve_step: 0.5
-    - _dissolve_step_amount: 0.085
-    - _dissolve_upanner: 0.22
-    - _dissolve_vpanner: -0.08
-    - _floor_range: 0.38
-    - _fresnel_intencity: 3.91
-    - _fresnel_power: 2.64
-    - _fresnel_scale: 1.78
-    - _normal_rot: 2.13
-    - _normal_str: 0.133
-    - _normal_upanner: 0.27
-    - _normal_vpanner: 0.61
-    - _rot: 0.82
-    - _use_customData: 0
-    - _use_toon_dissolve: 0
-    - use_customData: 1
+    - _fade_depth: 0
+    - _main_intencity: 4.13
+    - _main_pow: 1.18
+    - _main_upanner: 0.32
+    - _main_vpanner: 0
+    - _mask_pow: 3.86
+    - _normal_str: 0.037
+    - _normal_upanner: 0.52
+    - _normal_vpanner: 0
+    - _opacity: 10
+    - _slash_uoff: -0.44
+    - _slash_voff: 0
+    - _use_custom: 1
+    - _use_mask_mirror: 1
+    - _use_one_minus: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _dissolve_panner_speed: {r: 1, g: 0, b: 0, a: 0}
-    - _dissolve_tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _floor_panner_speed: {r: 5.08, g: 8.04, b: 0, a: 0}
-    - _floor_tiling: {r: 5.56, g: 8.4, b: 0, a: 0}
-    - _fresnel_color: {r: 6.5809126, g: 2.502352, b: 2.0177326, a: 0}
-    - _main_color: {r: 0.33962262, g: 0, b: 0.021911116, a: 0}
-    - _normal_panner_speed: {r: 1, g: 0, b: 0, a: 0}
-    - _normal_tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _main_color: {r: 0.01886791, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &8163883839124634720
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7

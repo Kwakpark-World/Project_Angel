@@ -7,12 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_AngleCastle_energyball
-  m_Shader: {fileID: -6465566751694194690, guid: ff34a5cc5e850f145abd06f5f89e5474,
-    type: 3}
+  m_Name: M_AngleCastle_shockwave 1
+  m_Shader: {fileID: 4800000, guid: bfc3df16c9df75141ab01f3a01444882, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _USE_VERTEX_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -44,6 +44,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Diss_Texture:
+        m_Texture: {fileID: 2800000, guid: 22bef0cd2cde8d140b6668781f88f12c, type: 3}
+        m_Scale: {x: 1, y: 0.4}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -52,9 +56,21 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Main_Texture:
+        m_Texture: {fileID: 2800000, guid: 22bef0cd2cde8d140b6668781f88f12c, type: 3}
+        m_Scale: {x: 1, y: 0.34}
+        m_Offset: {x: 0, y: 0}
+    - _Mask_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise_Texture:
+        m_Texture: {fileID: 2800000, guid: eb27a364e08d2d24c97d64b9e8611ec4, type: 3}
+        m_Scale: {x: 1, y: 0.3}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
@@ -68,21 +84,25 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Sub_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Vertex_texture:
+        m_Texture: {fileID: 2800000, guid: e841d5ab4e2f31945b79eee62b51064a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _dissolve_tex:
         m_Texture: {fileID: 2800000, guid: 22bef0cd2cde8d140b6668781f88f12c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _dissolve_texture:
-        m_Texture: {fileID: 2800000, guid: 22bef0cd2cde8d140b6668781f88f12c, type: 3}
+    - _main_tex:
+        m_Texture: {fileID: 2800000, guid: 7d68a918c0765ff46bd6aa7513519399, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _normal_tex:
         m_Texture: {fileID: 2800000, guid: eb27a364e08d2d24c97d64b9e8611ec4, type: 3}
         m_Scale: {x: 2, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _normal_texture:
-        m_Texture: {fileID: 2800000, guid: c4209b04f8d222c45acb912784553e02, type: 3}
-        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
@@ -98,27 +118,46 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Use_Custom: 0
     - _AlphaClip: 0
     - _AlphaCutoff: 0.5
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _CULLMODE: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
+    - _CullMode: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Diss_Tex_UPanner: 0
+    - _Diss_Tex_VPanner: 1.35
+    - _Dissolve: 1
+    - _Dst: 10
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _Fade_Distance: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Keyword0: 0
+    - _Main_Ins: 1
+    - _Main_Pow: 1
+    - _Main_UPanner: 0
+    - _Main_VPanner: 0.63
+    - _Mask_1x: 0
+    - _Mask_Mirror: 0
+    - _Mask_Pow: 1
     - _Metallic: 0
+    - _Noise_Str: 0.0294
+    - _Noise_Tex_UPanner: 0
+    - _Noise_Tex_VPanner: 1.68
     - _OcclusionStrength: 1
+    - _Opacity: 1.51
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -126,42 +165,60 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Src: 5
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
+    - _SubTex_Ins: 0
+    - _SubTex_Pow: 1
+    - _SubTex_UPanner: 0
+    - _SubTex_VPanner: 0
     - _Surface: 0
+    - _Use_AddMulityMask: 0
+    - _Use_Ceil: 0
+    - _Use_MaskTex: 0
+    - _Use_vertex: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _dissolve: 1
-    - _dissolve_amount: 1
-    - _dissolve_step: 0.5
     - _dissolve_step_amount: 0.085
     - _dissolve_upanner: 0.22
     - _dissolve_vpanner: -0.08
-    - _floor_range: 0.38
     - _fresnel_intencity: 3.91
-    - _fresnel_power: 2.64
-    - _fresnel_scale: 1.78
-    - _normal_rot: 2.13
+    - _fresnel_power: 5.33
+    - _fresnel_scale: 3.51
+    - _main_intencity: 1
+    - _main_power: 1
+    - _main_uoff: 0
+    - _main_voff: 0
+    - _mask_power: 1
+    - _mask_power_v: 1
     - _normal_str: 0.133
     - _normal_upanner: 0.27
     - _normal_vpanner: 0.61
+    - _opacity: 10
     - _rot: 0.82
     - _use_customData: 0
+    - _use_mask_1: 0
+    - _use_mask_1_v: 0
+    - _use_mask_mirror: 1
+    - _use_mask_mirror_v: 0
+    - _use_mask_step: 0
     - _use_toon_dissolve: 0
+    - _vertex_pow: 3.71
+    - _vertex_str: 0
+    - _vertex_upanner: 0
+    - _vertex_vpanner: 0
+    - use_custom: 0
     - use_customData: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _dissolve_panner_speed: {r: 1, g: 0, b: 0, a: 0}
-    - _dissolve_tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _floor_panner_speed: {r: 5.08, g: 8.04, b: 0, a: 0}
-    - _floor_tiling: {r: 5.56, g: 8.4, b: 0, a: 0}
+    - _SubTex_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _TintColor: {r: 0, g: 0, b: 0, a: 0}
     - _fresnel_color: {r: 6.5809126, g: 2.502352, b: 2.0177326, a: 0}
-    - _main_color: {r: 0.33962262, g: 0, b: 0.021911116, a: 0}
-    - _normal_panner_speed: {r: 1, g: 0, b: 0, a: 0}
-    - _normal_tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _main_color: {r: 0.9881089, g: 1, b: 0.5235849, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8163883839124634720
 MonoBehaviour:
