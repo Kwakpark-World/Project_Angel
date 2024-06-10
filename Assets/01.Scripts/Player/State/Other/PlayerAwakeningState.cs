@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAwakeningState : PlayerState
 {
     private bool _isAwakenOn;
+    private bool _isEffectOn;
 
+    private const string _awakenEffectString = "PlayerAwakenEffect";
     private ParticleSystem _thisParticle;
 
     public PlayerAwakeningState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -18,9 +19,11 @@ public class PlayerAwakeningState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
         _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         _player.StopImmediately(true);
         _isAwakenOn = false;
+        _isEffectOn = false;
     }
 
     public override void Exit()
@@ -31,6 +34,15 @@ public class PlayerAwakeningState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
+
+        if (_effectTriggerCalled)
+        {
+            if (!_isEffectOn)
+            {
+                AwakenEffect();
+                _isEffectOn = true;
+            }
+        }
 
         if (_endTriggerCalled)
         {
@@ -101,6 +113,13 @@ public class PlayerAwakeningState : PlayerState
     private void AwakeningEffect()
     {
         _thisParticle.Play();
+    }
+
+    private void AwakenEffect()
+    {
+        ParticleSystem awakenParticle = _player.effectParent.Find(_awakenEffectString).GetComponent<ParticleSystem>();
+
+        awakenParticle.Play();
     }
 
     private IEnumerator PlayerAwakening()
