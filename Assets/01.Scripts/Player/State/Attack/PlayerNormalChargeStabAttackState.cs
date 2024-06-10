@@ -129,6 +129,10 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
             _player.transform.position = Vector3.LerpUnclamped(_player.transform.position, targetPos, t);
             delta += Time.deltaTime;
+
+            if (_endTriggerCalled)
+                break;
+
             yield return null;
         }
     }

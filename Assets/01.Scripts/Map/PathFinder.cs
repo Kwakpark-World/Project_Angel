@@ -1,21 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class PathFinder : MonoBehaviour
 {
     private LineRenderer _lineRenderer;
-    public NavMeshAgent _navMeshAgent;
 
     public List<Transform> _targetList; // 시작을 0
-
     private int _targetIndex;
 
     private void Start()
     {
-        
         InitNaviManager(0.01f);
     }
 
@@ -23,12 +19,6 @@ public class PathFinder : MonoBehaviour
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = 0;
-
-       // _navMeshAgent = GetComponentInChildren<NavMeshAgent>();
-
-        _navMeshAgent.isStopped = true;
-        _navMeshAgent.radius = 1;
-        _navMeshAgent.height = 1;
 
         StartCoroutine(UpdateNavi(updateDelay));
     }
@@ -52,8 +42,7 @@ public class PathFinder : MonoBehaviour
 
             if (_targetIndex < _targetList.Count)
             {
-                _navMeshAgent.SetDestination(_targetList[_targetIndex].position);
-                DrawPath();
+                DrawPathToCurrentTarget();
             }
 
             yield return delayTime;
@@ -65,20 +54,16 @@ public class PathFinder : MonoBehaviour
         _targetIndex++;
     }
 
-    private void DrawPath()
+    private void DrawPathToCurrentTarget()
     {
-        if (_navMeshAgent.path.corners.Length < 2)
+        if (_targetIndex < _targetList.Count)
         {
-            _lineRenderer.positionCount = 0;
-            return;
-        }
+            Vector3[] pathCorners = new Vector3[2];
+            pathCorners[0] = transform.position;
+            pathCorners[1] = _targetList[_targetIndex].position;
 
-        _lineRenderer.positionCount = _navMeshAgent.path.corners.Length;
-        _lineRenderer.SetPosition(0, transform.position);
-
-        for (int i = 1; i < _navMeshAgent.path.corners.Length; ++i)
-        {
-            _lineRenderer.SetPosition(i, _navMeshAgent.path.corners[i]);
+            _lineRenderer.positionCount = pathCorners.Length;
+            _lineRenderer.SetPositions(pathCorners);
         }
     }
 }

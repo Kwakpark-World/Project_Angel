@@ -17,7 +17,7 @@ public class PlayerNormalSlamSkillEffect : PlayerEffect
 
         Vector3 dir = Vector3.zero;
         dir.x = -90f; // default Effect angle
-        dir.z = _player.transform.eulerAngles.y; // x가 돌아가서 이펙트의 Y회전이 아닌 Z회전을 해줘야됨c
+        dir.z = _player.transform.eulerAngles.y; // x가 돌아가서 이펙트의 Y회전이 아닌 Z회전을 해줘야됨
 
         Quaternion rot = Quaternion.Euler(dir);
 

@@ -2894,7 +2894,6 @@ GameObject:
   - component: {fileID: 8787152337149289024}
   - component: {fileID: 4404224866949824327}
   - component: {fileID: 3552165078964842164}
-  - component: {fileID: 7221655224559645079}
   - component: {fileID: -4427341669288770123}
   - component: {fileID: 5062443879734286216}
   - component: {fileID: 7700814571572305591}
@@ -2998,28 +2997,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!195 &7221655224559645079
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7234891252622568735}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: -0.25
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &-4427341669288770123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3178,7 +3155,7 @@ MonoBehaviour:
     onAnimationBegin:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7221655224559645079}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
           m_MethodName: set_isStopped
           m_Mode: 6
@@ -3232,7 +3209,7 @@ MonoBehaviour:
     onAnimationEnd:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7221655224559645079}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
           m_MethodName: set_isStopped
           m_Mode: 6
@@ -3248,7 +3225,7 @@ MonoBehaviour:
     onAnimationBegin:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7221655224559645079}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
           m_MethodName: set_isStopped
           m_Mode: 6

@@ -41,12 +41,10 @@ public class Player : PlayerController
     public AnimationClip[] playerAnims;
 
     public Transform effectParent;
-    public Transform playerCenter;
 
     public bool IsAttack;
     public bool IsDefense;
     public bool IsDie;
-    public bool IsStair { get; private set; }
     public bool IsAwakening;
     public bool IsPlayerStop;
     public bool IsGroundState;
@@ -110,7 +108,6 @@ public class Player : PlayerController
 
         StateMachine.CurrentState.UpdateState();
 
-        PlayerOnStair();
 
         SetMousePosInWorld();
     }
@@ -118,25 +115,11 @@ public class Player : PlayerController
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        MoveOnStair();
-        IsClimbStair();
     }
 
     protected void OnDisable()
     {
         PlayerInput.DashEvent -= HandleDashEvent;
-    }
-
-    private void IsClimbStair()
-    {
-        if (!StateMachine.CompareState(PlayerStateEnum.Walk)) return;
-
-        if (CheckStair(Vector3.forward))
-            IsStair = true;
-        if (CheckStair(new Vector3(1.5f, 0, 1)))
-            IsStair = true;
-        if (CheckStair(new Vector3(-1.5f, 0, 1)))
-            IsStair = true;
     }
 
     public void OnHit(float incomingDamage, Brain attacker = null)
@@ -184,31 +167,17 @@ public class Player : PlayerController
         StateMachine.ChangeState(PlayerStateEnum.Die);
     }
 
-    private void PlayerOnStair()
+    public bool IsMovePressed()
     {
-        if (IsStair)
-            if (IsGroundDetected())
-                IsStair = false;
-    }
+        float xInput = PlayerInput.XInput;
+        float yInput = PlayerInput.YInput;
 
-    private void MoveOnStair()
-    {
-        if (!StateMachine.CompareState(PlayerStateEnum.Walk)) return;
-
-        if (CheckStair(Vector3.forward))
+        if (Mathf.Abs(xInput) > 0.05f || Mathf.Abs(yInput) > 0.05f)
         {
-            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
+            return true;
         }
 
-        if (CheckStair(new Vector3(1.5f, 0, 1)))
-        {
-            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
-        }
-
-        if (CheckStair(new Vector3(-1.5f, 0, 1)))
-        {
-            RigidbodyCompo.position -= new Vector3(0f, -_stairMoveSmooth, 0f);
-        }
+        return false;
     }
     #endregion
 
@@ -277,7 +246,7 @@ public class Player : PlayerController
         Vector3 dir = (MousePosInWorld - transform.position).normalized;
         dir.y = 0;
 
-        transform.transform.rotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.LookRotation(dir);
     }
 
     private void SetMousePosInWorld()

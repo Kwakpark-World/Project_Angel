@@ -1,25 +1,17 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public abstract class PlayerController : MonoBehaviour  
 {
     [Header("Ground Checker")]
     [SerializeField] protected Transform _groundChecker;
-    [SerializeField] protected float _groundCheckDistance;
     [SerializeField] protected LayerMask _whatIsGround;
-    [SerializeField] protected LayerMask _whatIsStair;
-
-    [Header("Stair Checker")]
-    [SerializeField] private Transform _stairUpperChecker;
-    [SerializeField] private Transform _stairLowerChecker;
-    [SerializeField] private float _stairUpperCheckDistance;
-    [SerializeField] private float _stairLowerCheckDistance;
-
-    [Header("Stair Parameters")]
-    [SerializeField] protected float _stairHeight;
-    [SerializeField] protected float _stairMoveSmooth;
-
+    [SerializeField] public LayerMask whatIsStair;
+    [SerializeField] public float groundCheckDistanceTolerance;
+    [SerializeField] public float playerCenterToGroundDistance = 0.0f;
+    public RaycastHit groundCheckHit = new RaycastHit();
 
     #region components
     [Space(30f), Header("Components")]
@@ -32,8 +24,9 @@ public abstract class PlayerController : MonoBehaviour
     [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
     [field: SerializeField] public float CurrentHealth;
     
-    private float _gravity = -98f;
+    private float _gravity = -9.8f;
     #endregion
+    public Transform playerCenter;
 
 
     protected virtual void Awake()
@@ -53,7 +46,6 @@ public abstract class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-        InitStairCheckPos();
     }
 
     protected virtual void Update()
@@ -86,7 +78,15 @@ public abstract class PlayerController : MonoBehaviour
     #endregion
 
     #region Collision Check logic
-    public virtual bool IsGroundDetected() => Physics.Raycast(_groundChecker.position, Vector3.down, _groundCheckDistance * transform.localScale.y, _whatIsGround);
+    public virtual bool IsGroundDetected()
+    {
+
+        bool groundCheck = Physics.Raycast(_groundChecker.position, Vector3.down, out groundCheckHit, groundCheckDistanceTolerance * transform.localScale.y, _whatIsGround);
+        
+        playerCenterToGroundDistance = Vector3.Distance(groundCheckHit.point, playerCenter.position);
+
+        return groundCheck;
+    }
     #endregion
 
     #region delay coroutine logic
@@ -102,40 +102,12 @@ public abstract class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region stair logic
-    private void InitStairCheckPos()
-    {
-        Vector3 upperCheckPos = _stairUpperChecker.localPosition;
-        upperCheckPos.y = _stairHeight;
-
-        _stairUpperChecker.localPosition = upperCheckPos;
-    }
-
-    public bool CheckStair(Vector3 dir)
-    {
-        Debug.DrawRay(_stairLowerChecker.position, transform.TransformDirection(dir) * _stairLowerCheckDistance, Color.red);
-        Debug.DrawRay(_stairUpperChecker.position, transform.TransformDirection(dir) * _stairUpperCheckDistance, Color.red);
-
-        RaycastHit hitLower;
-        if (Physics.Raycast(_stairLowerChecker.position, transform.TransformDirection(dir), out hitLower, _stairLowerCheckDistance, _whatIsStair))
-        {
-            RaycastHit hitUpper;
-            if (!Physics.Raycast(_stairUpperChecker.position, transform.TransformDirection(dir), out hitUpper, _stairUpperCheckDistance, _whatIsStair))
-            {
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
-
-    #endregion
 #if UNITY_EDITOR
     protected virtual void OnDrawGizmos()
-    {      
+    {
+
         if (_groundChecker != null)
-            Gizmos.DrawLine(_groundChecker.position, _groundChecker.position + new Vector3(0, -_groundCheckDistance, 0));
+            Gizmos.DrawLine(_groundChecker.position, _groundChecker.position + new Vector3(0, -groundCheckDistanceTolerance, 0));
     }
 #endif
 }
