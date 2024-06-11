@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e53348e15998d664c9c50d66979b6c5b, type: 3}
-  m_Name: Stat_Player
+  m_Name: PlayerStat
   m_EditorClassIdentifier: 
   maxHealth:
     _baseValue: 100
@@ -28,10 +28,10 @@ MonoBehaviour:
     _baseValue: 1
     modifiers: []
   criticalChance:
-    _baseValue: 0
+    _baseValue: 10
     modifiers: []
   criticalDamageMultiplier:
-    _baseValue: 0
+    _baseValue: 1.5
     modifiers: []
   chargingAttackSpeed:
     _baseValue: 1.5

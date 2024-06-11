@@ -165,7 +165,7 @@ public class PlayerStat : ScriptableObject
     {
         return chargingAttackDistance.GetValue();
     }
-    
+
     public float GetChargingAttackCooldown()
     {
         return chargingAttackCooldown.GetValue();
