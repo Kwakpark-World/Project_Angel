@@ -1,9 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAwakenSlamSkillEffect : PlayerEffect
 {
+    private Vector3 _startPos = Vector3.zero;
+    private Vector3 _endPos = Vector3.zero;
+
+    private Vector3 dir = Vector3.zero;
+    private Quaternion rot = Quaternion.identity;
+            
+
     public override void InitializePoolItem()
     {
         base.InitializePoolItem();
@@ -12,15 +20,22 @@ public class PlayerAwakenSlamSkillEffect : PlayerEffect
         {
             PoolManager.Instance.Push(this);
         }
+        PoolManager.Instance.Push(this, duration);
+
 
         int comboCounter = gameObject.name[gameObject.name.Length - 1] - '0';
 
-        PoolManager.Instance.Push(this, duration);
+
+        SetAttackParams(comboCounter);
+
 
         SetRotation(comboCounter);
 
         PlayEffect();
+
+        SlamAttack();
     }
+
 
     protected override void Update()
     {
@@ -31,6 +46,28 @@ public class PlayerAwakenSlamSkillEffect : PlayerEffect
     public override void RegisterEffect()
     {
         base.RegisterEffect();
+    }
+
+    private void SlamAttack()
+    {
+        // 공격 방향대로 오버랩
+    }
+
+    private void SetAttackParams(int comboCounter)
+    {
+        if (comboCounter < 2)
+        {
+            _startPos = transform.Find("t1").position;
+            _endPos = transform.Find("t3").position;
+
+            dir = (_endPos - _startPos).normalized;
+            rot = Quaternion.LookRotation(dir);
+        }
+        else
+        {
+            dir = _player.transform.forward;
+            rot = Quaternion.LookRotation(_player.transform.forward);
+        }
     }
 
     private void SetRotation(int comboCounter)

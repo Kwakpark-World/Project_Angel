@@ -10,7 +10,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
     private string _comboEffectString;
 
     private float _attackPrevTime;
-    private float _comboWindow = 0.8f;
+    private float _comboWindow = 2.0f;
 
     private bool _isCombo = false;
     private bool _isEffectOn = false;
