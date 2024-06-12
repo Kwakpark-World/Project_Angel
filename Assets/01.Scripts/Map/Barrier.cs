@@ -14,7 +14,7 @@ public class Barrier : MonoBehaviour
     private bool _visible = false;
     private bool _changing = false;
 
-    private const string ALPHA_PROP = "_Alpha";
+    private const string ALPHA_PROP = "_main_alpha_mul";
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class Barrier : MonoBehaviour
         {
             _boxCollider.enabled = true;
             _changing = true;
-            DOTween.To(() => _material.GetFloat(ALPHA_PROP), (x) => _material.SetFloat(ALPHA_PROP, x), 1f, time)
+            DOTween.To(() => _material.GetFloat(ALPHA_PROP), (x) => _material.SetFloat(ALPHA_PROP, x), 0.78f, time)
                    .OnComplete(() =>
                    {
                        _changing = false;
