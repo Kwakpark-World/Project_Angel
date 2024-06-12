@@ -15,6 +15,8 @@ public class PlayerAwakenSlamState : PlayerAttackState
     private bool _isCombo = false;
     private bool _isEffectOn = false;
 
+    private Vector3 _effectPos = Vector3.zero;
+
     public PlayerAwakenSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         
@@ -58,8 +60,12 @@ public class PlayerAwakenSlamState : PlayerAttackState
             {
                 _isEffectOn = true;
 
-                Vector3 pos = _player.transform.position;
-                EffectManager.Instance.PlayEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), pos);
+                if (_comboCounter != 1)
+                {
+                    _effectPos = _player.transform.position;
+                }
+
+                EffectManager.Instance.PlayEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), _effectPos);
             }
         }
 

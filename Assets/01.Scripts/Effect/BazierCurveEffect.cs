@@ -6,31 +6,34 @@ public class BazierCurveEffect : MonoBehaviour
 {
     [SerializeField] private Transform[] _trms;
     [SerializeField] private float _speed;
+    [SerializeField] private float _acceleration;
 
     [ContextMenu("Reset")]
     public void ResetPosition()
     {
-        transform.position = new Vector3(0, 0, 0);
+        transform.position = _trms[0].position;
     }
 
     [ContextMenu("Bazier")]
     public void StartMove()
     {
-        StartCoroutine(MovementCo());
+        StartCoroutine(MovementCo()); 
     }
 
     private IEnumerator MovementCo()
     {
         float dt;
         float percent = 0.0f;
+        float acceleration = 0.0f;
         Vector3 p1;
         Vector3 p2;
         Vector3 result;
         transform.position = Vector3.zero;
         while(Vector3.Distance(transform.position, _trms[2].position) >= 0.1f)
         {
-            dt = Time.deltaTime * _speed;
+            dt = Time.deltaTime * (_speed + acceleration);
             percent += dt;
+            acceleration += _acceleration;
             p1 = Vector3.Lerp(_trms[0].position, _trms[1].position, percent);
             p2 = Vector3.Lerp(_trms[1].position, _trms[2].position, percent);
             result = Vector3.Lerp(p1, p2, percent);
