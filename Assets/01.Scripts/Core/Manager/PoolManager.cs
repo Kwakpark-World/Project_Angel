@@ -6,24 +6,39 @@ using UnityEngine;
 public class PoolManager : MonoSingleton<PoolManager>
 {
     private Dictionary<PoolType, Pool<PoolableMono>> _pools = new Dictionary<PoolType, Pool<PoolableMono>>();
+    private Transform _healthBarCanvas;
     [SerializeField]
-    private PoolListSO _poolingList;
+    private LayerMask _uiLayer;
+    [SerializeField]
+    private PoolListSO _poolList;
 
     protected override void Awake()
     {
         base.Awake();
 
-        foreach (var poolingObject in _poolingList.poolList)
+        _healthBarCanvas = transform.Find("Canvas_HealthBar");
+        _healthBarCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
+
+        foreach (var poolObject in _poolList.poolList)
         {
-            CreatePool(poolingObject.prefab, poolingObject.type, poolingObject.itemAmount);
+            CreatePool(poolObject.prefab, poolObject.type, poolObject.itemAmount);
         }
     }
 
-    public void CreatePool(PoolableMono prefab, PoolType poolingType, int itemAmount = 10)
+    public void CreatePool(PoolableMono prefab, PoolType poolType, int itemAmount = 10)
     {
-        Pool<PoolableMono> pool = new Pool<PoolableMono>(prefab, poolingType, transform, itemAmount);
+        Pool<PoolableMono> pool;
 
-        _pools.Add(poolingType, pool);
+        if ((1 << prefab.gameObject.layer & _uiLayer) == 0)
+        {
+            pool = new Pool<PoolableMono>(prefab, poolType, transform, itemAmount);
+        }
+        else
+        {
+            pool = new Pool<PoolableMono>(prefab, poolType, _healthBarCanvas, itemAmount);
+        }
+
+        _pools.Add(poolType, pool);
     }
 
     public void Push(PoolableMono item, bool resetParent = false)
@@ -57,16 +72,16 @@ public class PoolManager : MonoSingleton<PoolManager>
         _pools[item.poolType].Push(item);
     }
 
-    public PoolableMono Pop(PoolType poolingType, Vector3 position)
+    public PoolableMono Pop(PoolType poolType, Vector3 position)
     {
-        if (!_pools.ContainsKey(poolingType))
+        if (!_pools.ContainsKey(poolType))
         {
             Debug.LogError("Pool object doesn't exist on pool.");
 
             return null;
         }
 
-        PoolableMono item = _pools[poolingType].Pop();
+        PoolableMono item = _pools[poolType].Pop();
         item.transform.position = position;
 
         item.InitializePoolItem();
@@ -74,16 +89,16 @@ public class PoolManager : MonoSingleton<PoolManager>
         return item;
     }
 
-    public PoolableMono Pop(PoolType poolingType, Vector3 position, Transform parent)
+    public PoolableMono Pop(PoolType poolType, Vector3 position, Transform parent)
     {
-        if (!_pools.ContainsKey(poolingType))
+        if (!_pools.ContainsKey(poolType))
         {
             Debug.LogError("Pool object doesn't exist on pool.");
 
             return null;
         }
 
-        PoolableMono item = _pools[poolingType].Pop();
+        PoolableMono item = _pools[poolType].Pop();
         item.transform.position = position;
         item.transform.parent = parent;
 
