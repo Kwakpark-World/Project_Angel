@@ -9,6 +9,8 @@ using UnityEngine.Rendering.Universal;
 
 public class Player : PlayerController
 {
+    public EndingUI endingUI;
+
     [Space(30f), Header("Attack Settings")]
     public GameObject weapon;
 
@@ -165,6 +167,7 @@ public class Player : PlayerController
     private void OnDie()
     {
         StateMachine.ChangeState(PlayerStateEnum.Die);
+        endingUI.OnDie();
     }
 
     public bool IsMovePressed()
