@@ -1,21 +1,30 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyMannequin : MonoBehaviour
 {
     public EnemySpawnDataSO enemySpawnData;
 
-    private float ratioSum;
+    public Brain _brain;
+    private float _ratioSum;
 
     private void Awake()
     {
         InitializeSpawner();
     }
 
-    private void Start()
+    private void Update()
     {
-        SpawnEnemy();
-        gameObject.SetActive(false);
+        if (!_brain)
+        {
+            return;
+        }
+
+        if (_brain.AnimatorCompo.GetCurrentAnimationState("Die"))
+        {
+            _brain = null;
+
+            gameObject.SetActive(false);
+        }
     }
 
     public void InitializeSpawner()
@@ -29,8 +38,8 @@ public class EnemyMannequin : MonoBehaviour
                 continue;
             }
 
-            ratioSum += enemy.spawnRatio;
-            enemy.spawnRatio = ratioSum;
+            _ratioSum += enemy.spawnRatio;
+            enemy.spawnRatio = _ratioSum;
         }
 
         foreach (EnemyToSpawn enemy in enemySpawnData.enemiesToSpawn)
@@ -40,7 +49,7 @@ public class EnemyMannequin : MonoBehaviour
                 continue;
             }
 
-            enemy.spawnRatio = enemy.spawnRatio / ratioSum;
+            enemy.spawnRatio = enemy.spawnRatio / _ratioSum;
         }
     }
 
@@ -57,7 +66,7 @@ public class EnemyMannequin : MonoBehaviour
 
             if (enemy.spawnRatio >= randomValue)
             {
-                Brain brain = PoolManager.Instance.Pop(enemy.enemyType, transform.position) as Brain;
+                _brain = PoolManager.Instance.Pop(enemy.enemyType, transform.position) as Brain;
 
                 break;
             }

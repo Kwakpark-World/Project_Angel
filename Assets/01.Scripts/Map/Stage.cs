@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class Stage : MonoBehaviour
 {
     [SerializeField] private List<Barrier> _barriers = new List<Barrier>();
+    [SerializeField] private List<EnemyMannequin> _mannequins = new List<EnemyMannequin>();
     [SerializeField] private Transform _runeSpawnTrm;
 
     private bool _running = false;
@@ -14,7 +15,7 @@ public class Stage : MonoBehaviour
 
     private void Awake()
     {
-        for(int i = 0; i < _barriers.Count; i++)
+        for (int i = 0; i < _barriers.Count; i++)
         {
             _barriers[i].Hide();
         }
@@ -27,6 +28,16 @@ public class Stage : MonoBehaviour
         {
             ClearStage();
         }
+
+        foreach (EnemyMannequin mannequin in _mannequins)
+        {
+            if (mannequin.gameObject.activeInHierarchy)
+            {
+                return;
+            }
+        }
+
+        ClearStage();
 #endif
     }
 
@@ -34,8 +45,12 @@ public class Stage : MonoBehaviour
     {
         _running = true;
 
+        foreach (EnemyMannequin mannequin in _mannequins)
+        {
+            mannequin.SpawnEnemy();
+        }
+
         StartCoroutine(LockStage());
-        SoundManager.Instance.ChangeBGMMode(BGMMode.Combat);
     }
 
     public void ClearStage()
@@ -44,8 +59,6 @@ public class Stage : MonoBehaviour
         _isClear = true;
 
         StartCoroutine(UnlockStage());
-        SoundManager.Instance.ChangeBGMMode(BGMMode.NonCombat);
-        RuneManager.Instance.SpawnRune(_runeSpawnTrm.position);
     }
 
     private IEnumerator UnlockStage()
@@ -60,6 +73,9 @@ public class Stage : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        SoundManager.Instance.ChangeBGMMode(BGMMode.NonCombat);
+        RuneManager.Instance.SpawnRune(_runeSpawnTrm.position);
+        gameObject.SetActive(false);
         // TODO: enable player input
     }
 
@@ -75,12 +91,13 @@ public class Stage : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        SoundManager.Instance.ChangeBGMMode(BGMMode.Combat);
         // TODO: enable player input
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && !_isClear)
+        if (other.CompareTag("Player") && !_isClear && !_running)
         {
             StartStage();
         }

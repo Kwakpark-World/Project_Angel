@@ -22,7 +22,8 @@ public abstract class Brain : PoolableMono
     public Buff BuffCompo { get; private set; }
     public EnemyAnimator AnimatorCompo { get; private set; }
 
-    public TextRendererParticleSystem DamageTextCompo { get; private set; }
+    public FloatingText DamageTextCompo { get; private set; }
+    public EnemyHealthBar HealthBarCompo { get; private set; }
     #endregion
 
     [field: SerializeField]
@@ -89,6 +90,9 @@ public abstract class Brain : PoolableMono
         CurrentHealth = EnemyStatData.GetMaxHealth();
         NormalAttackTimer = Time.time;
         SkillAttackTimer = Time.time;
+        HealthBarCompo = PoolManager.Instance.Pop(PoolType.UI_HealthBar, transform.position + Vector3.up * 2.5f) as EnemyHealthBar;
+
+        HealthBarCompo.SetOwner(this);
     }
 
     protected virtual void Initialize()
@@ -112,7 +116,7 @@ public abstract class Brain : PoolableMono
 
         if (damageTextTransform)
         {
-            DamageTextCompo = damageTextTransform.GetComponent<TextRendererParticleSystem>();
+            DamageTextCompo = damageTextTransform.GetComponent<FloatingText>();
         }
     }
 
@@ -129,10 +133,10 @@ public abstract class Brain : PoolableMono
         }
 
         float finalDamage = incomingDamage - EnemyStatData.GetDefensivePower();
-
         CurrentHealth -= Mathf.Max(finalDamage, 0f);
 
-        DamageTextCompo.SpawnParticle(enemyCenter.position, finalDamage.ToString(), Color.red);
+        DamageTextCompo.SpawnParticle(enemyCenter.position, finalDamage.ToString("#.##"), Color.red, 0.5f);
+        HealthBarCompo.UpdateHealthBar();
         AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
 
         if (isHitPhysically)
@@ -149,6 +153,10 @@ public abstract class Brain : PoolableMono
     public virtual void OnDie()
     {
         AnimatorCompo.SetAnimationState("Die");
+        HealthBarCompo.SetOwner(null);
+        PoolManager.Instance.Push(HealthBarCompo);
+
+        HealthBarCompo = null;
     }
 
     public IEnumerator Knockback(float knockbackPower)
