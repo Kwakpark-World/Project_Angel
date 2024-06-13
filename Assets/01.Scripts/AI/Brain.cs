@@ -116,7 +116,7 @@ public abstract class Brain : PoolableMono
         }
     }
 
-    public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, float knockbackPower = 0f)
+    public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, bool isCritical = false, float knockbackPower = 0f)
     {
         if (BuffCompo.GetBuffState(BuffType.Shield))
         {

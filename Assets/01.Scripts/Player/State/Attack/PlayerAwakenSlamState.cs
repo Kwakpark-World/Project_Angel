@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerAwakenSlamState : PlayerAttackState
@@ -17,6 +18,10 @@ public class PlayerAwakenSlamState : PlayerAttackState
 
     private Vector3 _effectPos = Vector3.zero;
 
+    private float[] _width = new float[3];
+    private float[] _height = new float[3];
+    private float[] _dist = new float[3];
+
     public PlayerAwakenSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         
@@ -25,6 +30,8 @@ public class PlayerAwakenSlamState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
+        InitSetting();
+
         _player.PlayerInput.SlamSkillEvent += ComboSkill;
         _player.RotateToMousePos();
 
@@ -74,6 +81,11 @@ public class PlayerAwakenSlamState : PlayerAttackState
             }
         }
 
+        if (_isHitAbleTriggerCalled)
+        {
+            SlamAttack();
+        }
+
         if (_endTriggerCalled)
         {
             if (_isCombo)
@@ -81,6 +93,28 @@ public class PlayerAwakenSlamState : PlayerAttackState
             else
                 _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
+    }
+
+    protected override void SetAttackSetting()
+    {
+        _hitDist = _dist[_comboCounter];
+        _hitHeight = _height[_comboCounter];
+        _hitWidth = _width[_comboCounter];
+
+        Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
+
+        _attackOffset = _player.transform.forward * 3f;
+        _attackSize = size;
+    }
+
+    private void SlamAttack()
+    {
+        Vector3 startPos = Vector3.zero;
+        Vector3 dir = Vector3.zero;
+
+        Collider[] enemies = GetEnemyByOverlapBox(startPos, Quaternion.LookRotation(dir));
+
+        Attack(enemies.ToList());
     }
 
     private void ComboSkill()
@@ -97,5 +131,20 @@ public class PlayerAwakenSlamState : PlayerAttackState
             _comboCounter = 0;
 
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
+    }
+
+    private void InitSetting()
+    {
+        _width[0] = 0f;
+        _width[1] = 0f;
+        _width[2] = 0f;
+
+        _height[0] = 0f;
+        _height[1] = 0f;
+        _height[2] = 0f;
+
+        _dist[0] = 0f;
+        _dist[1] = 0f;
+        _dist[2] = 0f;
     }
 }
