@@ -8,11 +8,16 @@ using UnityEngine.UI;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    private readonly int _isRotatingHash = Animator.StringToHash("IsRotating");
+
     [SerializeField]
     private Image _fadePanel;
     [SerializeField]
+    private Image _loadingCircle;
+    [SerializeField]
     private float _fadeDuration;
     private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
+    private Animator _loadingCircleAnimator;
 
     protected override void Awake()
     {
@@ -25,6 +30,8 @@ public class UIManager : MonoSingleton<UIManager>
             popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
             popup.TogglePopup(false);
         }
+
+        _loadingCircleAnimator = _loadingCircle.GetComponent<Animator>();
     }
 
     private void Update()
@@ -50,6 +57,12 @@ public class UIManager : MonoSingleton<UIManager>
             .OnComplete(() =>
             {
                 StartCoroutine(LoadSceneAsync(sceneName));
+            });
+
+        _loadingCircle.DOFade(1f, _fadeDuration)
+            .OnStart(() =>
+            {
+                _loadingCircleAnimator.SetBool(_isRotatingHash, true);
             });
     }
 
@@ -118,6 +131,12 @@ public class UIManager : MonoSingleton<UIManager>
             .OnComplete(() =>
             {
                 _fadePanel.raycastTarget = false;
+            });
+
+        _loadingCircle.DOFade(0f, _fadeDuration)
+            .OnComplete(() =>
+            {
+                _loadingCircleAnimator.SetBool(_isRotatingHash, false);
             });
     }
 }
