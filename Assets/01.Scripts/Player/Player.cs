@@ -138,7 +138,7 @@ public class Player : PlayerController
 
         PlayerOnHitVolume();
 
-        if (CurrentHealth > 1f)
+        if (CurrentHealth > 0f)
         {
             CurrentHealth -= Mathf.Max(incomingDamage - PlayerStatData.GetDefensivePower(), 0f);
 
