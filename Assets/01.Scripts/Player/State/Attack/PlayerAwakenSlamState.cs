@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAwakenSlamState : PlayerAttackState
 {
@@ -21,6 +22,9 @@ public class PlayerAwakenSlamState : PlayerAttackState
     private float[] _width = new float[3];
     private float[] _height = new float[3];
     private float[] _dist = new float[3];
+    private Vector3[] _offset = new Vector3[3];
+
+    private PoolableMono particle;
 
     public PlayerAwakenSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -30,7 +34,6 @@ public class PlayerAwakenSlamState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
-        InitSetting();
 
         _player.PlayerInput.SlamSkillEvent += ComboSkill;
         _player.RotateToMousePos();
@@ -77,7 +80,8 @@ public class PlayerAwakenSlamState : PlayerAttackState
                     case 1: _effectPos.x += -3.4f; break;
                 }
 
-                EffectManager.Instance.PlayEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), _effectPos);
+                particle = EffectManager.Instance.PlayAndGetEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), _effectPos);
+                
             }
         }
 
@@ -97,20 +101,30 @@ public class PlayerAwakenSlamState : PlayerAttackState
 
     protected override void SetAttackSetting()
     {
+        InitSettings();
+
         _hitDist = _dist[_comboCounter];
         _hitHeight = _height[_comboCounter];
         _hitWidth = _width[_comboCounter];
 
         Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
 
-        _attackOffset = _player.transform.forward * 3f;
+        _attackOffset = _offset[_comboCounter];
         _attackSize = size;
     }
 
     private void SlamAttack()
     {
-        Vector3 startPos = Vector3.zero;
-        Vector3 dir = Vector3.zero;
+        Vector3 startPos, endPos;
+        InitAttackPosSetting(out startPos, out endPos);
+
+        float startY = startPos.y;
+
+        startPos.y = 0;
+        endPos.y = 0;
+
+        Vector3 dir = (endPos - startPos).normalized;
+        startPos.y = startY;
 
         Collider[] enemies = GetEnemyByOverlapBox(startPos, Quaternion.LookRotation(dir));
 
@@ -133,18 +147,43 @@ public class PlayerAwakenSlamState : PlayerAttackState
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
     }
 
-    private void InitSetting()
+    private void InitSettings()
     {
-        _width[0] = 0f;
-        _width[1] = 0f;
-        _width[2] = 0f;
+        switch (_comboCounter)
+        {
+            case 0:
+                _width[_comboCounter] = 7f;
+                _height[_comboCounter] = 7f;
+                _dist[_comboCounter] = 20f;
+                _offset[_comboCounter] = new Vector3(1.5f, 3f, 7f);
+                break;
+            case 1:
+                _width[_comboCounter] = 5f;
+                _height[_comboCounter] = 5f;
+                _dist[_comboCounter] = 20f;
+                _offset[_comboCounter] = new Vector3(-2f, 2.5f, 8);
+                break;
+            case 2:
+                _width[_comboCounter] = 5f;
+                _height[_comboCounter] = 6f;
+                _dist[_comboCounter] = 15f;
+                _offset[_comboCounter] = _player.transform.forward * 5;
+                _offset[_comboCounter].y += 2f;
+                break;
+        }
+    }
 
-        _height[0] = 0f;
-        _height[1] = 0f;
-        _height[2] = 0f;
-
-        _dist[0] = 0f;
-        _dist[1] = 0f;
-        _dist[2] = 0f;
+    private void InitAttackPosSetting(out Vector3 startPos, out Vector3 endPos)
+    {
+        if (_comboCounter < 2)
+        {
+            startPos = particle.transform.Find("t1").position;
+            endPos = particle.transform.Find("t3").position;
+        }
+        else
+        {
+            startPos = _player.transform.forward * 3;
+            endPos = _player.transform.forward * 4;
+        }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 public class PlayerAttackRangeEditor : MonoBehaviour
 {
@@ -9,10 +10,15 @@ public class PlayerAttackRangeEditor : MonoBehaviour
     public Vector3 size;
     public Vector3 offset;
 
+    [Header("Rot Params")]
+    public Vector3 pos;
+    public Vector3 rotation;
+
     #region Toggle Boolean
     public bool MeleeAttack_Normal = false;
     public bool AttackRange_Weapon = false;
     public bool AttackRange_Player = false;
+    public bool AttackRange_Rotation = false;
     #endregion
 
     private Player Player;
@@ -40,7 +46,10 @@ public class PlayerAttackRangeEditor : MonoBehaviour
             AttackRangeWeapon();
         if (AttackRange_Player)
             AttackRangePlayer();
+        if (AttackRange_Rotation)
+            AttackRangeRotation();
     }
+
 #endif
     private void MeleeAttack()
     {
@@ -73,5 +82,14 @@ public class PlayerAttackRangeEditor : MonoBehaviour
         Gizmos.DrawWireCube(-Player.transform.position + offset, size);
 
         //Gizmos.DrawCube(Player.transform.position + offset, size);
+    }
+
+    private void AttackRangeRotation()
+    {
+        Gizmos.matrix = Matrix4x4.TRS(pos + offset, Quaternion.Euler(rotation), size);
+        Gizmos.color = Color.white;
+        Gizmos.DrawCube(pos + offset, size);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(pos + offset, size);
     }
 }
