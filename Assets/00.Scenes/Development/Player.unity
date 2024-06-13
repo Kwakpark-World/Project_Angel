@@ -1717,6 +1717,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1266505408088137835, guid: 68479dde4c401d147b3732f592f08bca,
+        type: 3}
+      propertyPath: _poolList
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e47418fa772af64fae2632180eb855e,
+        type: 2}
     - target: {fileID: 1375569621907946859, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1945,6 +1951,11 @@ PrefabInstance:
     - target: {fileID: 3671291809450942285, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3748239048348661944, guid: 68479dde4c401d147b3732f592f08bca,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4105685223258706381, guid: 68479dde4c401d147b3732f592f08bca,
@@ -2911,15 +2922,28 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+    - target: {fileID: 4977708845564934515, guid: 7be0185120f2fa546ab1a40fccf5e39e,
         type: 3}
-      propertyPath: <PlayerStatData>k__BackingField
-      value: 
-      objectReference: {fileID: 11400000, guid: 117a183efd304834a929f87bac490837,
-        type: 2}
+      propertyPath: pos.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977708845564934515, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
+      propertyPath: size.x
+      value: 1.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977708845564934515, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
+      propertyPath: offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977708845564934515, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
+      propertyPath: AttackRange_Rotation
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5089682944616004727, guid: 7be0185120f2fa546ab1a40fccf5e39e, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7be0185120f2fa546ab1a40fccf5e39e, type: 3}
