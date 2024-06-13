@@ -17,7 +17,7 @@ public class BazierCurveEffect : MonoBehaviour
     [ContextMenu("Bazier")]
     public void StartMove()
     {
-        StartCoroutine(MovementCo());
+        StartCoroutine(MovementCo()); 
     }
 
     private IEnumerator MovementCo()

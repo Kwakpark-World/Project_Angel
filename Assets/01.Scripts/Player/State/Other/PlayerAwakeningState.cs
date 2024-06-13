@@ -118,8 +118,22 @@ public class PlayerAwakeningState : PlayerState
     private void AwakenEffect()
     {
         ParticleSystem awakenParticle = _player.effectParent.Find(_awakenEffectString).GetComponent<ParticleSystem>();
+        awakenParticle.transform.parent = null;
 
         awakenParticle.Play();
+        _player.StartCoroutine(ResetParent(awakenParticle));
+    }
+
+    private IEnumerator ResetParent(ParticleSystem particles)
+    {
+        float time = 0;
+        while(particles.main.duration >= time)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        particles.gameObject.transform.SetParent(_player.transform);
     }
 
     private IEnumerator PlayerAwakening()
