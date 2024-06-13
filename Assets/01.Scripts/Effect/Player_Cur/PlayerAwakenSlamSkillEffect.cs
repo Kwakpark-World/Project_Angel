@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,15 +13,16 @@ public class PlayerAwakenSlamSkillEffect : PlayerEffect
         {
             PoolManager.Instance.Push(this);
         }
+        PoolManager.Instance.Push(this, duration);
+
 
         int comboCounter = gameObject.name[gameObject.name.Length - 1] - '0';
-
-        PoolManager.Instance.Push(this, duration);
 
         SetRotation(comboCounter);
 
         PlayEffect();
     }
+
 
     protected override void Update()
     {

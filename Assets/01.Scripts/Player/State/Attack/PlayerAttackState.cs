@@ -69,7 +69,7 @@ public class PlayerAttackState : PlayerState
 
                     AttackBlood(); AttackExtraMaxHealth(); AttackCoolDonw();
 
-                    brain.OnHit(GetRandomDamage(), true, _player.PlayerStatData.GetKnockbackPower());
+                    brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
@@ -95,7 +95,7 @@ public class PlayerAttackState : PlayerState
             {
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
-                    brain.OnHit(GetRandomDamage(), true, _player.PlayerStatData.GetKnockbackPower());
+                    brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
@@ -168,8 +168,8 @@ public class PlayerAttackState : PlayerState
 
     private bool IsCritical()
     {
-        float rand = Random.Range(0, 10000) / 100;
-        if (rand < _player.PlayerStatData.GetCriticalChance())
+        float rand = Random.Range(0f, 100f);
+        if (rand <= _player.PlayerStatData.GetCriticalChance())
         {
             isCritical = true;
             return true;
