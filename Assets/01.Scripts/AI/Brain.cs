@@ -93,6 +93,7 @@ public abstract class Brain : PoolableMono
         HealthBarCompo = PoolManager.Instance.Pop(PoolType.UI_HealthBar, transform.position + Vector3.up * 2.5f) as EnemyHealthBar;
 
         HealthBarCompo.SetOwner(this);
+        HealthBarCompo.UpdateHealthBar();
     }
 
     protected virtual void Initialize()
