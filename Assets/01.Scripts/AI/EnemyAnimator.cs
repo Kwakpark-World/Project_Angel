@@ -28,12 +28,12 @@ public struct AnimationTrigger
 public class EnemyAnimator : MonoBehaviour
 {
     public List<AnimationTrigger> animationTriggers = new List<AnimationTrigger>();
+    public Dictionary<string, AnimationTrigger> animationTriggersByState = new Dictionary<string, AnimationTrigger>();
 
     [SerializeField]
     private Transform _weaponTransform;
     private Brain _owner;
 
-    private Dictionary<string, AnimationTrigger> _animationTriggersByState = new Dictionary<string, AnimationTrigger>();
     private Dictionary<string, int> _parameterHashes = new Dictionary<string, int>();
     public Animator _animator;
     private string _currentState = "Idle";
@@ -45,7 +45,7 @@ public class EnemyAnimator : MonoBehaviour
 
         foreach (AnimationTrigger animationTrigger in animationTriggers)
         {
-            _animationTriggersByState.Add(animationTrigger.stateName, animationTrigger);
+            animationTriggersByState.Add(animationTrigger.stateName, animationTrigger);
         }
     }
 
@@ -55,9 +55,9 @@ public class EnemyAnimator : MonoBehaviour
         {
             string state = parameter.name.Replace("is", "");
 
-            if (!_animationTriggersByState.ContainsKey(state))
+            if (!animationTriggersByState.ContainsKey(state))
             {
-                _animationTriggersByState.Add(state, new AnimationTrigger());
+                animationTriggersByState.Add(state, new AnimationTrigger());
             }
 
             _parameterHashes.Add(parameter.name, parameter.nameHash);
@@ -108,17 +108,17 @@ public class EnemyAnimator : MonoBehaviour
 
     public void OnAnimationBegin()
     {
-        _animationTriggersByState[_currentState].onAnimationBegin?.Invoke();
+        animationTriggersByState[_currentState].onAnimationBegin?.Invoke();
     }
 
     public void OnAnimationPlaying()
     {
-        _animationTriggersByState[_currentState].onAnimationPlaying?.Invoke();
+        animationTriggersByState[_currentState].onAnimationPlaying?.Invoke();
     }
 
     public void OnAnimationEnd(string stateName)
     {
-        _animationTriggersByState[_currentState].onAnimationEnd?.Invoke();
+        animationTriggersByState[_currentState].onAnimationEnd?.Invoke();
 
         if (stateName != "")
         {
