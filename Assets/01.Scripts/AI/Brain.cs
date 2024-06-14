@@ -77,6 +77,10 @@ public abstract class Brain : PoolableMono
             NavMeshAgentCompo = gameObject.AddComponent<NavMeshAgent>();
             NavMeshAgentCompo.updateRotation = false;
             NavMeshAgentCompo.speed = EnemyStatData.GetMoveSpeed();
+
+            AnimatorCompo?.animationTriggersByState["Hit"].onAnimationBegin.AddListener(() => NavMeshAgentCompo.isStopped = true);
+            AnimatorCompo?.animationTriggersByState["Hit"].onAnimationEnd.AddListener(() => NavMeshAgentCompo.isStopped = false);
+            AnimatorCompo?.animationTriggersByState["Die"].onAnimationBegin.AddListener(() => NavMeshAgentCompo.isStopped = true);
         }
 
         if (NavMeshAgentCompo)
@@ -93,6 +97,7 @@ public abstract class Brain : PoolableMono
         HealthBarCompo = PoolManager.Instance.Pop(PoolType.UI_HealthBar, transform.position + Vector3.up * 2.5f) as EnemyHealthBar;
 
         HealthBarCompo.SetOwner(this);
+        HealthBarCompo.UpdateHealthBar();
     }
 
     protected virtual void Initialize()
