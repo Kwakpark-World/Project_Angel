@@ -15,13 +15,19 @@ public class EndingUI : MonoBehaviour
     {
         backGround.gameObject.SetActive(true);
 
+        Color backGroundColor = backGround.color;
+        backGroundColor.a = 0f;
+        backGround.color = backGroundColor;
+
+        backGround.DOFade(0.7f, 1.5f);
+
         Color textColor = text.color;
         textColor.a = 0f;
         text.color = textColor;
 
-        text.DOFade(1f, 2f);
+        text.DOFade(0.9f, 1.5f);
 
-        StartCoroutine(ChangeScene(3f));
+        StartCoroutine(ChangeScene(3.5f));
     }
 
     IEnumerator ChangeScene(float delay)
