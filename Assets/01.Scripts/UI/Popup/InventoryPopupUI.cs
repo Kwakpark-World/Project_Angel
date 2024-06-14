@@ -47,7 +47,8 @@ public class InventoryPopupUI : PopupUI
         _selectedRuneImage.color = Color.white;
         _selectedRuneImage.sprite = selectedRune.RuneData.runeSprite;
         _selectedRuneName.text = selectedRune.RuneData.runeDisplayedName;
-        _selectedRuneDescription.text = selectedRune.RuneData.runeDescription;
+        //_selectedRuneDescription.text = selectedRune.RuneData.runeDescription;
+        _selectedRuneDescription.text = "설명 준비 중...";
 
         selectedRune.onClickRune.RemoveListener(SelectRune);
         selectedRune.onClickRune.AddListener(DeselectRune);
