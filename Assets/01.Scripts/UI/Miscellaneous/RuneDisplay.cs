@@ -36,6 +36,11 @@ public class RuneDisplay : MonoBehaviour, IPointerClickHandler, IBeginDragHandle
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!RuneData)
+        {
+            return;
+        }
+
         RuneImage.raycastTarget = false;
         _runeCanvas.sortingOrder++;
         transform.position = eventData.position;
@@ -43,6 +48,11 @@ public class RuneDisplay : MonoBehaviour, IPointerClickHandler, IBeginDragHandle
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!RuneData)
+        {
+            return;
+        }
+
         transform.position = eventData.position;
 
         if (!_isWaiting && !eventData.pointerCurrentRaycast.gameObject)
@@ -59,6 +69,11 @@ public class RuneDisplay : MonoBehaviour, IPointerClickHandler, IBeginDragHandle
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!RuneData)
+        {
+            return;
+        }
+
         transform.localPosition = Vector3.zero;
         _runeCanvas.sortingOrder--;
         RuneImage.raycastTarget = true;

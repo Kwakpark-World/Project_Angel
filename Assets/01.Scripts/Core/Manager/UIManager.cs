@@ -70,7 +70,18 @@ public class UIManager : MonoSingleton<UIManager>
     {
         foreach (var popup in popups)
         {
-            popup.Value.TogglePopup(popup.Key == popupName && !popup.Value.gameObject.activeInHierarchy);
+            bool popupToggleValue = popup.Key == popupName && !popup.Value.gameObject.activeInHierarchy;
+
+            popup.Value.TogglePopup(popupToggleValue);
+
+            if (popupToggleValue)
+            {
+                GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+            }
+            else if (popup.Key == popupName)
+            {
+                GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+            }
         }
     }
 
