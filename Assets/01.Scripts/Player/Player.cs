@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -92,6 +93,8 @@ public class Player : PlayerController
     protected void OnEnable()
     {
         PlayerInput.DashEvent += HandleDashEvent;
+        PlayerInput.DefenseEvent += PlayerDefense;
+
     }
 
     protected override void Start()
@@ -122,6 +125,7 @@ public class Player : PlayerController
     protected void OnDisable()
     {
         PlayerInput.DashEvent -= HandleDashEvent;
+        PlayerInput.DefenseEvent -= PlayerDefense;
     }
 
     public void OnHit(float incomingDamage, Brain attacker = null)
@@ -181,6 +185,16 @@ public class Player : PlayerController
         }
 
         return false;
+    }
+
+    private void PlayerDefense()
+    {
+        if (IsGroundDetected())
+        {
+            if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time) return;
+            StateMachine.ChangeState(PlayerStateEnum.Defense);
+        }
+
     }
     #endregion
 
