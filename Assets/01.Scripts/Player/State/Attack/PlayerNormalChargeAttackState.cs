@@ -91,4 +91,10 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         Attack(enemies.ToList());
     }
 
+    protected override void HitEnemyAction(Brain enemy)
+    {
+        base.HitEnemyAction(enemy);
+
+        CameraManager.Instance.ShakeCam(0.3f, 0.5f, 0.5f);
+    }
 }

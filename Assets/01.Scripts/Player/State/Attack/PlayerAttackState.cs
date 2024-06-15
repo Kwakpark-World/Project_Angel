@@ -70,6 +70,7 @@ public class PlayerAttackState : PlayerState
                     AttackBlood(); AttackExtraMaxHealth(); AttackCoolDonw();
 
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
+                    HitEnemyAction(brain);
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
@@ -78,7 +79,6 @@ public class PlayerAttackState : PlayerState
                 _player.PlayerStatData.attackPower.RemoveModifier(modifierValue);
             }
         }
-
     }
 
     public void Attack(List<RaycastHit> enemies)
@@ -96,6 +96,7 @@ public class PlayerAttackState : PlayerState
                 if (_player.enemyNormalHitDuplicateChecker.Add(brain))
                 {
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
+                    HitEnemyAction(brain);
 
                     if (!_player.IsAwakening)
                         _player.awakenCurrentGauge++;
@@ -213,7 +214,7 @@ public class PlayerAttackState : PlayerState
     }
     #endregion
 
-
+    protected virtual void HitEnemyAction(Brain enemy) { }
 
     protected virtual void SetAttackSetting() { }
 }

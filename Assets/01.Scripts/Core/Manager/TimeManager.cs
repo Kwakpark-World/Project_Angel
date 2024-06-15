@@ -30,6 +30,16 @@ public class TimeManager : MonoSingleton<TimeManager>
             _timeScaleChangeCoroutine = StartCoroutine(TimeSlow(targetScale, tick));
     }
 
+    public void ResetTimeScale()
+    {
+        Time.timeScale = 1f;
+    }
+
+    public void StopTimeScale()
+    {
+        Time.timeScale = 0f;
+    }
+
     private void ResetTimeChangeCoroutine()
     {
         float prevTimeScale = Time.timeScale;

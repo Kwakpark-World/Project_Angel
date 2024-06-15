@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerNormalChargeStabAttackState : PlayerChargeState
 {
@@ -100,6 +99,13 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
+    }
+
+    protected override void HitEnemyAction(Brain enemy)
+    {
+        base.HitEnemyAction(enemy);
+
+        CameraManager.Instance.ShakeCam(0.3f, 0.5f, 0.5f);
     }
 
     private void MoveToFront()
