@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,9 @@ public class PlayerStatUI : MonoBehaviour
     public Image playerHp;
     public Slider playerAwakenGage;
     public Slider playerChargeGage;
+    public TextMeshProUGUI HpTxt;
+    public TextMeshProUGUI AwakenTxt;
+    public TextMeshProUGUI ChargeTxt;
 
     [Header("PlayerSkill")]
     public Image QSkillCoolDown;
@@ -121,16 +125,20 @@ public class PlayerStatUI : MonoBehaviour
         float currentHealth = GameManager.Instance.PlayerInstance.CurrentHealth;
         float healthRatio = currentHealth / maxHealth;
         playerHp.fillAmount = healthRatio;
+
+        HpTxt.text = $"{currentHealth} / {maxHealth}";
     }
 
     public void UpdateAwakenGage()
     {
         playerAwakenGage.value = GameManager.Instance.PlayerInstance.awakenCurrentGauge;
+        AwakenTxt.text = $"{GameManager.Instance.PlayerInstance.awakenCurrentGauge} / 100";
     }
 
     public void UpdateChargeGage()
     {
         playerChargeGage.value = GameManager.Instance.PlayerInstance.ChargingGauge;
+        ChargeTxt.text = $"{GameManager.Instance.PlayerInstance.ChargingGauge} / 2";
     }
 
     IEnumerator CoolTime(Image skillImage, float cooldown)
