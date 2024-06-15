@@ -5756,13 +5756,17 @@ MonoBehaviour:
   whatIsStair:
     serializedVersion: 2
     m_Bits: 512
-  groundCheckDistanceTolerance: 1.54
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 1024
+  groundCheckDistanceTolerance: 1.6
   playerCenterToGroundDistance: 0
   AnimatorCompo: {fileID: 0}
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: 7e3ff71f983213546b0e5f3558d6f886,
     type: 2}
   CurrentHealth: 0
   playerCenter: {fileID: 5140108053741916498}
+  endingUI: {fileID: 0}
   weapon: {fileID: 7559007113953224229}
   enemyLayer:
     serializedVersion: 2

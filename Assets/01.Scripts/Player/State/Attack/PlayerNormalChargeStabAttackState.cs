@@ -108,9 +108,17 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         {
             _isStabMove = true;
 
+            float dashDistance = _player.PlayerStatData.GetChargingAttackDistance();
 
-            float stabDistance = _player.ChargingGauge * _player.PlayerStatData.GetChargingAttackDistance();
-            _player.SetVelocity(_player.transform.forward * stabDistance * 10);
+            RaycastHit hit;
+            if (Physics.Raycast(_player.transform.position, _player.transform.forward, out hit, _player.PlayerStatData.GetChargingAttackDistance(), _player.whatIsWall))
+            {
+                dashDistance = hit.distance;
+            }
+
+            float stabDistance = _player.ChargingGauge * dashDistance;
+            
+            _player.SetVelocity(_player.transform.forward * stabDistance * 5);
 
             //_player.StartCoroutine(MoveToFrontSmooth(_player.transform.position + (_player.transform.forward * stabDistance), _player.AnimatorCompo.speed));
         }
