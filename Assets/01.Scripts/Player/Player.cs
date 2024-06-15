@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -120,6 +119,8 @@ public class Player : PlayerController
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        StateMachine.CurrentState.FixedUpdateState();
     }
 
     protected void OnDisable()

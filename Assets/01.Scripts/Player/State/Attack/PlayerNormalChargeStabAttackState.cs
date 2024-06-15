@@ -59,14 +59,19 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
             }
         }        
 
-        if (_actionTriggerCalled)
-        {
-            MoveToFront();
-        }
-
         if (_endTriggerCalled)
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
+        }
+    }
+
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+
+        if (_actionTriggerCalled)
+        {
+            MoveToFront();
         }
     }
 

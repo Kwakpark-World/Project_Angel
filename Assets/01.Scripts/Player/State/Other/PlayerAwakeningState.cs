@@ -119,9 +119,24 @@ public class PlayerAwakeningState : PlayerState
     {
         ParticleSystem awakenParticle = _player.effectParent.Find(_awakenEffectString).GetComponent<ParticleSystem>();
         awakenParticle.transform.parent = null;
+        CameraManager.Instance.ShakeCam(0.1f, 0.3f, 3f);
+        AwakeningAttack();
 
         awakenParticle.Play();
         _player.StartCoroutine(ResetParent(awakenParticle));
+    }
+
+    private void AwakeningAttack()
+    {
+        Collider[] enemies = Physics.OverlapBox(_player.transform.position, Vector3.one * 5, Quaternion.identity, _player.enemyLayer);
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy.TryGetComponent<Brain>(out Brain brain))
+            {
+                brain.OnHit(3f, false, false, 0f);
+            }
+        }
     }
 
     private IEnumerator ResetParent(ParticleSystem particles)

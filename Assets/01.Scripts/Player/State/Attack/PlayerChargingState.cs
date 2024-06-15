@@ -85,7 +85,7 @@ public class PlayerChargingState : PlayerChargeState
         else
         {            
             ChargingEffect();
-            CameraManager.Instance.ZoomCam(3f, _cameraZoomChangePerTick);
+            CameraManager.Instance.ZoomCam(5.6f, _cameraZoomChangePerTick);
 
             _player.ChargingGauge += Time.deltaTime * 1.5f;
         }

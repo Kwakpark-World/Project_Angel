@@ -51,6 +51,11 @@ public class PlayerState
         _player.AnimatorCompo.SetFloat(_yVelocityHash, _rigidbody.velocity.y);
     }
 
+    public virtual void FixedUpdateState()
+    {
+
+    }
+
     public virtual void Exit()
     {
         _player.AnimatorCompo.SetBool(_animBoolHash, false);

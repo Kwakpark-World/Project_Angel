@@ -56,16 +56,24 @@ public class PlayerWalkState : PlayerGroundState
         float xInput = _player.PlayerInput.XInput;
         float yInput = _player.PlayerInput.YInput;
 
-        Vector3 moveDir = SetDirection(xInput, yInput);
-        moveDir = PlayerStair(moveDir);
-        moveDir = PlayerSlope(moveDir);
-
-        _player.SetVelocity(moveDir);
-
         if (Mathf.Abs(xInput) < 0.05f && Mathf.Abs(yInput) < 0.05f)
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
+    }
+
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+
+        float xInput = _player.PlayerInput.XInput;
+        float yInput = _player.PlayerInput.YInput;
+
+        Vector3 moveDir = SetDirection(xInput, yInput);
+        moveDir = PlayerStair(moveDir);
+        //moveDir = PlayerSlope(moveDir);
+
+        _player.SetVelocity(moveDir);
     }
 
     private Vector3 SetDirection(float xInput, float yInput)

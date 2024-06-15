@@ -12,7 +12,7 @@ public class PlayerNormalSlamState : PlayerAttackState
     private Vector3 _offset;
 
     private float _jumpForce = 10f;
-    private float _dropForce = 22f;
+    private float _dropForce = 44f;
 
     private bool _isEffectOn = false;
     
@@ -45,6 +45,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         if (_actionTriggerCalled )
         {
             AttackDrop();
+            //Time.timeScale = 2f;
         }
 
         if (_effectTriggerCalled)
@@ -52,6 +53,7 @@ public class PlayerNormalSlamState : PlayerAttackState
             if (!_isEffectOn)
             {
                 _isEffectOn = true;
+                CameraManager.Instance.ShakeCam(0.2f, 0.4f, 5f);
                 SlamEffect();
             }
         }
@@ -60,7 +62,8 @@ public class PlayerNormalSlamState : PlayerAttackState
         {
             if (_player.IsGroundDetected())
             {
-                SlamAttack();   
+                //Time.timeScale = 1f;
+                SlamAttack();
             } 
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
@@ -91,12 +94,15 @@ public class PlayerNormalSlamState : PlayerAttackState
     private void SlamEffect()
     {
         float yOffset = 0f;
-        Vector3 pos = _player.transform.position + _attackOffset;
+        Vector3 rayPos = _player.transform.position;
+        rayPos.y += 1f;
         RaycastHit hit;
-        if (Physics.Raycast(_player.transform.position, Vector3.down, out hit, 300f, LayerMask.GetMask("Ground")))
+
+        if (Physics.Raycast(rayPos, Vector3.down, out hit, 300f, LayerMask.GetMask("Ground")))
         {
             yOffset = hit.transform.position.y;
         }
+        Vector3 pos = _player.transform.position + _attackOffset;
         pos.y = yOffset;
 
         EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Slam_Normal, pos);
