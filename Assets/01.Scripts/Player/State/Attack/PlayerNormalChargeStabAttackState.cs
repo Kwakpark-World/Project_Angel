@@ -71,21 +71,6 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         }
     }
 
-
-    private void MoveToFront()
-    {
-        if (!_isStabMove)
-        {
-            _isStabMove = true;
-
-
-            float stabDistance = _player.ChargingGauge * _player.PlayerStatData.GetChargingAttackDistance();
-            //_player.SetVelocity(_player.transform.forward * stabDistance);
-
-            _player.StartCoroutine(MoveToFrontSmooth(_player.transform.position + (_player.transform.forward * stabDistance), _player.AnimatorCompo.speed));
-        }
-    }
-
     protected override void SetAttackSetting()
     {
         _hitDist = _dist;
@@ -117,6 +102,19 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         Attack(enemies.ToList());
     }
 
+    private void MoveToFront()
+    {
+        if (!_isStabMove)
+        {
+            _isStabMove = true;
+
+
+            float stabDistance = _player.ChargingGauge * _player.PlayerStatData.GetChargingAttackDistance();
+            _player.SetVelocity(_player.transform.forward * stabDistance * 10);
+
+            //_player.StartCoroutine(MoveToFrontSmooth(_player.transform.position + (_player.transform.forward * stabDistance), _player.AnimatorCompo.speed));
+        }
+    }
 
     private IEnumerator MoveToFrontSmooth(Vector3 targetPos, float duration)
     {
