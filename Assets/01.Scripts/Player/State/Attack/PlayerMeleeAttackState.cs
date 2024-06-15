@@ -7,7 +7,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 {
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
-    private int _comboCounter;
+    public int _comboCounter;
 
     private float _attackPrevTime;
     private float _comboWindow = 0.8f;

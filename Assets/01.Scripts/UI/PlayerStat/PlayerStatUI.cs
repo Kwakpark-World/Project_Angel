@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 public class PlayerStatUI : MonoBehaviour
 {
+
     [Header("PlayerStat")]
     public Image playerHp;
     public Slider playerAwakenGage;
     public Slider playerChargeGage;
+
     public TextMeshProUGUI HpTxt;
     public TextMeshProUGUI AwakenTxt;
     public TextMeshProUGUI ChargeTxt;
@@ -20,14 +22,19 @@ public class PlayerStatUI : MonoBehaviour
     public Image DefenceSkillCoolDown;
     public Image QSkill;
     public Image LBSkill;
+
+    
+
     [Header("PlayerAwakenSkill")]
-    public Image QAwkenSkill;
+    public List<Image> QskillAwaken;
     public Image LBAwkenSkill;
 
     [Header("PlayerDebuff")]
     public Image PosisonDebuff;
     public Image FreezeDebuff;
     public Image ParalysisDebuff;
+
+    
 
     private bool isDebuffer = false;
 
@@ -83,7 +90,10 @@ public class PlayerStatUI : MonoBehaviour
         if (QSkill.enabled && LBSkill.enabled)
         {
             LBAwkenSkill.enabled = false;
-            QAwkenSkill.enabled = false;
+            for(int i = 0; i <= 2; i++)
+            {
+                QskillAwaken[i].enabled = false;
+            }
         }
     }
 
@@ -95,7 +105,8 @@ public class PlayerStatUI : MonoBehaviour
         if(!QSkill.enabled && !LBSkill.enabled)
         {
             LBAwkenSkill.enabled = true;
-            QAwkenSkill.enabled = true;
+
+            QskillAwaken[0].enabled=true;
         }
     }
 
