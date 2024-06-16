@@ -24,8 +24,6 @@ public class PlayerAwakenSlamState : PlayerAttackState
     private float[] _dist = new float[3];
     private Vector3[] _offset = new Vector3[3];
 
-    private PoolableMono particle;
-
     public PlayerAwakenSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         
@@ -81,8 +79,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
                     case 1: _effectPos.x += -3.4f; break;
                 }
 
-                particle = EffectManager.Instance.PlayAndGetEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), _effectPos);
-                
+                EffectManager.Instance.PlayEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), _effectPos);
             }
         }
 

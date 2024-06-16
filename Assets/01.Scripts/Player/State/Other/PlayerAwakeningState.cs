@@ -9,7 +9,9 @@ public class PlayerAwakeningState : PlayerState
     private bool _isEffectOn;
 
     private const string _awakenEffectString = "PlayerAwakenEffect";
+    private const string _awakenStartEffectString = "PlayerAwakenStartEffect";
     private ParticleSystem _thisParticle;
+    ParticleSystem[] _awakenStartParticle;
 
     public PlayerAwakeningState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -19,6 +21,7 @@ public class PlayerAwakeningState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        AwakenStartEffect();
 
         _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         _player.StopImmediately(true);
@@ -110,6 +113,16 @@ public class PlayerAwakeningState : PlayerState
 
     }
 
+    private void AwakenStartEffect()
+    {
+        _awakenStartParticle = _player.effectParent.Find(_awakenStartEffectString).GetComponentsInChildren<ParticleSystem>();
+        
+        foreach (var particle in _awakenStartParticle)
+        {
+            particle.Play();
+        }
+    }
+
     private void AwakeningEffect()
     {
         _thisParticle.Play();
@@ -117,9 +130,14 @@ public class PlayerAwakeningState : PlayerState
 
     private void AwakenEffect()
     {
+        foreach (var startParticle in _awakenStartParticle)
+        {
+            startParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+
         ParticleSystem awakenParticle = _player.effectParent.Find(_awakenEffectString).GetComponent<ParticleSystem>();
         awakenParticle.transform.parent = null;
-        CameraManager.Instance.ShakeCam(0.1f, 0.3f, 3f);
+        CameraManager.Instance.ShakeCam(0.2f, 0.3f, 3f);
         AwakeningAttack();
 
         awakenParticle.Play();

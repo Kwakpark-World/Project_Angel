@@ -45,7 +45,6 @@ public class PlayerNormalSlamState : PlayerAttackState
         if (_actionTriggerCalled )
         {
             AttackDrop();
-            //Time.timeScale = 2f;
         }
 
         if (_effectTriggerCalled)
@@ -62,7 +61,6 @@ public class PlayerNormalSlamState : PlayerAttackState
         {
             if (_player.IsGroundDetected())
             {
-                //Time.timeScale = 1f;
                 SlamAttack();
             } 
             _stateMachine.ChangeState(PlayerStateEnum.Idle);

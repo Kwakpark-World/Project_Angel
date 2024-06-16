@@ -6,18 +6,6 @@ public class TimeManager : MonoSingleton<TimeManager>
 {
     private Coroutine _timeScaleChangeCoroutine;
 
-    public float scale;
-    public float tick;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            TimeChange(scale, tick);    
-        }
-        Debug.Log(Time.timeScale);
-    }
-
     public void TimeChange(float targetScale, float tick)
     {
         ResetTimeChangeCoroutine();
