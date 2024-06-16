@@ -78,7 +78,8 @@ public class PlayerAwakenSlamState : PlayerAttackState
                     case 0: _effectPos.x += 2f; break;
                     case 1: _effectPos.x += -3.4f; break;
                 }
-                
+
+                EffectManager.Instance.PlayEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), _effectPos);
             }
         }
 
