@@ -7,7 +7,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 {
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
-    private int _comboCounter;
+    public int _comboCounter;
 
     private float _attackPrevTime;
     private float _comboWindow = 0.8f;
@@ -15,11 +15,11 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private float _width = 0.5f;
     private float _height = 0.2f;
-    private float _dist = 1.6f;
+    private float _dist = 1.8f;
     private Vector3 _offset;
 
-    private float _awakenAttackDist = 1.6f;
-    private float _normalAttackDist = 1.6f;
+    private float _awakenAttackDist = 1.8f;
+    private float _normalAttackDist = 1.8f;
 
     private bool _isCombo;
     private bool _isEffectOn;
@@ -139,6 +139,16 @@ public class PlayerMeleeAttackState : PlayerAttackState
         Collider[] enemies = GetEnemyByOverlapBox(_player.weapon.transform.position, _player.weapon.transform.rotation);
 
         Attack(enemies.ToList());
+    }
+
+    protected override void HitEnemyAction(Brain enemy)
+    {
+        base.HitEnemyAction(enemy);
+
+        if (_comboCounter == 3)
+        {
+            CameraManager.Instance.ShakeCam(0.2f, 0.5f, 0.5f);
+        }
     }
 
     private void ChargingEffect()

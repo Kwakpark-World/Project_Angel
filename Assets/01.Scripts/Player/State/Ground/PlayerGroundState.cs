@@ -19,7 +19,6 @@ public class PlayerGroundState : PlayerState
         _player.PlayerInput.SlamSkillEvent += SlamSkillHandle;
         _player.PlayerInput.AwakeningSkillEvent += AwakeningSkillHandle;
         _player.PlayerInput.MeleeAttackEvent += HandlePrimaryAttackEvent;
-        _player.PlayerInput.DefenseEvent += PlayerDefense;
     }
 
     public override void Exit()
@@ -30,7 +29,6 @@ public class PlayerGroundState : PlayerState
         _player.PlayerInput.SlamSkillEvent -= SlamSkillHandle;
         _player.PlayerInput.AwakeningSkillEvent -= AwakeningSkillHandle;
         _player.PlayerInput.MeleeAttackEvent -= HandlePrimaryAttackEvent;
-        _player.PlayerInput.DefenseEvent -= PlayerDefense;
 
     }
 
@@ -39,15 +37,7 @@ public class PlayerGroundState : PlayerState
         base.UpdateState();
     }
 
-    private void PlayerDefense()
-    {
-        if (_player.IsGroundDetected())
-        {
-            if (_player.PlayerStatData.GetDefenseCooldown() + _player.defensePrevTime > Time.time) return;
-            _player.StateMachine.ChangeState(PlayerStateEnum.Defense);
-        }
-        
-    }
+
 
     private void HandlePrimaryAttackEvent()
     {
