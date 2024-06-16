@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -88,6 +89,15 @@ public class PlayerChargingState : PlayerChargeState
             CameraManager.Instance.ZoomCam(5.6f, _cameraZoomChangePerTick);
 
             _player.ChargingGauge += Time.deltaTime * 1.5f;
+
+            if (_player.ChargingGauge >= _maxChargeTime - 0.1f)
+            {
+                Material weaponMat = _player.weapon.GetComponent<MeshRenderer>().material;
+                Color color = weaponMat.color;
+                color *= 10;
+
+                weaponMat.SetColor("_EmissionColor", color);
+            }
         }
 
 
@@ -107,5 +117,10 @@ public class PlayerChargingState : PlayerChargeState
     private void SetEffectPos()
     {
         _thisParticle.transform.position = _weaponRT.position;
+    }
+
+    private IEnumerator Blink()
+    {
+        yield return null;
     }
 }
