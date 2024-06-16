@@ -34,7 +34,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         _player.enemyNormalHitDuplicateChecker.Clear();
 
-        _player.ChargingGauge = 0;
+        _player.currentChargingTime = 0;
         _player.AnimatorCompo.speed = 1;
 
         _thisParticle.Stop();
@@ -127,7 +127,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
                 dashDistance = hit.distance;
             }
 
-            float stabDistance = _player.ChargingGauge * dashDistance;
+            float stabDistance = _player.currentChargingTime * dashDistance;
             
             _player.SetVelocity(_player.transform.forward * stabDistance * 5);
 

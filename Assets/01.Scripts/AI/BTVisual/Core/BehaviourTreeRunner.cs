@@ -17,7 +17,7 @@ namespace BTVisual
 
         private void Update()
         {
-            if (brain.AnimatorCompo.GetCurrentAnimationState() == "Hit" || brain.AnimatorCompo.GetCurrentAnimationState() == "Die")
+            if (brain.AnimatorCompo.GetCurrentAnimationState("Hit") || brain.AnimatorCompo.GetCurrentAnimationState("Die"))
             {
                 return;
             }

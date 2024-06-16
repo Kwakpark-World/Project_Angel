@@ -25,7 +25,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         _isEffectOn = false;
 
         // (1 + (max):10%) * speed
-        _player.AnimatorCompo.speed = (1 + (_player.ChargingGauge / (_maxChargeTime * 10))) * _player.PlayerStatData.GetChargingAttackSpeed();
+        _player.AnimatorCompo.speed = (1 + (_player.currentChargingTime / (_maxChargeTime * 10))) * _player.PlayerStatData.GetChargingAttackSpeed();
         _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
 
     }

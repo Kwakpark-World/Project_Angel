@@ -52,20 +52,6 @@ public abstract class Brain : PoolableMono
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(NavMeshAgentCompo.steeringTarget - transform.position), EnemyStatData.GetRotateSpeed() * Time.deltaTime);
         }
-
-        // Debug
-        #region Debug
-        if (Keyboard.current.lKey.wasPressedThisFrame)
-        {
-            OnHit(15f);
-        }
-
-        if (Keyboard.current.mKey.wasPressedThisFrame)
-        {
-            BuffCompo.PlayBuff(BuffType.Shield, 3f, this);
-            Debug.Log("5");
-        }
-        #endregion
     }
 
     public override void InitializePoolItem()

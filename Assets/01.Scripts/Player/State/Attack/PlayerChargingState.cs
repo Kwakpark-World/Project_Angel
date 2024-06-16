@@ -27,7 +27,7 @@ public class PlayerChargingState : PlayerChargeState
         _player.StopImmediately(false);
         _player.RotateToMousePos();
 
-        _player.ChargingGauge = 0;
+        _player.currentChargingTime = 0;
         _isEffectOn = false;
 
         _thisParticle = _player.effectParent.Find(_player.IsAwakening ? _awakenEffectString : _effectString).GetComponent<ParticleSystem>();
@@ -58,9 +58,9 @@ public class PlayerChargingState : PlayerChargeState
 
         CameraManager.Instance.ResetCameraZoom();
 
-        if (_player.ChargingGauge < _minChargeTime)
+        if (_player.currentChargingTime < _minChargeTime)
         {
-            _player.ChargingGauge = 0;
+            _player.currentChargingTime = 0;
             _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
         }
         else
@@ -78,16 +78,16 @@ public class PlayerChargingState : PlayerChargeState
         if (!_player.PlayerInput.isCharge) return;
         if (_prevChargingTime + _player.PlayerStatData.GetChargingAttackCooldown() > Time.time) return;
 
-        _player.ChargingGauge = Mathf.Clamp(_player.ChargingGauge, 0f, _maxChargeTime);
+        _player.currentChargingTime = Mathf.Clamp(_player.currentChargingTime, 0f, _maxChargeTime);
 
-        if (_player.ChargingGauge < _minChargeTime)
-            _player.ChargingGauge += Time.deltaTime;
+        if (_player.currentChargingTime < _minChargeTime)
+            _player.currentChargingTime += Time.deltaTime;
         else
         {            
             ChargingEffect();
             CameraManager.Instance.ZoomCam(5.6f, _cameraZoomChangePerTick);
 
-            _player.ChargingGauge += Time.deltaTime * 1.5f;
+            _player.currentChargingTime += Time.deltaTime * 1.5f;
         }
 
 
