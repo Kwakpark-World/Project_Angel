@@ -40,17 +40,18 @@ public class PlayerAwakenDashState : PlayerDashState
 
         if (Physics.Raycast(playerPos, _player.transform.forward, out hit, _player.PlayerStatData.GetDashMaxDistance()))
         {
-            dashDistance = hit.distance - 1;
+            dashDistance = Mathf.Min(dashDistance, hit.distance - 1);
         }
 
         Vector3 mouseTarget = _player.MousePosInWorld;
-        float mousePosDist = Vector3.Distance(playerPos, _player.MousePosInWorld);
 
         mouseTarget.y = _player.transform.position.y + 0.1f;
         playerPos.y += 0.1f;
+
+        float mousePosDist = Vector3.Distance(playerPos, _player.MousePosInWorld);
         if (Physics.Raycast(playerPos, mouseTarget, out hit, _player.PlayerStatData.GetDashMaxDistance()))
         {
-            mousePosDist = hit.distance - 2;
+            mousePosDist = Mathf.Min(mousePosDist, hit.distance - 1);
         }
 
 

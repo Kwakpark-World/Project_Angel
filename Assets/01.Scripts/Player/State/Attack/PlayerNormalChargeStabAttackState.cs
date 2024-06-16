@@ -134,7 +134,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
             mouseTarget.y = _player.transform.position.y + 0.1f;
             playerPos.y += 0.1f;
-            if (Physics.Raycast(playerPos, mouseTarget, out hit, _player.PlayerStatData.GetDashMaxDistance(), _player.whatIsWall))
+            if (Physics.Raycast(playerPos, mouseTarget, out hit, _player.PlayerStatData.GetChargingAttackDistance(), _player.whatIsWall))
             {
                 mousePosDist = hit.distance - 2;
             }

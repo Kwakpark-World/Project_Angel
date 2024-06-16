@@ -16,6 +16,7 @@ public class PlayerChargingState : PlayerChargeState
     private float _cameraZoomChangePerTick = 0.1f;
 
     private float _prevChargingTime;
+    private bool _isBlink = false;
 
     public PlayerChargingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -30,6 +31,7 @@ public class PlayerChargingState : PlayerChargeState
 
         _player.ChargingGauge = 0;
         _isEffectOn = false;
+        _isBlink = false;
 
         _thisParticle = _player.effectParent.Find(_player.IsAwakening ? _awakenEffectString : _effectString).GetComponent<ParticleSystem>();
         var main = _thisParticle.main;
@@ -92,12 +94,11 @@ public class PlayerChargingState : PlayerChargeState
 
             if (_player.ChargingGauge >= _maxChargeTime - 0.1f)
             {
-                Material weaponMat = _player.weapon.GetComponent<MeshRenderer>().material;
-                Color color = weaponMat.color;
-                color *= 10;
-
-                weaponMat.SetColor("_EmissionColor", color);
+                if (_isBlink) return;
+                _isBlink = true;
+                BlinkWeapon();
             }
+            
         }
 
 
@@ -119,8 +120,21 @@ public class PlayerChargingState : PlayerChargeState
         _thisParticle.transform.position = _weaponRT.position;
     }
 
+    private void BlinkWeapon()
+    {
+        _player.StartCoroutine(Blink());
+    }
+
     private IEnumerator Blink()
     {
-        yield return null;
+        Material weaponMat = _player.materials[(_player.IsAwakening ? (int)PlayerMaterialIndex.Weapon_Awaken : (int)PlayerMaterialIndex.Weapon_Normal)];
+        Color color = weaponMat.GetColor("_EmissionColor");
+
+        weaponMat.SetColor("_EmissionColor", color * 10f);
+        while (_player.PlayerInput.isCharge)
+        {
+            yield return null;
+        }
+        weaponMat.SetColor("_EmissionColor", color);
     }
 }
