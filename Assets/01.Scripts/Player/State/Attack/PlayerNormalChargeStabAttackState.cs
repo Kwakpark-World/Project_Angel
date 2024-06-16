@@ -122,10 +122,24 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
             float dashDistance = _player.PlayerStatData.GetChargingAttackDistance();
 
             RaycastHit hit;
-            if (Physics.Raycast(_player.transform.position, _player.transform.forward, out hit, _player.PlayerStatData.GetChargingAttackDistance(), _player.whatIsWall))
+            Vector3 playerPos = _player.transform.position;
+
+            if (Physics.Raycast(playerPos, _player.transform.forward, out hit, _player.PlayerStatData.GetChargingAttackDistance(), _player.whatIsWall))
             {
                 dashDistance = hit.distance;
             }
+
+            Vector3 mouseTarget = _player.MousePosInWorld;
+            float mousePosDist = Vector3.Distance(playerPos, _player.MousePosInWorld);
+
+            mouseTarget.y = _player.transform.position.y + 0.1f;
+            playerPos.y += 0.1f;
+            if (Physics.Raycast(playerPos, mouseTarget, out hit, _player.PlayerStatData.GetChargingAttackDistance(), _player.whatIsWall))
+            {
+                mousePosDist = hit.distance - 2;
+            }
+
+            dashDistance = Mathf.Min(dashDistance, mousePosDist);
 
             float stabDistance = _player.currentChargingTime * dashDistance;
             

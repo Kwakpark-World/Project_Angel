@@ -166,7 +166,7 @@ public class PlayerAwakeningState : PlayerState
             yield return null;
         }
 
-        particles.gameObject.transform.SetParent(_player.transform);
+        particles.gameObject.transform.SetParent(_player.effectParent);
     }
 
     private IEnumerator PlayerAwakening()

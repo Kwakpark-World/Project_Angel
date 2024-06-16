@@ -15,11 +15,11 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private float _width = 0.5f;
     private float _height = 0.2f;
-    private float _dist = 1.8f;
+    private float _dist = 2.0f;
     private Vector3 _offset;
 
-    private float _awakenAttackDist = 1.8f;
-    private float _normalAttackDist = 1.8f;
+    private float _awakenAttackDist = 2.0f;
+    private float _normalAttackDist = 2.0f;
 
     private bool _isCombo;
     private bool _isEffectOn;
@@ -36,6 +36,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.PlayerStatData.attackPower.RemoveModifier(_comboAttackAddtiveDamage * _comboCounter);
+        _player.RotateToMousePos();
 
         _player.IsAttack = true;
         _isEffectOn = false;
