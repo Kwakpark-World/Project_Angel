@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerNormalChargeStabAttackState : PlayerChargeState
 {
@@ -60,29 +59,19 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
             }
         }        
 
-        if (_actionTriggerCalled)
-        {
-            MoveToFront();
-        }
-
         if (_endTriggerCalled)
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
 
-
-    private void MoveToFront()
+    public override void FixedUpdateState()
     {
-        if (!_isStabMove)
+        base.FixedUpdateState();
+
+        if (_actionTriggerCalled)
         {
-            _isStabMove = true;
-
-
-            float stabDistance = _player.ChargingGauge * _player.PlayerStatData.GetChargingAttackDistance();
-            //_player.SetVelocity(_player.transform.forward * stabDistance);
-
-            _player.StartCoroutine(MoveToFrontSmooth(_player.transform.position + (_player.transform.forward * stabDistance), _player.AnimatorCompo.speed));
+            MoveToFront();
         }
     }
 
@@ -117,6 +106,34 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         Attack(enemies.ToList());
     }
 
+    protected override void HitEnemyAction(Brain enemy)
+    {
+        base.HitEnemyAction(enemy);
+
+        CameraManager.Instance.ShakeCam(0.3f, 0.5f, 0.5f);
+    }
+
+    private void MoveToFront()
+    {
+        if (!_isStabMove)
+        {
+            _isStabMove = true;
+
+            float dashDistance = _player.PlayerStatData.GetChargingAttackDistance();
+
+            RaycastHit hit;
+            if (Physics.Raycast(_player.transform.position, _player.transform.forward, out hit, _player.PlayerStatData.GetChargingAttackDistance(), _player.whatIsWall))
+            {
+                dashDistance = hit.distance;
+            }
+
+            float stabDistance = _player.ChargingGauge * dashDistance;
+            
+            _player.SetVelocity(_player.transform.forward * stabDistance * 5);
+
+            //_player.StartCoroutine(MoveToFrontSmooth(_player.transform.position + (_player.transform.forward * stabDistance), _player.AnimatorCompo.speed));
+        }
+    }
 
     private IEnumerator MoveToFrontSmooth(Vector3 targetPos, float duration)
     {

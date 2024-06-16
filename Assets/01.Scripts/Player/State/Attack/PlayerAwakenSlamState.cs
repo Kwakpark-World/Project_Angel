@@ -24,8 +24,6 @@ public class PlayerAwakenSlamState : PlayerAttackState
     private float[] _dist = new float[3];
     private Vector3[] _offset = new Vector3[3];
 
-    private PoolableMono particle;
-
     public PlayerAwakenSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         
@@ -55,6 +53,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
     public override void Exit()
     {
         base.Exit();
+        _player.enemyNormalHitDuplicateChecker.Clear();
 
         _attackPrevTime = Time.time;
         ++_comboCounter;
@@ -80,8 +79,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
                     case 1: _effectPos.x += -3.4f; break;
                 }
 
-                particle = EffectManager.Instance.PlayAndGetEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), _effectPos);
-                
+                EffectManager.Instance.PlayEffect((PoolType)Enum.Parse(typeof(PoolType), _comboEffectString), _effectPos);
             }
         }
 
@@ -115,20 +113,24 @@ public class PlayerAwakenSlamState : PlayerAttackState
 
     private void SlamAttack()
     {
-        Vector3 startPos, endPos;
-        InitAttackPosSetting(out startPos, out endPos);
+        if (_comboCounter == 2)
+        {
+            GameObject obj = GameManager.Instantiate(new GameObject(), _player.transform.position + _attackOffset, _player.transform.rotation);
+            obj.transform.localScale = _attackSize;
+            obj.AddComponent<MeshFilter>();
+            obj.AddComponent<MeshRenderer>();
+        }
 
-        float startY = startPos.y;
-
-        startPos.y = 0;
-        endPos.y = 0;
-
-        Vector3 dir = (endPos - startPos).normalized;
-        startPos.y = startY;
-
-        Collider[] enemies = GetEnemyByOverlapBox(startPos, Quaternion.LookRotation(dir));
+        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
+    }
+
+    protected override void HitEnemyAction(Brain enemy)
+    {
+        base.HitEnemyAction(enemy);
+
+        CameraManager.Instance.ShakeCam(0.1f, 0.3f, 2f);
     }
 
     private void ComboSkill()
@@ -158,32 +160,18 @@ public class PlayerAwakenSlamState : PlayerAttackState
                 _offset[_comboCounter] = new Vector3(1.5f, 3f, 7f);
                 break;
             case 1:
-                _width[_comboCounter] = 5f;
+                _width[_comboCounter] = 6f;
                 _height[_comboCounter] = 5f;
-                _dist[_comboCounter] = 20f;
-                _offset[_comboCounter] = new Vector3(-2f, 2.5f, 8);
+                _dist[_comboCounter] = 21f;
+                _offset[_comboCounter] = new Vector3(-4.5f, 2.5f, 7);
                 break;
             case 2:
                 _width[_comboCounter] = 5f;
                 _height[_comboCounter] = 6f;
-                _dist[_comboCounter] = 15f;
-                _offset[_comboCounter] = _player.transform.forward * 5;
+                _dist[_comboCounter] = 13f;
+                _offset[_comboCounter] = _player.transform.forward * 2;
                 _offset[_comboCounter].y += 2f;
                 break;
-        }
-    }
-
-    private void InitAttackPosSetting(out Vector3 startPos, out Vector3 endPos)
-    {
-        if (_comboCounter < 2)
-        {
-            startPos = particle.transform.Find("t1").position;
-            endPos = particle.transform.Find("t3").position;
-        }
-        else
-        {
-            startPos = _player.transform.forward * 3;
-            endPos = _player.transform.forward * 4;
         }
     }
 }

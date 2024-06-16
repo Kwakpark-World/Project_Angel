@@ -122,6 +122,8 @@ public class CameraManager : MonoSingleton<CameraManager>
         vCam.m_Lens.OrthographicSize = DefaultOrthoSize;
     }
 
+
+    // ½Ã°£, ºóµµ, ÁøÆø
     private IEnumerator ShakeCamera(float duration, float frequency, float amplitude)
     {
         CinemachineVirtualCamera noiseCamera = _currentCam.GetComponent<CinemachineVirtualCamera>();

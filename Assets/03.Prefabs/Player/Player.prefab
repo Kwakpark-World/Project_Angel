@@ -5694,7 +5694,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494236958258072100}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2bc2b4c0e1e4e224885c49e37940f7f0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5756,13 +5756,17 @@ MonoBehaviour:
   whatIsStair:
     serializedVersion: 2
     m_Bits: 512
-  groundCheckDistanceTolerance: 1.54
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 1024
+  groundCheckDistanceTolerance: 1.6
   playerCenterToGroundDistance: 0
   AnimatorCompo: {fileID: 0}
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: 7e3ff71f983213546b0e5f3558d6f886,
     type: 2}
   CurrentHealth: 0
   playerCenter: {fileID: 5140108053741916498}
+  endingUI: {fileID: 0}
   weapon: {fileID: 7559007113953224229}
   enemyLayer:
     serializedVersion: 2
@@ -20725,6 +20729,7 @@ Transform:
   - {fileID: 4732232156808851570}
   - {fileID: 7244639571719378979}
   - {fileID: 5264088951610939762}
+  - {fileID: 3773557550102806915}
   m_Father: {fileID: 626907113407866902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6637722899443304299
@@ -22065,6 +22070,80 @@ MonoBehaviour:
   - m_Rig: {fileID: 4827324562207601299}
     m_Active: 1
   m_Effectors: []
+--- !u!1001 &2108800573018879222
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7951902177072720133}
+    m_Modifications:
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8182066
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.57492435
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481895186906674840, guid: c5c45a0a640487d4db73fe00f0c15511,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerAwakenStartEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c5c45a0a640487d4db73fe00f0c15511, type: 3}
+--- !u!4 &3773557550102806915 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2962709309570495861, guid: c5c45a0a640487d4db73fe00f0c15511,
+    type: 3}
+  m_PrefabInstance: {fileID: 2108800573018879222}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2965929660481826105
 PrefabInstance:
   m_ObjectHideFlags: 0

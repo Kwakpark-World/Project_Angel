@@ -92,6 +92,8 @@ public class Player : PlayerController
     protected void OnEnable()
     {
         PlayerInput.DashEvent += HandleDashEvent;
+        PlayerInput.DefenseEvent += PlayerDefense;
+
     }
 
     protected override void Start()
@@ -117,11 +119,14 @@ public class Player : PlayerController
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        StateMachine.CurrentState.FixedUpdateState();
     }
 
     protected void OnDisable()
     {
         PlayerInput.DashEvent -= HandleDashEvent;
+        PlayerInput.DefenseEvent -= PlayerDefense;
     }
 
     public void OnHit(float incomingDamage, Brain attacker = null)
@@ -133,7 +138,12 @@ public class Player : PlayerController
             attacker.OnHit(incomingDamage * 0.25f);
         }
 
-        if (IsDefense || IsDie)
+        if (IsDefense)
+        {
+            CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1.5f);
+            return;
+        }
+        if (IsDie)
             return;
         if (StateMachine.CompareState(PlayerStateEnum.Awakening))
             return;
@@ -181,6 +191,16 @@ public class Player : PlayerController
         }
 
         return false;
+    }
+
+    private void PlayerDefense()
+    {
+        if (IsGroundDetected())
+        {
+            if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time) return;
+            StateMachine.ChangeState(PlayerStateEnum.Defense);
+        }
+
     }
     #endregion
 
@@ -347,9 +367,18 @@ public class Player : PlayerController
             volume.rounded.overrideState = true;
         }
 
+        // 0 ~ 1
+        float valueAdd = (PlayerStatData.GetMaxHealth() - CurrentHealth) / PlayerStatData.GetMaxHealth();
+        valueAdd *= 0.3f; // 0 ~ 0.3
+
         volume.color.value = Color.red;
-        volume.intensity.value = 0.3f;
+        volume.intensity.value = 0.3f + valueAdd;
         volume.rounded.value = true;
+
+        if (volume.intensity.value > 0.5f)
+        {
+            CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f + valueAdd);
+        }
 
         _playerOnHitVolumeCoroutine = StartCoroutine(PlayerOnHitVolumeFade());
     }

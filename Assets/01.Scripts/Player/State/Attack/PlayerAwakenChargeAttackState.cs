@@ -13,6 +13,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
     private const string _animName = "PlayerAttack_Charged_Awaken";
 
     private bool _isEffectOn = false;
+    private bool _isShaken = false;
     private ParticleSystem[] _thisParticles;
 
     public PlayerAwakenChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -23,6 +24,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
     {
         base.Enter();
         _isEffectOn = false;
+        _isShaken = false;
 
         _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
         _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
@@ -114,11 +116,21 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         if (_TickCheckTriggerCalled) // default One Hit + Tick(Anim Event)
         {
             _TickCheckTriggerCalled = false;
+            _isShaken = false;
             _player.enemyNormalHitDuplicateChecker.Clear();
         }
 
         Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
         Attack(enemies.ToList());
+    }
+
+    protected override void HitEnemyAction(Brain enemy)
+    {
+        base.HitEnemyAction(enemy);
+
+        if (_isShaken) return;
+        _isShaken = true;
+        CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f);
     }
 }

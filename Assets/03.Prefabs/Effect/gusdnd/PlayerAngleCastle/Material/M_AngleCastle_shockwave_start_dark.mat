@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_AngleCastle_shockwave 1
+  m_Name: M_AngleCastle_shockwave_start_dark
   m_Shader: {fileID: 4800000, guid: bfc3df16c9df75141ab01f3a01444882, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -58,7 +58,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Main_Texture:
         m_Texture: {fileID: 2800000, guid: 22bef0cd2cde8d140b6668781f88f12c, type: 3}
-        m_Scale: {x: 1, y: 0.34}
+        m_Scale: {x: 1, y: -0.34}
         m_Offset: {x: 0, y: 0}
     - _Mask_Texture:
         m_Texture: {fileID: 0}
@@ -151,7 +151,7 @@ Material:
     - _Main_VPanner: 0.63
     - _Mask_1x: 0
     - _Mask_Mirror: 0
-    - _Mask_Pow: 1
+    - _Mask_Pow: 15.8
     - _Metallic: 0
     - _Noise_Str: 0.0294
     - _Noise_Tex_UPanner: 0
