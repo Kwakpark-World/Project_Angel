@@ -96,7 +96,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         rayPos.y += 1f;
         RaycastHit hit;
 
-        if (Physics.Raycast(rayPos, Vector3.down, out hit, 300f, LayerMask.GetMask("Ground")))
+        if (Physics.Raycast(rayPos, Vector3.down, out hit, 300f, _player.whatIsGround))
         {
             yOffset = hit.transform.position.y;
         }

@@ -7,7 +7,7 @@ public abstract class PlayerController : MonoBehaviour
 {
     [Header("Ground Checker")]
     [SerializeField] protected Transform _groundChecker;
-    [SerializeField] protected LayerMask _whatIsGround;
+    [SerializeField] public LayerMask whatIsGround;
     [SerializeField] public LayerMask whatIsStair;
     [SerializeField] public LayerMask whatIsWall;
     [SerializeField] public float groundCheckDistanceTolerance;
@@ -82,7 +82,7 @@ public abstract class PlayerController : MonoBehaviour
     public virtual bool IsGroundDetected()
     {
 
-        bool groundCheck = Physics.Raycast(_groundChecker.position, Vector3.down, out groundCheckHit, groundCheckDistanceTolerance * transform.localScale.y, _whatIsGround);
+        bool groundCheck = Physics.Raycast(_groundChecker.position, Vector3.down, out groundCheckHit, groundCheckDistanceTolerance * transform.localScale.y, whatIsGround);
         
         playerCenterToGroundDistance = Vector3.Distance(groundCheckHit.point, playerCenter.position);
 
