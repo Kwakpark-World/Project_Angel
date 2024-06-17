@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEditor.AddressableAssets;
 using UnityEngine;
 
 public class MaterialManager : MonoSingleton<MaterialManager>
@@ -17,7 +16,12 @@ public class MaterialManager : MonoSingleton<MaterialManager>
 
     private async Task LoadMaterial()
     {
-        List<string> labelList = AddressableAssetSettingsDefaultObject.Settings.GetLabels();
+
+        List<string> labelList = new List<string>
+        {
+            "PlayerNormal",
+            "PlayerAwaken"
+        };
         
         foreach (var label in labelList)
         {
