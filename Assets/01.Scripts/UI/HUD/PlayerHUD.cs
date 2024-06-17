@@ -61,6 +61,10 @@ public class PlayerHUD : MonoBehaviour
         if (GameManager.Instance.HasPlayer)
         {
             _player = GameManager.Instance.PlayerInstance;
+
+            UpdateHealth();
+            UpdateAwakenGauge();
+            UpdateChargingGauge();
         }
 
         foreach (PlayerStateEnum playerState in Enum.GetValues(typeof(PlayerStateEnum)))

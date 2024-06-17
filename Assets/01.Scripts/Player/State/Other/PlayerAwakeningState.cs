@@ -138,6 +138,7 @@ public class PlayerAwakeningState : PlayerState
 
         ParticleSystem awakenParticle = _player.effectParent.Find(_awakenEffectString).GetComponent<ParticleSystem>();
         awakenParticle.transform.parent = null;
+        awakenParticle.transform.position = _player.transform.position;
         CameraManager.Instance.ShakeCam(0.2f, 0.3f, 3f);
         AwakeningAttack();
 
