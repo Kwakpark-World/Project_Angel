@@ -180,6 +180,7 @@ public class Player : PlayerController
     {
         StateMachine.ChangeState(PlayerStateEnum.Die);
         UIManager.Instance.DieUIProperty.OnDie();
+        Debug.Log(UIManager.Instance.DieUIProperty);
     }
 
     public bool IsMovePressed()

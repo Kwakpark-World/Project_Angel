@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -154,6 +153,8 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 _loadingCircleAnimator.SetBool(_isRotatingHash, false);
             });
+
+        Debug.Log(GameManager.Instance.HasPlayer);
 
         if (GameManager.Instance.HasPlayer)
         {
