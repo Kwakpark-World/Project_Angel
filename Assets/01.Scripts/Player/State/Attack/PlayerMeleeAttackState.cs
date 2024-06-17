@@ -15,11 +15,11 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private float _width = 0.8f;
     private float _height = 0.4f;
-    private float _dist = 2.2f;
+    private float _dist = 2.6f;
     private Vector3 _offset;
 
-    private float _awakenAttackDist = 2.2f;
-    private float _normalAttackDist = 2.2f;
+    private float _awakenAttackDist = 2.6f;
+    private float _normalAttackDist = 2.6f;
 
     private bool _isCombo;
     private bool _isEffectOn;
