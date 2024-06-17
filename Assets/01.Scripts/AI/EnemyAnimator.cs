@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering.PostProcessing;
 
 public enum AnimationStateMode
 {
@@ -72,6 +73,11 @@ public class EnemyAnimator : MonoBehaviour
     public void SetAnimationState(string stateName = "Idle", AnimationStateMode stateMode = AnimationStateMode.None)
     {
         _animator.SetBool(_parameterHashes["is" + _currentState], false);
+
+        if (stateName != "Die" && GetCurrentAnimationState("Die"))
+        {
+            return;
+        }
 
         switch (stateMode)
         {

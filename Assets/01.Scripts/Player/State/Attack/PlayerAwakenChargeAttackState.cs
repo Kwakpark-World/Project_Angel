@@ -26,7 +26,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         _isEffectOn = false;
         _isShaken = false;
 
-        _player.AnimatorCompo.speed = 1 + (_player.ChargingGauge / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
+        _player.AnimatorCompo.speed = 1 + (_player.currentChargingTime / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargingAttackSpeed();
         _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
 
     }
