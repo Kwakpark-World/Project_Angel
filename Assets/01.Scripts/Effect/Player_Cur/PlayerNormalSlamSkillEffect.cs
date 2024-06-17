@@ -7,7 +7,8 @@ public class PlayerNormalSlamSkillEffect : PlayerEffect
     public override void InitializePoolItem()
     {
         base.InitializePoolItem();
-        
+
+        Debug.Log(_player);
         if (GameManager.Instance.PlayerInstance.IsAwakening)
         {
             PoolManager.Instance.Push(this);
