@@ -10,7 +10,7 @@ public class MaterialManager : MonoSingleton<MaterialManager>
 
     private async void Start()
     {
-        await LoadMaterial();
+        //await LoadMaterial();
     }
 
     private async Task LoadMaterial()
