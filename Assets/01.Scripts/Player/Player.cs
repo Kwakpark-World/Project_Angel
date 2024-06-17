@@ -65,7 +65,6 @@ public class Player : PlayerController
     {
         base.Awake();
 
-        //MaterialManager.Instance._cachingAction += MaterialCaching;
         MaterialCaching();
 
         BuffCompo.SetOwner(this);
