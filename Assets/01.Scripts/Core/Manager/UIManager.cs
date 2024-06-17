@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,7 @@ public class UIManager : MonoSingleton<UIManager>
     private Image _loadingCircle;
     [SerializeField]
     private float _fadeDuration;
+    public DieUI DieUIProperty { get; private set; }
     private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
     private Animator _loadingCircleAnimator;
 
@@ -74,13 +76,16 @@ public class UIManager : MonoSingleton<UIManager>
 
             popup.Value.TogglePopup(popupToggleValue);
 
-            if (popupToggleValue)
+            if (GameManager.Instance.HasPlayer)
             {
-                GameManager.Instance.PlayerInstance.IsPlayerStop = true;
-            }
-            else if (popup.Key == popupName)
-            {
-                GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+                if (popupToggleValue)
+                {
+                    GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+                }
+                else if (popup.Key == popupName)
+                {
+                    GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+                }
             }
         }
     }
@@ -149,5 +154,10 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 _loadingCircleAnimator.SetBool(_isRotatingHash, false);
             });
+
+        if (GameManager.Instance.HasPlayer)
+        {
+            DieUIProperty = FindAnyObjectByType<DieUI>();
+        }
     }
 }
