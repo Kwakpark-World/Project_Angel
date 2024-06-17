@@ -159,8 +159,8 @@ public class UIManager : MonoSingleton<UIManager>
 
         if (GameManager.Instance.HasPlayer)
         {
-            PlayerHUDProperty = FindObjectsOfType<PlayerHUD>();
-            DieUIProperty = FindObjectsOfType<DieUI>();
+            PlayerHUDProperty = FindObjectOfType<PlayerHUD>();
+            DieUIProperty = FindObjectOfType<DieUI>();
         }
     }
 }

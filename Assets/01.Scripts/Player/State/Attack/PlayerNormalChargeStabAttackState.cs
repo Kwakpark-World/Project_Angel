@@ -129,7 +129,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
                 dashDistance = hit.distance;
             }
 
-            float stabDistance = _player.currentChargingTime * dashDistance;
+            float stabDistance = _player.CurrentChargingTime * dashDistance;
             
             _player.SetVelocity(_player.transform.forward * stabDistance * 2);
             
