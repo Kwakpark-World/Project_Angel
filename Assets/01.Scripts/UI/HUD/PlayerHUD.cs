@@ -6,15 +6,13 @@ using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
-    [Header("Player Debuff Icon")]
+    [Header("Player Buff Icon")]
     [SerializeField]
-    private Image _poisonDebuffLeftTimeImage;
+    private Image _poisonBuffDurationImage;
     [SerializeField]
-    private Image _freezeDebuffLeftTimeImage;
+    private Image _freezeBuffDurationImage;
     [SerializeField]
-    private Image _paralysisDebuffLeftTimeImage;
-
-    private bool _isDebuffer = false;
+    private Image _paralysisBuffDurationImage;
 
     [Header("Player Skill Icon")]
     [SerializeField]
@@ -26,6 +24,8 @@ public class PlayerHUD : MonoBehaviour
     private List<Sprite> _awakenSlamSkillIcons;
     [SerializeField]
     private Image _slamSkillIconImage;
+    [SerializeField]
+    private Image _slamSkillComboLimitImage;
     [SerializeField]
     private Image _slamSkillCooldownImage;
 
@@ -54,48 +54,22 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _chargingTimeText;
 
+    private Player _player;
+    private float _previousAttackTime;
+    private float _comboLimit;
+    private int _comboCounter;
+
+    private void Start()
+    {
+        if (GameManager.Instance.HasPlayer)
+        {
+            _player = GameManager.Instance.PlayerInstance;
+        }
+    }
+
     private void Update()
     {
-        UpdateHealth();
-        UpdateAwakenGauge();
-        UpdateChargingGauge();
-
-        if (!GameManager.Instance.PlayerInstance.IsAwakening)
-        {
-            SetNormalSkillIcon();
-            if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.NormalChargeAttack))
-            {
-                StartCoroutine(CooldownCoroutine(_chargingSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.chargingAttackCooldown.GetValue()));
-            }
-
-            if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.NormalSlam))
-            {
-                StartCoroutine(CooldownCoroutine(_slamSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.slamCooldown.GetValue()));
-            }
-
-            if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.Defense))
-            {
-                StartCoroutine(CooldownCoroutine(_defenseSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.defenseCooldown.GetValue()));
-            }
-        }
-        else
-        {
-            SetAwakenSkillIcon();
-            if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.AwakenChargeAttack))
-            {
-                StartCoroutine(CooldownCoroutine(_chargingSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.chargingAttackCooldown.GetValue()));
-            }
-
-            if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.AwakenSlam))
-            {
-                StartCoroutine(CooldownCoroutine(_slamSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.slamCooldown.GetValue()));
-            }
-
-            if (GameManager.Instance.PlayerInstance.StateMachine.CompareState(PlayerStateEnum.Defense))
-            {
-                StartCoroutine(CooldownCoroutine(_defenseSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.defenseCooldown.GetValue()));
-            }
-        }
+        _slamSkillComboLimitImage.fillAmount = Mathf.Clamp01(1f - (Time.time - _previousAttackTime) / _comboLimit);
     }
 
     public void SetNormalSkillIcon()
@@ -110,24 +84,76 @@ public class PlayerHUD : MonoBehaviour
         _chargingSkillIconImage.sprite = _awakenChargingSkillIcon;
     }
 
-    public void StartCooldown(string buff)
+    public void UpdateSkillComboIcon()
     {
-        _isDebuffer = true;
-        switch (buff)
+        if (_comboCounter >= 3 || Time.time >= _previousAttackTime + _comboLimit)
         {
-            case "Poison":
-                _poisonDebuffLeftTimeImage.transform.parent.gameObject.SetActive(true);
-                StartCoroutine(CooldownCoroutine(_poisonDebuffLeftTimeImage, GameManager.Instance.PlayerInstance.BuffCompo.BuffStatData.poisonDuration));
+            _comboCounter = 0;
+        }
+
+        _slamSkillIconImage.sprite = _awakenSlamSkillIcons[_comboCounter];
+    }
+
+    public void StartBuffDuration(BuffType buffType, float duration = 0)
+    {
+        switch (buffType)
+        {
+            case BuffType.Potion_Poison:
+                _poisonBuffDurationImage.transform.parent.parent.parent.gameObject.SetActive(true);
+                StartCoroutine(BuffDurationCoroutine(buffType, _poisonBuffDurationImage, duration));
+
                 break;
-            case "Freeze":
-                _freezeDebuffLeftTimeImage.transform.parent.gameObject.SetActive(true);
-                StartCoroutine(CooldownCoroutine(_freezeDebuffLeftTimeImage, GameManager.Instance.PlayerInstance.BuffCompo.BuffStatData.freezeDuration));
+
+            case BuffType.Potion_Freeze:
+                _freezeBuffDurationImage.transform.parent.parent.parent.gameObject.SetActive(true);
+                StartCoroutine(BuffDurationCoroutine(buffType, _freezeBuffDurationImage, duration));
+
                 break;
-            case "Paralysis":
-                _paralysisDebuffLeftTimeImage.transform.parent.gameObject.SetActive(true);
-                StartCoroutine(CooldownCoroutine(_paralysisDebuffLeftTimeImage, GameManager.Instance.PlayerInstance.BuffCompo.BuffStatData.paralysisDuration));
+
+            case BuffType.Potion_Paralysis:
+                _paralysisBuffDurationImage.transform.parent.parent.parent.gameObject.SetActive(true);
+                StartCoroutine(BuffDurationCoroutine(buffType, _paralysisBuffDurationImage, duration));
+
+                break;
+
+            default:
                 break;
         }
+    }
+
+    public void StartSkillCooldown(PlayerStateEnum playerState)
+    {
+        switch (playerState)
+        {
+            case PlayerStateEnum.Defense:
+                StartCoroutine(SkillCooldownCoroutine(_defenseSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetDefenseCooldown()));
+
+                break;
+
+            case PlayerStateEnum.NormalSlam:
+            case PlayerStateEnum.AwakenSlam:
+                StartCoroutine(SkillCooldownCoroutine(_slamSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetSlamCooldown()));
+
+                break;
+
+            case PlayerStateEnum.NormalChargeAttack:
+            case PlayerStateEnum.AwakenChargeAttack:
+                StartCoroutine(SkillCooldownCoroutine(_chargingSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetChargingAttackCooldown()));
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void StartSkillComboLimit(float previousAttackTime, float comboLimit, int comboCounter)
+    {
+        _previousAttackTime = previousAttackTime;
+        _comboLimit = comboLimit;
+        _comboCounter = comboCounter;
+
+        UpdateSkillComboIcon();
     }
 
     public void UpdateHealth()
@@ -141,7 +167,7 @@ public class PlayerHUD : MonoBehaviour
 
     public void UpdateAwakenGauge()
     {
-        float currentAwakenGauge = GameManager.Instance.PlayerInstance.currentAwakenGauge;
+        float currentAwakenGauge = GameManager.Instance.PlayerInstance.CurrentAwakenGauge;
         float maxAwakenGauge = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxAwakenGauge();
         _awakenGaugeSlider.value = currentAwakenGauge;
         _awakenGaugeText.text = $"{(int)(currentAwakenGauge / maxAwakenGauge * 100f)}%";
@@ -149,28 +175,51 @@ public class PlayerHUD : MonoBehaviour
 
     public void UpdateChargingGauge()
     {
-        float currentChargingTime = GameManager.Instance.PlayerInstance.currentChargingTime;
+        float currentChargingTime = GameManager.Instance.PlayerInstance.CurrentChargingTime;
         float maxChargingTime = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxChargingTime();
         _chargingTimeSlider.value = currentChargingTime;
         _chargingTimeText.text = $"{(int)(currentChargingTime / maxChargingTime * 100f)}%";
     }
 
-    private IEnumerator CooldownCoroutine(Image skillImage, float cooldown)
+    private IEnumerator BuffDurationCoroutine(BuffType buffType, Image buffDurationImage, float duration = 0)
+    {
+        if (duration > 0f)
+        {
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                buffDurationImage.fillAmount = Mathf.Clamp01(elapsed / duration);
+
+                yield return null;
+            }
+        }
+        else
+        {
+            while (_player.BuffCompo.GetBuffState(buffType))
+            {
+                yield return null;
+            }
+        }
+
+        buffDurationImage.fillAmount = 1f;
+
+        buffDurationImage.transform.parent.parent.parent.gameObject.SetActive(false);
+    }
+
+    private IEnumerator SkillCooldownCoroutine(Image skillCooldownImage, float cooldown)
     {
         float elapsed = 0f;
 
         while (elapsed < cooldown)
         {
             elapsed += Time.deltaTime;
-            skillImage.fillAmount = Mathf.Clamp01(1 - (elapsed / cooldown));
+            skillCooldownImage.fillAmount = Mathf.Clamp01(1f - (elapsed / cooldown));
 
             yield return null;
         }
 
-        skillImage.fillAmount = 0f;
-
-        if (_isDebuffer == true)
-            skillImage.transform.parent.gameObject.SetActive(false);
-
+        skillCooldownImage.fillAmount = 0f;
     }
 }

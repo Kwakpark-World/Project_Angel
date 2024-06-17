@@ -34,7 +34,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         _player.enemyNormalHitDuplicateChecker.Clear();
 
-        _player.currentChargingTime = 0;
+        _player.CurrentChargingTime = 0;
         _player.AnimatorCompo.speed = 1;
 
         _thisParticle.Stop();
@@ -141,7 +141,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
             dashDistance = Mathf.Min(dashDistance, mousePosDist);
 
-            float stabDistance = _player.currentChargingTime * dashDistance;
+            float stabDistance = _player.CurrentChargingTime * dashDistance;
             
             _player.SetVelocity(_player.transform.forward * stabDistance * 2);
             

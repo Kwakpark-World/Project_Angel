@@ -65,7 +65,8 @@ public class Stage : MonoBehaviour
     {
         GameManager.Instance.PlayerInstance.StopImmediately(true);
 
-        // TODO: disable player input
+        GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+
         for (int i = 0; i < _barriers.Count; i++)
         {
             _barriers[i].Hide();
@@ -76,14 +77,16 @@ public class Stage : MonoBehaviour
         SoundManager.Instance.ChangeBGMMode(BGMMode.NonCombat);
         RuneManager.Instance.SpawnRune(_runeSpawnTrm.position);
         gameObject.SetActive(false);
-        // TODO: enable player input
+
+        GameManager.Instance.PlayerInstance.IsPlayerStop = false;
     }
 
     private IEnumerator LockStage()
     {
         GameManager.Instance.PlayerInstance.StopImmediately(true);
 
-        // TODO: disable player input
+        GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+
         for (int i = 0; i < _barriers.Count; i++)
         {
             _barriers[i].Show();
@@ -92,7 +95,8 @@ public class Stage : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         SoundManager.Instance.ChangeBGMMode(BGMMode.Combat);
-        // TODO: enable player input
+
+        GameManager.Instance.PlayerInstance.IsPlayerStop = false;
     }
 
     private void OnTriggerEnter(Collider other)

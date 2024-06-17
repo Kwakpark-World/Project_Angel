@@ -2,12 +2,10 @@ using BTVisual;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody)/*, typeof(NavMeshAgent)*/)]
+[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Buff), typeof(EnemyAnimator))]
 public abstract class Brain : PoolableMono
 {

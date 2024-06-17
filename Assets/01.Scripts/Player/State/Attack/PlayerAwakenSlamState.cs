@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerAwakenSlamState : PlayerAttackState
 {
@@ -12,7 +11,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
     private string _comboEffectString;
 
     private float _attackPrevTime;
-    private float _comboWindow = 2.0f;
+    private float _comboLimit = 2.0f;
 
     private bool _isCombo = false;
     private bool _isEffectOn = false;
@@ -57,6 +56,8 @@ public class PlayerAwakenSlamState : PlayerAttackState
 
         _attackPrevTime = Time.time;
         ++_comboCounter;
+
+        UIManager.Instance.PlayerHUDProperty.StartSkillComboLimit(_attackPrevTime, _comboLimit, _comboCounter);
     }
 
     public override void UpdateState()
@@ -143,7 +144,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
     {
         _isCombo = false;
 
-        if (_comboCounter >= 3 || Time.time >= _attackPrevTime + _comboWindow)
+        if (_comboCounter >= 3 || Time.time >= _attackPrevTime + _comboLimit)
             _comboCounter = 0;
 
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);

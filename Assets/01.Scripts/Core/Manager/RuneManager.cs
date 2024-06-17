@@ -28,16 +28,6 @@ public class RuneManager : MonoSingleton<RuneManager>
         }
     }
 
-    public void Update()
-    {
-#if UNITY_EDITOR // Debug
-        if (Keyboard.current.pKey.wasPressedThisFrame)
-        {
-            SpawnRune(GameManager.Instance.PlayerInstance.transform.position + Vector3.forward * 5f);
-        }
-#endif
-    }
-
     public void SetRuneList(RuneListSO list)
     {
         _runeList = list;

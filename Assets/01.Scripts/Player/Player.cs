@@ -22,8 +22,36 @@ public class Player : PlayerController
     public float slamPrevTime = 0f;
     public float defensePrevTime = 0f;
 
-    public float currentAwakenGauge = 0f;
-    public float currentChargingTime = 0f;
+    private float _currentAwakenGauge = 0f;
+    public float CurrentAwakenGauge
+    {
+        get
+        {
+            return _currentAwakenGauge;
+        }
+
+        set
+        {
+            _currentAwakenGauge = value;
+
+            UIManager.Instance.PlayerHUDProperty.UpdateAwakenGauge();
+        }
+    }
+    private float _currentChargingTime = 0f;
+    public float CurrentChargingTime
+    {
+        get
+        {
+            return _currentChargingTime;
+        }
+
+        set
+        {
+            _currentChargingTime = value;
+
+            UIManager.Instance.PlayerHUDProperty.UpdateChargingGauge();
+        }
+    }
 
     [field: Header("Asset Label")]
     [field: SerializeField] public AssetLabelReference normalStateLabel { get; private set; }
@@ -112,7 +140,7 @@ public class Player : PlayerController
         //debug DeveloperKey.
         if (Input.GetKeyDown(KeyCode.K))
         {
-            currentAwakenGauge += 100;
+            CurrentAwakenGauge += 100;
         }
 
         SetMousePosInWorld();
@@ -151,6 +179,7 @@ public class Player : PlayerController
             return;
 
         PlayerOnHitVolume();
+        UIManager.Instance.PlayerHUDProperty.UpdateHealth();
 
         if (CurrentHealth > 0f)
         {

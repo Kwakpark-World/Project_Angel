@@ -26,7 +26,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         get
         {
-            return _player;
+            return _player = FindObjectOfType<Player>();
         }
 
         private set

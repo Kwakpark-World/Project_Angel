@@ -47,7 +47,7 @@ public class PlayerGroundState : PlayerState
     private void AwakeningSkillHandle()
     {
         if (_player.IsAwakening) return;
-        if (_player.currentAwakenGauge < _player.PlayerStatData.GetMaxAwakenGauge()) return;
+        if (_player.CurrentAwakenGauge < _player.PlayerStatData.GetMaxAwakenGauge()) return;
 
         _stateMachine.ChangeState(PlayerStateEnum.Awakening);
     }

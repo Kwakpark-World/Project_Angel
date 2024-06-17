@@ -15,7 +15,7 @@ public class PlayerAwakeningState : PlayerState
 
     public PlayerAwakeningState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        
+
     }
 
     public override void Enter()
@@ -64,7 +64,8 @@ public class PlayerAwakeningState : PlayerState
 
         AwakeningEffect();
         ChangeModelMaterial();
-        
+        UIManager.Instance.PlayerHUDProperty.SetAwakenSkillIcon();
+
         _player.StartCoroutine(PlayerAwakening());
     }
 
@@ -78,7 +79,7 @@ public class PlayerAwakeningState : PlayerState
         const string hairString = Player.hairMatName;
         const string armorString = Player.armorMatName;
 
-        
+
         for (int i = 0; i < _player.renderers.Length; i++)
         {
             List<Material> mats = new List<Material>();
@@ -88,7 +89,7 @@ public class PlayerAwakeningState : PlayerState
             {
                 index = _player.IsAwakening ? awakenStartIndex : normalStartIndex;
                 string[] matName = _player.renderers[i].materials[j].name.Split(' ');
-                
+
                 switch (matName[0])
                 {
                     case weaponString:
@@ -109,14 +110,14 @@ public class PlayerAwakeningState : PlayerState
 
             _player.renderers[i].SetMaterials(mats);
         }
-        
+
 
     }
 
     private void AwakenStartEffect()
     {
         _awakenStartParticle = _player.effectParent.Find(_awakenStartEffectString).GetComponentsInChildren<ParticleSystem>();
-        
+
         foreach (var particle in _awakenStartParticle)
         {
             particle.Play();
@@ -160,7 +161,7 @@ public class PlayerAwakeningState : PlayerState
     private IEnumerator ResetParent(ParticleSystem particles)
     {
         float time = 0;
-        while(particles.main.duration >= time)
+        while (particles.main.duration >= time)
         {
             time += Time.deltaTime;
             yield return null;
@@ -171,12 +172,12 @@ public class PlayerAwakeningState : PlayerState
 
     private IEnumerator PlayerAwakening()
     {
-        while (_player.currentAwakenGauge >= 0)
+        while (_player.CurrentAwakenGauge >= 0)
         {
             if (_player.IsAwakening)
             {
-                _player.currentAwakenGauge = Mathf.Clamp(_player.currentAwakenGauge, 0, _player.PlayerStatData.GetMaxAwakenGauge());
-                _player.currentAwakenGauge -= 10 * Time.deltaTime;
+                _player.CurrentAwakenGauge = Mathf.Clamp(_player.CurrentAwakenGauge, 0, _player.PlayerStatData.GetMaxAwakenGauge());
+                _player.CurrentAwakenGauge -= 10 * Time.deltaTime;
             }
             yield return null;
         }
@@ -188,10 +189,11 @@ public class PlayerAwakeningState : PlayerState
             _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             _player.IsAwakening = false;
             ChangeModelMaterial();
+            UIManager.Instance.PlayerHUDProperty.SetNormalSkillIcon();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
 
-   
+
 
 }

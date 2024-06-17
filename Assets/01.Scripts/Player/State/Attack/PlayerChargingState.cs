@@ -29,7 +29,7 @@ public class PlayerChargingState : PlayerChargeState
         _player.StopImmediately(false);
         _player.RotateToMousePos();
 
-        _player.currentChargingTime = 0;
+        _player.CurrentChargingTime = 0;
         _isEffectOn = false;
         _isBlink = false;
 
@@ -61,9 +61,9 @@ public class PlayerChargingState : PlayerChargeState
 
         CameraManager.Instance.ResetCameraZoom();
 
-        if (_player.currentChargingTime < _minChargeTime)
+        if (_player.CurrentChargingTime < _minChargeTime)
         {
-            _player.currentChargingTime = 0;
+            _player.CurrentChargingTime = 0;
             _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
         }
         else
@@ -81,18 +81,18 @@ public class PlayerChargingState : PlayerChargeState
         if (!_player.PlayerInput.isCharge) return;
         if (_prevChargingTime + _player.PlayerStatData.GetChargingAttackCooldown() > Time.time) return;
 
-        _player.currentChargingTime = Mathf.Clamp(_player.currentChargingTime, 0f, _maxChargeTime);
+        _player.CurrentChargingTime = Mathf.Clamp(_player.CurrentChargingTime, 0f, _maxChargeTime);
 
-        if (_player.currentChargingTime < _minChargeTime)
-            _player.currentChargingTime += Time.deltaTime;
+        if (_player.CurrentChargingTime < _minChargeTime)
+            _player.CurrentChargingTime += Time.deltaTime;
         else
         {            
             ChargingEffect();
             CameraManager.Instance.ZoomCam(5.6f, _cameraZoomChangePerTick);
 
-            _player.currentChargingTime += Time.deltaTime * 1.5f;
+            _player.CurrentChargingTime += Time.deltaTime * 1.5f;
 
-            if (_player.currentChargingTime >= _maxChargeTime - 0.1f)
+            if (_player.CurrentChargingTime >= _maxChargeTime - 0.1f)
             {
                 if (_isBlink) return;
                 _isBlink = true;
