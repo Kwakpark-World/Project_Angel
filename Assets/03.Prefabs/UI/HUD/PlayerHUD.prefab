@@ -1487,7 +1487,7 @@ GameObject:
   - component: {fileID: 5776864493403889479}
   - component: {fileID: 925392853108355007}
   m_Layer: 5
-  m_Name: Image_DebuffLeftTime
+  m_Name: Image_DebuffDuration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1716,6 +1716,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1035989248904067873}
+  - {fileID: 6325597930746652252}
   m_Father: {fileID: 2756650940387032217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2188,14 +2189,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a06f08549a196043b83767dd2e8a9e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poisonDebuffLeftTimeImage: {fileID: 925392853108355007}
-  _freezeDebuffLeftTimeImage: {fileID: 3836787576400727794}
-  _paralysisDebuffLeftTimeImage: {fileID: 1023649888671434735}
+  _poisonBuffDurationImage: {fileID: 925392853108355007}
+  _freezeBuffDurationImage: {fileID: 3836787576400727794}
+  _paralysisBuffDurationImage: {fileID: 1023649888671434735}
   _defenseSkillCooldownImage: {fileID: 5952154595962533949}
   _normalSlamSkillIcon: {fileID: 21300000, guid: 041232d435a80804e85ecbfb67da00d5,
     type: 3}
-  _awakenSlamSkillIcons: []
+  _awakenSlamSkillIcons:
+  - {fileID: 21300000, guid: 97adb80a60e09a84399ed9b66d929eb5, type: 3}
+  - {fileID: 21300000, guid: d240c9f9faf97ef46829f1cb2f033f5d, type: 3}
+  - {fileID: 21300000, guid: 16a6365a2d056cc4da392a3d5b9bd8a7, type: 3}
   _slamSkillIconImage: {fileID: 3498340745548758632}
+  _slamSkillComboLimitImage: {fileID: 8714550697332322228}
   _slamSkillCooldownImage: {fileID: 2600518868136936561}
   _normalChargingSkillIcon: {fileID: 21300000, guid: 42bc5fbc1e30d664e8d0454dae54b17a,
     type: 3}
@@ -2221,7 +2226,7 @@ GameObject:
   - component: {fileID: 8635781370982496500}
   - component: {fileID: 3836787576400727794}
   m_Layer: 5
-  m_Name: Image_DebuffLeftTime
+  m_Name: Image_DebuffDuration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3107,7 +3112,7 @@ GameObject:
   - component: {fileID: 8964581599521809827}
   - component: {fileID: 1023649888671434735}
   m_Layer: 5
-  m_Name: Image_DebuffLeftTime
+  m_Name: Image_DebuffDuration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4235,6 +4240,81 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_TargetDisplay: 0
+--- !u!1 &8660179647134614187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6325597930746652252}
+  - component: {fileID: 3975456045562116065}
+  - component: {fileID: 8714550697332322228}
+  m_Layer: 5
+  m_Name: Image_SkillComboLimit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6325597930746652252
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8660179647134614187}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5799382961654471388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3975456045562116065
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8660179647134614187}
+  m_CullTransparentMesh: 1
+--- !u!114 &8714550697332322228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8660179647134614187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.8509804, b: 0, a: 0.7490196}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 8fd1775e8416df44d85116f5bf72e0cb, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0
+  m_FillClockwise: 0
+  m_FillOrigin: 2
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &9156630195651584486
 GameObject:
   m_ObjectHideFlags: 0
