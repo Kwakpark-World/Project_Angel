@@ -15,7 +15,7 @@ public class PlayerWalkState : PlayerGroundState
     private float   _firstStepVelocityDistanceMultiplier    = 0.1f;
     private float   _ascendingStairsMovementMultiplier      = 0.35f;
     private float   _descendingStairsMovementMultiplier     = 0.7f;
-    private float   _maximumAngleOfApproachToAscend         = 46.0f;
+    private float   _maximumAngleOfApproachToAscend         = 360.0f;
     private float   _playerHalfHeightToGround               = 0.0f;
     private float   _maxAscendRayDistance                   = 0.0f;
     private float   _maxDescnedRayDistance                  = 0.0f;

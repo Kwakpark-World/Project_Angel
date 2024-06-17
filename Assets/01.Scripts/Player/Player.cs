@@ -109,6 +109,11 @@ public class Player : PlayerController
 
         StateMachine.CurrentState.UpdateState();
 
+        //debug DeveloperKey.
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            currentAwakenGauge += 100;
+        }
 
         SetMousePosInWorld();
     }
@@ -274,7 +279,7 @@ public class Player : PlayerController
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(PlayerInput.MousePos);
 
         RaycastHit hit;
-        if (Physics.Raycast(worldPos, Camera.main.transform.forward, out hit, 3000f, _whatIsGround))
+        if (Physics.Raycast(worldPos, Camera.main.transform.forward, out hit, 3000f, whatIsGround))
         {
             MousePosInWorld = hit.point;
         }

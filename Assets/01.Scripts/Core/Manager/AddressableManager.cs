@@ -1,11 +1,7 @@
-using Autodesk.Fbx;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Threading.Tasks; 
+using UnityEngine.AddressableAssets; 
 using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class AddressableManager : MonoSingleton<AddressableManager>
