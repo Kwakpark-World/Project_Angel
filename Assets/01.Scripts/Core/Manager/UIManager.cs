@@ -149,12 +149,6 @@ public class UIManager : MonoSingleton<UIManager>
             .OnComplete(() =>
             {
                 _fadePanel.raycastTarget = false;
-
-                if (GameManager.Instance.HasPlayer)
-                {
-                    PlayerHUDProperty = FindObjectOfType<PlayerHUD>();
-                    DieUIProperty = FindObjectOfType<DieUI>();
-                }
             });
 
         _loadingCircle.DOFade(0f, _fadeDuration)
@@ -162,5 +156,11 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 _loadingCircleAnimator.SetBool(_isRotatingHash, false);
             });
+
+        if (GameManager.Instance.HasPlayer)
+        {
+            PlayerHUDProperty = FindObjectsOfType<PlayerHUD>();
+            DieUIProperty = FindObjectsOfType<DieUI>();
+        }
     }
 }
