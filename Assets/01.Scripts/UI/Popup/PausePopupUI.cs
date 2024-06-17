@@ -12,10 +12,10 @@ public class PausePopupUI : PopupUI
 
     public override void TogglePopup(bool value)
     {
-        /*if (value && SceneManager.GetActiveScene().name != "GameScene")
+        if (value && !GameManager.Instance.HasPlayer)
         {
             return;
-        }*/
+        }
 
         base.TogglePopup(value);
 

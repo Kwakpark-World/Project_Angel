@@ -29,7 +29,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (transform.root.gameObject.scene.name != "DontDestroyOnLoad")
             {
-                //DontDestroyOnLoad(transform.root.gameObject);
+                DontDestroyOnLoad(transform.root.gameObject);
             }
         }
         else

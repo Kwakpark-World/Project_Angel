@@ -29,10 +29,10 @@ public class InventoryPopupUI : PopupUI
 
     public override void TogglePopup(bool value)
     {
-        /*if (value && SceneManager.GetActiveScene().name != "GameScene")
+        if (value && !GameManager.Instance.HasPlayer)
         {
             return;
-        }*/
+        }
 
         base.TogglePopup(value);
     }
@@ -44,6 +44,12 @@ public class InventoryPopupUI : PopupUI
             return;
         }
 
+        if (_selectedRune)
+        {
+            _selectedRune.onClickRune.Invoke(_selectedRune);
+        }
+
+        _selectedRune = selectedRune;
         _selectedRuneImage.color = Color.white;
         _selectedRuneImage.sprite = selectedRune.RuneData.runeSprite;
         _selectedRuneName.text = selectedRune.RuneData.runeDisplayedName;
@@ -56,6 +62,7 @@ public class InventoryPopupUI : PopupUI
 
     public void DeselectRune(RuneDisplay selectedRune)
     {
+        _selectedRune = null;
         _selectedRuneImage.color = Color.clear;
         _selectedRuneImage.sprite = null;
         _selectedRuneName.text = string.Empty;

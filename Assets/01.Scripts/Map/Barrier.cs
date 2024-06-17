@@ -2,7 +2,6 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Barrier : MonoBehaviour
 {
@@ -27,19 +26,6 @@ public class Barrier : MonoBehaviour
         _material.SetFloat(ALPHA_PROP, 0f);
         _boxCollider.enabled = false;
     }
-
-    // This is for Debug
-    //private void Update()
-    //{
-    //    if(Keyboard.current.spaceKey.wasPressedThisFrame)
-    //    {
-    //        if (_visible)
-    //        {
-    //            Hide();
-    //        }
-    //        else Show();
-    //    }
-    //}
 
     public void Show(float time = 1f)
     {

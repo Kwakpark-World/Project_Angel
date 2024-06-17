@@ -9,12 +9,6 @@ public class PlayerEffect : PoolableMonoEffect
 
     protected Quaternion _defaultRot;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        _player = GameManager.Instance.PlayerInstance;
-    }
-
     public override void InitializePoolItem()
     {
         base.InitializePoolItem();

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -21,6 +20,18 @@ public class GameManager : MonoSingleton<GameManager>
             }
 
             return _player;
+        }
+    }
+    public bool HasPlayer
+    {
+        get
+        {
+            return _player;
+        }
+
+        private set
+        {
+
         }
     }
 
