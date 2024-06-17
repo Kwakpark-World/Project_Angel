@@ -25,7 +25,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
 
     public PlayerAwakenSlamState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        
+
     }
 
     public override void Enter()
@@ -57,7 +57,7 @@ public class PlayerAwakenSlamState : PlayerAttackState
         _attackPrevTime = Time.time;
         ++_comboCounter;
 
-        UIManager.Instance.PlayerHUDProperty.StartSkillComboLimit(_attackPrevTime, _comboLimit, _comboCounter);
+        UIManager.Instance.PlayerHUDProperty.UpdateSkillComboIcon(_comboCounter);
     }
 
     public override void UpdateState()

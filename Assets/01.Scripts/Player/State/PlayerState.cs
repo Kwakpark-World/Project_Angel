@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerState
 {
+    protected PlayerStateEnum _stateEnum;
+
     protected PlayerStateMachine _stateMachine;
     protected Player _player;
     protected Rigidbody _rigidbody;
@@ -27,6 +29,7 @@ public class PlayerState
         _effectString = $"Player{animBoolName}Effect";
         _animBoolHash = Animator.StringToHash(animBoolName);
         _rigidbody = _player.RigidbodyCompo;
+        _stateEnum = (PlayerStateEnum)Enum.Parse(typeof(PlayerStateEnum), animBoolName);
     }
 
     public virtual void Enter()

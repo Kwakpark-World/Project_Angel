@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -24,8 +25,6 @@ public class PlayerHUD : MonoBehaviour
     private List<Sprite> _awakenSlamSkillIcons;
     [SerializeField]
     private Image _slamSkillIconImage;
-    [SerializeField]
-    private Image _slamSkillComboLimitImage;
     [SerializeField]
     private Image _slamSkillCooldownImage;
 
@@ -55,9 +54,7 @@ public class PlayerHUD : MonoBehaviour
     private TextMeshProUGUI _chargingTimeText;
 
     private Player _player;
-    private float _previousAttackTime;
-    private float _comboLimit;
-    private int _comboCounter;
+    private Dictionary<PlayerStateEnum, Coroutine> _cooldownCoroutines = new Dictionary<PlayerStateEnum, Coroutine>();
 
     private void Start()
     {
@@ -65,11 +62,11 @@ public class PlayerHUD : MonoBehaviour
         {
             _player = GameManager.Instance.PlayerInstance;
         }
-    }
 
-    private void Update()
-    {
-        _slamSkillComboLimitImage.fillAmount = Mathf.Clamp01(1f - (Time.time - _previousAttackTime) / _comboLimit);
+        foreach (PlayerStateEnum playerState in Enum.GetValues(typeof(PlayerStateEnum)))
+        {
+            _cooldownCoroutines[playerState] = null;
+        }
     }
 
     public void SetNormalSkillIcon()
@@ -84,14 +81,9 @@ public class PlayerHUD : MonoBehaviour
         _chargingSkillIconImage.sprite = _awakenChargingSkillIcon;
     }
 
-    public void UpdateSkillComboIcon()
+    public void UpdateSkillComboIcon(int comboCounter)
     {
-        if (_comboCounter >= 3 || Time.time >= _previousAttackTime + _comboLimit)
-        {
-            _comboCounter = 0;
-        }
-
-        _slamSkillIconImage.sprite = _awakenSlamSkillIcons[_comboCounter];
+        _slamSkillIconImage.sprite = _awakenSlamSkillIcons[comboCounter % 3];
     }
 
     public void StartBuffDuration(BuffType buffType, float duration = 0)
@@ -123,37 +115,33 @@ public class PlayerHUD : MonoBehaviour
 
     public void StartSkillCooldown(PlayerStateEnum playerState)
     {
+        if (_cooldownCoroutines[playerState] != null)
+        {
+            return;
+        }
+
         switch (playerState)
         {
             case PlayerStateEnum.Defense:
-                StartCoroutine(SkillCooldownCoroutine(_defenseSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetDefenseCooldown()));
+                _cooldownCoroutines[playerState] = StartCoroutine(SkillCooldownCoroutine(playerState, _defenseSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetDefenseCooldown()));
 
                 break;
 
             case PlayerStateEnum.NormalSlam:
             case PlayerStateEnum.AwakenSlam:
-                StartCoroutine(SkillCooldownCoroutine(_slamSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetSlamCooldown()));
+                _cooldownCoroutines[playerState] = StartCoroutine(SkillCooldownCoroutine(playerState, _slamSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetSlamCooldown()));
 
                 break;
 
             case PlayerStateEnum.NormalChargeAttack:
             case PlayerStateEnum.AwakenChargeAttack:
-                StartCoroutine(SkillCooldownCoroutine(_chargingSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetChargingAttackCooldown()));
+                _cooldownCoroutines[playerState] = StartCoroutine(SkillCooldownCoroutine(playerState, _chargingSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetChargingAttackCooldown()));
 
                 break;
 
             default:
                 break;
         }
-    }
-
-    public void StartSkillComboLimit(float previousAttackTime, float comboLimit, int comboCounter)
-    {
-        _previousAttackTime = previousAttackTime;
-        _comboLimit = comboLimit;
-        _comboCounter = comboCounter;
-
-        UpdateSkillComboIcon();
     }
 
     public void UpdateHealth()
@@ -208,7 +196,7 @@ public class PlayerHUD : MonoBehaviour
         buffDurationImage.transform.parent.parent.parent.gameObject.SetActive(false);
     }
 
-    private IEnumerator SkillCooldownCoroutine(Image skillCooldownImage, float cooldown)
+    private IEnumerator SkillCooldownCoroutine(PlayerStateEnum playerState, Image skillCooldownImage, float cooldown)
     {
         float elapsed = 0f;
 
@@ -221,5 +209,6 @@ public class PlayerHUD : MonoBehaviour
         }
 
         skillCooldownImage.fillAmount = 0f;
+        _cooldownCoroutines[playerState] = null;
     }
 }

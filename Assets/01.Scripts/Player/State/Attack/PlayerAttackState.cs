@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerAttackState : PlayerState
 {
@@ -67,7 +64,7 @@ public class PlayerAttackState : PlayerState
                     if (IsCritical())
                         _player.PlayerStatData.attackPower.AddModifier(modifierValue);
 
-                    AttackBlood(); AttackExtraMaxHealth(); AttackCoolDonw();
+                    AttackBlood(); AttackExtraMaxHealth(); AttackCooldown();
 
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
                     HitEnemyAction(brain);
@@ -141,12 +138,12 @@ public class PlayerAttackState : PlayerState
     public void HitTrapByOverlapBox(Vector3 startPos, Quaternion direction)
     {
         Vector3 pos = startPos + _attackOffset;
-        
+
         Vector3 halfSize = _attackSize * 0.5f;
 
         Collider[] traps = Physics.OverlapBox(pos, halfSize, direction, _trapLayer);
 
-        foreach(var trap in traps) 
+        foreach (var trap in traps)
         {
             if (trap.TryGetComponent<HitableTrap>(out HitableTrap hitTrap))
             {
@@ -203,14 +200,14 @@ public class PlayerAttackState : PlayerState
             _player.PlayerStatData.maxHealth.AddModifier(1f);
     }
 
-    private void AttackCoolDonw()
+    private void AttackCooldown()
     {
         if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Heimdall))
         {
-            _player  .PlayerStatData.defenseCooldown.AddModifier(-1f);
+            _player.PlayerStatData.defenseCooldown.AddModifier(-1f);
             _player.PlayerStatData.slamCooldown.AddModifier(-1f);
         }
-            
+
     }
     #endregion
 

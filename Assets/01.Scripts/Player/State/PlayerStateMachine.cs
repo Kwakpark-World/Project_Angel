@@ -47,7 +47,6 @@ public class PlayerStateMachine
             return;
         if (_player.IsPlayerStop)
             return;
-        
 
         CurrentState.Exit();
         CurrentState = StateDictionary[state];
