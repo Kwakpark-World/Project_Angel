@@ -30,5 +30,10 @@ public class PlayerEffect : PoolableMonoEffect
     protected override void Update()
     {
         base.Update();
+
+        if (!_player)
+        {
+            _player = GameManager.Instance.PlayerInstance;
+        }
     }
 }

@@ -16,8 +16,6 @@ public class Player : PlayerController
 
     public LayerMask enemyLayer;
 
-    public float ChargingGauge;
-
     [Header("Defense Settings")]
     public float defenseTime = 3f;
 
@@ -26,7 +24,8 @@ public class Player : PlayerController
     public float slamPrevTime = 0f;
     public float defensePrevTime = 0f;
 
-    public float awakenCurrentGauge = 0f;
+    public float currentAwakenGauge = 0f;
+    public float currentChargingTime = 0f;
 
     [field: Header("Asset Label")]
     [field: SerializeField] public AssetLabelReference normalStateLabel { get; private set; }
