@@ -306,5 +306,17 @@ public class Buff : MonoBehaviour
 
         }
     }
+
+    public void ParalysisEnd()
+    {
+        if (_isPlayer)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
     #endregion
 }

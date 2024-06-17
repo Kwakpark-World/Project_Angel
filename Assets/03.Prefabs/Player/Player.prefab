@@ -5764,7 +5764,7 @@ MonoBehaviour:
   AnimatorCompo: {fileID: 0}
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: 24b7a6688532fb74bb3b57c0957e7ed0,
     type: 2}
-  CurrentHealth: 0
+  CurrentHealth: 100
   playerCenter: {fileID: 5140108053741916498}
   weapon: {fileID: 7559007113953224229}
   enemyLayer:
@@ -5777,6 +5777,13 @@ MonoBehaviour:
     m_LabelString: PlayerNormal
   <awakenStateLabel>k__BackingField:
     m_LabelString: PlayerAwaken
+  materials:
+  - {fileID: 2100000, guid: cde5f28873944824aade31a80ca8a239, type: 2}
+  - {fileID: 2100000, guid: fc6a68923a892bb47a1d72913fc3d444, type: 2}
+  - {fileID: 2100000, guid: 69b4f0993cabfcf4ca04c08b12327c05, type: 2}
+  - {fileID: 2100000, guid: 1289ba761a2445c438cf47a7c68957dd, type: 2}
+  - {fileID: 2100000, guid: b057af2ed5fbd3e4bab3983c67146b24, type: 2}
+  - {fileID: 2100000, guid: a4686a6229c8a114bae7fcc4efe7cd75, type: 2}
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d771d326405705e4b9989f7211c9e6b3,
     type: 2}
   playerAnims: []
@@ -5811,7 +5818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffTriggers:
-  - buffType: 1001
+  - buffType: 1000
     onBuffBegin:
       m_PersistentCalls:
         m_Calls:
@@ -5845,7 +5852,7 @@ MonoBehaviour:
     onBuffEnd:
       m_PersistentCalls:
         m_Calls: []
-  - buffType: 1002
+  - buffType: 1001
     onBuffBegin:
       m_PersistentCalls:
         m_Calls:
@@ -5879,13 +5886,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - buffType: 1003
+  - buffType: 1002
     onBuffBegin:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 6385291853889329438}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: KnockbackBegin
+          m_MethodName: ParalysisBegin
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5900,7 +5907,19 @@ MonoBehaviour:
         m_Calls: []
     onBuffEnd:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: ParalysisEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   <BuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
     type: 2}
 --- !u!114 &4977708845564934515

@@ -28,7 +28,7 @@ public class Stage : MonoBehaviour
         {
             ClearStage();
         }
-
+#endif
         foreach (EnemyMannequin mannequin in _mannequins)
         {
             if (mannequin.gameObject.activeInHierarchy)
@@ -38,7 +38,6 @@ public class Stage : MonoBehaviour
         }
 
         ClearStage();
-#endif
     }
 
     public void StartStage()

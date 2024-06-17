@@ -57,7 +57,7 @@ public class Player : PlayerController
     [field: SerializeField] public AssetLabelReference normalStateLabel { get; private set; }
     [field: SerializeField] public AssetLabelReference awakenStateLabel { get; private set; }
 
-    public Material[] materials { get; private set; } = new Material[6];
+    public List<Material> materials = new List<Material>();
 
     public const string weaponMatName = "PlayerWeaponMat";
     public const string hairMatName = "PlayerHairMat";
@@ -93,7 +93,7 @@ public class Player : PlayerController
     {
         base.Awake();
 
-        MaterialCaching();
+        //MaterialCaching();
 
         BuffCompo.SetOwner(this);
 
