@@ -111,6 +111,11 @@ public class Player : PlayerController
 
         StateMachine.CurrentState.UpdateState();
 
+        //debug DeveloperKey.
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            currentAwakenGauge += 100;
+        }
 
         SetMousePosInWorld();
     }
