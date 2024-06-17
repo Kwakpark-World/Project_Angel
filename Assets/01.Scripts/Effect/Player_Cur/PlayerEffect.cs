@@ -12,6 +12,10 @@ public class PlayerEffect : PoolableMonoEffect
     public override void InitializePoolItem()
     {
         base.InitializePoolItem();
+        if (!_player)
+        {
+            _player = GameManager.Instance.PlayerInstance;
+        }
     }
 
     public override void RegisterEffect()

@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class MaterialManager : MonoSingleton<MaterialManager>
 {
-    public Action _cachingAction;
     private Dictionary<string, List<Material>> _materials = new Dictionary<string, List<Material>>(); // Label, (matName, mat)
 
     private async void Start()
@@ -32,8 +31,6 @@ public class MaterialManager : MonoSingleton<MaterialManager>
 
             _materials.Add(label, _getMats);
         }
-
-        _cachingAction?.Invoke();
     }
 
     public List<Material> GetMaterial(string labelName)
