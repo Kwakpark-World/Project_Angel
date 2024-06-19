@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class CameraManager : MonoSingleton<CameraManager>
@@ -18,6 +19,11 @@ public class CameraManager : MonoSingleton<CameraManager>
         if (addCamera._type == CameraType.None)
         {
             Debug.LogError($"{addCamera} type is None. Select Camera Type");
+        }
+
+        if (_cameraDictionary.ContainsKey(addCamera._type))
+        {
+            _cameraDictionary.Remove(addCamera._type);
         }
 
         _cameraDictionary.Add(addCamera._type, addCamera.RegisterCamera());

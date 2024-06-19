@@ -129,6 +129,10 @@ public class Player : PlayerController
         PlayerStatData.InitializeAllModifiers();
 
         CurrentHealth = PlayerStatData.GetMaxHealth();
+
+        UIManager.Instance.PlayerHUDProperty.UpdateHealth(); ;
+        UIManager.Instance.PlayerHUDProperty.UpdateAwakenGauge(); ;
+        UIManager.Instance.PlayerHUDProperty.UpdateChargingGauge(); ;
     }
 
     protected override void Update()
