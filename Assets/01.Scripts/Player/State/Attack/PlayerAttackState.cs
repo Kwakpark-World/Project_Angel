@@ -64,7 +64,7 @@ public class PlayerAttackState : PlayerState
                     if (IsCritical())
                         _player.PlayerStatData.attackPower.AddModifier(modifierValue);
 
-                    AttackBlood(); AttackExtraMaxHealth(); AttackCooldown();
+                    AttackBlood(); AttackExtraMaxHealth(); AttackCooldown(); HermesRun();
 
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
                     HitEnemyAction(brain);
@@ -193,11 +193,48 @@ public class PlayerAttackState : PlayerState
             _player.CurrentHealth += 3f;
     }
 
+    private void HermesRun()
+    {
+        float timer;
+
+        timer = Time.deltaTime;
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Hermes))
+        {
+            if(timer > 3f)
+            {
+                _player.PlayerStatData.moveSpeed.AddModifier(3f);
+                _player.PlayerStatData.attackSpeed.AddModifier(1.5f);
+            }
+
+            else
+            {
+                _player.PlayerStatData.moveSpeed.RemoveModifier(3f);
+                _player.PlayerStatData.attackSpeed.AddModifier(1.5f);
+                timer = 0;
+            }
+        }
+    }
+
+    private void Herculesfighting()
+    {
+        //감전 마지막 공격일 때 추가 데미지
+        if(_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Heracles))
+        {
+            if(_comboCounter >= 3 && _comboCounter < 4)
+            _player.PlayerStatData.attackPower.AddModifier(3f);
+        }
+    }
+
     private void AttackExtraMaxHealth()
     {
         //remove를 만들어 줘야 할 수도 있음 생각을 해보고 결정을 하셈 ><
         if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Freyja))
             _player.PlayerStatData.maxHealth.AddModifier(1f);
+
+        if(_player.CurrentHealth == 0)
+        {
+            _player.PlayerStatData.maxHealth.RemoveModifier(1f);
+        }
     }
 
     private void AttackCooldown()

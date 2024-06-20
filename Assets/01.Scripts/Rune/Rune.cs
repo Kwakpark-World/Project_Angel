@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Rune : PoolableMono
 {
@@ -13,6 +14,8 @@ public class Rune : PoolableMono
     private float _rotateSpeed = 1.5f;
     [SerializeField]
     private Light _runeLight;
+    [SerializeField]
+    private float nearPlayer = 3f;
 
     private RuneDataSO _runeData;
     public RuneDataSO RuneData
@@ -31,11 +34,17 @@ public class Rune : PoolableMono
     private void Update()
     {
         transform.Rotate(Vector3.up, _rotateSpeed * Time.deltaTime);
+        if(Keyboard.current.fKey.wasPressedThisFrame ) 
+        {
+            interactive();
+        }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void interactive()
     {
-        if (other.TryGetComponent(out Player player))
+        float distancePlayer = Vector3.Distance(gameObject.transform.position, GameManager.Instance.PlayerInstance.transform.position);
+
+        if(distancePlayer <= nearPlayer)
         {
             if (!RuneManager.Instance.TryEquipRune(RuneData))
             {
@@ -43,7 +52,7 @@ public class Rune : PoolableMono
             }
 
             StopAllCoroutines();
-            player.BuffCompo.PlayBuff(_runeData.buffType);
+            GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_runeData.buffType);
             PoolManager.Instance.Push(this);
         }
     }

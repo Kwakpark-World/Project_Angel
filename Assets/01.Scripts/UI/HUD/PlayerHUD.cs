@@ -155,8 +155,17 @@ public class PlayerHUD : MonoBehaviour
 
     public void UpdateAwakenGauge()
     {
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Gabriel))
+        {
+            GameManager.Instance.PlayerInstance.PlayerStatData.maxAwakenGauge.AddModifier(-20);
+        }
+        else
+        {
+            GameManager.Instance.PlayerInstance.PlayerStatData.maxAwakenGauge.RemoveModifier(20);
+        }
         float currentAwakenGauge = GameManager.Instance.PlayerInstance.CurrentAwakenGauge;
         float maxAwakenGauge = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxAwakenGauge();
+
         _awakenGaugeSlider.value = currentAwakenGauge;
         _awakenGaugeText.text = $"{(int)(currentAwakenGauge / maxAwakenGauge * 100f)}%";
     }
