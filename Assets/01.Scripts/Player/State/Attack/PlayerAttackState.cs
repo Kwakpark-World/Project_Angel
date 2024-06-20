@@ -220,8 +220,11 @@ public class PlayerAttackState : PlayerState
         //감전 마지막 공격일 때 추가 데미지
         if(_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Heracles))
         {
-            if(_comboCounter >= 3 && _comboCounter < 4)
-            _player.PlayerStatData.attackPower.AddModifier(3f);
+            PlayerMeleeAttackState pat = _player.StateMachine.GetState(PlayerStateEnum.MeleeAttack) as PlayerMeleeAttackState;
+            if(pat._comboCounter == 3)
+            {
+                Debug.Log("3타임");
+            }
         }
     }
 
