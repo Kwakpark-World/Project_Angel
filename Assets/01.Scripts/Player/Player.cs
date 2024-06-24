@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -148,6 +149,12 @@ public class Player : PlayerController
         }
 
         SetMousePosInWorld();
+
+        //µð¹ö±ë
+        if (Keyboard.current.bKey.wasPressedThisFrame)
+        {
+            PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.playerCenter.position);
+        }
     }
 
     protected override void FixedUpdate()
