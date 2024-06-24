@@ -35,7 +35,8 @@ public enum PoolType
     Effect_PlayerAttack_Slam_Awaken_2,
     Trap_Dynamite = 3000,
     Trap_Spike,
-    UI_HealthBar = 4000
+    UI_HealthBar = 4000,
+    GuidedBullet = 5000,
 }
 
 [Serializable]

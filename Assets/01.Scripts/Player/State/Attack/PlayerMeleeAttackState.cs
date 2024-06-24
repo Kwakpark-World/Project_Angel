@@ -140,6 +140,11 @@ public class PlayerMeleeAttackState : PlayerAttackState
         Collider[] enemies = GetEnemyByOverlapBox(_player.weapon.transform.position, _player.weapon.transform.rotation);
 
         Attack(enemies.ToList());
+
+        if(_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Michael))
+        {
+            PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.transform.position);
+        }
     }
 
     protected override void HitEnemyAction(Brain enemy)
