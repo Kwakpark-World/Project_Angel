@@ -34,7 +34,7 @@ public class Player : PlayerController
         {
             _currentAwakenGauge = value;
 
-            UIManager.Instance.PlayerHUDProperty.UpdateAwakenGauge();
+            UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge();
         }
     }
     private float _currentChargingTime = 0f;
@@ -49,7 +49,7 @@ public class Player : PlayerController
         {
             _currentChargingTime = value;
 
-            UIManager.Instance.PlayerHUDProperty.UpdateChargingGauge();
+            UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge();
         }
     }
 
@@ -130,9 +130,9 @@ public class Player : PlayerController
 
         CurrentHealth = PlayerStatData.GetMaxHealth();
 
-        UIManager.Instance.PlayerHUDProperty.UpdateHealth(); ;
-        UIManager.Instance.PlayerHUDProperty.UpdateAwakenGauge(); ;
-        UIManager.Instance.PlayerHUDProperty.UpdateChargingGauge(); ;
+        UIManager.Instance.PlayerHUDProperty?.UpdateHealth(); ;
+        UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge(); ;
+        UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge(); ;
     }
 
     protected override void Update()
@@ -183,7 +183,7 @@ public class Player : PlayerController
             return;
 
         PlayerOnHitVolume();
-        UIManager.Instance.PlayerHUDProperty.UpdateHealth();
+        UIManager.Instance.PlayerHUDProperty?.UpdateHealth();
 
         if (CurrentHealth > 0f)
         {
@@ -212,8 +212,7 @@ public class Player : PlayerController
     private void OnDie()
     {
         StateMachine.ChangeState(PlayerStateEnum.Die);
-        UIManager.Instance.DieUIProperty.OnDie();
-        Debug.Log(UIManager.Instance.DieUIProperty);
+        UIManager.Instance.DieUIProperty?.OnDie();
     }
 
     public bool IsMovePressed()

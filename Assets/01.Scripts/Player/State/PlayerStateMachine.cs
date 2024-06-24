@@ -52,7 +52,7 @@ public class PlayerStateMachine
         CurrentState = StateDictionary[state];
         CurrentState.Enter();
 
-        UIManager.Instance.PlayerHUDProperty.StartSkillCooldown(state);
+        UIManager.Instance.PlayerHUDProperty?.StartSkillCooldown(state);
     }
 
     public PlayerState GetState(PlayerStateEnum state)

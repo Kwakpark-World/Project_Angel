@@ -131,7 +131,7 @@ public class Buff : MonoBehaviour
 
         _buffStates[buffType] = true;
 
-        UIManager.Instance.PlayerHUDProperty.StartBuffDuration(buffType);
+        UIManager.Instance.PlayerHUDProperty?.StartBuffDuration(buffType);
         _buffTriggersByType[buffType].onBuffBegin?.Invoke();
     }
 
@@ -144,7 +144,7 @@ public class Buff : MonoBehaviour
 
         _attackers[buffType] = attacker;
 
-        UIManager.Instance.PlayerHUDProperty.StartBuffDuration(buffType);
+        UIManager.Instance.PlayerHUDProperty?.StartBuffDuration(buffType);
         _buffTriggersByType[buffType].onBuffBegin?.Invoke();
     }
 
@@ -168,7 +168,7 @@ public class Buff : MonoBehaviour
             StopCoroutine(_coroutines[buffType]);
         }
 
-        UIManager.Instance.PlayerHUDProperty.StartBuffDuration(buffType, duration);
+        UIManager.Instance.PlayerHUDProperty?.StartBuffDuration(buffType, duration);
 
         _coroutines[buffType] = StartCoroutine(BuffCoroutine(buffType, duration));
     }
