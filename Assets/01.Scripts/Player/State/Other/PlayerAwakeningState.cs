@@ -64,7 +64,7 @@ public class PlayerAwakeningState : PlayerState
 
         AwakeningEffect();
         ChangeModelMaterial();
-        UIManager.Instance.PlayerHUDProperty.SetAwakenSkillIcon();
+        UIManager.Instance.PlayerHUDProperty?.SetAwakenSkillIcon();
 
         _player.StartCoroutine(PlayerAwakening());
     }
@@ -190,7 +190,7 @@ public class PlayerAwakeningState : PlayerState
             _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             _player.IsAwakening = false;
             ChangeModelMaterial();
-            UIManager.Instance.PlayerHUDProperty.SetNormalSkillIcon();
+            UIManager.Instance.PlayerHUDProperty?.SetNormalSkillIcon();
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
