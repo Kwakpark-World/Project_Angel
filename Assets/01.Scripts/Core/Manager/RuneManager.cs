@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class RuneManager : MonoSingleton<RuneManager>
 {
+    private readonly string _assetPath = "Assets/11.SO/Rune";
+
     [SerializeField]
     private RuneListSO _runeList;
     [field: SerializeField]
@@ -35,8 +37,28 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     public void SpawnRune(Vector3 runeSpawnPos)
     {
+        RuneDataSO runeData;
+
+        if (_runeList.list.Count <= 0)
+        {
+            string[] assetNames = AssetDatabase.FindAssets("", new[] { _assetPath });
+
+            foreach (string assetName in assetNames)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(assetName);
+                runeData = AssetDatabase.LoadAssetAtPath<RuneDataSO>(path);
+
+                if (!runeData)
+                {
+                    continue;
+                }
+
+                _runeList.list.Add(runeData);
+            }
+        }
+
         Rune rune = PoolManager.Instance.Pop(PoolType.Rune, runeSpawnPos) as Rune;
-        RuneDataSO runeData = _runeList.list[UnityEngine.Random.Range(0, _runeList.list.Count)];
+        runeData = _runeList.list[UnityEngine.Random.Range(0, _runeList.list.Count)];
 
         rune.InitializeRune(runeData);
         _runeList.list.Remove(runeData);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -144,7 +145,15 @@ public class Player : PlayerController
         //debug DeveloperKey.
         if (Input.GetKeyDown(KeyCode.K))
         {
-            CurrentAwakenGauge += 100;
+            CurrentAwakenGauge = Mathf.Clamp(CurrentAwakenGauge + 100, 0f, GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxAwakenGauge());
+        }
+
+        SetMousePosInWorld();
+
+        //µð¹ö±ë
+        if (Keyboard.current.bKey.wasPressedThisFrame)
+        {
+            PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.playerCenter.position);
         }
     }
 
@@ -181,7 +190,6 @@ public class Player : PlayerController
             return;
 
         PlayerOnHitVolume();
-        UIManager.Instance.PlayerHUDProperty?.UpdateHealth();
 
         if (CurrentHealth > 0f)
         {
@@ -192,6 +200,8 @@ public class Player : PlayerController
                 CurrentHealth = Mathf.Max(CurrentHealth, 1f);
             }
         }
+
+        UIManager.Instance.PlayerHUDProperty?.UpdateHealth();
 
         if (CurrentHealth <= 0f)
         {
@@ -210,7 +220,7 @@ public class Player : PlayerController
     private void OnDie()
     {
         StateMachine.ChangeState(PlayerStateEnum.Die);
-        UIManager.Instance.DieUIProperty?.OnDie();
+        UIManager.Instance.GameOverUIProperty?.OnGameOver();
     }
 
     public bool IsMovePressed()
@@ -293,6 +303,30 @@ public class Player : PlayerController
     public void AnimationTickCheckTrigger()
     {
         StateMachine.CurrentState.AnimationTickCheckTrigger();
+    }
+    #endregion
+
+    #region Mouse Control
+    public void RotateToMousePos()
+    {
+        Vector3 dir = (MousePosInWorld - transform.position).normalized;
+        dir.y = 0;
+
+        transform.rotation = Quaternion.LookRotation(dir);
+    }
+
+    private void SetMousePosInWorld()
+    {
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(PlayerInput.MousePos);
+
+        RaycastHit hit;
+        if (Physics.Raycast(worldPos, Camera.main.transform.forward, out hit, 3000f, whatIsGround))
+        {
+            MousePosInWorld = hit.point;
+        }
+
+
+        Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
     #endregion
 

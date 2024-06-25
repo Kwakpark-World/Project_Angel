@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMeleeAttackState : PlayerAttackState
 {
@@ -139,6 +140,20 @@ public class PlayerMeleeAttackState : PlayerAttackState
         Collider[] enemies = GetEnemyByOverlapBox(_player.weapon.transform.position, _player.weapon.transform.rotation);
 
         Attack(enemies.ToList());
+
+        GuidedBulletFire(5f);
+    }
+
+    IEnumerator GuidedBulletFire(float delay)
+    {
+        delay += Time.deltaTime;
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Michael) && delay < Time.deltaTime)
+        {
+            PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.transform.position);
+            delay = 0;
+        }
+
+        yield return new WaitForSeconds(delay);
     }
 
     protected override void HitEnemyAction(Brain enemy)
@@ -148,6 +163,12 @@ public class PlayerMeleeAttackState : PlayerAttackState
         if (_comboCounter == 3)
         {
             CameraManager.Instance.ShakeCam(0.2f, 0.5f, 0.5f);
+            if(_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Thor))
+            {
+                //여기에 파티클까지 나와야함 근데 파티클에 데미지 자체를 넣는 방법도 있긴함 그건 알아서 생각을 해보시길..
+                _player.PlayerStatData.attackPower.AddModifier(3f);
+                Debug.Log("2");
+            }
         }
     }
 

@@ -146,12 +146,12 @@ GameObject:
   - component: {fileID: 2030301789392740234}
   - component: {fileID: 2555207833480500363}
   m_Layer: 5
-  m_Name: DieUI
+  m_Name: GameOverUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2030301789392740234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8153680117754468955}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554e8b681d1892746be4cf82e51ba556, type: 3}
+  m_Script: {fileID: 11500000, guid: 829f1ac7d8925b34da5f22488120acdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _backgroundImage: {fileID: 8444576340866545876}

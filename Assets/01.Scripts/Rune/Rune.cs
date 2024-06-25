@@ -15,7 +15,7 @@ public class Rune : PoolableMono
     [SerializeField]
     private Light _runeLight;
     [SerializeField]
-    private float nearPlayer = 3f;
+    private float nearPlayer = 5f;
 
     private RuneDataSO _runeData;
     public RuneDataSO RuneData
@@ -55,6 +55,7 @@ public class Rune : PoolableMono
             GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_runeData.buffType);
             PoolManager.Instance.Push(this);
         }
+       /* CameraManager.Instance.StopZoomCam();*/
     }
 
     public override void InitializePoolItem()
