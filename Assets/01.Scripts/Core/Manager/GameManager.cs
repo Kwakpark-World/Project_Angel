@@ -39,4 +39,11 @@ public class GameManager : MonoSingleton<GameManager>
     {
         SoundManager.Instance.PlayEnv(ENVType.Wind);
     }
+
+    // 커서 키면 보이고 락풀리고, 커서 끄면 안보이고 락걸리고.
+    public void SetCursor(bool isOnCursor)
+    {
+        Cursor.visible = isOnCursor;
+        Cursor.lockState = isOnCursor ? CursorLockMode.None : CursorLockMode.Locked;
+    }
 }
