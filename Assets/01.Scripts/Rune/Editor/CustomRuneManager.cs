@@ -6,8 +6,9 @@ using UnityEngine;
 [CustomEditor(typeof(RuneManager))]
 public class CustomRuneManager : Editor
 {
+    private readonly string _assetPath = "Assets/11.SO/Rune";
     private readonly string _soName = "RuneList";
-    private readonly string _prefabPath = "Assets/11.SO/Rune";
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -17,6 +18,7 @@ public class CustomRuneManager : Editor
         if (GUILayout.Button("Generate RuneList"))
         {
             RuneListSO list = CreateAssetDatabase();
+
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
@@ -26,35 +28,40 @@ public class CustomRuneManager : Editor
 
     private RuneListSO CreateAssetDatabase()
     {
-        List<RuneDataSO> loadedList = new List<RuneDataSO>();
-
-        string[] assetNames = AssetDatabase.FindAssets("", new[] { _prefabPath });
+        List<RuneDataSO> loadedRuneList = new List<RuneDataSO>();
+        string[] assetNames = AssetDatabase.FindAssets("", new[] { _assetPath });
 
         foreach (string assetName in assetNames)
         {
             string path = AssetDatabase.GUIDToAssetPath(assetName);
-            RuneDataSO powerUp = AssetDatabase.LoadAssetAtPath<RuneDataSO>(path);
-            if (powerUp == null) continue;
-            loadedList.Add(powerUp);
-        }
-        Debug.Log($"Rune load complete [ count: {loadedList.Count} ]");
+            RuneDataSO runeData = AssetDatabase.LoadAssetAtPath<RuneDataSO>(path);
 
-        RuneListSO powerUpList;
-        powerUpList = AssetDatabase.LoadAssetAtPath<RuneListSO>($"{_prefabPath}/{_soName}.asset");
-        string absoluteFilename = AssetDatabase.GenerateUniqueAssetPath($"{_prefabPath}/{_soName}.asset");
-        if (powerUpList == null)
+            if (runeData == null) continue;
+
+            loadedRuneList.Add(runeData);
+        }
+
+        Debug.Log($"Rune load complete [ count: {loadedRuneList.Count} ]");
+
+        RuneListSO runeList = AssetDatabase.LoadAssetAtPath<RuneListSO>($"{_assetPath}/{_soName}.asset");
+        string soFileName = AssetDatabase.GenerateUniqueAssetPath($"{_assetPath}/{_soName}.asset");
+
+        if (runeList == null)
         {
-            powerUpList = ScriptableObject.CreateInstance<RuneListSO>();
-            powerUpList.list = loadedList;
-            AssetDatabase.CreateAsset(powerUpList, absoluteFilename);
-            Debug.Log($"Rune asset created at {absoluteFilename}");
+            runeList = ScriptableObject.CreateInstance<RuneListSO>();
+            runeList.list = loadedRuneList;
+            AssetDatabase.CreateAsset(runeList, soFileName);
+
+            Debug.Log($"Rune asset created at {soFileName}");
         }
         else
         {
-            powerUpList.list = loadedList;
-            EditorUtility.SetDirty(powerUpList);
-            Debug.Log($"Rune asset updated at {absoluteFilename}");
+            runeList.list = loadedRuneList;
+            EditorUtility.SetDirty(runeList);
+
+            Debug.Log($"Rune asset updated at {soFileName}");
         }
-        return powerUpList;
+
+        return runeList;
     }
 }

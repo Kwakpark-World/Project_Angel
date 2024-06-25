@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stat_Player
   m_EditorClassIdentifier: 
   maxHealth:
-    _baseValue: 100
+    _baseValue: 500
     modifiers: []
   defensivePower:
     _baseValue: 0
@@ -28,10 +28,10 @@ MonoBehaviour:
     _baseValue: 1
     modifiers: []
   criticalChance:
-    _baseValue: 0
+    _baseValue: 10
     modifiers: []
   criticalDamageMultiplier:
-    _baseValue: 0
+    _baseValue: 1.5
     modifiers: []
   chargingAttackSpeed:
     _baseValue: 1.5
@@ -46,7 +46,7 @@ MonoBehaviour:
     _baseValue: 0.2
     modifiers: []
   knockbackDuration:
-    _baseValue: 0
+    _baseValue: 0.25
     modifiers: []
   moveSpeed:
     _baseValue: 8
