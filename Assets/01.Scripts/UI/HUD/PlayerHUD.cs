@@ -53,16 +53,11 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _chargingTimeText;
 
-    private Player _player;
+    public Player PlayerReference { get; set; }
     private Dictionary<PlayerStateEnum, Coroutine> _cooldownCoroutines = new Dictionary<PlayerStateEnum, Coroutine>();
 
     private void Start()
     {
-        if (GameManager.Instance.HasPlayer)
-        {
-            _player = GameManager.Instance.PlayerInstance;
-        }
-
         foreach (PlayerStateEnum playerState in Enum.GetValues(typeof(PlayerStateEnum)))
         {
             _cooldownCoroutines[playerState] = null;
@@ -155,7 +150,7 @@ public class PlayerHUD : MonoBehaviour
 
     public void UpdateAwakenGauge()
     {
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Gabriel))
+        if (PlayerReference.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Gabriel))
         {
             GameManager.Instance.PlayerInstance.PlayerStatData.maxAwakenGauge.AddModifier(-20);
         }
@@ -194,7 +189,7 @@ public class PlayerHUD : MonoBehaviour
         }
         else
         {
-            while (_player.BuffCompo.GetBuffState(buffType))
+            while (PlayerReference.BuffCompo.GetBuffState(buffType))
             {
                 yield return null;
             }

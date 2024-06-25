@@ -173,12 +173,11 @@ public class PlayerAwakeningState : PlayerState
 
     private IEnumerator PlayerAwakening()
     {
-        while (_player.CurrentAwakenGauge >= 0)
+        while (_player.CurrentAwakenGauge > 0)
         {
             if (_player.IsAwakening)
             {
-                _player.CurrentAwakenGauge = Mathf.Clamp(_player.CurrentAwakenGauge, 0, _player.PlayerStatData.GetMaxAwakenGauge());
-                _player.CurrentAwakenGauge -= 10 * Time.deltaTime;
+                _player.CurrentAwakenGauge = Mathf.Clamp(_player.CurrentAwakenGauge - 10f * Time.deltaTime, 0f, _player.PlayerStatData.GetMaxAwakenGauge());
             }
             yield return null;
         }
