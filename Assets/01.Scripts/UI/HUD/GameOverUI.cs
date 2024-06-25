@@ -16,6 +16,7 @@ public class GameOverUI : MonoBehaviour
     public void OnGameOver()
     {
         _backgroundImage.gameObject.SetActive(true);
+        _dieText.gameObject.SetActive(true);
 
         Color backGroundColor = _backgroundImage.color;
         backGroundColor.a = 0f;
