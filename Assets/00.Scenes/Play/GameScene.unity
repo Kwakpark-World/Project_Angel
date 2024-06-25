@@ -53603,10 +53603,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2366252909713179384, guid: 4b70a7ee16e5e074ab169aaa9ba735ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8153680117754468955, guid: 4b70a7ee16e5e074ab169aaa9ba735ea,
         type: 3}
       propertyPath: m_Name
       value: DieUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 9014757140146023869, guid: 4b70a7ee16e5e074ab169aaa9ba735ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62108,8 +62118,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 626907113407866902, guid: 7be0185120f2fa546ab1a40fccf5e39e,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 626907113407866902, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
       propertyPath: m_LocalPosition.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 626907113407866902, guid: 7be0185120f2fa546ab1a40fccf5e39e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 626907113407866902, guid: 7be0185120f2fa546ab1a40fccf5e39e,
         type: 3}
@@ -62486,22 +62506,6 @@ PrefabInstance:
       propertyPath: _targetList.Array.data[66]
       value: 
       objectReference: {fileID: 558528521}
-    - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
-        type: 3}
-      propertyPath: endingUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
-        type: 3}
-      propertyPath: CurrentHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8523927444897520135, guid: 7be0185120f2fa546ab1a40fccf5e39e,
-        type: 3}
-      propertyPath: <PlayerStatData>k__BackingField
-      value: 
-      objectReference: {fileID: 11400000, guid: 58535d849d86c05438a1b9d7319b9718,
-        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

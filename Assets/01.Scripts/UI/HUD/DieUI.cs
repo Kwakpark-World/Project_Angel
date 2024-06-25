@@ -16,6 +16,7 @@ public class DieUI : MonoBehaviour
     public void OnDie()
     {
         _backgroundImage.gameObject.SetActive(true);
+        _dieText.gameObject.SetActive(true);
 
         Color backGroundColor = _backgroundImage.color;
         backGroundColor.a = 0f;
