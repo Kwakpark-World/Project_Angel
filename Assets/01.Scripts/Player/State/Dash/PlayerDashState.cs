@@ -12,7 +12,6 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
 
-        _player.RotateToMousePos();
     }
 
     public override void Exit()

@@ -146,8 +146,6 @@ public class Player : PlayerController
         {
             CurrentAwakenGauge += 100;
         }
-
-        SetMousePosInWorld();
     }
 
     protected override void FixedUpdate()
@@ -295,30 +293,6 @@ public class Player : PlayerController
     public void AnimationTickCheckTrigger()
     {
         StateMachine.CurrentState.AnimationTickCheckTrigger();
-    }
-    #endregion
-
-    #region Mouse Control
-    public void RotateToMousePos()
-    {
-        Vector3 dir = (MousePosInWorld - transform.position).normalized;
-        dir.y = 0;
-
-        transform.rotation = Quaternion.LookRotation(dir);
-    }
-
-    private void SetMousePosInWorld()
-    {
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(PlayerInput.MousePos);
-
-        RaycastHit hit;
-        if (Physics.Raycast(worldPos, Camera.main.transform.forward, out hit, 3000f, whatIsGround))
-        {
-            MousePosInWorld = hit.point;
-        }
-
-
-        Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
     }
     #endregion
 

@@ -36,7 +36,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
         base.Enter();
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.PlayerStatData.attackPower.InitializeModifier();
-        _player.RotateToMousePos();
 
         _player.IsAttack = true;
         _isEffectOn = false;

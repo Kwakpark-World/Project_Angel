@@ -27,7 +27,6 @@ public class PlayerChargingState : PlayerChargeState
     {
         base.Enter();
         _player.StopImmediately(false);
-        _player.RotateToMousePos();
 
         _player.CurrentChargingTime = 0;
         _isEffectOn = false;

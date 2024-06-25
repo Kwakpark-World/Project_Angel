@@ -33,7 +33,6 @@ public class PlayerAwakenSlamState : PlayerAttackState
         base.Enter();
 
         _player.PlayerInput.SlamSkillEvent += ComboSkill;
-        _player.RotateToMousePos();
 
         _isEffectOn = false;
 
