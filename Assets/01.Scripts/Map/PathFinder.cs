@@ -7,7 +7,7 @@ public class PathFinder : MonoBehaviour
 {
     private LineRenderer _lineRenderer;
 
-    public List<Transform> _targetList; // 시작을 0
+    public List<Transform> _targetList;
     private int _targetIndex;
 
     private BGMMode _mode;
@@ -37,14 +37,22 @@ public class PathFinder : MonoBehaviour
                 break;
             }
 
-            if (Vector3.Distance(transform.position, _targetList[_targetIndex].position) <= 2f)
+            if (Vector3.Distance(transform.position, _targetList[_targetIndex].position) <= 5f)
             {
                 PassToNextDestination();
             }
 
             if (_targetIndex < _targetList.Count)
             {
-                DrawPathToCurrentTarget();
+                Debug.Log(UIManager.Instance._mode);
+                if (UIManager.Instance._mode == BGMMode.Combat)
+                {
+                    _lineRenderer.positionCount = 0;
+                }
+                else if (UIManager.Instance._mode == BGMMode.NonCombat)
+                {
+                    DrawPathToCurrentTarget();
+                }
             }
 
             yield return delayTime;
@@ -58,18 +66,19 @@ public class PathFinder : MonoBehaviour
 
     private void DrawPathToCurrentTarget()
     {
-        if(_mode == BGMMode.NonCombat)
+        if (_targetIndex < _targetList.Count)
         {
-            if (_targetIndex < _targetList.Count)
-            {
-                Vector3[] pathCorners = new Vector3[2];
-                pathCorners[0] = transform.position;
-                pathCorners[1] = _targetList[_targetIndex].position;
-
-                _lineRenderer.positionCount = pathCorners.Length;
-                _lineRenderer.SetPositions(pathCorners);
-            }
+            Vector3[] pathCorners = new Vector3[2];
+            pathCorners[0] = transform.position;
+            pathCorners[1] = _targetList[_targetIndex].position;
+            _lineRenderer.positionCount = pathCorners.Length;
+            _lineRenderer.SetPositions(pathCorners);
+            _lineRenderer.enabled = true; 
         }
- 
+    }
+
+    public void SetMode(BGMMode newMode)
+    {
+        _mode = newMode;
     }
 }

@@ -21,6 +21,8 @@ public class UIManager : MonoSingleton<UIManager>
     private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
     private Animator _loadingCircleAnimator;
 
+    public BGMMode _mode;
+
     protected override void Awake()
     {
         base.Awake();
