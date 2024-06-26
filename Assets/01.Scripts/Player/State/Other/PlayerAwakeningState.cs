@@ -177,7 +177,8 @@ public class PlayerAwakeningState : PlayerState
         {
             if (_player.IsAwakening)
             {
-                _player.CurrentAwakenGauge = Mathf.Clamp(_player.CurrentAwakenGauge - 10f * Time.deltaTime, 0f, _player.PlayerStatData.GetMaxAwakenGauge());
+                _player.CurrentAwakenGauge -= 10f * Time.deltaTime;
+                _player.CurrentAwakenGauge = Mathf.Clamp(_player.CurrentAwakenGauge, 0f, _player.PlayerStatData.GetMaxAwakenGauge());
             }
             yield return null;
         }

@@ -80,8 +80,6 @@ public class PlayerChargingState : PlayerChargeState
         if (!_player.PlayerInput.isCharge) return;
         if (_prevChargingTime + _player.PlayerStatData.GetChargingAttackCooldown() > Time.time) return;
 
-        _player.CurrentChargingTime = Mathf.Clamp(_player.CurrentChargingTime, 0f, _maxChargeTime);
-
         if (_player.CurrentChargingTime < _minChargeTime)
             _player.CurrentChargingTime += Time.deltaTime;
         else
