@@ -70,6 +70,9 @@ public class PlayerWalkState : PlayerGroundState
         float xInput = _player.PlayerInput.XInput;
         float yInput = _player.PlayerInput.YInput;
 
+        _player.AnimatorCompo.SetFloat("XInput", xInput);
+        _player.AnimatorCompo.SetFloat("YInput", yInput);
+
         Vector3 moveDir = SetDirection(xInput, yInput);
         moveDir = PlayerStair(moveDir);
         //moveDir = PlayerSlope(moveDir);
