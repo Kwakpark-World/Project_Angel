@@ -82,17 +82,15 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 if (popupToggleValue)
                 {
-                    GameManager.Instance.SetCursor(true);
-
-                    GameManager.Instance.PlayerInstance.IsPlayerStop = true;
-
                     GameManager.Instance.PlayerInstance.StopImmediately(true);
                 }
-                else if (popup.Key == popupName)
-                {
-                    GameManager.Instance.SetCursor(false);
 
-                    GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+                if (popup.Key == popupName)
+                {
+                    GameManager.Instance.PlayerInstance.IsPlayerStop = popupToggleValue;
+                    CameraManager.Instance._currentCam.IsCamRotateStop = popupToggleValue;
+
+                    CameraManager.Instance.SetCursor(popupToggleValue);
                 }
             }
         }
