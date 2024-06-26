@@ -128,6 +128,12 @@ public class CameraManager : MonoSingleton<CameraManager>
         vCam.m_Lens.OrthographicSize = DefaultOrthoSize;
     }
 
+    // 커서 키면 보이고 락풀리고, 커서 끄면 안보이고 락걸리고.
+    public void SetCursor(bool isOnCursor)
+    {
+        Cursor.visible = isOnCursor;
+        Cursor.lockState = isOnCursor ? CursorLockMode.None : CursorLockMode.Locked;
+    }
 
     // 시간, 빈도, 진폭
     private IEnumerator ShakeCamera(float duration, float frequency, float amplitude)

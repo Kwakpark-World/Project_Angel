@@ -9,6 +9,8 @@ public class CameraState : MonoBehaviour
 
     protected event Action _cameraEvent;
 
+    public bool IsCamRotateStop;
+
     public virtual CameraState RegisterCamera()
     {
         _camera = GetComponent<CinemachineVirtualCameraBase>();
