@@ -57,6 +57,11 @@ public class PlayerWalkState : PlayerGroundState
         float xInput = _player.PlayerInput.XInput;
         float yInput = _player.PlayerInput.YInput;
 
+        if (Mathf.Abs(yInput) > 0.05f) _player.AnimatorCompo.SetFloat("XInput", xInput * -yInput, 0.2f, Time.deltaTime);
+        else _player.AnimatorCompo.SetFloat("XInput", xInput, 0.2f, Time.deltaTime);
+
+        _player.AnimatorCompo.SetFloat("YInput", yInput, 0.2f, Time.deltaTime);
+
         if (Mathf.Abs(xInput) < 0.05f && Mathf.Abs(yInput) < 0.05f)
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
@@ -69,9 +74,6 @@ public class PlayerWalkState : PlayerGroundState
 
         float xInput = _player.PlayerInput.XInput;
         float yInput = _player.PlayerInput.YInput;
-
-        _player.AnimatorCompo.SetFloat("XInput", xInput);
-        _player.AnimatorCompo.SetFloat("YInput", yInput);
 
         Vector3 moveDir = SetDirection(xInput, yInput);
         moveDir = PlayerStair(moveDir);
