@@ -29,6 +29,7 @@ public class IntroUI : MonoBehaviour
         if (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.press.wasPressedThisFrame)
         {
             UIManager.Instance.LoadScene(_nextSceneName);
+            GameManager.Instance.SetCursor(false);
 
             enabled = false;
         }

@@ -12,4 +12,9 @@ public abstract class PoolableMono : MonoBehaviour
     {
         sameLifeCycle = false;
     }
+
+    public void OnGameOver()
+    {
+        PoolManager.Instance.Push(this);
+    }
 }

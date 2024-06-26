@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DieUI : MonoBehaviour
+public class GameOverUI : MonoBehaviour
 {
     [SerializeField]
     private Image _backgroundImage;
@@ -13,7 +13,7 @@ public class DieUI : MonoBehaviour
     [SerializeField]
     private string _nextSceneName;
 
-    public void OnDie()
+    public void OnGameOver()
     {
         _backgroundImage.gameObject.SetActive(true);
         _dieText.gameObject.SetActive(true);
@@ -36,6 +36,13 @@ public class DieUI : MonoBehaviour
     private IEnumerator ChangeScene(float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        PoolableMono[] poolObjects = FindObjectsOfType<PoolableMono>();
+
+        foreach (var poolObject in poolObjects)
+        {
+            poolObject.OnGameOver();
+        }
 
         UIManager.Instance.LoadScene(_nextSceneName);
     }

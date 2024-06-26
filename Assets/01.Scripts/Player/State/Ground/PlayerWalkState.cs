@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerWalkState : PlayerGroundState
 {
@@ -82,11 +83,6 @@ public class PlayerWalkState : PlayerGroundState
 
         moveDir = (Quaternion.Euler(0, CameraManager.Instance.GetCameraByType(CameraType.PlayerCam).transform.eulerAngles.y, 0) * moveDir).normalized;
         moveDir *= _player.PlayerStatData.GetMoveSpeed();
-
-        if (moveDir.sqrMagnitude > 0)
-        {
-            _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(moveDir), Time.deltaTime * _player.PlayerStatData.GetRotateSpeed());
-        }
 
         moveDir.y = _rigidbody.velocity.y;
         return moveDir;

@@ -70,7 +70,7 @@ public class PlayerAttackState : PlayerState
                     HitEnemyAction(brain);
 
                     if (!_player.IsAwakening)
-                        _player.CurrentAwakenGauge++;
+                        _player.CurrentAwakenGauge = Mathf.Clamp(_player.CurrentAwakenGauge + 1, 0f, _player.PlayerStatData.GetMaxAwakenGauge());
                 }
                 isCritical = false;
                 _player.PlayerStatData.attackPower.RemoveModifier(modifierValue);
@@ -96,7 +96,7 @@ public class PlayerAttackState : PlayerState
                     HitEnemyAction(brain);
 
                     if (!_player.IsAwakening)
-                        _player.CurrentAwakenGauge++;
+                        _player.CurrentAwakenGauge = Mathf.Clamp(_player.CurrentAwakenGauge + 1, 0f, _player.PlayerStatData.GetMaxAwakenGauge());
                 }
             }
         }
@@ -200,7 +200,7 @@ public class PlayerAttackState : PlayerState
         timer = Time.deltaTime;
         if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Hermes))
         {
-            if(timer > 3f)
+            if (timer > 3f)
             {
                 _player.PlayerStatData.moveSpeed.AddModifier(3f);
                 _player.PlayerStatData.attackSpeed.AddModifier(1.5f);
@@ -218,10 +218,10 @@ public class PlayerAttackState : PlayerState
     private void Herculesfighting()
     {
         //감전 마지막 공격일 때 추가 데미지
-        if(_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Heracles))
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Heracles))
         {
             PlayerMeleeAttackState pat = _player.StateMachine.GetState(PlayerStateEnum.MeleeAttack) as PlayerMeleeAttackState;
-            if(pat._comboCounter == 3)
+            if (pat._comboCounter == 3)
             {
                 Debug.Log("3타임");
             }
@@ -234,7 +234,7 @@ public class PlayerAttackState : PlayerState
         if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Freyja))
             _player.PlayerStatData.maxHealth.AddModifier(1f);
 
-        if(_player.CurrentHealth == 0)
+        if (_player.CurrentHealth == 0)
         {
             _player.PlayerStatData.maxHealth.RemoveModifier(1f);
         }

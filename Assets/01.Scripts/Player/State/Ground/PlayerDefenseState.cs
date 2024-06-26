@@ -32,7 +32,6 @@ public class PlayerDefenseState : PlayerGroundState
             particle.Play();
         }
     
-        _player.RotateToMousePos();
         
     }
 

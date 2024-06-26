@@ -145,7 +145,7 @@ public class Player : PlayerController
         //debug DeveloperKey.
         if (Input.GetKeyDown(KeyCode.K))
         {
-            CurrentAwakenGauge += 100;
+            CurrentAwakenGauge = Mathf.Clamp(CurrentAwakenGauge + 100, 0f, GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxAwakenGauge());
         }
 
         SetMousePosInWorld();
@@ -190,7 +190,6 @@ public class Player : PlayerController
             return;
 
         PlayerOnHitVolume();
-        UIManager.Instance.PlayerHUDProperty?.UpdateHealth();
 
         if (CurrentHealth > 0f)
         {
@@ -201,6 +200,8 @@ public class Player : PlayerController
                 CurrentHealth = Mathf.Max(CurrentHealth, 1f);
             }
         }
+
+        UIManager.Instance.PlayerHUDProperty?.UpdateHealth();
 
         if (CurrentHealth <= 0f)
         {
@@ -219,7 +220,7 @@ public class Player : PlayerController
     private void OnDie()
     {
         StateMachine.ChangeState(PlayerStateEnum.Die);
-        UIManager.Instance.DieUIProperty?.OnDie();
+        UIManager.Instance.GameOverUIProperty?.OnGameOver();
     }
 
     public bool IsMovePressed()

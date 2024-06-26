@@ -17,7 +17,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private float _fadeDuration;
     public PlayerHUD PlayerHUDProperty { get; private set; }
-    public DieUI DieUIProperty { get; private set; }
+    public GameOverUI GameOverUIProperty { get; private set; }
     private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
     private Animator _loadingCircleAnimator;
 
@@ -162,7 +162,8 @@ public class UIManager : MonoSingleton<UIManager>
         if (GameManager.Instance.HasPlayer)
         {
             PlayerHUDProperty = FindObjectOfType<PlayerHUD>();
-            DieUIProperty = FindObjectOfType<DieUI>();
+            PlayerHUDProperty.PlayerReference = GameManager.Instance.PlayerInstance;
+            GameOverUIProperty = FindObjectOfType<GameOverUI>();
         }
     }
 }
