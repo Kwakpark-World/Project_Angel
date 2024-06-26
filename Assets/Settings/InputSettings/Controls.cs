@@ -31,7 +31,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""XMovement"",
                     ""type"": ""Value"",
                     ""id"": ""5e1a5338-5c25-49a4-8a71-fe045293229b"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Delta"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -40,7 +40,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""YMovement"",
                     ""type"": ""Value"",
                     ""id"": ""5212d021-640e-4b4d-ac67-055668008692"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Delta"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
