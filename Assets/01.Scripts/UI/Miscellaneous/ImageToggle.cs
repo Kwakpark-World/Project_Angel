@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ImageToggle : MonoBehaviour, IPointerDownHandler
@@ -14,6 +15,8 @@ public class ImageToggle : MonoBehaviour, IPointerDownHandler
     public UnityEvent<bool> onValueChanged;
     public bool isOn;
     private Image _toggleSpriteSocket;
+
+    
 
     private void Awake()
     {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [Serializable]
@@ -15,12 +16,17 @@ public class VolumeSlider
     public ImageToggle muteImageToggle;
 }
 
-public class SoundSettingPopupUI : PopupUI
+public class SettingPopupUI : PopupUI
 {
     [SerializeField]
     private AudioMixer _audioMixer;
     [SerializeField, SerializedDictionary("Audio mixer group name", "Slider")]
     private SerializedDictionary<string, VolumeSlider> _volumeSliders = new SerializedDictionary<string, VolumeSlider>();
+
+    public GameObject soundSetting;
+    public GameObject sensitivitySetting;
+
+    private bool _isPanelChange;
 
     private void Start()
     {
@@ -29,6 +35,23 @@ public class SoundSettingPopupUI : PopupUI
             volumeSlider.Value.volumeSlider.onValueChanged.AddListener((value) => ChangeVolume(volumeSlider.Key, value));
             volumeSlider.Value.muteImageToggle.onValueChanged.AddListener((value) => ChangeVolumeSliderValue(volumeSlider.Key, value));
             ChangeVolumeSliderValue(volumeSlider.Key, 1f);
+        }
+    }
+
+    public void Update()
+    {
+        if (Keyboard.current.rightArrowKey.wasPressedThisFrame && !_isPanelChange)
+        {
+            soundSetting.SetActive(false);
+            sensitivitySetting.SetActive(true);
+            _isPanelChange = true;
+        }
+
+        else if (Keyboard.current.leftArrowKey.wasPressedThisFrame && _isPanelChange)
+        {
+            soundSetting.SetActive(true);
+            sensitivitySetting.SetActive(false);
+            _isPanelChange = false;
         }
     }
 
