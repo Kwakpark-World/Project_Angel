@@ -29,6 +29,8 @@ public class PlayerWalkState : PlayerGroundState
     private float   _gravityGrounded                        = -1.0f;
     private float   _maxSlopeAngle                          = 47.5f;
 
+    private float   _defaultMoveSpeed                       = 0f;
+
     public PlayerWalkState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
 
@@ -37,6 +39,7 @@ public class PlayerWalkState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+        _defaultMoveSpeed = _player.PlayerStatData.GetMoveSpeed();
 
         _maxAscendRayDistance = _maxStepHeight / Mathf.Cos(_maximumAngleOfApproachToAscend * Mathf.Deg2Rad);
         _maxDescnedRayDistance = _maxStepHeight / Mathf.Cos(80.0f  * Mathf.Deg2Rad);
@@ -48,6 +51,7 @@ public class PlayerWalkState : PlayerGroundState
     public override void Exit()
     {
         base.Exit();
+        _player.PlayerStatData.moveSpeed.SetDefalutValue(_defaultMoveSpeed);
     }
 
     public override void UpdateState()
@@ -86,6 +90,12 @@ public class PlayerWalkState : PlayerGroundState
     {
         Vector3 moveDir = new Vector3(xInput, 0, yInput).normalized;
 
+        float backMoveSpeedAdd = 5f;
+        if (yInput <= 0)
+            _player.PlayerStatData.moveSpeed.SetDefalutValue(backMoveSpeedAdd);
+        else
+            _player.PlayerStatData.moveSpeed.SetDefalutValue(_defaultMoveSpeed);
+        
         moveDir = (Quaternion.Euler(0, CameraManager.Instance.GetCameraByType(CameraType.PlayerCam).transform.eulerAngles.y, 0) * moveDir).normalized;
         moveDir *= _player.PlayerStatData.GetMoveSpeed();
 
