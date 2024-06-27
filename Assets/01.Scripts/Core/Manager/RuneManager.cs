@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RuneManager : MonoSingleton<RuneManager>
 {
@@ -14,9 +16,13 @@ public class RuneManager : MonoSingleton<RuneManager>
     [field: SerializeField]
     public float UnequipWaitTime { get; private set; }
     public float UnequipWaitTimer { get; set; }
+    [field: SerializeField]
+    public int EquipableRuneAmount { get; private set; }
 
     private List<RuneDataSO> _equipedRunes = Enumerable.Repeat<RuneDataSO>(null, 5).ToList();
     private BuffType _synergizeRuneType;
+
+    private List<Rune> _runes;
 
     protected override void Awake()
     {
@@ -28,6 +34,23 @@ public class RuneManager : MonoSingleton<RuneManager>
         {
             _equipedRunes[i] = null;
         }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitializeRunes();
+        _runeList.IsDestroyed();
     }
 
     public void SetRuneList(RuneListSO list)
@@ -80,7 +103,7 @@ public class RuneManager : MonoSingleton<RuneManager>
                 break;
             }
 
-            if (i == 4)
+            if (i == 3)
             {
                 return false;
             }
@@ -120,6 +143,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     public int GetEquipedRuneIndex(RuneDataSO runeData)
     {
+        Debug.Log("µé¾î°¨");
         return _equipedRunes.IndexOf(runeData);
     }
 
@@ -137,6 +161,28 @@ public class RuneManager : MonoSingleton<RuneManager>
             GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_synergizeRuneType);
 
             _synergizeRuneType = BuffType.None;
+        }
+    }
+
+    public void RegisterRune(Rune rune)
+    {
+        if (_runes == null)
+        {
+            _runes = new List<Rune>();
+        }
+        _runes.Add(rune);
+    }
+
+    public void InitializeRunes()
+    {
+        if (_runes == null)
+        {
+            return;
+        }
+
+        foreach (Rune rune in _runes)
+        {
+            rune.InitializePoolItem();
         }
     }
 }

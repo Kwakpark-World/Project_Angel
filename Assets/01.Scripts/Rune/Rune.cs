@@ -31,10 +31,15 @@ public class Rune : PoolableMono
         }
     }
 
+    private void Start()
+    {
+        RuneManager.Instance.RegisterRune(this);
+    }
+
     private void Update()
     {
         transform.Rotate(Vector3.up, _rotateSpeed * Time.deltaTime);
-        if(Keyboard.current.fKey.wasPressedThisFrame ) 
+        if (Keyboard.current.fKey.wasPressedThisFrame)
         {
             interactive();
         }
@@ -44,7 +49,7 @@ public class Rune : PoolableMono
     {
         float distancePlayer = Vector3.Distance(gameObject.transform.position, GameManager.Instance.PlayerInstance.transform.position);
 
-        if(distancePlayer <= nearPlayer)
+        if (distancePlayer <= nearPlayer)
         {
             if (!RuneManager.Instance.TryEquipRune(RuneData))
             {
@@ -55,7 +60,7 @@ public class Rune : PoolableMono
             GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_runeData.buffType);
             PoolManager.Instance.Push(this);
         }
-       /* CameraManager.Instance.StopZoomCam();*/
+        /* CameraManager.Instance.StopZoomCam();*/
     }
 
     public override void InitializePoolItem()

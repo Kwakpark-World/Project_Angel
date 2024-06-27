@@ -33,14 +33,6 @@ public class EnemyBuffArea : PoolableMono
                 {
                     GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_areaBuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
                 }
-                else
-                {
-                    Debug.Log("플레이어가 원 밖에 있습니다.");
-                }
-            }
-            else
-            {
-                Debug.Log("플레이어가 원 밖에 있습니다.");
             }
         }
     }
