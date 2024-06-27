@@ -10,8 +10,6 @@ public class Stage : MonoBehaviour
     [SerializeField] private List<EnemyMannequin> _mannequins = new List<EnemyMannequin>();
     [SerializeField] private Transform _runeSpawnTrm;
 
-    private BGMMode _mode;
-
     private bool _running = false;
     private bool _isClear = false;
 
@@ -44,7 +42,9 @@ public class Stage : MonoBehaviour
 
     public void StartStage()
     {
-        _mode = BGMMode.Combat;
+        GameManager.Instance.PlayerInstance.Navigation.gameObject.SetActive(false);
+        SoundManager.Instance.ChangeBGMMode(BGMMode.Combat);
+
         _running = true;
 
         foreach (EnemyMannequin mannequin in _mannequins)
@@ -57,7 +57,9 @@ public class Stage : MonoBehaviour
 
     public void ClearStage()
     {
-        _mode = BGMMode.NonCombat;
+        GameManager.Instance.PlayerInstance.Navigation.gameObject.SetActive(true);
+        SoundManager.Instance.ChangeBGMMode(BGMMode.NonCombat);
+
         _running = false;
         _isClear = true;
 

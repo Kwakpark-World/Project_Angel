@@ -31,11 +31,6 @@ public class Rune : PoolableMono
         }
     }
 
-    private void Start()
-    {
-        RuneManager.Instance.RegisterRune(this);
-    }
-
     private void Update()
     {
         transform.Rotate(Vector3.up, _rotateSpeed * Time.deltaTime);
