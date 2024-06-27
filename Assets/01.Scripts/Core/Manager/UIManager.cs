@@ -18,20 +18,16 @@ public class UIManager : MonoSingleton<UIManager>
     private float _fadeDuration;
     public PlayerHUD PlayerHUDProperty { get; private set; }
     public GameOverUI GameOverUIProperty { get; private set; }
-    private Dictionary<string, PopupUI> popups = new Dictionary<string, PopupUI>();
+    private Dictionary<string, PopupUI> _popups = new Dictionary<string, PopupUI>();
     private Animator _loadingCircleAnimator;
-
-    public BGMMode _mode;
 
     protected override void Awake()
     {
         base.Awake();
 
-        SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoaded();
-
         foreach (PopupUI popup in FindObjectsOfType<PopupUI>())
         {
-            popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
+            _popups.Add(popup.GetType().Name.Replace(typeof(PopupUI).Name, ""), popup);
             popup.TogglePopup(false);
         }
 
@@ -72,7 +68,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void TogglePopupUniquely(string popupName)
     {
-        foreach (var popup in popups)
+        foreach (var popup in _popups)
         {
             bool popupToggleValue = popup.Key == popupName && !popup.Value.gameObject.activeInHierarchy;
 
@@ -87,7 +83,18 @@ public class UIManager : MonoSingleton<UIManager>
 
                 if (popup.Key == popupName)
                 {
-                    GameManager.Instance.PlayerInstance.IsPlayerStop = popupToggleValue;
+                    if (popupToggleValue)
+                    {
+                        GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+                    }
+                    else
+                    {
+                        if (!GameManager.Instance.PlayerInstance.BuffCompo.GetBuffState(BuffType.Potion_Paralysis))
+                        {
+                            GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+                        }
+                    }
+
                     CameraManager.Instance._currentCam.IsCamRotateStop = popupToggleValue;
 
                     CameraManager.Instance.SetCursor(popupToggleValue);
@@ -147,7 +154,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    private void OnSceneLoaded()
+    protected override void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         _fadePanel.DOFade(0f, _fadeDuration)
             .OnComplete(() =>
@@ -160,6 +167,22 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 _loadingCircleAnimator.SetBool(_isRotatingHash, false);
             });
+
+        switch (scene.name)
+        {
+            case "IntroScene":
+                SoundManager.Instance.ChangeBGMMode(BGMMode.Intro);
+
+                break;
+
+            case "GameScene":
+                SoundManager.Instance.ChangeBGMMode(BGMMode.NonCombat);
+
+                break;
+
+            default:
+                break;
+        }
 
         if (GameManager.Instance.HasPlayer)
         {

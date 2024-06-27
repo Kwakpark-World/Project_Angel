@@ -29,22 +29,25 @@ public class EnemyPotion : PoolableMono
     {
         if (other.gameObject == GameManager.Instance.PlayerInstance.gameObject)
         {
-            switch (_potionBuffType)
+            if (!GameManager.Instance.PlayerInstance.IsDefense)
             {
-                case BuffType.Potion_Poison:
-                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
+                switch (_potionBuffType)
+                {
+                    case BuffType.Potion_Poison:
+                        GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.poisonDuration, owner);
 
-                    break;
+                        break;
 
-                case BuffType.Potion_Freeze:
-                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.freezeDuration, owner);
+                    case BuffType.Potion_Freeze:
+                        GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.freezeDuration, owner);
 
-                    break;
+                        break;
 
-                case BuffType.Potion_Paralysis:
-                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner);
+                    case BuffType.Potion_Paralysis:
+                        GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.paralysisDuration, owner);
 
-                    break;
+                        break;
+                }
             }
 
             PoolManager.Instance.Push(this);

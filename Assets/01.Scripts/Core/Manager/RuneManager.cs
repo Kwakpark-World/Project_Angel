@@ -36,23 +36,6 @@ public class RuneManager : MonoSingleton<RuneManager>
         }
     }
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        InitializeRunes();
-        _runeList.IsDestroyed();
-    }
-
     public void SetRuneList(RuneListSO list)
     {
         _runeList = list;
@@ -109,6 +92,7 @@ public class RuneManager : MonoSingleton<RuneManager>
             }
         }
 
+        GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(runeData.buffType);
         CheckRuneSynergy(runeData.mythSynergyType);
 
         for (int i = 0; i < 2; ++i)
@@ -143,7 +127,6 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     public int GetEquipedRuneIndex(RuneDataSO runeData)
     {
-        Debug.Log("µé¾î°¨");
         return _equipedRunes.IndexOf(runeData);
     }
 
@@ -164,25 +147,11 @@ public class RuneManager : MonoSingleton<RuneManager>
         }
     }
 
-    public void RegisterRune(Rune rune)
+    protected override void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if (_runes == null)
+        for (int i = 0; i < _equipedRunes.Count; ++i)
         {
-            _runes = new List<Rune>();
-        }
-        _runes.Add(rune);
-    }
-
-    public void InitializeRunes()
-    {
-        if (_runes == null)
-        {
-            return;
-        }
-
-        foreach (Rune rune in _runes)
-        {
-            rune.InitializePoolItem();
+            TryUnequipRune(i);
         }
     }
 }

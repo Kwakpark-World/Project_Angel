@@ -172,7 +172,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
             {
                 //여기에 파티클까지 나와야함 근데 파티클에 데미지 자체를 넣는 방법도 있긴함 그건 알아서 생각을 해보시길..
                 _player.PlayerStatData.attackPower.AddModifier(3f);
-                Debug.Log("2");
             }
         }
     }
