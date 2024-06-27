@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMeleeAttackState : PlayerAttackState
 {
@@ -24,7 +23,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private bool _isCombo;
     private bool _isEffectOn;
-
+    
     private ParticleSystem _thisParticle; 
 
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -45,6 +44,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         SetCombo();
         _player.PlayerStatData.attackPower.AddModifier(_comboAttackAddtiveDamage * _comboCounter);
+
+        _player.RigidbodyCompo.AddForce(_player.transform.forward * 10, ForceMode.Impulse);
 
         _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
 
