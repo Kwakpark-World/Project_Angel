@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -33,7 +34,7 @@ public class Player : PlayerController
 
         set
         {
-            _currentAwakenGauge = value;
+            _currentAwakenGauge = Mathf.Clamp(value, 0f, PlayerStatData.GetMaxAwakenGauge());
 
             UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge();
         }
@@ -48,7 +49,7 @@ public class Player : PlayerController
 
         set
         {
-            _currentChargingTime = value;
+            _currentChargingTime = Mathf.Clamp(value, 0f, PlayerStatData.GetMaxChargingTime());
 
             UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge();
         }
@@ -145,7 +146,7 @@ public class Player : PlayerController
         //debug DeveloperKey.
         if (Input.GetKeyDown(KeyCode.K))
         {
-            CurrentAwakenGauge = Mathf.Clamp(CurrentAwakenGauge + 100, 0f, GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxAwakenGauge());
+            CurrentAwakenGauge++;
         }
 
         SetMousePosInWorld();

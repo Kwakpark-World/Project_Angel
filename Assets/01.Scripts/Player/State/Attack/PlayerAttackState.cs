@@ -70,7 +70,9 @@ public class PlayerAttackState : PlayerState
                     HitEnemyAction(brain);
 
                     if (!_player.IsAwakening)
-                        _player.CurrentAwakenGauge = Mathf.Clamp(_player.CurrentAwakenGauge + 1, 0f, _player.PlayerStatData.GetMaxAwakenGauge());
+                    {
+                        _player.CurrentAwakenGauge++;
+                    }
                 }
                 isCritical = false;
                 _player.PlayerStatData.attackPower.RemoveModifier(modifierValue);
@@ -96,7 +98,9 @@ public class PlayerAttackState : PlayerState
                     HitEnemyAction(brain);
 
                     if (!_player.IsAwakening)
-                        _player.CurrentAwakenGauge = Mathf.Clamp(_player.CurrentAwakenGauge + 1, 0f, _player.PlayerStatData.GetMaxAwakenGauge());
+                    {
+                        _player.CurrentAwakenGauge++;
+                    }
                 }
             }
         }

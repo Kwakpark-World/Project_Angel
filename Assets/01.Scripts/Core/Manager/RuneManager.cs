@@ -15,6 +15,8 @@ public class RuneManager : MonoSingleton<RuneManager>
     [field: SerializeField]
     public float UnequipWaitTime { get; private set; }
     public float UnequipWaitTimer { get; set; }
+    [field: SerializeField]
+    public int EquipableRuneAmount { get; private set; }
 
     private List<RuneDataSO> _equipedRunes = Enumerable.Repeat<RuneDataSO>(null, 5).ToList();
     private BuffType _synergizeRuneType;
@@ -98,7 +100,7 @@ public class RuneManager : MonoSingleton<RuneManager>
                 break;
             }
 
-            if (i == 4)
+            if (i == 3)
             {
                 return false;
             }
