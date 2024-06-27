@@ -50,15 +50,7 @@ public class PathFinder : MonoBehaviour
 
             if (_targetIndex < targetList.Count)
             {
-                Debug.Log(UIManager.Instance._mode);
-                if (UIManager.Instance._mode == BGMMode.Combat)
-                {
-                    _lineRenderer.positionCount = 0;
-                }
-                else if (UIManager.Instance._mode == BGMMode.NonCombat)
-                {
-                    DrawPathToCurrentTarget();
-                }
+                DrawPathToCurrentTarget();
             }
 
             yield return delayTime;
