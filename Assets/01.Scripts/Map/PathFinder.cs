@@ -5,9 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class PathFinder : MonoBehaviour
 {
-    private LineRenderer _lineRenderer;
+    public LineRenderer PathLine { get; private set; }
 
-    public List<Transform> _targetList;
+    public List<Transform> targetList;
     private int _targetIndex;
 
     private void Start()
@@ -17,8 +17,8 @@ public class PathFinder : MonoBehaviour
 
     public void InitNaviManager(float updateDelay)
     {
-        _lineRenderer = GetComponent<LineRenderer>();
-        _lineRenderer.positionCount = 0;
+        PathLine = GetComponent<LineRenderer>();
+        PathLine.positionCount = 0;
 
         StartCoroutine(UpdateNavi(updateDelay));
     }
@@ -29,18 +29,24 @@ public class PathFinder : MonoBehaviour
 
         while (true)
         {
-            if (_targetIndex >= _targetList.Count)
+            if (_targetIndex >= targetList.Count)
             {
-                _lineRenderer.enabled = false;
+                PathLine.enabled = false;
+
                 break;
             }
 
-            if (Vector3.Distance(transform.position, _targetList[_targetIndex].position) <= 5f)
+            if (!PathLine.enabled)
+            {
+                continue;
+            }
+
+            if (Vector3.Distance(transform.position, targetList[_targetIndex].position) <= 5f)
             {
                 PassToNextDestination();
             }
 
-            if (_targetIndex < _targetList.Count)
+            if (_targetIndex < targetList.Count)
             {
                 DrawPathToCurrentTarget();
             }
@@ -56,14 +62,14 @@ public class PathFinder : MonoBehaviour
 
     private void DrawPathToCurrentTarget()
     {
-        if (_targetIndex < _targetList.Count)
+        if (_targetIndex < targetList.Count)
         {
             Vector3[] pathCorners = new Vector3[2];
             pathCorners[0] = transform.position;
-            pathCorners[1] = _targetList[_targetIndex].position;
-            _lineRenderer.positionCount = pathCorners.Length;
-            _lineRenderer.SetPositions(pathCorners);
-            _lineRenderer.enabled = true; 
+            pathCorners[1] = targetList[_targetIndex].position;
+            PathLine.positionCount = pathCorners.Length;
+            PathLine.SetPositions(pathCorners);
+            PathLine.enabled = true; 
         }
     }
 }

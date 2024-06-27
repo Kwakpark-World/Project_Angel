@@ -42,9 +42,9 @@ public class Stage : MonoBehaviour
 
     public void StartStage()
     {
-        GameManager.Instance.PlayerInstance.Navigation.gameObject.SetActive(false);
         SoundManager.Instance.ChangeBGMMode(BGMMode.Combat);
 
+        GameManager.Instance.PlayerInstance.Navigation.PathLine.enabled = false;
         _running = true;
 
         foreach (EnemyMannequin mannequin in _mannequins)
@@ -57,9 +57,9 @@ public class Stage : MonoBehaviour
 
     public void ClearStage()
     {
-        GameManager.Instance.PlayerInstance.Navigation.gameObject.SetActive(true);
         SoundManager.Instance.ChangeBGMMode(BGMMode.NonCombat);
 
+        GameManager.Instance.PlayerInstance.Navigation.PathLine.enabled = true;
         _running = false;
         _isClear = true;
 
