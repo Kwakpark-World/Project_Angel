@@ -72,6 +72,11 @@ public class PlayerMeleeAttackState : PlayerAttackState
         ++_comboCounter;
         _player.enemyNormalHitDuplicateChecker.Clear();
         _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        if(Input.GetKeyDown(KeyCode.U)) 
+        {
+            PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.transform.position);
+        }
     }
 
     public override void UpdateState()

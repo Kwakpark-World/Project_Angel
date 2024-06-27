@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -43,11 +44,13 @@ public class RuneManager : MonoSingleton<RuneManager>
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         InitializeRunes();
+        _runeList.IsDestroyed();
     }
 
     public void SetRuneList(RuneListSO list)
@@ -140,6 +143,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     public int GetEquipedRuneIndex(RuneDataSO runeData)
     {
+        Debug.Log("µé¾î°¨");
         return _equipedRunes.IndexOf(runeData);
     }
 
