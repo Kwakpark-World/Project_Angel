@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -60,7 +61,7 @@ public class Rune : PoolableMono
 
     public override void InitializePoolItem()
     {
-        _runeData = null;
+        _runeData.IsDestroyed();
     }
 
     public void InitializeRune(RuneDataSO runeData)
