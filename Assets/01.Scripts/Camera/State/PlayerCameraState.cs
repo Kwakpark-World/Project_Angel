@@ -29,6 +29,7 @@ public class PlayerCameraState : CameraState
     {
         if (IsCamRotateStop) return;
         Vector3 dir = new Vector3(Mouse.current.delta.x.ReadValue(), 0, 0);
+        if (dir.x == 0) return;
 
         _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, _player.transform.rotation * Quaternion.LookRotation(dir), _player.PlayerStatData.GetRotateSpeed() * Time.deltaTime);
     }

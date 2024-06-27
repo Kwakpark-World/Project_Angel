@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerWalkState : PlayerGroundState
 {
@@ -12,7 +11,7 @@ public class PlayerWalkState : PlayerGroundState
     private int     _numberOfStepDetectRays                 = 0;
     private float   _maxStepHeight                          = 0.5f;
     private float   _minStepDepth                           = 0.3f;
-    private float   _stairHeightPaddingMultiplier           = 1.5f;
+    private float   _stairHeightPaddingMultiplier           = 0.2f;
     private float   _firstStepVelocityDistanceMultiplier    = 0.1f;
     private float   _ascendingStairsMovementMultiplier      = 0.35f;
     private float   _descendingStairsMovementMultiplier     = 0.7f;
@@ -88,9 +87,11 @@ public class PlayerWalkState : PlayerGroundState
 
     private Vector3 SetDirection(float xInput, float yInput)
     {
+        //if (_animationMoveFreezeToggleTrigger) return Vector3.zero;
+
         Vector3 moveDir = new Vector3(xInput, 0, yInput).normalized;
 
-        float backMoveSpeedAdd = 5f;
+        float backMoveSpeedAdd = 3f;
         if (yInput <= 0)
             _player.PlayerStatData.moveSpeed.SetDefalutValue(backMoveSpeedAdd);
         else
@@ -113,10 +114,10 @@ public class PlayerWalkState : PlayerGroundState
             _playerHalfHeightToGround = _player.playerCenterToGroundDistance;
         }
         calculatedStepInput = AscendStairs(calculatedStepInput, moveDir);
-        if (!_isPlayerAscendingStairs)
-        {
-            calculatedStepInput = DescendStairs(calculatedStepInput, moveDir);
-        }
+        //if (!_isPlayerAscendingStairs)
+        //{
+        //    calculatedStepInput = DescendStairs(calculatedStepInput, moveDir);
+        //}
 
         return calculatedStepInput; 
     }
@@ -174,9 +175,6 @@ public class PlayerWalkState : PlayerGroundState
                             calculatedStepInput = Quaternion.AngleAxis(45.0f, playerRelX) * calculatedStepInput;
                             _isFirstStep = false;
                         }
-                        //else
-                        //{
-                        //}
                     }
                     else
                     {

@@ -22,6 +22,7 @@ public class Player : PlayerController
     private float _dashPrevTime = 0f;
     public float slamPrevTime = 0f;
     public float defensePrevTime = 0f;
+    public float prevChargingTime;
 
     private float _currentAwakenGauge = 0f;
     public float CurrentAwakenGauge
@@ -113,6 +114,7 @@ public class Player : PlayerController
         playerCenter = transform.Find("PlayerCenter");
         playerAnims = AnimatorCompo.runtimeAnimatorController.animationClips;
 
+        ResetSkillCooldown();
     }
 
     protected void OnEnable()
@@ -145,7 +147,7 @@ public class Player : PlayerController
         //debug DeveloperKey.
         if (Input.GetKeyDown(KeyCode.K))
         {
-            CurrentAwakenGauge++;
+            CurrentAwakenGauge += 100;
         }
 
         SetMousePosInWorld();
@@ -245,6 +247,14 @@ public class Player : PlayerController
         }
 
     }
+
+    private void ResetSkillCooldown()
+    {
+        _dashPrevTime = Time.time - PlayerStatData.GetDashCooldown() + 1f;
+        prevChargingTime = Time.time - PlayerStatData.GetChargingAttackCooldown() + 1f;
+        slamPrevTime = Time.time - PlayerStatData.GetSlamCooldown() + 1f;
+        defensePrevTime = Time.time - PlayerStatData.GetDefenseCooldown() + 1f;
+    }
     #endregion
 
     #region handling input
@@ -303,6 +313,11 @@ public class Player : PlayerController
     public void AnimationTickCheckTrigger()
     {
         StateMachine.CurrentState.AnimationTickCheckTrigger();
+    }
+
+    public void AnimationMoveFreezeToggleTrigger()
+    {
+        StateMachine.CurrentState.AnimationMoveFreezeToggleTrigger();
     }
     #endregion
 
