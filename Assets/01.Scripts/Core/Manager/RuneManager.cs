@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RuneManager : MonoSingleton<RuneManager>
 {
@@ -18,6 +19,8 @@ public class RuneManager : MonoSingleton<RuneManager>
     private List<RuneDataSO> _equipedRunes = Enumerable.Repeat<RuneDataSO>(null, 5).ToList();
     private BuffType _synergizeRuneType;
 
+    private List<Rune> _runes;
+
     protected override void Awake()
     {
         base.Awake();
@@ -28,6 +31,21 @@ public class RuneManager : MonoSingleton<RuneManager>
         {
             _equipedRunes[i] = null;
         }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitializeRunes();
     }
 
     public void SetRuneList(RuneListSO list)
@@ -137,6 +155,28 @@ public class RuneManager : MonoSingleton<RuneManager>
             GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_synergizeRuneType);
 
             _synergizeRuneType = BuffType.None;
+        }
+    }
+
+    public void RegisterRune(Rune rune)
+    {
+        if (_runes == null)
+        {
+            _runes = new List<Rune>();
+        }
+        _runes.Add(rune);
+    }
+
+    public void InitializeRunes()
+    {
+        if (_runes == null)
+        {
+            return;
+        }
+
+        foreach (Rune rune in _runes)
+        {
+            rune.InitializePoolItem();
         }
     }
 }
