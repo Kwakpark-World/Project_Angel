@@ -44,7 +44,6 @@ public class PathFinder : MonoBehaviour
 
             if (_targetIndex < _targetList.Count)
             {
-                Debug.Log(UIManager.Instance._mode);
                 if (UIManager.Instance._mode == BGMMode.Combat)
                 {
                     _lineRenderer.positionCount = 0;
