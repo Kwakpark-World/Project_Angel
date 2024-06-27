@@ -21,8 +21,6 @@ public class RuneManager : MonoSingleton<RuneManager>
     private List<RuneDataSO> _equipedRunes = Enumerable.Repeat<RuneDataSO>(null, 5).ToList();
     private BuffType _synergizeRuneType;
 
-    private List<Rune> _runes;
-
     protected override void Awake()
     {
         base.Awake();
@@ -33,21 +31,6 @@ public class RuneManager : MonoSingleton<RuneManager>
         {
             _equipedRunes[i] = null;
         }
-    }
-
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        InitializeRunes();
     }
 
     public void SetRuneList(RuneListSO list)
