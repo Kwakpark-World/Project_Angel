@@ -15,7 +15,6 @@ public class PlayerChargingState : PlayerChargeState
 
     private float _cameraZoomChangePerTick = 0.1f;
 
-    private float _prevChargingTime;
     private bool _isBlink = false;
 
     public PlayerChargingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -67,7 +66,7 @@ public class PlayerChargingState : PlayerChargeState
         }
         else
         {
-            _prevChargingTime = Time.time;
+            _player.prevChargingTime = Time.time;
             if (_player.IsAwakening)
                 _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
             else
@@ -78,7 +77,7 @@ public class PlayerChargingState : PlayerChargeState
     private void SetChargingGauge()
     {
         if (!_player.PlayerInput.isCharge) return;
-        if (_prevChargingTime + _player.PlayerStatData.GetChargingAttackCooldown() > Time.time) return;
+        if (_player.prevChargingTime + _player.PlayerStatData.GetChargingAttackCooldown() > Time.time) return;
 
         if (_player.CurrentChargingTime < _minChargeTime)
             _player.CurrentChargingTime += Time.deltaTime;
