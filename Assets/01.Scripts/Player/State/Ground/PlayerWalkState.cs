@@ -88,9 +88,11 @@ public class PlayerWalkState : PlayerGroundState
 
     private Vector3 SetDirection(float xInput, float yInput)
     {
+        //if (_animationMoveFreezeToggleTrigger) return Vector3.zero;
+
         Vector3 moveDir = new Vector3(xInput, 0, yInput).normalized;
 
-        float backMoveSpeedAdd = 5f;
+        float backMoveSpeedAdd = 3f;
         if (yInput <= 0)
             _player.PlayerStatData.moveSpeed.SetDefalutValue(backMoveSpeedAdd);
         else

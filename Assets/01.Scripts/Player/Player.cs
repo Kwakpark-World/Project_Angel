@@ -304,6 +304,11 @@ public class Player : PlayerController
     {
         StateMachine.CurrentState.AnimationTickCheckTrigger();
     }
+
+    public void AnimationMoveFreezeToggleTrigger()
+    {
+        StateMachine.CurrentState.AnimationMoveFreezeToggleTrigger();
+    }
     #endregion
 
     #region Mouse Control
