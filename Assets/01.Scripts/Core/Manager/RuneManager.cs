@@ -38,17 +38,13 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     private void OnEnable()
     {
+        Debug.Log("12");
         SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("2");
         InitializeRunes();
         _runeList.IsDestroyed();
     }
