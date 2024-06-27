@@ -10,6 +10,8 @@ public class PathFinder : MonoBehaviour
     public List<Transform> targetList;
     private int _targetIndex;
 
+    private BGMMode _mode;
+
     private void Start()
     {
         InitNaviManager(0.01f);
@@ -48,7 +50,15 @@ public class PathFinder : MonoBehaviour
 
             if (_targetIndex < targetList.Count)
             {
-                DrawPathToCurrentTarget();
+                Debug.Log(UIManager.Instance._mode);
+                if (UIManager.Instance._mode == BGMMode.Combat)
+                {
+                    _lineRenderer.positionCount = 0;
+                }
+                else if (UIManager.Instance._mode == BGMMode.NonCombat)
+                {
+                    DrawPathToCurrentTarget();
+                }
             }
 
             yield return delayTime;
@@ -71,5 +81,10 @@ public class PathFinder : MonoBehaviour
             PathLine.SetPositions(pathCorners);
             PathLine.enabled = true; 
         }
+    }
+
+    public void SetMode(BGMMode newMode)
+    {
+        _mode = newMode;
     }
 }

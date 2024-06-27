@@ -77,9 +77,6 @@ public class SoundManager : MonoSingleton<SoundManager>
         {
             _sfxDicionary.Add(sfx.type, sfx.clip);
         }
-
-        ChangeBGMMode(BGMMode.Intro);
-        PlayEnv(ENVType.Wind);
     }
 
     public void ChangeBGMMode(BGMMode mode)

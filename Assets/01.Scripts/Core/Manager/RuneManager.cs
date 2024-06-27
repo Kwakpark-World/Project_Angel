@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,6 +22,8 @@ public class RuneManager : MonoSingleton<RuneManager>
     private List<RuneDataSO> _equipedRunes = Enumerable.Repeat<RuneDataSO>(null, 5).ToList();
     private BuffType _synergizeRuneType;
 
+    private List<Rune> _runes;
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,6 +34,23 @@ public class RuneManager : MonoSingleton<RuneManager>
         {
             _equipedRunes[i] = null;
         }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitializeRunes();
+        _runeList.IsDestroyed();
     }
 
     public void SetRuneList(RuneListSO list)
@@ -123,6 +143,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     public int GetEquipedRuneIndex(RuneDataSO runeData)
     {
+        Debug.Log("µé¾î°¨");
         return _equipedRunes.IndexOf(runeData);
     }
 
@@ -143,11 +164,25 @@ public class RuneManager : MonoSingleton<RuneManager>
         }
     }
 
-    protected override void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+    public void RegisterRune(Rune rune)
     {
-        for (int i = 0; i < _equipedRunes.Count; ++i)
+        if (_runes == null)
         {
-            TryUnequipRune(i);
+            _runes = new List<Rune>();
+        }
+        _runes.Add(rune);
+    }
+
+    public void InitializeRunes()
+    {
+        if (_runes == null)
+        {
+            return;
+        }
+
+        foreach (Rune rune in _runes)
+        {
+            rune.InitializePoolItem();
         }
     }
 }

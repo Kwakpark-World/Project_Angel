@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -65,7 +67,6 @@ public class Player : PlayerController
 
     [field: SerializeField] public InputReader PlayerInput { get; private set; }
     public PlayerStateMachine StateMachine { get; private set; }
-    public PathFinder Navigation { get; private set; }
     public AnimationClip[] playerAnims;
 
     public Transform effectParent;
@@ -82,7 +83,10 @@ public class Player : PlayerController
     public HashSet<Brain> enemyNormalHitDuplicateChecker = new HashSet<Brain>();
     public HashSet<Brain> enemyChainHitDuplicateChecker = new HashSet<Brain>();
 
+    [Header("Debuff Render")]
     public Renderer[] renderers;
+    public Material freezeMaterial;
+    private bool _isFreezing;
 
     private Volume _playerOnHitVolume;
     private Coroutine _playerOnHitVolumeCoroutine;
@@ -96,7 +100,6 @@ public class Player : PlayerController
         BuffCompo.SetOwner(this);
 
         StateMachine = new PlayerStateMachine();
-        Navigation = transform.Find("PathFinder").GetComponent<PathFinder>();
 
         foreach (PlayerStateEnum stateEnum in Enum.GetValues(typeof(PlayerStateEnum)))
         {
@@ -325,6 +328,46 @@ public class Player : PlayerController
 
 
         Debug.DrawRay(worldPos, Camera.main.transform.forward * 3000f, Color.red);
+    }
+    #endregion
+
+    #region Debuff Control
+    public void AddFreezeMaterial()
+    {
+        if (_isFreezing)
+        {
+            return;
+        }
+
+        _isFreezing = true;
+
+        foreach (Renderer renderer in renderers)
+        {
+            List<Material> rendererMaterials = new List<Material>();
+
+            renderer.GetMaterials(rendererMaterials);
+            rendererMaterials.Add(freezeMaterial);
+            renderer.SetMaterials(rendererMaterials);
+        }
+    }
+
+    public void RemoveFreezeMaterial()
+    {
+        if (!_isFreezing)
+        {
+            return;
+        }
+
+        _isFreezing = false;
+
+        foreach (Renderer renderer in renderers)
+        {
+            List<Material> rendererMaterials = new List<Material>();
+
+            renderer.GetMaterials(rendererMaterials);
+            rendererMaterials.Remove(rendererMaterials.Last());
+            renderer.SetMaterials(rendererMaterials);
+        }
     }
     #endregion
 

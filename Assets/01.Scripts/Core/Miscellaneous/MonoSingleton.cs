@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -37,12 +36,5 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    protected virtual void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
-    {
-
     }
 }
