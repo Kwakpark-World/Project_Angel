@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -11,9 +12,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             if (!_player)
             {
-                _player = FindObjectOfType<Player>();
-
-                if (!_player)
+                if (HasPlayer)
                 {
                     Debug.LogError("Player instance doesn't exist.");
                 }
@@ -35,9 +34,11 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    private void Start()
+    protected override void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        SoundManager.Instance.PlayEnv(ENVType.Wind);
-    }
+        if (HasPlayer)
+        {
 
+        }
+    }
 }

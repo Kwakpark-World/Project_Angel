@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RuneManager : MonoSingleton<RuneManager>
 {
@@ -139,6 +140,14 @@ public class RuneManager : MonoSingleton<RuneManager>
             GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_synergizeRuneType);
 
             _synergizeRuneType = BuffType.None;
+        }
+    }
+
+    protected override void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        for (int i = 0; i < _equipedRunes.Count; ++i)
+        {
+            TryUnequipRune(i);
         }
     }
 }
