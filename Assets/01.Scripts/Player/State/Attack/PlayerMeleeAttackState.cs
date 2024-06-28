@@ -54,9 +54,9 @@ public class PlayerMeleeAttackState : PlayerAttackState
             _player.StopImmediately(false);
         });
 
-        _thisParticle = _player.weapon.transform.Find(_effectString).GetComponent<ParticleSystem>(); 
+        _thisParticle = _player.weapon.transform.Find(_effectString).GetComponent<ParticleSystem>();
 
-
+        HermesRun();
     }
 
     public override void Exit()
@@ -193,6 +193,29 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
 
+    }
+
+    private void HermesRun()
+    {
+        float timer;
+
+        timer = Time.deltaTime;
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Hermes))
+        {
+            if (timer > 1f)
+            {
+                _player.PlayerStatData.moveSpeed.AddModifier(3f);
+                _player.PlayerStatData.attackSpeed.AddModifier(1f);
+                Debug.Log("≥≠¿‘¿Ã µ ");
+            }
+
+            else
+            {
+                _player.PlayerStatData.moveSpeed.RemoveModifier(3f);
+                _player.PlayerStatData.attackSpeed.RemoveModifier(1f);
+                timer = 0;
+            }
+        }
     }
 
     private void ComboAttack()
