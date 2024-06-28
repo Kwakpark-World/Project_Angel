@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -23,6 +24,8 @@ public class Player : PlayerController
     public float slamPrevTime = 0f;
     public float defensePrevTime = 0f;
     public float prevChargingTime;
+
+    public float defaultMoveSpeed = 0f;
 
     private float _currentAwakenGauge = 0f;
     public float CurrentAwakenGauge
@@ -130,12 +133,13 @@ public class Player : PlayerController
 
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
-
         CurrentHealth = PlayerStatData.GetMaxHealth();
+        
+        defaultMoveSpeed = PlayerStatData.GetMoveSpeed();
 
-        UIManager.Instance.PlayerHUDProperty?.UpdateHealth(); ;
-        UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge(); ;
-        UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge(); ;
+        UIManager.Instance.PlayerHUDProperty?.UpdateHealth(); 
+        UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge(); 
+        UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge(); 
     }
 
     protected override void Update()

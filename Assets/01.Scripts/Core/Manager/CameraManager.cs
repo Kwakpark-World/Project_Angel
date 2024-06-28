@@ -1,7 +1,6 @@
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
+using System.Collections.Generic; 
 using UnityEngine;
 
 public class CameraManager : MonoSingleton<CameraManager>
@@ -13,6 +12,7 @@ public class CameraManager : MonoSingleton<CameraManager>
     private NoiseSettings shake6DSettings;
 
     private float DefaultOrthoSize;
+    public bool IsXReverse;
 
     public void AddCamera(CameraState addCamera)
     {
