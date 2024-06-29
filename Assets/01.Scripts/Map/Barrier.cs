@@ -29,7 +29,6 @@ public class Barrier : MonoBehaviour
 
     public void Show(float time = 1f)
     {
-        UIManager.Instance._mode = BGMMode.Combat;
         if (_visible) return;
         if(!_changing)
         {
@@ -46,7 +45,6 @@ public class Barrier : MonoBehaviour
 
     public void Hide(float time = 1f)
     {
-        UIManager.Instance._mode = BGMMode.NonCombat;
         if (!_visible) return;
         if (!_changing)
         {

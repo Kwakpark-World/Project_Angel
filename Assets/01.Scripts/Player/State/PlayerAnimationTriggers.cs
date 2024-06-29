@@ -40,4 +40,9 @@ public class PlayerAnimationTriggers : MonoBehaviour
     {
         _player.AnimationTickCheckTrigger();
     }
+
+    private void AnimationMoveFreezeToggleTrigger()
+    {
+        _player.AnimationMoveFreezeToggleTrigger();
+    }
 }

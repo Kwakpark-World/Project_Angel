@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
@@ -54,10 +55,16 @@ public class PlayerHUD : MonoBehaviour
     private TextMeshProUGUI _chargingTimeText;
 
     public Player PlayerReference { get; set; }
+    private Dictionary<BuffType, Coroutine> _durationCoroutines = new Dictionary<BuffType, Coroutine>();
     private Dictionary<PlayerStateEnum, Coroutine> _cooldownCoroutines = new Dictionary<PlayerStateEnum, Coroutine>();
 
     private void Start()
     {
+        foreach (BuffType buffType in Enum.GetValues(typeof(BuffType)))
+        {
+            _durationCoroutines[buffType] = null;
+        }
+
         foreach (PlayerStateEnum playerState in Enum.GetValues(typeof(PlayerStateEnum)))
         {
             _cooldownCoroutines[playerState] = null;
@@ -83,23 +90,28 @@ public class PlayerHUD : MonoBehaviour
 
     public void StartBuffDuration(BuffType buffType, float duration = 0)
     {
+        if (_durationCoroutines[buffType] != null)
+        {
+            StopCoroutine(_durationCoroutines[buffType]);
+        }
+
         switch (buffType)
         {
             case BuffType.Potion_Poison:
                 _poisonBuffDurationImage.transform.parent.parent.parent.gameObject.SetActive(true);
-                StartCoroutine(BuffDurationCoroutine(buffType, _poisonBuffDurationImage, duration));
+                _durationCoroutines[buffType] = StartCoroutine(BuffDurationCoroutine(buffType, _poisonBuffDurationImage, duration));
 
                 break;
 
             case BuffType.Potion_Freeze:
                 _freezeBuffDurationImage.transform.parent.parent.parent.gameObject.SetActive(true);
-                StartCoroutine(BuffDurationCoroutine(buffType, _freezeBuffDurationImage, duration));
+                _durationCoroutines[buffType] = StartCoroutine(BuffDurationCoroutine(buffType, _freezeBuffDurationImage, duration));
 
                 break;
 
             case BuffType.Potion_Paralysis:
                 _paralysisBuffDurationImage.transform.parent.parent.parent.gameObject.SetActive(true);
-                StartCoroutine(BuffDurationCoroutine(buffType, _paralysisBuffDurationImage, duration));
+                _durationCoroutines[buffType] = StartCoroutine(BuffDurationCoroutine(buffType, _paralysisBuffDurationImage, duration));
 
                 break;
 
@@ -143,25 +155,16 @@ public class PlayerHUD : MonoBehaviour
     {
         float currentHealth = GameManager.Instance.PlayerInstance.CurrentHealth;
         float maxHealth = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxHealth();
-        float healthRatio = currentHealth / maxHealth;
-        _healthBarImage.fillAmount = healthRatio;
+        _healthBarImage.fillAmount = currentHealth / maxHealth;
         _healthText.text = $"{Mathf.Clamp(currentHealth, 0f, maxHealth)} / {maxHealth}";
     }
 
     public void UpdateAwakenGauge()
     {
-        if (PlayerReference.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Gabriel))
-        {
-            GameManager.Instance.PlayerInstance.PlayerStatData.maxAwakenGauge.AddModifier(-20);
-        }
-        else
-        {
-            GameManager.Instance.PlayerInstance.PlayerStatData.maxAwakenGauge.RemoveModifier(20);
-        }
         float currentAwakenGauge = GameManager.Instance.PlayerInstance.CurrentAwakenGauge;
         float maxAwakenGauge = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxAwakenGauge();
-
         _awakenGaugeSlider.value = currentAwakenGauge;
+        _awakenGaugeSlider.maxValue = maxAwakenGauge;
         _awakenGaugeText.text = $"{(int)(currentAwakenGauge / maxAwakenGauge * 100f)}%";
     }
 
@@ -170,6 +173,7 @@ public class PlayerHUD : MonoBehaviour
         float currentChargingTime = GameManager.Instance.PlayerInstance.CurrentChargingTime;
         float maxChargingTime = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxChargingTime();
         _chargingTimeSlider.value = currentChargingTime;
+        _chargingTimeSlider.maxValue = maxChargingTime;
         _chargingTimeText.text = $"{(int)(currentChargingTime / maxChargingTime * 100f)}%";
     }
 
@@ -196,6 +200,7 @@ public class PlayerHUD : MonoBehaviour
         }
 
         buffDurationImage.fillAmount = 1f;
+        _durationCoroutines[buffType] = null;
 
         buffDurationImage.transform.parent.parent.parent.gameObject.SetActive(false);
     }

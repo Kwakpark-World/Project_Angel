@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMeleeAttackState : PlayerAttackState
 {
@@ -24,7 +23,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private bool _isCombo;
     private bool _isEffectOn;
-
+    
     private ParticleSystem _thisParticle; 
 
     public PlayerMeleeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -46,6 +45,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
         SetCombo();
         _player.PlayerStatData.attackPower.AddModifier(_comboAttackAddtiveDamage * _comboCounter);
 
+        _player.RigidbodyCompo.AddForce(_player.transform.forward * 10, ForceMode.Impulse);
+
         _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
 
         _player.StartDelayAction(0.1f, () =>
@@ -53,9 +54,9 @@ public class PlayerMeleeAttackState : PlayerAttackState
             _player.StopImmediately(false);
         });
 
-        _thisParticle = _player.weapon.transform.Find(_effectString).GetComponent<ParticleSystem>(); 
+        _thisParticle = _player.weapon.transform.Find(_effectString).GetComponent<ParticleSystem>();
 
-
+        HermesRun();
     }
 
     public override void Exit()
@@ -172,7 +173,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
             {
                 //여기에 파티클까지 나와야함 근데 파티클에 데미지 자체를 넣는 방법도 있긴함 그건 알아서 생각을 해보시길..
                 _player.PlayerStatData.attackPower.AddModifier(3f);
-                Debug.Log("2");
             }
         }
     }
@@ -193,6 +193,29 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         _player.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
 
+    }
+
+    private void HermesRun()
+    {
+        float timer;
+
+        timer = Time.deltaTime;
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Hermes))
+        {
+            if (timer > 1f)
+            {
+                _player.PlayerStatData.moveSpeed.AddModifier(3f);
+                _player.PlayerStatData.attackSpeed.AddModifier(1f);
+                Debug.Log("난입이 됨");
+            }
+
+            else
+            {
+                _player.PlayerStatData.moveSpeed.RemoveModifier(3f);
+                _player.PlayerStatData.attackSpeed.RemoveModifier(1f);
+                timer = 0;
+            }
+        }
     }
 
     private void ComboAttack()

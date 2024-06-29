@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -55,7 +54,7 @@ public class Buff : MonoBehaviour
     public BuffStat BuffStatData { get; private set; }
 
     private Dictionary<BuffType, BuffTrigger> _buffTriggersByType = new Dictionary<BuffType, BuffTrigger>();
-    private Dictionary<BuffType, object> _attackers = new Dictionary<BuffType, object>();
+    private Dictionary<BuffType, object> _buffers = new Dictionary<BuffType, object>();
     private Dictionary<BuffType, bool> _buffStates = new Dictionary<BuffType, bool>();
     private Dictionary<BuffType, Coroutine> _coroutines = new Dictionary<BuffType, Coroutine>();
 
@@ -88,7 +87,7 @@ public class Buff : MonoBehaviour
     {
         foreach (BuffType buffType in Enum.GetValues(typeof(BuffType)))
         {
-            _attackers[buffType] = null;
+            _buffers[buffType] = null;
             _buffStates[buffType] = false;
             _coroutines[buffType] = null;
         }
@@ -142,7 +141,7 @@ public class Buff : MonoBehaviour
             return;
         }
 
-        _attackers[buffType] = attacker;
+        _buffers[buffType] = attacker;
 
         UIManager.Instance.PlayerHUDProperty?.StartBuffDuration(buffType);
         _buffTriggersByType[buffType].onBuffBegin?.Invoke();
@@ -157,7 +156,7 @@ public class Buff : MonoBehaviour
 
         if (!_buffStates[buffType])
         {
-            _attackers[buffType] = attacker;
+            _buffers[buffType] = attacker;
             _buffStates[buffType] = true;
 
             _buffTriggersByType[buffType].onBuffBegin?.Invoke();
@@ -198,62 +197,49 @@ public class Buff : MonoBehaviour
         StopBuff(buffType);
     }
 
+    #region Miscellaneous Buffs
     #region Shield Functions
     public void ShieldBegin()
     {
         EffectManager.Instance.PlayEffect(PoolType.Effect_Shield, transform.position + transform.up * 1.5f, transform);
     }
     #endregion
+    #endregion
 
+    #region Rune Buffs
     #region Gabriel Functions
     public void GabrielBegin()
     {
-        _ownerController.PlayerStatData.maxAwakenGauge.AddModifier(-25f);
+        _ownerController.PlayerStatData.maxAwakenGauge.AddModifier(-20f);
+
+        _ownerController.CurrentAwakenGauge = _ownerController.CurrentAwakenGauge;
+
+        UIManager.Instance.PlayerHUDProperty.UpdateAwakenGauge();
     }
 
     public void GabrielEnd()
     {
-        _ownerController.PlayerStatData.maxAwakenGauge.RemoveModifier(-25f);
+        _ownerController.PlayerStatData.maxAwakenGauge.RemoveModifier(-20f);
     }
     #endregion
+    #endregion
 
+    #region Potion Buffs
     #region Poison Functions
     public void PoisonBegin()
     {
-        if (_isPlayer)
-        {
-            _poisonDelayTimer = Time.time - (_attackers[BuffType.Potion_Poison] as Brain).BuffCompo.BuffStatData.poisonDelay;
-            //Debug.Log(RuneManager.Instance.isArmor);
-        }
-        else
-        {
-            _poisonDelayTimer = Time.time - (_attackers[BuffType.Potion_Poison] as Player).BuffCompo.BuffStatData.poisonDelay;
-        }
+        _poisonDelayTimer = Time.time - (_buffers[BuffType.Potion_Poison] as Brain).BuffCompo.BuffStatData.poisonDelay;
     }
 
     public void PoisonPlaying()
     {
-        if (_isPlayer)
+        Brain buffer = _buffers[BuffType.Potion_Poison] as Brain;
+
+        if (Time.time > _poisonDelayTimer + buffer.BuffCompo.BuffStatData.poisonDelay)
         {
-            Brain attacker = _attackers[BuffType.Potion_Poison] as Brain;
+            _ownerController.OnHit(buffer.BuffCompo.BuffStatData.poisonDamage);
 
-            if (Time.time > _poisonDelayTimer + attacker.BuffCompo.BuffStatData.poisonDelay)
-            {
-                _ownerController.OnHit(attacker.BuffCompo.BuffStatData.poisonDamage);
-
-                _poisonDelayTimer = Time.time;
-            }
-        }
-        else
-        {
-            Player attacker = _attackers[BuffType.Potion_Poison] as Player;
-
-            if (Time.time > _poisonDelayTimer + attacker.BuffCompo.BuffStatData.poisonDelay)
-            {
-                _ownerBrain.OnHit(attacker.BuffCompo.BuffStatData.poisonDamage);
-
-                _poisonDelayTimer = Time.time;
-            }
+            _poisonDelayTimer = Time.time;
         }
     }
     #endregion
@@ -261,62 +247,33 @@ public class Buff : MonoBehaviour
     #region Freeze Functions
     public void FreezeBegin()
     {
-        if (_isPlayer)
-        {
-            Brain attacker = _attackers[BuffType.Potion_Freeze] as Brain;
+        Brain buffer = _buffers[BuffType.Potion_Freeze] as Brain;
 
-            _ownerController.PlayerStatData.moveSpeed.AddModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
-        }
-        else
-        {
-            PlayerController attacker = _attackers[BuffType.Potion_Freeze] as PlayerController;
-
-            _ownerBrain.EnemyStatData.moveSpeed.AddModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
-        }
-
-        //RuneManager.Instance.isArmor = false;
+        _ownerController.PlayerStatData.moveSpeed.AddModifier(buffer.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
     }
 
     public void FreezeEnd()
     {
-        if (_isPlayer)
-        {
-            Brain attacker = _attackers[BuffType.Potion_Freeze] as Brain;
+        Brain buffer = _buffers[BuffType.Potion_Freeze] as Brain;
 
-            _ownerController.PlayerStatData.moveSpeed.RemoveModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
-        }
-        else
-        {
-            PlayerController attacker = _attackers[BuffType.Potion_Freeze] as PlayerController;
-
-            _ownerBrain.EnemyStatData.moveSpeed.RemoveModifier(attacker.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
-        }
+        _ownerController.PlayerStatData.moveSpeed.RemoveModifier(buffer.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
     }
     #endregion
 
     #region Paralysis Functions
     public void ParalysisBegin()
     {
-        if (_isPlayer)
-        {
+        GameManager.Instance.PlayerInstance.StopImmediately(true);
 
-        }
-        else
-        {
-
-        }
+        GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+        CameraManager.Instance._currentCam.IsCamRotateStop = true;
     }
 
     public void ParalysisEnd()
     {
-        if (_isPlayer)
-        {
-
-        }
-        else
-        {
-
-        }
+        GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+        CameraManager.Instance._currentCam.IsCamRotateStop = false;
     }
+    #endregion
     #endregion
 }

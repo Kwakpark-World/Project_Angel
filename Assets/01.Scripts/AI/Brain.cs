@@ -235,4 +235,21 @@ public abstract class Brain : PoolableMono
 
         return enemyChain;
     }
+
+    public void ChainingDamage(int maxEnemyAmount, float nearByRange, int damage)
+    {
+        List<Brain> nearbyEnemies = FindNearbyEnemies(maxEnemyAmount, nearByRange);
+
+        if(GameManager.Instance.PlayerInstance.BuffCompo.GetBuffState(BuffType.Rune_Attack_Thor))
+        {
+            if (nearbyEnemies != null)
+            {
+                foreach (Brain enemy in nearbyEnemies)
+                {
+                    //여기에다가 파티클이 나와야할거 같음 maybe?
+                    enemy.CurrentHealth -= 3f;
+                }
+            }
+        }
+    }
 }

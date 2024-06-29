@@ -10,8 +10,6 @@ public class PathFinder : MonoBehaviour
     public List<Transform> targetList;
     private int _targetIndex;
 
-    private BGMMode _mode;
-
     private void Start()
     {
         InitNaviManager(0.01f);
@@ -73,10 +71,5 @@ public class PathFinder : MonoBehaviour
             PathLine.SetPositions(pathCorners);
             PathLine.enabled = true; 
         }
-    }
-
-    public void SetMode(BGMMode newMode)
-    {
-        _mode = newMode;
     }
 }
