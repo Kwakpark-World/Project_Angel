@@ -145,6 +145,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         Collider[] enemies = GetEnemyByOverlapBox(_player.weapon.transform.position, _player.weapon.transform.rotation);
 
+        shield();
         Attack(enemies.ToList());
 
         GuidedBulletFire(5f);
@@ -242,7 +243,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
         if(_player.BuffCompo.GetBuffState(BuffType.Rune_Defense_Athena) && !_player.isShield)
         {
             _player.isShield = true;
-            
         }
     }
 
