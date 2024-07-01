@@ -14,6 +14,7 @@ public class Player : PlayerController
     public GameObject weapon;
 
     public LayerMask enemyLayer;
+    public ParticleSystem shieldParticle;
 
     [Header("Defense Settings")]
     public float defenseTime = 3f;
@@ -23,8 +24,10 @@ public class Player : PlayerController
     public float slamPrevTime = 0f;
     public float defensePrevTime = 0f;
     public float prevChargingTime;
+    public float shieldPrevTime;
 
     private float _currentAwakenGauge = 0f;
+    public float CurrentShield = 10f;
     public float CurrentAwakenGauge
     {
         get
@@ -78,6 +81,7 @@ public class Player : PlayerController
     public bool IsAwakening;
     public bool IsPlayerStop;
     public bool IsGroundState;
+    public bool isShield;
 
     public Vector3 MousePosInWorld { get; private set; }
 
@@ -174,9 +178,7 @@ public class Player : PlayerController
 
     public void OnHit(float incomingDamage, Brain attacker = null)
     {
-        //ï¿½ï¿½ï¿½ï¿½Ù°ï¿?ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ý»ï¿½ ï¿½ï¿½ ï¿½Ï±â·¯ï¿½ï¿½
-
-        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Uriel) && attacker)
+        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Uriel) && attacker && !isShield)
         {
             attacker.OnHit(incomingDamage * 0.25f);
         }
@@ -186,6 +188,7 @@ public class Player : PlayerController
             CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1.5f);
             return;
         }
+
         if (IsDie)
             return;
         if (StateMachine.CompareState(PlayerStateEnum.Awakening))
@@ -195,11 +198,32 @@ public class Player : PlayerController
 
         if (CurrentHealth > 0f)
         {
-            CurrentHealth -= Mathf.Max(incomingDamage - PlayerStatData.GetDefensivePower(), 0f);
-
-            if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
+            if (CurrentShield > 0f && BuffCompo.GetBuffState(BuffType.Rune_Defense_Athena))
             {
-                CurrentHealth = Mathf.Max(CurrentHealth, 1f);
+                isShield = true;
+                shieldParticle.Play();
+                if (CurrentShield >= incomingDamage)
+                {
+                    CurrentShield -= incomingDamage;
+                    incomingDamage = 0f;
+                }
+                else
+                {
+                    incomingDamage -= CurrentShield;
+                    CurrentShield = 0f;
+                }
+            }
+            shieldParticle.Stop();
+
+            // ³²Àº ÇÇÇØ·®ÀÌ ÀÖ´Â °æ¿ì Ã¼·Â °¨¼Ò
+            if (incomingDamage > 0f)
+            {
+                CurrentHealth -= Mathf.Max(incomingDamage - PlayerStatData.GetDefensivePower(), 0f);
+
+                if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
+                {
+                    CurrentHealth = Mathf.Max(CurrentHealth, 1f);
+                }
             }
         }
 
@@ -210,6 +234,8 @@ public class Player : PlayerController
             OnDie();
         }
     }
+
+
 
     #region Player Stat Func
     public void SetPlayerStat(PlayerStatType stat, float value)

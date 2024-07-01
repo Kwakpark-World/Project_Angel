@@ -145,22 +145,32 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         Collider[] enemies = GetEnemyByOverlapBox(_player.weapon.transform.position, _player.weapon.transform.rotation);
 
+        shield();
         Attack(enemies.ToList());
 
         GuidedBulletFire(5f);
     }
 
-    IEnumerator GuidedBulletFire(float delay)
+    IEnumerator GuidedBulletFire(float initialDelay)
     {
-        delay += Time.deltaTime;
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Michael) && delay < Time.deltaTime)
-        {
-            PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.transform.position);
-            delay = 0;
-        }
+        float delay = initialDelay;
 
-        yield return new WaitForSeconds(delay);
+        while (true)
+        {
+            if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Michael))
+            {
+                PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.transform.position);
+                delay = initialDelay; 
+            }
+            else
+            {
+                delay -= Time.deltaTime; 
+            }
+
+            yield return new WaitForSeconds(delay);
+        }
     }
+
 
     protected override void HitEnemyAction(Brain enemy)
     {
@@ -226,6 +236,14 @@ public class PlayerMeleeAttackState : PlayerAttackState
     public void UpgradeActivePoison()
     {
         //TODO: use poison every attack
+    }
+
+    private void shield()
+    {
+        if(_player.BuffCompo.GetBuffState(BuffType.Rune_Defense_Athena) && !_player.isShield)
+        {
+            _player.isShield = true;
+        }
     }
 
     public void KillInactivePoison()
