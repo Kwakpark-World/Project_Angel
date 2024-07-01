@@ -66,7 +66,7 @@ public class PlayerChargingState : PlayerChargeState
         }
         else
         {
-            _player.prevChargingTime = Time.time;
+            _player.chargingPrevTime = Time.time;
             if (_player.IsAwakening)
                 _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
             else
@@ -77,7 +77,7 @@ public class PlayerChargingState : PlayerChargeState
     private void SetChargingGauge()
     {
         if (!_player.PlayerInput.isCharge) return;
-        if (_player.prevChargingTime + _player.PlayerStatData.GetChargingAttackCooldown() > Time.time) return;
+        if (_player.chargingPrevTime + _player.PlayerStatData.GetChargingAttackCooldown() > Time.time) return;
 
         if (_player.CurrentChargingTime < _minChargeTime)
             _player.CurrentChargingTime += Time.deltaTime;
