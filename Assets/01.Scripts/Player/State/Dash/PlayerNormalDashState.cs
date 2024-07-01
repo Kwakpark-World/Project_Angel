@@ -29,7 +29,7 @@ public class PlayerNormalDashState : PlayerDashState
 
         _dashDirection = _player.transform.forward;
 
-        _player.SetVelocity(_dashDirection * _player.PlayerStatData.GetDashSpeed());
+        _player.SetVelocity(_dashDirection * _player.PlayerStatData.GetDashSpeed() * Time.timeScale);
 
         if (_endTriggerCalled)
         {

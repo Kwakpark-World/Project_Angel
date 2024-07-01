@@ -9,6 +9,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -26,6 +27,8 @@ public class Player : PlayerController
     public float defenseLeftCooldown;
     public float chargingLeftCooldown;
     public float slamLeftCooldown;
+
+    public float defaultMoveSpeed = 0f;
 
     private float _currentAwakenGauge = 0f;
     public float CurrentShield = 10f;
@@ -135,12 +138,13 @@ public class Player : PlayerController
 
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
-
         CurrentHealth = PlayerStatData.GetMaxHealth();
+        
+        defaultMoveSpeed = PlayerStatData.GetMoveSpeed();
 
-        UIManager.Instance.PlayerHUDProperty?.UpdateHealth(); ;
-        UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge(); ;
-        UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge(); ;
+        UIManager.Instance.PlayerHUDProperty?.UpdateHealth(); 
+        UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge(); 
+        UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge(); 
     }
 
     protected override void Update()

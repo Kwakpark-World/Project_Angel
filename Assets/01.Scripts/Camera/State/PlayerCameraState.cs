@@ -28,11 +28,19 @@ public class PlayerCameraState : CameraState
     private void SetRotation()
     {
         if (IsCamRotateStop) return;
-        Vector3 dir = new Vector3(Mouse.current.delta.x.ReadValue(), 0, 0);
-        if (dir.x == 0) return;
 
-        _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, _player.transform.rotation * Quaternion.LookRotation(dir), _player.PlayerStatData.GetRotateSpeed() * Time.deltaTime);
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+        if (mouseDelta.x == 0) return;
+
+        float rotationAmount = mouseDelta.x * Time.deltaTime * _player.PlayerStatData.GetRotateSpeed();
+
+        if (CameraManager.Instance.IsXReverse)
+            rotationAmount *= -1f;
+
+        // 회전 값을 적용합니다.
+        _player.transform.Rotate(Vector3.up, rotationAmount);
     }
+
     /*private void SetRotation()
     {
         float cameraYRotation = transform.eulerAngles.y;
