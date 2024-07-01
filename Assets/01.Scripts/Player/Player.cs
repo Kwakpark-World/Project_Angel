@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
@@ -17,15 +18,15 @@ public class Player : PlayerController
     public LayerMask enemyLayer;
     public ParticleSystem shieldParticle;
 
-    [Header("Defense Settings")]
-    public float defenseTime = 3f;
-
     [Header("CoolTime Settings")]
-    private float _dashPrevTime = 0f;
-    public float slamPrevTime = 0f;
+    public float dashPrevTime = 0f;
     public float defensePrevTime = 0f;
-    public float prevChargingTime;
-    public float shieldPrevTime;
+    public float chargingPrevTime = 0f;
+    public float slamPrevTime = 0f;
+    public float dashLeftCooldown;
+    public float defenseLeftCooldown;
+    public float chargingLeftCooldown;
+    public float slamLeftCooldown;
 
     public float defaultMoveSpeed = 0f;
 
@@ -152,19 +153,25 @@ public class Player : PlayerController
 
         StateMachine.CurrentState.UpdateState();
 
+        GetSkillLeftCooldown();
+
         //debug DeveloperKey.
+        #region Debug
         if (Input.GetKeyDown(KeyCode.K))
         {
             CurrentAwakenGauge += 100;
         }
 
-        SetMousePosInWorld();
-
-        //디버깅
+#if UNITY_EDITOR
         if (Keyboard.current.bKey.wasPressedThisFrame)
         {
             PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.playerCenter.position);
         }
+#endif
+        #endregion
+
+        SetMousePosInWorld();
+
     }
 
     protected override void FixedUpdate()
@@ -202,28 +209,10 @@ public class Player : PlayerController
 
         if (CurrentHealth > 0f)
         {
-            if (CurrentShield > 0f && BuffCompo.GetBuffState(BuffType.Rune_Defense_Athena))
-            {
-                isShield = true;
-                shieldParticle.Play();
-                if (CurrentShield >= incomingDamage)
-                {
-                    CurrentShield -= incomingDamage;
-                    incomingDamage = 0f;
-                }
-                else
-                {
-                    incomingDamage -= CurrentShield;
-                    CurrentShield = 0f;
-                }
-            }
-            shieldParticle.Stop();
+            CurrentHealth -= Mathf.Max(Mathf.RoundToInt(incomingDamage - PlayerStatData.GetDefensivePower()), 0);
 
-            // 남은 피해량이 있는 경우 체력 감소
-            if (incomingDamage > 0f)
+            if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
             {
-                CurrentHealth -= Mathf.Max(incomingDamage - PlayerStatData.GetDefensivePower(), 0f);
-
                 if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
                 {
                     CurrentHealth = Mathf.Max(CurrentHealth, 1f);
@@ -245,6 +234,17 @@ public class Player : PlayerController
     public void SetPlayerStat(PlayerStatType stat, float value)
     {
         PlayerStatData.GetStatByType(stat).AddModifier(value);
+    }
+
+    private void GetSkillLeftCooldown()
+    {
+        PlayerStat stat = GameManager.Instance.PlayerInstance.PlayerStatData;
+        dashLeftCooldown = Mathf.Clamp01((stat.GetDashCooldown() - (dashPrevTime + Time.time)) / stat.GetDashCooldown());
+        slamLeftCooldown = Mathf.Clamp01((stat.GetSlamCooldown() - (slamPrevTime + Time.time)) / stat.GetSlamCooldown());
+        defenseLeftCooldown = Mathf.Clamp01((stat.GetDefenseCooldown() - (defensePrevTime + Time.time)) / stat.GetDefenseCooldown());
+        chargingLeftCooldown = Mathf.Clamp01((stat.GetChargingAttackCooldown() - (chargingPrevTime + Time.time)) / stat.GetChargingAttackCooldown());
+
+        UIManager.Instance.PlayerHUDProperty.UpdateSkillCooldown(dashLeftCooldown, defenseLeftCooldown, slamLeftCooldown, chargingLeftCooldown);
     }
     #endregion
 
@@ -280,8 +280,8 @@ public class Player : PlayerController
 
     private void ResetSkillCooldown()
     {
-        _dashPrevTime = Time.time - PlayerStatData.GetDashCooldown() + 1f;
-        prevChargingTime = Time.time - PlayerStatData.GetChargingAttackCooldown() + 1f;
+        dashPrevTime = Time.time - PlayerStatData.GetDashCooldown() + 1f;
+        chargingPrevTime = Time.time - PlayerStatData.GetChargingAttackCooldown() + 1f;
         slamPrevTime = Time.time - PlayerStatData.GetSlamCooldown() + 1f;
         defensePrevTime = Time.time - PlayerStatData.GetDefenseCooldown() + 1f;
     }
@@ -291,10 +291,10 @@ public class Player : PlayerController
 
     private void HandleDashEvent()
     {
-        if (PlayerStatData.GetDashCooldown() + _dashPrevTime > Time.time) return;
+        if (PlayerStatData.GetDashCooldown() + dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
 
-        _dashPrevTime = Time.time;
+        dashPrevTime = Time.time;
 
         if (!IsAwakening)
         {

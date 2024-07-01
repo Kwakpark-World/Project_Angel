@@ -64,7 +64,7 @@ public class PlayerAttackState : PlayerState
                     if (IsCritical())
                         _player.PlayerStatData.attackPower.AddModifier(modifierValue);
 
-                    AttackBlood(); AttackExtraMaxHealth(); AttackCooldown(); //HermesRun();
+                    PlayRuneEffect();
 
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
                     HitEnemyAction(brain);
@@ -82,9 +82,7 @@ public class PlayerAttackState : PlayerState
 
     public void Attack(List<RaycastHit> enemies)
     {
-        Herculesfighting();
-
-        float modifierValue = _player.PlayerStatData.GetAttackPower() * _player.PlayerStatData.GetCriticalDamageMultiplier();
+        float modifierValue = _player.PlayerStatData.GetAttackPower() * _player.PlayerStatData.GetCriticalDamageMultiplier() - _player.PlayerStatData.GetAttackPower();
         if (IsCritical())
         {
             _player.PlayerStatData.attackPower.AddModifier(modifierValue);
@@ -193,56 +191,55 @@ public class PlayerAttackState : PlayerState
     }
 
     #region Rune
-    private void AttackBlood()
-    {
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Raphael))
-            _player.CurrentHealth += 3f;
-    }
-
-    private void Herculesfighting()
+    private void PlayRuneEffect()
     {
         if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Heracles))
         {
-            PlayerMeleeAttackState pat = _player.StateMachine.GetState(PlayerStateEnum.MeleeAttack) as PlayerMeleeAttackState;
-            if (pat._comboCounter == 3)
+            if ((this as PlayerMeleeAttackState)._comboCounter == 3)
             {
-                //여기에 플러스로 파티클도 넣어줘야함
-                GameManager.Instance.PlayerInstance.PlayerStatData.attackPower.AddModifier(3f);
-                Debug.Log("3타임");
-            }
-            else
-            {
-                GameManager.Instance.PlayerInstance.PlayerStatData.attackPower.RemoveModifier(3f);
+
             }
         }
-    }
 
-    private void AttackExtraMaxHealth()
-    {
-        float extraHealth = 0;
-        float timer = 0;
-        timer += Time.deltaTime;
-        //remove를 만들어 줘야 할 수도 있음 생각을 해보고 결정을 하셈 ><
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Freyja) && timer > 5)
-        {
-            _player.PlayerStatData.maxHealth.AddModifier(extraHealth++);
-            timer = 0;
-        }
-
-        if (_player.CurrentHealth == 0)
-        {
-            _player.PlayerStatData.maxHealth.RemoveModifier(extraHealth);
-        }
-    }
-
-    private void AttackCooldown()
-    {
         if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Heimdall))
         {
-            _player.PlayerStatData.defenseCooldown.AddModifier(-1f);
-            _player.PlayerStatData.slamCooldown.AddModifier(-1f);
+            _player.dashPrevTime += 0f; // +5f;
+            _player.defensePrevTime += 0f;
+            _player.chargingPrevTime += 0f;
+            _player.slamPrevTime += 0f;
         }
 
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Freyja))
+        {
+            _player.PlayerStatData.maxHealth.AddModifier(1f);
+        }
+
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Raphael))
+        {
+            _player.CurrentHealth += 3f;
+        }
+    }
+
+    private void HermesRun()
+    {
+        float timer;
+
+        timer = Time.deltaTime;
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Hermes))
+        {
+            if (timer > 3f)
+            {
+                _player.PlayerStatData.moveSpeed.AddModifier(3f);
+                _player.PlayerStatData.attackSpeed.AddModifier(1.5f);
+            }
+
+            else
+            {
+                _player.PlayerStatData.moveSpeed.RemoveModifier(3f);
+                _player.PlayerStatData.attackSpeed.AddModifier(1.5f);
+                timer = 0;
+            }
+        }
     }
     #endregion
 

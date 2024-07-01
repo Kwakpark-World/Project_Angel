@@ -36,19 +36,17 @@ public class PathFinder : MonoBehaviour
                 break;
             }
 
-            if (!PathLine.enabled)
+            if (PathLine.enabled)
             {
-                continue;
-            }
+                if (Vector3.Distance(transform.position, targetList[_targetIndex].position) <= 5f)
+                {
+                    PassToNextDestination();
+                }
 
-            if (Vector3.Distance(transform.position, targetList[_targetIndex].position) <= 5f)
-            {
-                PassToNextDestination();
-            }
-
-            if (_targetIndex < targetList.Count)
-            {
-                DrawPathToCurrentTarget();
+                if (_targetIndex < targetList.Count)
+                {
+                    DrawPathToCurrentTarget();
+                }
             }
 
             yield return delayTime;
@@ -69,7 +67,7 @@ public class PathFinder : MonoBehaviour
             pathCorners[1] = targetList[_targetIndex].position;
             PathLine.positionCount = pathCorners.Length;
             PathLine.SetPositions(pathCorners);
-            PathLine.enabled = true; 
+            PathLine.enabled = true;
         }
     }
 }
