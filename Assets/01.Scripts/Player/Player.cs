@@ -1,3 +1,4 @@
+using AmplifyShaderEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ public class Player : PlayerController
     public GameObject weapon;
 
     public LayerMask enemyLayer;
-    public ParticleSystem shieldParticle;
 
     [Header("Defense Settings")]
     public float defenseTime = 3f;
@@ -201,7 +201,7 @@ public class Player : PlayerController
             if (CurrentShield > 0f && BuffCompo.GetBuffState(BuffType.Rune_Defense_Athena))
             {
                 isShield = true;
-                shieldParticle.Play();
+                PoolManager.Instance.Pop(PoolType.Effect_Shield, playerCenter.position);
                 if (CurrentShield >= incomingDamage)
                 {
                     CurrentShield -= incomingDamage;
@@ -213,7 +213,8 @@ public class Player : PlayerController
                     CurrentShield = 0f;
                 }
             }
-            shieldParticle.Stop();
+            
+            //PoolManager.Instance.Push( as PoolableMono);
 
             // 남은 피해량이 있는 경우 체력 감소
             if (incomingDamage > 0f)

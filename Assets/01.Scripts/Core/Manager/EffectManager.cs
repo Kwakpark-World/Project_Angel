@@ -42,6 +42,17 @@ public class EffectManager : MonoSingleton<EffectManager>
         PoolManager.Instance.Pop(type, pos);
     }
 
+    public void StopEffect(PoolType type, Vector3 pos)
+    {
+        string effectName = type.ToString();
+
+        if (!_effects.ContainsKey(effectName))
+        {
+            Debug.LogError($"{effectName} is Not Contain _effects");
+            return;
+        }
+    }
+
     public PoolableMono PlayAndGetEffect(PoolType type, Vector3 pos)
     {
         string effectName = type.ToString();

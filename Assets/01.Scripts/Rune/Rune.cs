@@ -63,7 +63,6 @@ public class Rune : PoolableMono
     {
         _runeData.IsDestroyed();
     }
-
     public void InitializeRune(RuneDataSO runeData)
     {
         _runeData = runeData;
