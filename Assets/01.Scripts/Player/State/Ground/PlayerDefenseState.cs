@@ -23,7 +23,7 @@ public class PlayerDefenseState : PlayerGroundState
         _player.IsDefense = true;
         _player.StopImmediately(false);
 
-        
+
         _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
         foreach (var particle in _thisParticles)
         {
@@ -31,8 +31,8 @@ public class PlayerDefenseState : PlayerGroundState
             main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
             particle.Play();
         }
-    
-        
+
+
     }
 
     public override void Exit()
@@ -49,9 +49,9 @@ public class PlayerDefenseState : PlayerGroundState
     {
         base.UpdateState();
 
-        _defenseTimer += Time.deltaTime;        
+        _defenseTimer += Time.deltaTime;
 
-        if (!_player.PlayerInput.isDefense || _defenseTimer >= _player.defenseTime)
+        if (!_player.PlayerInput.isDefense || _defenseTimer >= _player.PlayerStatData.GetDefenseDuration())
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }

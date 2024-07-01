@@ -5824,7 +5824,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6385291853889329438}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: GabrielBegin
+          m_MethodName: BeginRuneGabriel
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5842,7 +5842,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6385291853889329438}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: GabrielEnd
+          m_MethodName: EndRuneGabriel
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5858,7 +5858,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6385291853889329438}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: PoisonBegin
+          m_MethodName: BeginPotionPoison
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5873,7 +5873,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6385291853889329438}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: PoisonPlaying
+          m_MethodName: PlayingPotionPoison
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5892,7 +5892,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6385291853889329438}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: FreezeBegin
+          m_MethodName: BeginPotionFreeze
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5910,7 +5910,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6385291853889329438}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: FreezeEnd
+          m_MethodName: EndPotionFreeze
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5926,7 +5926,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6385291853889329438}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: ParalysisBegin
+          m_MethodName: BeginPotionParalysis
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5944,7 +5944,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6385291853889329438}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: ParalysisEnd
+          m_MethodName: EndPotionParalysis
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

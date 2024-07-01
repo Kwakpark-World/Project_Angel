@@ -4318,13 +4318,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffTriggers:
-  - buffType: 25
+  - buffType: 2
     onBuffBegin:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 4450875782849930655}
           m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: ShieldBegin
+          m_MethodName: BeginShield
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
-using UnityEngine; 
+using UnityEngine;
 
-public abstract class PlayerController : MonoBehaviour  
+public abstract class PlayerController : MonoBehaviour
 {
     [Header("Ground Checker")]
     [SerializeField] protected Transform _groundChecker;
@@ -14,20 +14,31 @@ public abstract class PlayerController : MonoBehaviour
     public RaycastHit groundCheckHit = new RaycastHit();
 
     #region components
-    [Space(30f), Header("Components")]
-    public Animator AnimatorCompo;
-
+    [field: Space(30f), Header("Components")]
+    public Animator AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
     public CapsuleCollider ColliderCompo { get; private set; }
-
     public Buff BuffCompo { get; private set; }
-    [field: SerializeField] public PlayerStat PlayerStatData { get; protected set; }
-    [field: SerializeField] public float CurrentHealth;
-    
-    private float _gravity = -9.8f;
+    [field: SerializeField]
+    public PlayerStat PlayerStatData { get; protected set; }
     #endregion
+
     public Transform playerCenter;
 
+    private float _currentHealth;
+    public float CurrentHealth
+    {
+        get
+        {
+            return _currentHealth;
+        }
+
+        set
+        {
+            _currentHealth = Mathf.Clamp(value, 0f, PlayerStatData.GetMaxHealth());
+        }
+    }
+    private float _gravity = -9.8f;
 
     protected virtual void Awake()
     {
@@ -50,7 +61,7 @@ public abstract class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        
+
     }
 
     protected virtual void FixedUpdate()
@@ -82,7 +93,7 @@ public abstract class PlayerController : MonoBehaviour
     {
 
         bool groundCheck = Physics.Raycast(_groundChecker.position, Vector3.down, out groundCheckHit, groundCheckDistanceTolerance * transform.localScale.y, whatIsGround);
-        
+
         playerCenterToGroundDistance = Vector3.Distance(groundCheckHit.point, playerCenter.position);
 
         return groundCheck;

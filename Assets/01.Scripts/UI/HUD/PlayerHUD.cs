@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
@@ -56,7 +55,6 @@ public class PlayerHUD : MonoBehaviour
 
     public Player PlayerReference { get; set; }
     private Dictionary<BuffType, Coroutine> _durationCoroutines = new Dictionary<BuffType, Coroutine>();
-    private Dictionary<PlayerStateEnum, Coroutine> _cooldownCoroutines = new Dictionary<PlayerStateEnum, Coroutine>();
 
     private void Start()
     {
@@ -64,12 +62,7 @@ public class PlayerHUD : MonoBehaviour
         {
             _durationCoroutines[buffType] = null;
         }
-
-        foreach (PlayerStateEnum playerState in Enum.GetValues(typeof(PlayerStateEnum)))
-        {
-            _cooldownCoroutines[playerState] = null;
-        }
-    }
+    } 
 
     public void SetNormalSkillIcon()
     {
@@ -120,35 +113,11 @@ public class PlayerHUD : MonoBehaviour
         }
     }
 
-    public void StartSkillCooldown(PlayerStateEnum playerState)
+    public void UpdateSkillCooldown(float dashLeftCooldown, float defenseLeftCooldown, float slamLeftCooldown, float chargingLeftCooldown)
     {
-        if (_cooldownCoroutines[playerState] != null)
-        {
-            return;
-        }
-
-        switch (playerState)
-        {
-            case PlayerStateEnum.Defense:
-                _cooldownCoroutines[playerState] = StartCoroutine(SkillCooldownCoroutine(playerState, _defenseSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetDefenseCooldown()));
-
-                break;
-
-            case PlayerStateEnum.NormalSlam:
-            case PlayerStateEnum.AwakenSlam:
-                _cooldownCoroutines[playerState] = StartCoroutine(SkillCooldownCoroutine(playerState, _slamSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetSlamCooldown()));
-
-                break;
-
-            case PlayerStateEnum.NormalChargeAttack:
-            case PlayerStateEnum.AwakenChargeAttack:
-                _cooldownCoroutines[playerState] = StartCoroutine(SkillCooldownCoroutine(playerState, _chargingSkillCooldownImage, GameManager.Instance.PlayerInstance.PlayerStatData.GetChargingAttackCooldown()));
-
-                break;
-
-            default:
-                break;
-        }
+        _defenseSkillCooldownImage.fillAmount = defenseLeftCooldown;
+        _chargingSkillCooldownImage.fillAmount = chargingLeftCooldown;
+        _slamSkillCooldownImage.fillAmount = slamLeftCooldown;
     }
 
     public void UpdateHealth()
@@ -203,21 +172,5 @@ public class PlayerHUD : MonoBehaviour
         _durationCoroutines[buffType] = null;
 
         buffDurationImage.transform.parent.parent.parent.gameObject.SetActive(false);
-    }
-
-    private IEnumerator SkillCooldownCoroutine(PlayerStateEnum playerState, Image skillCooldownImage, float cooldown)
-    {
-        float elapsed = 0f;
-
-        while (elapsed < cooldown)
-        {
-            elapsed += Time.deltaTime;
-            skillCooldownImage.fillAmount = Mathf.Clamp01(1f - (elapsed / cooldown));
-
-            yield return null;
-        }
-
-        skillCooldownImage.fillAmount = 0f;
-        _cooldownCoroutines[playerState] = null;
     }
 }

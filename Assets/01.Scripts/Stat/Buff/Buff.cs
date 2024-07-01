@@ -199,7 +199,7 @@ public class Buff : MonoBehaviour
 
     #region Miscellaneous Buffs
     #region Shield Functions
-    public void ShieldBegin()
+    public void BeginShield()
     {
         EffectManager.Instance.PlayEffect(PoolType.Effect_Shield, transform.position + transform.up * 1.5f, transform);
     }
@@ -207,8 +207,15 @@ public class Buff : MonoBehaviour
     #endregion
 
     #region Rune Buffs
+    #region Hermes Functions
+    public void BeginRuneHermes()
+    {
+
+    }
+    #endregion
+
     #region Gabriel Functions
-    public void GabrielBegin()
+    public void BeginRuneGabriel()
     {
         _ownerController.PlayerStatData.maxAwakenGauge.AddModifier(-20f);
 
@@ -217,7 +224,7 @@ public class Buff : MonoBehaviour
         UIManager.Instance.PlayerHUDProperty.UpdateAwakenGauge();
     }
 
-    public void GabrielEnd()
+    public void EndRuneGabriel()
     {
         _ownerController.PlayerStatData.maxAwakenGauge.RemoveModifier(-20f);
     }
@@ -226,12 +233,12 @@ public class Buff : MonoBehaviour
 
     #region Potion Buffs
     #region Poison Functions
-    public void PoisonBegin()
+    public void BeginPotionPoison()
     {
         _poisonDelayTimer = Time.time - (_buffers[BuffType.Potion_Poison] as Brain).BuffCompo.BuffStatData.poisonDelay;
     }
 
-    public void PoisonPlaying()
+    public void PlayingPotionPoison()
     {
         Brain buffer = _buffers[BuffType.Potion_Poison] as Brain;
 
@@ -245,14 +252,14 @@ public class Buff : MonoBehaviour
     #endregion
 
     #region Freeze Functions
-    public void FreezeBegin()
+    public void BeginPotionFreeze()
     {
         Brain buffer = _buffers[BuffType.Potion_Freeze] as Brain;
 
         _ownerController.PlayerStatData.moveSpeed.AddModifier(buffer.BuffCompo.BuffStatData.freezeMoveSpeedModifier);
     }
 
-    public void FreezeEnd()
+    public void EndPotionFreeze()
     {
         Brain buffer = _buffers[BuffType.Potion_Freeze] as Brain;
 
@@ -261,7 +268,7 @@ public class Buff : MonoBehaviour
     #endregion
 
     #region Paralysis Functions
-    public void ParalysisBegin()
+    public void BeginPotionParalysis()
     {
         GameManager.Instance.PlayerInstance.StopImmediately(true);
 
@@ -269,7 +276,7 @@ public class Buff : MonoBehaviour
         CameraManager.Instance._currentCam.IsCamRotateStop = true;
     }
 
-    public void ParalysisEnd()
+    public void EndPotionParalysis()
     {
         GameManager.Instance.PlayerInstance.IsPlayerStop = false;
         CameraManager.Instance._currentCam.IsCamRotateStop = false;

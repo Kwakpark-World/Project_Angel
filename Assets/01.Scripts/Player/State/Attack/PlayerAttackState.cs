@@ -64,7 +64,7 @@ public class PlayerAttackState : PlayerState
                     if (IsCritical())
                         _player.PlayerStatData.attackPower.AddModifier(modifierValue);
 
-                    AttackBlood(); AttackExtraMaxHealth(); AttackCooldown(); HermesRun();
+                    PlayRuneEffect();
 
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
                     HitEnemyAction(brain);
@@ -82,7 +82,7 @@ public class PlayerAttackState : PlayerState
 
     public void Attack(List<RaycastHit> enemies)
     {
-        float modifierValue = _player.PlayerStatData.GetAttackPower() * _player.PlayerStatData.GetCriticalDamageMultiplier();
+        float modifierValue = _player.PlayerStatData.GetAttackPower() * _player.PlayerStatData.GetCriticalDamageMultiplier() - _player.PlayerStatData.GetAttackPower();
         if (IsCritical())
         {
             _player.PlayerStatData.attackPower.AddModifier(modifierValue);
@@ -191,10 +191,33 @@ public class PlayerAttackState : PlayerState
     }
 
     #region Rune
-    private void AttackBlood()
+    private void PlayRuneEffect()
     {
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Heracles))
+        {
+            if ((this as PlayerMeleeAttackState)._comboCounter == 3)
+            {
+
+            }
+        }
+
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Heimdall))
+        {
+            _player.dashPrevTime += 0f; // +5f;
+            _player.defensePrevTime += 0f;
+            _player.chargingPrevTime += 0f;
+            _player.slamPrevTime += 0f;
+        }
+
+        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Freyja))
+        {
+            _player.PlayerStatData.maxHealth.AddModifier(1f);
+        }
+
         if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Raphael))
+        {
             _player.CurrentHealth += 3f;
+        }
     }
 
     private void HermesRun()
@@ -217,41 +240,6 @@ public class PlayerAttackState : PlayerState
                 timer = 0;
             }
         }
-    }
-
-    private void Herculesfighting()
-    {
-        //감전 마지막 공격일 때 추가 데미지
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Heracles))
-        {
-            PlayerMeleeAttackState pat = _player.StateMachine.GetState(PlayerStateEnum.MeleeAttack) as PlayerMeleeAttackState;
-            if (pat._comboCounter == 3)
-            {
-                Debug.Log("3타임");
-            }
-        }
-    }
-
-    private void AttackExtraMaxHealth()
-    {
-        //remove를 만들어 줘야 할 수도 있음 생각을 해보고 결정을 하셈 ><
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Freyja))
-            _player.PlayerStatData.maxHealth.AddModifier(1f);
-
-        if (_player.CurrentHealth == 0)
-        {
-            _player.PlayerStatData.maxHealth.RemoveModifier(1f);
-        }
-    }
-
-    private void AttackCooldown()
-    {
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Heimdall))
-        {
-            _player.PlayerStatData.defenseCooldown.AddModifier(-1f);
-            _player.PlayerStatData.slamCooldown.AddModifier(-1f);
-        }
-
     }
     #endregion
 

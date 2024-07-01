@@ -121,10 +121,10 @@ public abstract class Brain : PoolableMono
             return;
         }
 
-        float finalDamage = incomingDamage - EnemyStatData.GetDefensivePower();
-        CurrentHealth -= Mathf.Max(finalDamage, 0f);
+        int finalDamage = Mathf.RoundToInt(incomingDamage - EnemyStatData.GetDefensivePower());
+        CurrentHealth -= Mathf.Max(finalDamage, 0);
 
-        DamageTextCompo.SpawnParticle(enemyCenter.position, finalDamage.ToString("#.##"), Color.red, 0.5f);
+        DamageTextCompo.SpawnParticle(enemyCenter.position, finalDamage.ToString(), Color.red, 0.5f);
         HealthBarCompo.UpdateHealthBar();
         AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
 
