@@ -15,6 +15,7 @@ public class Player : PlayerController
     public GameObject weapon;
 
     public LayerMask enemyLayer;
+    public ParticleSystem shieldParticle;
 
     [Header("CoolTime Settings")]
     public float dashPrevTime = 0f;
@@ -27,6 +28,7 @@ public class Player : PlayerController
     public float slamLeftCooldown;
 
     private float _currentAwakenGauge = 0f;
+    public float CurrentShield = 10f;
     public float CurrentAwakenGauge
     {
         get
@@ -80,6 +82,7 @@ public class Player : PlayerController
     public bool IsAwakening;
     public bool IsPlayerStop;
     public bool IsGroundState;
+    public bool isShield;
 
     public Vector3 MousePosInWorld { get; private set; }
 
@@ -182,9 +185,7 @@ public class Player : PlayerController
 
     public void OnHit(float incomingDamage, Brain attacker = null)
     {
-        //����ٰ�?�÷��̾� �ݻ� �� �ϱⷯ��
-
-        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Uriel) && attacker)
+        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Uriel) && attacker && !isShield)
         {
             attacker.OnHit(incomingDamage * 0.25f);
         }
@@ -194,6 +195,7 @@ public class Player : PlayerController
             CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1.5f);
             return;
         }
+
         if (IsDie)
             return;
         if (StateMachine.CompareState(PlayerStateEnum.Awakening))
@@ -207,7 +209,10 @@ public class Player : PlayerController
 
             if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
             {
-                CurrentHealth = Mathf.Max(CurrentHealth, 1f);
+                if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
+                {
+                    CurrentHealth = Mathf.Max(CurrentHealth, 1f);
+                }
             }
         }
 
@@ -218,6 +223,8 @@ public class Player : PlayerController
             OnDie();
         }
     }
+
+
 
     #region Player Stat Func
     public void SetPlayerStat(PlayerStatType stat, float value)
