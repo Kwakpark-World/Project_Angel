@@ -26,11 +26,14 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         _isEffectOn = false;
         _isStabMove = false;
         _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+
+        CameraManager.Instance._currentCam.IsCamRotateStop = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+        CameraManager.Instance._currentCam.IsCamRotateStop = false;
 
         _player.enemyNormalHitDuplicateChecker.Clear();
 

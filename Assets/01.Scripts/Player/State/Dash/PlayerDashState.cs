@@ -12,11 +12,13 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
 
+        CameraManager.Instance._currentCam.IsCamRotateStop = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+        CameraManager.Instance._currentCam.IsCamRotateStop = false;
     }
 
     public override void UpdateState()
