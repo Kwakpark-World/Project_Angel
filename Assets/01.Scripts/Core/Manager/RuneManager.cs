@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +11,7 @@ public class RuneManager : MonoSingleton<RuneManager>
     private readonly string _assetPath = "Assets/11.SO/Rune";
 
     [SerializeField]
+    private RuneListSO _baseRuneList;
     private RuneListSO _runeList;
     [field: SerializeField]
     public float UnequipWaitTime { get; private set; }
@@ -28,7 +28,7 @@ public class RuneManager : MonoSingleton<RuneManager>
     {
         base.Awake();
 
-        _runeList = Instantiate(_runeList);
+        _runeList = Instantiate(_baseRuneList);
 
         for (int i = 0; i < _equipedRunes.Count; ++i)
         {
@@ -47,20 +47,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 
         if (_runeList.list.Count <= 0)
         {
-            string[] assetNames = AssetDatabase.FindAssets("", new[] { _assetPath });
-
-            foreach (string assetName in assetNames)
-            {
-                string path = AssetDatabase.GUIDToAssetPath(assetName);
-                runeData = AssetDatabase.LoadAssetAtPath<RuneDataSO>(path);
-
-                if (!runeData)
-                {
-                    continue;
-                }
-
-                _runeList.list.Add(runeData);
-            }
+            _runeList = Instantiate(_baseRuneList);
         }
 
         Rune rune = PoolManager.Instance.Pop(PoolType.Rune, runeSpawnPos) as Rune;
