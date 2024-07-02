@@ -1,15 +1,11 @@
-using AmplifyShaderEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -209,31 +205,11 @@ public class Player : PlayerController
 
         if (CurrentHealth > 0f)
         {
-            if (CurrentShield > 0f && BuffCompo.GetBuffState(BuffType.Rune_Defense_Athena))
-            {
-                isShield = true;
-                PoolManager.Instance.Pop(PoolType.Effect_Shield, playerCenter.position);
-                if (CurrentShield >= incomingDamage)
-                {
-                    CurrentShield -= incomingDamage;
-                    incomingDamage = 0f;
-                }
-                else
-                {
-                    incomingDamage -= CurrentShield;
-                    CurrentShield = 0f;
-                }
-            }
-
-            //PoolManager.Instance.Push( as PoolableMono);
             CurrentHealth -= Mathf.Max(Mathf.RoundToInt(incomingDamage - PlayerStatData.GetDefensivePower()), 0);
 
             if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
             {
-                if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
-                {
-                    CurrentHealth = Mathf.Max(CurrentHealth, 1f);
-                }
+                CurrentHealth = Mathf.Max(CurrentHealth, 1f);
             }
         }
 
@@ -294,7 +270,7 @@ public class Player : PlayerController
             if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time)
             {
                 return;
-            } 
+            }
 
             StateMachine.ChangeState(PlayerStateEnum.Defense);
         }

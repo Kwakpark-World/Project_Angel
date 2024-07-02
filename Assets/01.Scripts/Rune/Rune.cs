@@ -37,11 +37,11 @@ public class Rune : PoolableMono
         transform.Rotate(Vector3.up, _rotateSpeed * Time.deltaTime);
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
-            interactive();
+            Interactive();
         }
     }
 
-    private void interactive()
+    private void Interactive()
     {
         float distancePlayer = Vector3.Distance(gameObject.transform.position, GameManager.Instance.PlayerInstance.transform.position);
 
@@ -54,6 +54,7 @@ public class Rune : PoolableMono
 
             StopAllCoroutines();
             GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_runeData.buffType);
+            transform.Find(_runeData.name).gameObject.SetActive(false);
             PoolManager.Instance.Push(this);
         }
         /* CameraManager.Instance.StopZoomCam();*/
