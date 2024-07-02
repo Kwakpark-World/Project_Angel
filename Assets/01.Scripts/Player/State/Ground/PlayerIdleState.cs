@@ -26,7 +26,10 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.UpdateState();
 
-        _player.SetVelocity(Vector3.zero);
+        Vector3 moveVel = Vector3.zero;
+        moveVel.y = _player.RigidbodyCompo.velocity.y;
+
+        _player.SetVelocity(moveVel);
              
         //x 축으로 값이 눌렸다면 이동상태로 변경해주면 됨.
         float xInput = _player.PlayerInput.XInput;
