@@ -23,6 +23,7 @@ public class PlayerDefenseState : PlayerGroundState
         _player.IsDefense = true;
         _player.StopImmediately(false);
 
+        Debug.Log("Defense Enter");
 
         _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
         foreach (var particle in _thisParticles)
@@ -53,6 +54,8 @@ public class PlayerDefenseState : PlayerGroundState
 
         if (!_player.PlayerInput.isDefense || _defenseTimer >= _player.PlayerStatData.GetDefenseDuration())
         {
+            Debug.Log("Defense out");
+
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }

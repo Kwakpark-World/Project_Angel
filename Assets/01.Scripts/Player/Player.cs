@@ -139,12 +139,12 @@ public class Player : PlayerController
         StateMachine.Initialize(PlayerStateEnum.Idle, this);
         PlayerStatData.InitializeAllModifiers();
         CurrentHealth = PlayerStatData.GetMaxHealth();
-        
+
         defaultMoveSpeed = PlayerStatData.GetMoveSpeed();
 
-        UIManager.Instance.PlayerHUDProperty?.UpdateHealth(); 
-        UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge(); 
-        UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge(); 
+        UIManager.Instance.PlayerHUDProperty?.UpdateHealth();
+        UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge();
+        UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge();
     }
 
     protected override void Update()
@@ -224,7 +224,7 @@ public class Player : PlayerController
                     CurrentShield = 0f;
                 }
             }
-            
+
             //PoolManager.Instance.Push( as PoolableMono);
             CurrentHealth -= Mathf.Max(Mathf.RoundToInt(incomingDamage - PlayerStatData.GetDefensivePower()), 0);
 
@@ -256,12 +256,12 @@ public class Player : PlayerController
     private void GetSkillLeftCooldown()
     {
         PlayerStat stat = GameManager.Instance.PlayerInstance.PlayerStatData;
-        dashLeftCooldown = Mathf.Clamp01((stat.GetDashCooldown() - (dashPrevTime + Time.time)) / stat.GetDashCooldown());
-        slamLeftCooldown = Mathf.Clamp01((stat.GetSlamCooldown() - (slamPrevTime + Time.time)) / stat.GetSlamCooldown());
-        defenseLeftCooldown = Mathf.Clamp01((stat.GetDefenseCooldown() - (defensePrevTime + Time.time)) / stat.GetDefenseCooldown());
-        chargingLeftCooldown = Mathf.Clamp01((stat.GetChargingAttackCooldown() - (chargingPrevTime + Time.time)) / stat.GetChargingAttackCooldown());
+        dashLeftCooldown = Mathf.Clamp01((dashPrevTime + stat.GetDashCooldown() - Time.time) / stat.GetDashCooldown());
+        defenseLeftCooldown = Mathf.Clamp01((defensePrevTime + stat.GetDefenseCooldown() - Time.time) / stat.GetDefenseCooldown());
+        chargingLeftCooldown = Mathf.Clamp01((chargingPrevTime + stat.GetChargingAttackCooldown() - Time.time) / stat.GetChargingAttackCooldown());
+        slamLeftCooldown = Mathf.Clamp01((slamPrevTime + stat.GetSlamCooldown() - Time.time) / stat.GetSlamCooldown());
 
-        UIManager.Instance.PlayerHUDProperty.UpdateSkillCooldown(dashLeftCooldown, defenseLeftCooldown, slamLeftCooldown, chargingLeftCooldown);
+        UIManager.Instance.PlayerHUDProperty?.UpdateSkillCooldown(dashLeftCooldown, defenseLeftCooldown, slamLeftCooldown, chargingLeftCooldown);
     }
     #endregion
 
@@ -287,9 +287,17 @@ public class Player : PlayerController
 
     private void PlayerDefense()
     {
+        Debug.Log("Defense Input");
         if (IsGroundDetected())
         {
-            if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time) return;
+            Debug.Log("Defense groundCheck");
+            if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time)
+            {
+                Debug.Log("defense not cool");
+                return;
+            } 
+
+            Debug.Log("Defense");
             StateMachine.ChangeState(PlayerStateEnum.Defense);
         }
 

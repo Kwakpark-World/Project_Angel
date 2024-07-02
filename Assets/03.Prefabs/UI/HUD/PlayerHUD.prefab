@@ -334,7 +334,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 42bc5fbc1e30d664e8d0454dae54b17a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e46f708c8cb02404cbe6e41512b2603e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1753,7 +1753,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 041232d435a80804e85ecbfb67da00d5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fa9720e71f4951240841197bd156e9b1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2194,21 +2194,26 @@ MonoBehaviour:
   _poisonBuffDurationImage: {fileID: 925392853108355007}
   _freezeBuffDurationImage: {fileID: 3836787576400727794}
   _paralysisBuffDurationImage: {fileID: 1023649888671434735}
+  _normalDefenseSkillIcon: {fileID: 21300000, guid: feb80da55bd87314a81acff79eaa87f2,
+    type: 3}
+  _awakenDefenseSkillIcon: {fileID: 21300000, guid: 0720a143210ca6e4b858f97fbce6106d,
+    type: 3}
+  _defenseSkillIconImage: {fileID: 580054978557677011}
   _defenseSkillCooldownImage: {fileID: 5952154595962533949}
-  _normalSlamSkillIcon: {fileID: 21300000, guid: 041232d435a80804e85ecbfb67da00d5,
+  _normalChargingSkillIcon: {fileID: 21300000, guid: e46f708c8cb02404cbe6e41512b2603e,
     type: 3}
-  _awakenSlamSkillIcons:
-  - {fileID: 21300000, guid: 97adb80a60e09a84399ed9b66d929eb5, type: 3}
-  - {fileID: 21300000, guid: d240c9f9faf97ef46829f1cb2f033f5d, type: 3}
-  - {fileID: 21300000, guid: 16a6365a2d056cc4da392a3d5b9bd8a7, type: 3}
-  _slamSkillIconImage: {fileID: 3498340745548758632}
-  _slamSkillCooldownImage: {fileID: 2600518868136936561}
-  _normalChargingSkillIcon: {fileID: 21300000, guid: 42bc5fbc1e30d664e8d0454dae54b17a,
-    type: 3}
-  _awakenChargingSkillIcon: {fileID: 21300000, guid: 2edac399a1f3b134092bdd5cc9fc4750,
+  _awakenChargingSkillIcon: {fileID: 21300000, guid: 78190e7f76db9dc4cbcdddeeb85b1a76,
     type: 3}
   _chargingSkillIconImage: {fileID: 6049224482802691555}
   _chargingSkillCooldownImage: {fileID: 8341460142196384791}
+  _normalSlamSkillIcon: {fileID: 21300000, guid: fa9720e71f4951240841197bd156e9b1,
+    type: 3}
+  _awakenSlamSkillIcons:
+  - {fileID: 21300000, guid: cc410b7ccd49382429f59e339d93a8ba, type: 3}
+  - {fileID: 21300000, guid: cc410b7ccd49382429f59e339d93a8ba, type: 3}
+  - {fileID: 21300000, guid: cc410b7ccd49382429f59e339d93a8ba, type: 3}
+  _slamSkillIconImage: {fileID: 3498340745548758632}
+  _slamSkillCooldownImage: {fileID: 2600518868136936561}
   _healthBarImage: {fileID: 3350744732992145334}
   _healthText: {fileID: 6078309371810255808}
   _awakenGaugeSlider: {fileID: 5661697091185870117}
@@ -3974,7 +3979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 47f78e7c2c71e8b43b5d791e269d30e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: feb80da55bd87314a81acff79eaa87f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
