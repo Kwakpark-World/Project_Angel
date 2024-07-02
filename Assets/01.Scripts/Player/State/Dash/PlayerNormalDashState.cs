@@ -27,7 +27,6 @@ public class PlayerNormalDashState : PlayerDashState
         base.UpdateState();
 
         _dashDirection = _player.transform.forward;
-        _dashDirection.y += _player.RigidbodyCompo.velocity.y;
 
         _player.SetVelocity(_dashDirection * _player.PlayerStatData.GetDashSpeed() * Time.timeScale);
 
