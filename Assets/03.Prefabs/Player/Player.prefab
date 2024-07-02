@@ -5762,21 +5762,22 @@ MonoBehaviour:
     m_Bits: 1024
   groundCheckDistanceTolerance: 1.6
   playerCenterToGroundDistance: 0
-  AnimatorCompo: {fileID: 0}
   <PlayerStatData>k__BackingField: {fileID: 11400000, guid: a76f72377b2b79d4096bd0b5b17b029c,
     type: 2}
-  CurrentHealth: 100
   playerCenter: {fileID: 5140108053741916498}
   weapon: {fileID: 7559007113953224229}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  shieldParticle: {fileID: 1470568570091842203}
-  defenseTime: 3
-  slamPrevTime: 0
+  dashPrevTime: 0
   defensePrevTime: 0
-  prevChargingTime: 0
-  shieldPrevTime: 0
+  chargingPrevTime: 0
+  slamPrevTime: 0
+  dashLeftCooldown: 0
+  defenseLeftCooldown: 0
+  chargingLeftCooldown: 0
+  slamLeftCooldown: 0
+  defaultMoveSpeed: 0
   CurrentShield: 10
   <normalStateLabel>k__BackingField:
     m_LabelString: PlayerNormal
@@ -22588,22 +22589,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6164784500157121122, guid: 80612ac72e5e366478437414a7ea7f87,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8768139750422357353, guid: 80612ac72e5e366478437414a7ea7f87,
         type: 3}
       propertyPath: m_Name
       value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 8895682376636235504, guid: 80612ac72e5e366478437414a7ea7f87,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80612ac72e5e366478437414a7ea7f87, type: 3}
---- !u!198 &1470568570091842203 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6164784500157121122, guid: 80612ac72e5e366478437414a7ea7f87,
-    type: 3}
-  m_PrefabInstance: {fileID: 4748259130628548857}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5687084255750170166 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1083573632701697743, guid: 80612ac72e5e366478437414a7ea7f87,
