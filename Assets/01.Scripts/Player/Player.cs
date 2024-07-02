@@ -1,11 +1,15 @@
+using AmplifyShaderEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : PlayerController
 {
@@ -283,6 +287,8 @@ public class Player : PlayerController
 
     private void PlayerDefense()
     {
+        if (IsPlayerStop) return;
+
         if (IsGroundDetected())
         {
             if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time)
@@ -292,6 +298,7 @@ public class Player : PlayerController
 
             StateMachine.ChangeState(PlayerStateEnum.Defense);
         }
+
     }
 
     private void ResetSkillCooldown()
@@ -307,6 +314,8 @@ public class Player : PlayerController
 
     private void HandleDashEvent()
     {
+        if (IsPlayerStop) return;
+
         if (PlayerStatData.GetDashCooldown() + dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
 

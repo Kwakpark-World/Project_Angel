@@ -13,7 +13,6 @@ public class PlayerNormalDashState : PlayerDashState
     public override void Enter()
     {
         base.Enter();
-
         _player.PlayerInput.SlamSkillEvent += SlamSkillHandle;
     }
 
@@ -28,6 +27,7 @@ public class PlayerNormalDashState : PlayerDashState
         base.UpdateState();
 
         _dashDirection = _player.transform.forward;
+        _dashDirection.y += _player.RigidbodyCompo.velocity.y;
 
         _player.SetVelocity(_dashDirection * _player.PlayerStatData.GetDashSpeed() * Time.timeScale);
 
@@ -39,6 +39,7 @@ public class PlayerNormalDashState : PlayerDashState
 
     private void SlamSkillHandle()
     {
+        if (_player.IsPlayerStop) return;
         if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
 
         _player.slamPrevTime = Time.time;

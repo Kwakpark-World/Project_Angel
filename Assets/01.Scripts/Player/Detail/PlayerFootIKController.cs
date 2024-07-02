@@ -52,7 +52,6 @@ public class PlayerFootIKController : MonoBehaviour
                     _player.AnimatorCompo.SetIKPosition(AvatarIKGoal.RightFoot, footPos);
                     //_player.AnimatorCompo.SetIKRotation(AvatarIKGoal.RightFoot, Quaternion.LookRotation(_player.transform.forward, hit.normal));
                 }
-
             }
         }
     }

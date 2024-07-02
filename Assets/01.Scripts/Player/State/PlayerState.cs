@@ -50,6 +50,8 @@ public class PlayerState
     {
         if (_player.IsPlayerStop)
         {
+            _endTriggerCalled = true;
+            _player.StopImmediately(true);
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
 
