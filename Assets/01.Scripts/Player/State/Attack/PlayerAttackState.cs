@@ -195,7 +195,9 @@ public class PlayerAttackState : PlayerState
     {
         if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Heracles))
         {
-            if ((this as PlayerMeleeAttackState)._comboCounter == 3)
+            PlayerMeleeAttackState playerMeleeAttackState = this as PlayerMeleeAttackState;
+
+            if (playerMeleeAttackState != null && playerMeleeAttackState._comboCounter == 3)
             {
 
             }
