@@ -2,14 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class RuneManager : MonoSingleton<RuneManager>
 {
-    private readonly string _assetPath = "Assets/11.SO/Rune";
-
     [SerializeField]
     private RuneListSO _baseRuneList;
     private RuneListSO _runeList;
@@ -23,18 +20,6 @@ public class RuneManager : MonoSingleton<RuneManager>
     private BuffType _synergizeRuneType;
 
     private List<Rune> _runes;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        _runeList = Instantiate(_baseRuneList);
-
-        for (int i = 0; i < _equipedRunes.Count; ++i)
-        {
-            _equipedRunes[i] = null;
-        }
-    }
 
     public void SetRuneList(RuneListSO list)
     {
@@ -97,6 +82,8 @@ public class RuneManager : MonoSingleton<RuneManager>
             return false;
         }
 
+        GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_equipedRunes[index].buffType);
+
         _equipedRunes[index] = null;
 
         for (int i = 0; i < 2; ++i)
@@ -136,6 +123,8 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     protected override void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
+        _runeList = Instantiate(_baseRuneList);
+
         for (int i = 0; i < _equipedRunes.Count; ++i)
         {
             TryUnequipRune(i);
