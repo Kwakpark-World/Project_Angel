@@ -17,16 +17,13 @@ public class PlayerHUD : MonoBehaviour
 
     [Header("Player Skill Icon")]
     [SerializeField]
+    private Sprite _normalDefenseSkillIcon;
+    [SerializeField]
+    private Sprite _awakenDefenseSkillIcon;
+    [SerializeField]
+    private Image _defenseSkillIconImage;
+    [SerializeField]
     private Image _defenseSkillCooldownImage;
-
-    [SerializeField]
-    private Sprite _normalSlamSkillIcon;
-    [SerializeField]
-    private List<Sprite> _awakenSlamSkillIcons;
-    [SerializeField]
-    private Image _slamSkillIconImage;
-    [SerializeField]
-    private Image _slamSkillCooldownImage;
 
     [SerializeField]
     private Sprite _normalChargingSkillIcon;
@@ -36,6 +33,15 @@ public class PlayerHUD : MonoBehaviour
     private Image _chargingSkillIconImage;
     [SerializeField]
     private Image _chargingSkillCooldownImage;
+
+    [SerializeField]
+    private Sprite _normalSlamSkillIcon;
+    [SerializeField]
+    private List<Sprite> _awakenSlamSkillIcons;
+    [SerializeField]
+    private Image _slamSkillIconImage;
+    [SerializeField]
+    private Image _slamSkillCooldownImage;
 
     [Header("Player Stat")]
     [SerializeField]
@@ -66,14 +72,16 @@ public class PlayerHUD : MonoBehaviour
 
     public void SetNormalSkillIcon()
     {
-        _slamSkillIconImage.sprite = _normalSlamSkillIcon;
+        _defenseSkillCooldownImage.sprite = _normalDefenseSkillIcon;
         _chargingSkillIconImage.sprite = _normalChargingSkillIcon;
+        _slamSkillIconImage.sprite = _normalSlamSkillIcon;
     }
 
     public void SetAwakenSkillIcon()
     {
-        _slamSkillIconImage.sprite = _awakenSlamSkillIcons[0];
+        _defenseSkillCooldownImage.sprite = _awakenDefenseSkillIcon;
         _chargingSkillIconImage.sprite = _awakenChargingSkillIcon;
+        _slamSkillIconImage.sprite = _awakenSlamSkillIcons[0];
     }
 
     public void UpdateSkillComboIcon(int comboCounter)
