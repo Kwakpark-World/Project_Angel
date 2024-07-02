@@ -287,17 +287,15 @@ public class Player : PlayerController
 
     private void PlayerDefense()
     {
-        Debug.Log("Defense Input");
+        if (IsPlayerStop) return;
+
         if (IsGroundDetected())
         {
-            Debug.Log("Defense groundCheck");
             if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time)
             {
-                Debug.Log("defense not cool");
                 return;
             } 
 
-            Debug.Log("Defense");
             StateMachine.ChangeState(PlayerStateEnum.Defense);
         }
 
@@ -316,6 +314,8 @@ public class Player : PlayerController
 
     private void HandleDashEvent()
     {
+        if (IsPlayerStop) return;
+
         if (PlayerStatData.GetDashCooldown() + dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
 
