@@ -134,7 +134,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
             float stabDistance = _player.CurrentChargingTime * dashDistance;
             
-            _player.SetVelocity(_player.transform.forward * stabDistance * 2 * Time.timeScale);
+            _player.SetVelocity(_player.transform.forward * stabDistance * 2);
             
             //_player.StartCoroutine(MoveToFrontSmooth(_player.transform.position + (_player.transform.forward * stabDistance), _player.AnimatorCompo.speed));
         }

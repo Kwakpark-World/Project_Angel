@@ -26,10 +26,10 @@ public class PlayerNormalDashState : PlayerDashState
     {
         base.UpdateState();
 
-        _dashDirection = _player.transform.forward;
+        _dashDirection = _player.transform.forward * _player.PlayerStatData.GetDashSpeed();
+        _dashDirection.y += _player.RigidbodyCompo.velocity.y;
 
-        _player.SetVelocity(_dashDirection * _player.PlayerStatData.GetDashSpeed() * Time.timeScale);
-
+        _player.SetVelocity(_dashDirection);
         if (_endTriggerCalled)
         {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);

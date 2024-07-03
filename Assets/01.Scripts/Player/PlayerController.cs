@@ -39,6 +39,7 @@ public abstract class PlayerController : MonoBehaviour
         }
     }
     private float _gravity = -9.8f;
+    public float Gravity { get { return _gravity; }  }
 
     protected virtual void Awake()
     {
