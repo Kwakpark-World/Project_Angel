@@ -48,6 +48,11 @@ public class PlayerDefenseState : PlayerGroundState
     {
         base.UpdateState();
 
+        Vector3 moveVel = Vector3.zero;
+        moveVel.y = _player.RigidbodyCompo.velocity.y;
+
+        _player.SetVelocity(moveVel);
+
         _defenseTimer += Time.deltaTime;
 
         if (!_player.PlayerInput.isDefense || _defenseTimer >= _player.PlayerStatData.GetDefenseDuration())

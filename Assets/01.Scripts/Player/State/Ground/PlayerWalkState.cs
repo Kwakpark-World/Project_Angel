@@ -54,6 +54,8 @@ public class PlayerWalkState : PlayerGroundState
     public override void UpdateState()
     {
         base.UpdateState();
+        if (_player.IsPlayerStop)
+            return;
 
         float xInput = _player.PlayerInput.XInput;
         float yInput = _player.PlayerInput.YInput;
@@ -72,6 +74,8 @@ public class PlayerWalkState : PlayerGroundState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
+        if (_player.IsPlayerStop)
+            return;
 
         float xInput = _player.PlayerInput.XInput;
         float yInput = _player.PlayerInput.YInput;
