@@ -43,8 +43,6 @@ public class PlayerState
         _effectTriggerEndCalled = false;
         _animationMoveFreezeToggleTrigger = false;
 
-        _player.AnimatorCompo.speed = 1;
-
         _player.AnimatorCompo.SetBool(_animBoolHash, true);
     }
 
@@ -52,7 +50,6 @@ public class PlayerState
     {
         if (_player.IsPlayerStop != PlayerControlEnum.Move)
         {
-            _endTriggerCalled = true;
             _player.StopImmediately(true);
             if (_player.IsPlayerStop == PlayerControlEnum.Wait)
             {
@@ -62,6 +59,13 @@ public class PlayerState
             else
                 _stateMachine.ChangeState(PlayerStateEnum.Idle, true);
             return;
+        }
+        else
+        {
+            if (_player.AnimatorCompo.speed == 0)
+            {
+                _player.AnimatorCompo.speed = 1;
+            }
         }
 
         _player.AnimatorCompo.SetFloat(_yVelocityHash, _rigidbody.velocity.y);
