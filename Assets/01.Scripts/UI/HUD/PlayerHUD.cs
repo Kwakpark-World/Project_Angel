@@ -68,25 +68,28 @@ public class PlayerHUD : MonoBehaviour
         {
             _durationCoroutines[buffType] = null;
         }
-    } 
+    }
 
     public void SetNormalSkillIcon()
     {
-        _defenseSkillCooldownImage.sprite = _normalDefenseSkillIcon;
+        _defenseSkillIconImage.sprite = _normalDefenseSkillIcon;
         _chargingSkillIconImage.sprite = _normalChargingSkillIcon;
         _slamSkillIconImage.sprite = _normalSlamSkillIcon;
     }
 
     public void SetAwakenSkillIcon()
     {
-        _defenseSkillCooldownImage.sprite = _awakenDefenseSkillIcon;
+        _defenseSkillIconImage.sprite = _awakenDefenseSkillIcon;
         _chargingSkillIconImage.sprite = _awakenChargingSkillIcon;
         _slamSkillIconImage.sprite = _awakenSlamSkillIcons[0];
     }
 
     public void UpdateSkillComboIcon(int comboCounter)
     {
-        _slamSkillIconImage.sprite = _awakenSlamSkillIcons[comboCounter % 3];
+        if (_slamSkillIconImage.sprite == _awakenSlamSkillIcons[(comboCounter - 1) % 3])
+        {
+            _slamSkillIconImage.sprite = _awakenSlamSkillIcons[comboCounter % 3];
+        }
     }
 
     public void StartBuffDuration(BuffType buffType, float duration = 0)
