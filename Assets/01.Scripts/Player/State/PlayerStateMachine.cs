@@ -41,12 +41,14 @@ public class PlayerStateMachine
         StateDictionary.Add(state, playerState);
     }
 
-    public void ChangeState(PlayerStateEnum state)
+    public void ChangeState(PlayerStateEnum state, bool forceChange = false)
     {
         if (_player.IsDie)
             return;
-        if (_player.IsPlayerStop)
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop && !forceChange)
+        {
             return;
+        }
 
         CurrentState.Exit();
         CurrentState = StateDictionary[state];

@@ -57,7 +57,7 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
         if (_endTriggerCalled)                                                                                
         {
-            if (_player.IsPlayerStop) return;
+            if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
             _stateMachine.ChangeState(PlayerStateEnum.NormalChargeStabAttack);
         }
     }

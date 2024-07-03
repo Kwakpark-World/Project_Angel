@@ -41,14 +41,14 @@ public class PlayerGroundState : PlayerState
 
     private void HandlePrimaryAttackEvent()
     {
-        if (_player.IsPlayerStop) return;
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
 
         _stateMachine.ChangeState(PlayerStateEnum.Charging);
     }
 
     private void AwakeningSkillHandle()
     {
-        if (_player.IsPlayerStop) return;
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
         if (_player.IsAwakening) return;
         if (_player.CurrentAwakenGauge < _player.PlayerStatData.GetMaxAwakenGauge()) return;
 
@@ -57,7 +57,7 @@ public class PlayerGroundState : PlayerState
 
     private void SlamSkillHandle()
     {
-        if (_player.IsPlayerStop) return;
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
         if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
         if (!_player.IsGroundDetected()) return;
 

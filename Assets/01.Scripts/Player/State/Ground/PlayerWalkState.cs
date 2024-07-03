@@ -54,7 +54,7 @@ public class PlayerWalkState : PlayerGroundState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_player.IsPlayerStop)
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop)
             return;
 
         float xInput = _player.PlayerInput.XInput;
@@ -74,7 +74,7 @@ public class PlayerWalkState : PlayerGroundState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
-        if (_player.IsPlayerStop)
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop)
             return;
 
         float xInput = _player.PlayerInput.XInput;

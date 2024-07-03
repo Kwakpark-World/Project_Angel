@@ -38,7 +38,7 @@ public class PlayerNormalDashState : PlayerDashState
 
     private void SlamSkillHandle()
     {
-        if (_player.IsPlayerStop) return;
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
         if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
 
         _player.slamPrevTime = Time.time;

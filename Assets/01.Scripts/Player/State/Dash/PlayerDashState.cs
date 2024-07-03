@@ -24,7 +24,7 @@ public class PlayerDashState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_player.IsPlayerStop)
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop)
             return;
     }
 

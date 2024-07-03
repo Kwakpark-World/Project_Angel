@@ -7,6 +7,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+public enum PlayerControlEnum 
+{
+    Move,
+    Wait,
+    Stop
+}
+
+
 public class Player : PlayerController
 {
     [Space(30f), Header("Attack Settings")]
@@ -79,9 +87,9 @@ public class Player : PlayerController
     public bool IsDefense;
     public bool IsDie;
     public bool IsAwakening;
-    public bool IsPlayerStop;
     public bool IsGroundState;
     public bool isShield;
+    public PlayerControlEnum IsPlayerStop = PlayerControlEnum.Move;
 
     public Vector3 MousePosInWorld { get; private set; }
 
@@ -263,7 +271,7 @@ public class Player : PlayerController
 
     private void PlayerDefense()
     {
-        if (IsPlayerStop) return;
+        if (IsPlayerStop == PlayerControlEnum.Stop) return;
 
         if (IsGroundDetected())
         {
@@ -290,7 +298,7 @@ public class Player : PlayerController
 
     private void HandleDashEvent()
     {
-        if (IsPlayerStop) return;
+        if (IsPlayerStop == PlayerControlEnum.Stop) return;
 
         if (PlayerStatData.GetDashCooldown() + dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;
