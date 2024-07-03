@@ -133,8 +133,11 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
             }
 
             float stabDistance = _player.CurrentChargingTime * dashDistance;
-            
-            _player.SetVelocity(_player.transform.forward * stabDistance * 2);
+
+            Vector3 moveDir = _player.transform.forward * stabDistance * 2;
+            moveDir.y += _player.RigidbodyCompo.velocity.y;
+
+            _player.SetVelocity(moveDir);
             
             //_player.StartCoroutine(MoveToFrontSmooth(_player.transform.position + (_player.transform.forward * stabDistance), _player.AnimatorCompo.speed));
         }
