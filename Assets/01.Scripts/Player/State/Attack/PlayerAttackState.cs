@@ -40,7 +40,7 @@ public class PlayerAttackState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_player.IsPlayerStop) return;
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
 
         IsCritical();
         /*Gizmos.matrix = Matrix4x4.TRS(_player.transform.TransformPoint(_player.transform.position + _attackOffset), _player.transform.rotation, _player.transform.lossyScale);

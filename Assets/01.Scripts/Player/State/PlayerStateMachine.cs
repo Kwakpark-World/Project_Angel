@@ -45,7 +45,7 @@ public class PlayerStateMachine
     {
         if (_player.IsDie)
             return;
-        if (_player.IsPlayerStop && !forceChange)
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop && !forceChange)
         {
             return;
         }

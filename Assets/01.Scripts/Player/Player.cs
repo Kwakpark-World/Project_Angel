@@ -271,7 +271,7 @@ public class Player : PlayerController
 
     private void PlayerDefense()
     {
-        if (IsPlayerStop) return;
+        if (IsPlayerStop == PlayerControlEnum.Stop) return;
 
         if (IsGroundDetected())
         {
@@ -298,7 +298,7 @@ public class Player : PlayerController
 
     private void HandleDashEvent()
     {
-        if (IsPlayerStop) return;
+        if (IsPlayerStop == PlayerControlEnum.Stop) return;
 
         if (PlayerStatData.GetDashCooldown() + dashPrevTime > Time.time) return;
         if (StateMachine.CurrentState._actionTriggerCalled) return;

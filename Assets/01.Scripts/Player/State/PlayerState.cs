@@ -57,7 +57,7 @@ public class PlayerState
             if (_player.IsPlayerStop == PlayerControlEnum.Wait)
             {
                 _player.AnimatorCompo.speed = 0;
-                _stateMachine.ChangeState(PlayerStateEnum.Idle);
+                return;
             }
             else
                 _stateMachine.ChangeState(PlayerStateEnum.Idle, true);
