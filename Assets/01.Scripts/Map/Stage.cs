@@ -70,7 +70,7 @@ public class Stage : MonoBehaviour
     {
         GameManager.Instance.PlayerInstance.StopImmediately(true);
 
-        GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+        GameManager.Instance.PlayerInstance.IsPlayerStop = PlayerControlEnum.Stop;
 
         for (int i = 0; i < _barriers.Count; i++)
         {
@@ -82,14 +82,14 @@ public class Stage : MonoBehaviour
         RuneManager.Instance.SpawnRune(_runeSpawnTrm.position);
         gameObject.SetActive(false);
 
-        GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+        GameManager.Instance.PlayerInstance.IsPlayerStop = PlayerControlEnum.Move;
     }
 
     private IEnumerator LockStage()
     {
         GameManager.Instance.PlayerInstance.StopImmediately(true);
 
-        GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+        GameManager.Instance.PlayerInstance.IsPlayerStop = PlayerControlEnum.Stop;
 
         for (int i = 0; i < _barriers.Count; i++)
         {
@@ -100,7 +100,7 @@ public class Stage : MonoBehaviour
 
         SoundManager.Instance.ChangeBGMMode(BGMMode.Combat);
 
-        GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+        GameManager.Instance.PlayerInstance.IsPlayerStop = PlayerControlEnum.Move;
     }
 
     private void OnTriggerEnter(Collider other)

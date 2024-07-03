@@ -85,13 +85,13 @@ public class UIManager : MonoSingleton<UIManager>
                 {
                     if (popupToggleValue)
                     {
-                        GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+                        GameManager.Instance.PlayerInstance.IsPlayerStop = PlayerControlEnum.Stop;
                     }
                     else
                     {
                         if (!GameManager.Instance.PlayerInstance.BuffCompo.GetBuffState(BuffType.Potion_Paralysis))
                         {
-                            GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+                            GameManager.Instance.PlayerInstance.IsPlayerStop = PlayerControlEnum.Move;
                         }
                     }
 

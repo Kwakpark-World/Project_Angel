@@ -272,13 +272,13 @@ public class Buff : MonoBehaviour
     {
         GameManager.Instance.PlayerInstance.StopImmediately(true);
 
-        GameManager.Instance.PlayerInstance.IsPlayerStop = true;
+        GameManager.Instance.PlayerInstance.IsPlayerStop = PlayerControlEnum.Wait;
         CameraManager.Instance._currentCam.IsCamRotateStop = true;
     }
 
     public void EndPotionParalysis()
     {
-        GameManager.Instance.PlayerInstance.IsPlayerStop = false;
+        GameManager.Instance.PlayerInstance.IsPlayerStop = PlayerControlEnum.Move;
         CameraManager.Instance._currentCam.IsCamRotateStop = false;
     }
     #endregion
