@@ -46,7 +46,10 @@ public class PlayerStateMachine
         if (_player.IsDie)
             return;
         if (_player.IsPlayerStop)
+        {
+            ChangeState(PlayerStateEnum.Idle);
             return;
+        }
 
         CurrentState.Exit();
         CurrentState = StateDictionary[state];

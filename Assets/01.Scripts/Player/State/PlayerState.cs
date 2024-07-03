@@ -52,7 +52,7 @@ public class PlayerState
         {
             _endTriggerCalled = true;
             _player.StopImmediately(true);
-            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+            return;
         }
 
         _player.AnimatorCompo.SetFloat(_yVelocityHash, _rigidbody.velocity.y);
