@@ -80,7 +80,7 @@ public class EnemyAreaPotion : PoolableMono
                     break;
 
                 case BuffType.Potion_Paralysis:
-                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner);
+                    GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_potionBuffType, owner.BuffCompo.BuffStatData.paralysisDuration, owner);
 
                     break;
             }
