@@ -30,7 +30,7 @@ public class Player : PlayerController
     public float dashLeftCooldown;
     public float defenseLeftCooldown;
     public float chargingLeftCooldown;
-    public float slamLeftCooldown;
+    public float QSkillCoolDonw;
 
     public float defaultMoveSpeed = 0f;
 
@@ -175,6 +175,7 @@ public class Player : PlayerController
         #endregion
 
         SetMousePosInWorld();
+        //Skill_Synergy(enemy);
 
     }
 
@@ -193,6 +194,8 @@ public class Player : PlayerController
 
     public void OnHit(float incomingDamage, Brain attacker = null)
     {
+        CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f);
+        TimeManager.Instance.TimeChange(0.8f, 0.6f);
         if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Uriel) && attacker && !isShield)
         {
             attacker.OnHit(incomingDamage * 0.25f);
@@ -243,11 +246,12 @@ public class Player : PlayerController
         dashLeftCooldown = Mathf.Clamp01((dashPrevTime + stat.GetDashCooldown() - Time.time) / stat.GetDashCooldown());
         defenseLeftCooldown = Mathf.Clamp01((defensePrevTime + stat.GetDefenseCooldown() - Time.time) / stat.GetDefenseCooldown());
         chargingLeftCooldown = Mathf.Clamp01((chargingPrevTime + stat.GetChargingAttackCooldown() - Time.time) / stat.GetChargingAttackCooldown());
-        slamLeftCooldown = Mathf.Clamp01((slamPrevTime + stat.GetSlamCooldown() - Time.time) / stat.GetSlamCooldown());
+        QSkillCoolDonw = Mathf.Clamp01((slamPrevTime + stat.GetSlamCooldown() - Time.time) / stat.GetSlamCooldown());
 
-        UIManager.Instance.PlayerHUDProperty?.UpdateSkillCooldown(dashLeftCooldown, defenseLeftCooldown, slamLeftCooldown, chargingLeftCooldown);
+        UIManager.Instance.PlayerHUDProperty?.UpdateSkillCooldown(dashLeftCooldown, defenseLeftCooldown, QSkillCoolDonw, chargingLeftCooldown);
     }
     #endregion
+
 
     #region Player State Func
     private void OnDie()
@@ -457,4 +461,43 @@ public class Player : PlayerController
     }
 
     #endregion
+
+    public void Skill_Synergy()
+    {
+        PlayerStat stat = GameManager.Instance.PlayerInstance.PlayerStatData;
+
+        //µð¹ö±ë¿ë
+        if (Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            QSkillCoolDonw = stat.GetSlamCooldown() - 4;
+            Debug.Log(QSkillCoolDonw);
+        }
+
+        if(Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            CurrentHealth += 1;
+        }
+
+        if(Keyboard.current.shiftKey.wasPressedThisFrame)
+        {
+            StartCoroutine(IAS(3f));
+            
+        }
+    }
+
+    private IEnumerator IAS(float duration)
+    {
+        if (duration >= 3f)
+        {
+            yield return new WaitForSeconds(3f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(duration);
+        }
+
+        BuffCompo.StopBuff(BuffType.Potion_Freeze);
+        BuffCompo.StopBuff(BuffType.Potion_Paralysis);
+        BuffCompo.StopBuff(BuffType.Potion_Poison);
+    }
 }

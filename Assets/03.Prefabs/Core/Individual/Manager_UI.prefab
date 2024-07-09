@@ -49,7 +49,6 @@ MonoBehaviour:
   _fadePanel: {fileID: 1340357858824748545}
   _loadingCircle: {fileID: 2131470566665828570}
   _fadeDuration: 1
-  _mode: 0
 --- !u!1 &2011556863208978387
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,6 +544,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1236052006439370797, guid: e1e32009f89852945a9da2ed527af462,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891751743800039354, guid: e1e32009f89852945a9da2ed527af462,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891751743800039354, guid: e1e32009f89852945a9da2ed527af462,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891751743800039354, guid: e1e32009f89852945a9da2ed527af462,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891751743800039354, guid: e1e32009f89852945a9da2ed527af462,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
