@@ -8,16 +8,11 @@ public class PlayerNormalSlamSkillEffect : PlayerEffect
     {
         base.InitializePoolItem();
 
-        if (GameManager.Instance.PlayerInstance.IsAwakened)
-        {
-            PoolManager.Instance.Push(this);
-        }
-
         PoolManager.Instance.Push(this, duration);
 
         Vector3 dir = Vector3.zero;
         dir.x = -90f; // default Effect angle
-        dir.z = _player.transform.eulerAngles.y; // x°¡ µ¹¾Æ°¡¼­ ÀÌÆåÆ®ÀÇ YÈ¸ÀüÀÌ ¾Æ´Ñ ZÈ¸ÀüÀ» ÇØÁà¾ßµÊ
+        dir.z = _player.transform.eulerAngles.y; // xï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ YÈ¸ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ZÈ¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ßµï¿½
 
         Quaternion rot = Quaternion.Euler(dir);
 

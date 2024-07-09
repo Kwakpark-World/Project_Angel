@@ -25,7 +25,7 @@ public class PlayerNormalSlamState : PlayerAttackState
         _player.StopImmediately(false);
         _isEffectOn = false;
 
-        JumpToFront();
+        //JumpToFront();
     }
 
     public override void Exit()
@@ -40,10 +40,10 @@ public class PlayerNormalSlamState : PlayerAttackState
         base.UpdateState();
 
         
-        if (_actionTriggerCalled )
-        {
-            AttackDrop();
-        }
+        //if (_actionTriggerCalled )
+        //{
+        //    AttackDrop();
+        //}
 
         if (_effectTriggerCalled)
         {

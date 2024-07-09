@@ -18,7 +18,6 @@ public class PlayerEQSkillEffect : PoolableMonoEffect
 
     protected override void Update()
     {
-        Debug.Log("#");
         base.Update();
     }
 

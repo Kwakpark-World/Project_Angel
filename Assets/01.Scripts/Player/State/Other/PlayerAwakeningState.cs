@@ -27,31 +27,52 @@ public class PlayerAwakeningState : PlayerState
         _player.StopImmediately(true);
         _isAwakenOn = false;
         _isEffectOn = false;
+
+        _player.awakenTime = 0f;
     }
 
     public override void Exit()
     {
         base.Exit();
+        _thisParticle.transform.SetParent(_player.effectParent);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_effectTriggerCalled)
+        if (!_isEffectOn)
         {
-            if (!_isEffectOn)
-            {
-                AwakenEffect();
-                _isEffectOn = true;
-            }
-        }
-
-        if (_endTriggerCalled)
-        {
+            AwakenEffect();
             OnAwakening();
+            _isEffectOn = true;
 
-            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+            if (_player.PlayerInput.isPressedKey != PressedKey.None)
+            {
+                if (_player.PlayerInput.isPressedKey == PressedKey.Q)
+                {
+                    _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
+                }
+                else if (_player.PlayerInput.isPressedKey == PressedKey.E)
+                {
+                    _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
+                }
+
+                _player.PlayerInput.isPressedKey = PressedKey.None;
+                return;
+            }
+
+            if (Mathf.Abs(_player.PlayerInput.XInput) > 0.05f || Mathf.Abs(_player.PlayerInput.YInput) > 0.05f)
+            {
+                _stateMachine.ChangeState(PlayerStateEnum.Walk);
+                return;
+            }
+            else
+            {
+                _stateMachine.ChangeState(PlayerStateEnum.Idle);
+                return;
+            }
+            
         }
     }
 
@@ -62,7 +83,7 @@ public class PlayerAwakeningState : PlayerState
         _isAwakenOn = true;
         _player.IsAwakened = true;
 
-        AwakeningEffect();
+        //AwakeningEffect();
         ChangeModelMaterial();
         UIManager.Instance.PlayerHUDProperty?.ChangeSkillIcon(_player.IsAwakened);
 
@@ -78,8 +99,7 @@ public class PlayerAwakeningState : PlayerState
         const string weaponString = Player.weaponMatName;
         const string hairString = Player.hairMatName;
         const string armorString = Player.armorMatName;
-
-
+         
         for (int i = 0; i < _player.renderers.Length; i++)
         {
             List<Material> mats = new List<Material>();
@@ -137,7 +157,6 @@ public class PlayerAwakeningState : PlayerState
         }
 
         ParticleSystem awakenParticle = _player.effectParent.Find(_awakenEffectString).GetComponent<ParticleSystem>();
-        awakenParticle.transform.parent = null;
         awakenParticle.transform.position = _player.transform.position;
         CameraManager.Instance.ShakeCam(0.2f, 0.3f, 3f);
         AwakeningAttack();
@@ -173,11 +192,11 @@ public class PlayerAwakeningState : PlayerState
 
     private IEnumerator PlayerAwakening()
     {
-        while (_player.CurrentAwakenGauge > 0)
+        while (_player.awakenTime < _player.PlayerStatData.GetAwakenTime())
         {
             if (_player.IsAwakened)
             {
-                _player.CurrentAwakenGauge -= 10f * Time.deltaTime;
+                _player.awakenTime += Time.deltaTime;
             }
             yield return null;
         }
@@ -186,14 +205,21 @@ public class PlayerAwakeningState : PlayerState
 
         if (!_player.IsDie)
         {
-            _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            _player.IsAwakened = false;
-            ChangeModelMaterial();
-            UIManager.Instance.PlayerHUDProperty?.ChangeSkillIcon(_player.IsAwakened);
-            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+            EndAwakening();
         }
     }
 
+    private void EndAwakening()
+    {
+        _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        _player.IsAwakened = false;
+        ChangeModelMaterial();
+        UIManager.Instance.PlayerHUDProperty?.ChangeSkillIcon(_player.IsAwakened);
 
+        if (Mathf.Abs(_player.PlayerInput.XInput) > 0.05f || Mathf.Abs(_player.PlayerInput.YInput) > 0.05f)
+            _stateMachine.ChangeState(PlayerStateEnum.Walk);
+        else
+            _stateMachine.ChangeState(PlayerStateEnum.Idle);
+    }
 
 }

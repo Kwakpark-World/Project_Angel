@@ -91,6 +91,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""RSkill"",
+                    ""type"": ""Button"",
+                    ""id"": ""66a9786d-a00e-4787-9830-5b548d61309d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""MousePos"",
                     ""type"": ""Value"",
                     ""id"": ""4c2b6f11-a8f4-4857-b3ca-0cd748a3716b"",
@@ -252,6 +261,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""MouseWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d08528f-ffa5-4f95-9cfd-941e14ee22bd"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -284,6 +304,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Defense = m_Player.FindAction("Defense", throwIfNotFound: true);
         m_Player_QSkill = m_Player.FindAction("QSkill", throwIfNotFound: true);
         m_Player_ESkill = m_Player.FindAction("ESkill", throwIfNotFound: true);
+        m_Player_RSkill = m_Player.FindAction("RSkill", throwIfNotFound: true);
         m_Player_MousePos = m_Player.FindAction("MousePos", throwIfNotFound: true);
         m_Player_MouseWheel = m_Player.FindAction("MouseWheel", throwIfNotFound: true);
     }
@@ -354,6 +375,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Defense;
     private readonly InputAction m_Player_QSkill;
     private readonly InputAction m_Player_ESkill;
+    private readonly InputAction m_Player_RSkill;
     private readonly InputAction m_Player_MousePos;
     private readonly InputAction m_Player_MouseWheel;
     public struct PlayerActions
@@ -367,6 +389,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Defense => m_Wrapper.m_Player_Defense;
         public InputAction @QSkill => m_Wrapper.m_Player_QSkill;
         public InputAction @ESkill => m_Wrapper.m_Player_ESkill;
+        public InputAction @RSkill => m_Wrapper.m_Player_RSkill;
         public InputAction @MousePos => m_Wrapper.m_Player_MousePos;
         public InputAction @MouseWheel => m_Wrapper.m_Player_MouseWheel;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -399,6 +422,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ESkill.started += instance.OnESkill;
             @ESkill.performed += instance.OnESkill;
             @ESkill.canceled += instance.OnESkill;
+            @RSkill.started += instance.OnRSkill;
+            @RSkill.performed += instance.OnRSkill;
+            @RSkill.canceled += instance.OnRSkill;
             @MousePos.started += instance.OnMousePos;
             @MousePos.performed += instance.OnMousePos;
             @MousePos.canceled += instance.OnMousePos;
@@ -430,6 +456,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ESkill.started -= instance.OnESkill;
             @ESkill.performed -= instance.OnESkill;
             @ESkill.canceled -= instance.OnESkill;
+            @RSkill.started -= instance.OnRSkill;
+            @RSkill.performed -= instance.OnRSkill;
+            @RSkill.canceled -= instance.OnRSkill;
             @MousePos.started -= instance.OnMousePos;
             @MousePos.performed -= instance.OnMousePos;
             @MousePos.canceled -= instance.OnMousePos;
@@ -471,6 +500,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDefense(InputAction.CallbackContext context);
         void OnQSkill(InputAction.CallbackContext context);
         void OnESkill(InputAction.CallbackContext context);
+        void OnRSkill(InputAction.CallbackContext context);
         void OnMousePos(InputAction.CallbackContext context);
         void OnMouseWheel(InputAction.CallbackContext context);
     }

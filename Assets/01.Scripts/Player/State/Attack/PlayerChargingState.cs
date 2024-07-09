@@ -67,10 +67,12 @@ public class PlayerChargingState : PlayerChargeState
         else
         {
             _player.chargingPrevTime = Time.time;
-            if (_player.IsAwakened)
-                _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
-            else
-                _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
+            _player.awakenTime = 0;
+
+            //if (_player.IsAwakened)
+            //    _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
+            //else
+            _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
         }
     }
 
@@ -79,16 +81,16 @@ public class PlayerChargingState : PlayerChargeState
         if (!_player.PlayerInput.isCharge) return;
         if (_player.chargingPrevTime + _player.PlayerStatData.GetChargeAttackCooldown() > Time.time) return;
 
-        if (_player.CurrentChargingTime < _minChargeTime)
-            _player.CurrentChargingTime += Time.deltaTime;
+        if (_player.CurrentChargeTime < _minChargeTime)
+            _player.CurrentChargeTime += Time.deltaTime;
         else
         {            
             ChargingEffect();
             CameraManager.Instance.ZoomCam(5.6f, _cameraZoomChangePerTick);
 
-            _player.CurrentChargingTime += Time.deltaTime * 1.5f;
+            _player.CurrentChargeTime += Time.deltaTime * 1.5f;
 
-            if (_player.CurrentChargingTime >= _maxChargeTime - 0.1f)
+            if (_player.CurrentChargeTime >= _maxChargeTime - 0.1f)
             {
                 if (_isBlink) return;
                 _isBlink = true;

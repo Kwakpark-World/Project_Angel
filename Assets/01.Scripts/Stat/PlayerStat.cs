@@ -27,66 +27,72 @@ public enum PlayerStatType
     slamMaxDistance = 300,
     slamCooldown,
     maxAwakenGauge = 310,
+    awakenTime,
     minChargeTime = 320,
     maxChargeTime,
+    whirlwindCoolDown = 330,
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Player")]
 public class PlayerStat : ScriptableObject
 {
     [Header("Defensive stats")]
-    [Tooltip("ÃÖ´ë Ã¼·Â")]
+    [Tooltip("ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½")]
     public Stat maxHealth;
-    [Tooltip("¹æ¾î·Â")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½")]
     public Stat defensivePower;
-    [Tooltip("¹æ¾î Áö¼Ó ½Ã°£")]
+    [Tooltip("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½")]
     public Stat defenseDuration;
-    [Tooltip("¹æ¾î Äð´Ù¿î")]
+    [Tooltip("ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¿ï¿½")]
     public Stat defenseCooldown;
 
     [Header("Offensive stats")]
-    [Tooltip("°ø°Ý·Â")]
+    [Tooltip("ï¿½ï¿½ï¿½Ý·ï¿½")]
     public Stat attackPower;
-    [Tooltip("°ø°Ý ¼Óµµ")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½")]
     public Stat attackSpeed;
-    [Tooltip("Ä¡¸íÅ¸ È®·ü")]
+    [Tooltip("Ä¡ï¿½ï¿½Å¸ È®ï¿½ï¿½")]
     public Stat criticalChance;
-    [Tooltip("Ä¡¸íÅ¸ µ¥¹ÌÁö")]
+    [Tooltip("Ä¡ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public Stat criticalDamageMultiplier;
-    [Tooltip("Â÷Â¡ °ø°Ý ¼Óµµ")]
+    [Tooltip("ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½")]
     public Stat chargeAttackSpeed;
-    [Tooltip("Â÷Â¡ °ø°Ý Âî¸£±â ÀÌµ¿ °Å¸®")]
+    [Tooltip("ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½ ï¿½î¸£ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Å¸ï¿½")]
     public Stat chargeAttackDistance;
-    [Tooltip("Â÷Â¡ °ø°Ý Äð´Ù¿î")]
+    [Tooltip("ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¿ï¿½")]
     public Stat chargeAttackCooldown;
-    [Tooltip("³Ë¹é À§·Â")]
+    [Tooltip("ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public Stat knockbackPower;
-    [Tooltip("³Ë¹é Áö¼Ó ½Ã°£")]
+    [Tooltip("ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½")]
     public Stat knockbackDuration;
 
     [Header("Move stats")]
-    [Tooltip("ÀÌµ¿ ¼Óµµ")]
+    [Tooltip("ï¿½Ìµï¿½ ï¿½Óµï¿½")]
     public Stat moveSpeed;
-    [Tooltip("´ë½Ã ¼Óµµ")]
+    [Tooltip("ï¿½ï¿½ï¿½ ï¿½Óµï¿½")]
     public Stat dashSpeed;
-    [Tooltip("°¢¼º Áß ´ë½Ã ÃÖ´ë °Å¸®")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Å¸ï¿½")]
     public Stat dashMaxDistance;
-    [Tooltip("´ë½Ã Äð´Ù¿î")]
+    [Tooltip("ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¿ï¿½")]
     public Stat dashCooldown;
-    [Tooltip("È¸Àü ¼Óµµ")]
+    [Tooltip("È¸ï¿½ï¿½ ï¿½Óµï¿½")]
     public Stat rotateSpeed;
 
     [Header("Skill stats")]
-    [Tooltip("Q ½ºÅ³ ÃÖ´ë ÀÌµ¿ °Å¸®")]
+    [Tooltip("Q ï¿½ï¿½Å³ ï¿½Ö´ï¿½ ï¿½Ìµï¿½ ï¿½Å¸ï¿½")]
     public Stat slamMaxDistance;
-    [Tooltip("Q ½ºÅ³ Äð´Ù¿î")]
+    [Tooltip("Q ï¿½ï¿½Å³ ï¿½ï¿½Ù¿ï¿½")]
     public Stat slamCooldown;
-    [Tooltip("ÃÖ´ë °¢¼º °ÔÀÌÁö")]
+    [Tooltip("ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public Stat maxAwakenGauge;
-    [Tooltip("ÃÖ¼Ò Â÷Â¡ ½Ã°£")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½")]
+    public Stat awakenTime;
+    [Tooltip("ï¿½Ö¼ï¿½ ï¿½ï¿½Â¡ ï¿½Ã°ï¿½")]
     public Stat minChargeTime;
-    [Tooltip("ÃÖ´ë Â÷Â¡ ½Ã°£")]
+    [Tooltip("ï¿½Ö´ï¿½ ï¿½ï¿½Â¡ ï¿½Ã°ï¿½")]
     public Stat maxChargeTime;
+    [Tooltip("E ï¿½ï¿½Å³ ï¿½ï¿½Ù¿ï¿½")]
+    public Stat whirlwindCoolDown;
 
     private PlayerController _owner;
 
@@ -235,6 +241,11 @@ public class PlayerStat : ScriptableObject
         return maxAwakenGauge.GetValue();
     }
 
+    public float GetAwakenTime()
+    {
+        return awakenTime.GetValue();
+    }
+
     public float GetMinChargeTime()
     {
         return minChargeTime.GetValue();
@@ -243,5 +254,10 @@ public class PlayerStat : ScriptableObject
     public float GetMaxChargeTime()
     {
         return maxChargeTime.GetValue();
+    }
+
+    public float GetWhirlWindCooldown()
+    {
+        return whirlwindCoolDown.GetValue();
     }
 }

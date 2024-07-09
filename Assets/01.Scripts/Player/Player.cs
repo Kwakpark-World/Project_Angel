@@ -22,15 +22,19 @@ public class Player : PlayerController
 
     public LayerMask enemyLayer;
 
-    [Header("CoolTime Settings")]
+    [Header("Cooldown Settings")]
     public float dashPrevTime = 0f;
     public float defensePrevTime = 0f;
     public float chargingPrevTime = 0f;
     public float slamPrevTime = 0f;
+    public float whirlwindPrevTime = 0f;
+    public float awakenTime = 0f;
+
     public float dashLeftCooldown;
     public float defenseLeftCooldown;
     public float chargingLeftCooldown;
     public float slamLeftCooldown;
+    public float whirlwindLeftCooldown;
 
     public float defaultMoveSpeed = 0f;
 
@@ -132,7 +136,7 @@ public class Player : PlayerController
     protected void OnEnable()
     {
         PlayerInput.DashEvent += HandleDashEvent;
-        PlayerInput.DefenseEvent += PlayerDefense;
+        //PlayerInput.DefenseEvent += PlayerDefense;
 
     }
 
@@ -168,6 +172,7 @@ public class Player : PlayerController
         #endregion
 
         SetMousePosInWorld();
+        //Skill_Synergy(enemy);
     }
 
     protected override void FixedUpdate()
@@ -180,11 +185,14 @@ public class Player : PlayerController
     protected void OnDisable()
     {
         PlayerInput.DashEvent -= HandleDashEvent;
-        PlayerInput.DefenseEvent -= PlayerDefense;
+        //PlayerInput.DefenseEvent -= PlayerDefense;
     }
 
     public void OnHit(float incomingDamage, Brain attacker = null)
     {
+        CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f);
+        TimeManager.Instance.TimeChange(0.8f, 0.6f);
+
         if (IsDefense)
         {
             CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1.5f);
@@ -224,12 +232,14 @@ public class Player : PlayerController
         PlayerStat stat = GameManager.Instance.PlayerInstance.PlayerStatData;
         dashLeftCooldown = Mathf.Clamp01((dashPrevTime + stat.GetDashCooldown() - Time.time) / stat.GetDashCooldown());
         defenseLeftCooldown = Mathf.Clamp01((defensePrevTime + stat.GetDefenseCooldown() - Time.time) / stat.GetDefenseCooldown());
-        chargingLeftCooldown = Mathf.Clamp01((chargingPrevTime + stat.GetChargeAttackCooldown() - Time.time) / stat.GetChargeAttackCooldown());
+        chargeLeftCooldown = Mathf.Clamp01((chargePrevTime + stat.GetChargeAttackCooldown() - Time.time) / stat.GetChargeAttackCooldown());
         slamLeftCooldown = Mathf.Clamp01((slamPrevTime + stat.GetSlamCooldown() - Time.time) / stat.GetSlamCooldown());
+        whirlwindLeftCooldown = Mathf.Clamp01((whirlwindPrevTime + stat.GetWhirlWindCooldown() - Time.time) / stat.GetWhirlWindCooldown());
 
-        UIManager.Instance.PlayerHUDProperty?.UpdateSkillCooldown(dashLeftCooldown, defenseLeftCooldown, slamLeftCooldown, chargingLeftCooldown);
+        UIManager.Instance.PlayerHUDProperty?.UpdateSkillCooldown(dashLeftCooldown, chargeLeftCooldown, slamLeftCooldown, whirlwindLeftCooldown);
     }
     #endregion
+
 
     #region Player State Func
     private void OnDie()
@@ -270,9 +280,10 @@ public class Player : PlayerController
     private void ResetSkillCooldown()
     {
         dashPrevTime = Time.time - PlayerStatData.GetDashCooldown() + 1f;
-        chargingPrevTime = Time.time - PlayerStatData.GetChargeAttackCooldown() + 1f;
+        chargePrevTime = Time.time - PlayerStatData.GetChargeAttackCooldown() + 1f;
         slamPrevTime = Time.time - PlayerStatData.GetSlamCooldown() + 1f;
         defensePrevTime = Time.time - PlayerStatData.GetDefenseCooldown() + 1f;
+        whirlwindPrevTime = Time.time - PlayerStatData.GetWhirlWindCooldown() + 1f;
     }
     #endregion
 
@@ -286,6 +297,7 @@ public class Player : PlayerController
         if (StateMachine.CurrentState._actionTriggerCalled) return;
 
         dashPrevTime = Time.time;
+        awakenTime = 0;
 
         if (!IsAwakened)
         {
@@ -439,4 +451,43 @@ public class Player : PlayerController
     }
 
     #endregion
+
+    public void Skill_Synergy()
+    {
+        PlayerStat stat = GameManager.Instance.PlayerInstance.PlayerStatData;
+
+        //������
+        if (Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            QSkillCoolDonw = stat.GetSlamCooldown() - 4;
+            Debug.Log(QSkillCoolDonw);
+        }
+
+        if(Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            CurrentHealth += 1;
+        }
+
+        if(Keyboard.current.shiftKey.wasPressedThisFrame)
+        {
+            StartCoroutine(IAS(3f));
+            
+        }
+    }
+
+    private IEnumerator IAS(float duration)
+    {
+        if (duration >= 3f)
+        {
+            yield return new WaitForSeconds(3f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(duration);
+        }
+
+        BuffCompo.StopBuff(BuffType.Potion_Freeze);
+        BuffCompo.StopBuff(BuffType.Potion_Paralysis);
+        BuffCompo.StopBuff(BuffType.Potion_Poison);
+    }
 }
