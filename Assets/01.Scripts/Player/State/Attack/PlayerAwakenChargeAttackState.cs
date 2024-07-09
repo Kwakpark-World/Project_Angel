@@ -47,6 +47,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
     public override void UpdateState()
     {
         base.UpdateState();
+        _player.StopImmediately(false);
 
         if (_effectTriggerCalled)
         {
