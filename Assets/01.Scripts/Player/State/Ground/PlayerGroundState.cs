@@ -63,14 +63,14 @@ public class PlayerGroundState : PlayerState
         if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
         if (!_player.IsGroundDetected()) return;
         if (_player.CurrentAwakenGauge <= 0) return;
+        
+        _player.slamPrevTime = Time.time;
+        _player.awakenTime = 0;
         if (!_player.IsAwakening)
         {
-            _player.slamPrevTime = Time.time;
             _player.StateMachine.ChangeState(PlayerStateEnum.Awakening);
             return;
         }
-
-        _player.slamPrevTime = Time.time;
 
         _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
         //if (_player.IsAwakening)
@@ -84,14 +84,15 @@ public class PlayerGroundState : PlayerState
         if (_player.whirlwindPrevTime + _player.PlayerStatData.GetWhirlWindCooldown() > Time.time) return;
         if (!_player.IsGroundDetected()) return;
         if (_player.CurrentAwakenGauge <= 0) return;
+        
+
+        _player.awakenTime = 0;
+        _player.whirlwindPrevTime = Time.time;
         if (!_player.IsAwakening)
         {
-            _player.whirlwindPrevTime = Time.time;
             _player.StateMachine.ChangeState(PlayerStateEnum.Awakening);
             return;
         }
-
-        _player.whirlwindPrevTime = Time.time;
 
         _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
         //if (_player.IsAwakening)

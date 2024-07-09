@@ -67,10 +67,12 @@ public class PlayerChargingState : PlayerChargeState
         else
         {
             _player.chargingPrevTime = Time.time;
-            if (_player.IsAwakening)
-                _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
-            else
-                _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
+            _player.awakenTime = 0;
+
+            //if (_player.IsAwakening)
+            //    _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
+            //else
+            _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
         }
     }
 

@@ -308,6 +308,7 @@ public class Player : PlayerController
         if (StateMachine.CurrentState._actionTriggerCalled) return;
 
         dashPrevTime = Time.time;
+        awakenTime = 0;
 
         if (!IsAwakening)
         {
