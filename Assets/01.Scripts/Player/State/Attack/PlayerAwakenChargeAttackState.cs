@@ -47,6 +47,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
     public override void UpdateState()
     {
         base.UpdateState();
+        _player.StopImmediately(false);
 
         if (_effectTriggerCalled)
         {
@@ -101,7 +102,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
 
         foreach (var particle in _thisParticles)
         {
-            particle.Stop();
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             var main = particle.main;
             main.duration = playerDuration;
             particle.Play();

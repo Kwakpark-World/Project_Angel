@@ -70,10 +70,9 @@ public class PlayerAttackState : PlayerState
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
                     HitEnemyAction(brain);
 
-                    if (!_player.IsAwakening)
-                    {
-                        _player.CurrentAwakenGauge++;
-                    }
+                    
+                    _player.CurrentAwakenGauge++;
+                    
                 }
                 isCritical = false;
                 _player.PlayerStatData.attackPower.RemoveModifier(modifierValue);
@@ -98,10 +97,9 @@ public class PlayerAttackState : PlayerState
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
                     HitEnemyAction(brain);
 
-                    if (!_player.IsAwakening)
-                    {
-                        _player.CurrentAwakenGauge++;
-                    }
+                    
+                    _player.CurrentAwakenGauge++;
+                    
                 }
             }
         }

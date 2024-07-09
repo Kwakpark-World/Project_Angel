@@ -19,6 +19,7 @@ public class PlayerGroundState : PlayerState
         _player.PlayerInput.SlamSkillEvent += SlamSkillHandle;
         _player.PlayerInput.AwakeningSkillEvent += AwakeningSkillHandle;
         _player.PlayerInput.MeleeAttackEvent += HandlePrimaryAttackEvent;
+        _player.PlayerInput.WhirlwindEvent += WhirlwindSkillHandle;
     }
 
     public override void Exit()
@@ -29,6 +30,7 @@ public class PlayerGroundState : PlayerState
         _player.PlayerInput.SlamSkillEvent -= SlamSkillHandle;
         _player.PlayerInput.AwakeningSkillEvent -= AwakeningSkillHandle;
         _player.PlayerInput.MeleeAttackEvent -= HandlePrimaryAttackEvent;
+        _player.PlayerInput.WhirlwindEvent -= WhirlwindSkillHandle;
 
     }
 
@@ -36,8 +38,6 @@ public class PlayerGroundState : PlayerState
     {
         base.UpdateState();
     }
-
-
 
     private void HandlePrimaryAttackEvent()
     {
@@ -49,10 +49,12 @@ public class PlayerGroundState : PlayerState
     private void AwakeningSkillHandle()
     {
         if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
-        if (_player.IsAwakening) return;
-        if (_player.CurrentAwakenGauge < _player.PlayerStatData.GetMaxAwakenGauge()) return;
-
-        _stateMachine.ChangeState(PlayerStateEnum.Awakening);
+        if (_player.CurrentAwakenGauge <= 0) return;
+        if (_player.IsAwakening)
+        {
+            _player.awakenTime = _player.PlayerStatData.GetAwakenTime();
+            return;
+        }
     }
 
     private void SlamSkillHandle()
@@ -60,12 +62,41 @@ public class PlayerGroundState : PlayerState
         if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
         if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
         if (!_player.IsGroundDetected()) return;
-
+        if (_player.CurrentAwakenGauge <= 0) return;
+        
         _player.slamPrevTime = Time.time;
+        _player.awakenTime = 0;
+        if (!_player.IsAwakening)
+        {
+            _player.StateMachine.ChangeState(PlayerStateEnum.Awakening);
+            return;
+        }
 
-        if (_player.IsAwakening)
-            _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
-        else
-            _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
+        _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
+        //if (_player.IsAwakening)
+        //    _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
+        //else
+    }
+
+    private void WhirlwindSkillHandle()
+    {
+        if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
+        if (_player.whirlwindPrevTime + _player.PlayerStatData.GetWhirlWindCooldown() > Time.time) return;
+        if (!_player.IsGroundDetected()) return;
+        if (_player.CurrentAwakenGauge <= 0) return;
+        
+
+        _player.awakenTime = 0;
+        _player.whirlwindPrevTime = Time.time;
+        if (!_player.IsAwakening)
+        {
+            _player.StateMachine.ChangeState(PlayerStateEnum.Awakening);
+            return;
+        }
+
+        _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
+        //if (_player.IsAwakening)
+        //    _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
+        //else
     }
 }

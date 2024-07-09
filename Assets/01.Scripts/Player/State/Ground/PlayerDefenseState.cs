@@ -69,6 +69,7 @@ public class PlayerDefenseState : PlayerGroundState
         }
 
         _defenseTimer = 0;
+
         _player.defensePrevTime = Time.time;
 
     }
