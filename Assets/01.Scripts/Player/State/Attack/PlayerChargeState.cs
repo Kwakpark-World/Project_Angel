@@ -8,8 +8,8 @@ public class PlayerChargeState : PlayerAttackState
 
     public PlayerChargeState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        _minChargeTime = player.PlayerStatData.GetMinChargingTime();
-        _maxChargeTime = player.PlayerStatData.GetMaxChargingTime();
+        _minChargeTime = player.PlayerStatData.GetMinChargeTime();
+        _maxChargeTime = player.PlayerStatData.GetMaxChargeTime();
     }
 
     public override void Enter()

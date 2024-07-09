@@ -36,7 +36,6 @@ public enum PoolType
     Trap_Dynamite = 3000,
     Trap_Spike,
     UI_HealthBar = 4000,
-    GuidedBullet = 5000,
 }
 
 [Serializable]

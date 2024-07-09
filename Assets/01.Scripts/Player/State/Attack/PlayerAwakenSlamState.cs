@@ -55,8 +55,6 @@ public class PlayerAwakenSlamState : PlayerAttackState
 
         _attackPrevTime = Time.time;
         ++_comboCounter;
-
-        UIManager.Instance.PlayerHUDProperty?.UpdateSkillComboIcon(_comboCounter);
     }
 
     public override void UpdateState()

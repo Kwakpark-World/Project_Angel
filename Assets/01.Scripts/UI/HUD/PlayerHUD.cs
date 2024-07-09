@@ -17,31 +17,26 @@ public class PlayerHUD : MonoBehaviour
 
     [Header("Player Skill Icon")]
     [SerializeField]
-    private Sprite _normalDefenseSkillIcon;
+    private Image _dashSkillIconImage;
     [SerializeField]
-    private Sprite _awakenDefenseSkillIcon;
+    private Sprite _dashSkillNormalRollIcon;
     [SerializeField]
-    private Image _defenseSkillIconImage;
+    private Sprite _dashSkillAwakenRollIcon;
     [SerializeField]
-    private Image _defenseSkillCooldownImage;
+    private Sprite _dashSkillNormalDashIcon;
+    [SerializeField]
+    private Sprite _dashSkillAwakenDashIcon;
+    [SerializeField]
+    private Image _dashSkillCooldownImage;
 
     [SerializeField]
-    private Sprite _normalChargingSkillIcon;
-    [SerializeField]
-    private Sprite _awakenChargingSkillIcon;
-    [SerializeField]
-    private Image _chargingSkillIconImage;
-    [SerializeField]
-    private Image _chargingSkillCooldownImage;
+    private Image _chargeSkillCooldownImage;
 
-    [SerializeField]
-    private Sprite _normalSlamSkillIcon;
-    [SerializeField]
-    private List<Sprite> _awakenSlamSkillIcons;
-    [SerializeField]
-    private Image _slamSkillIconImage;
     [SerializeField]
     private Image _slamSkillCooldownImage;
+
+    [SerializeField]
+    private Image _whirlwindSkillCooldownImage;
 
     [Header("Player Stat")]
     [SerializeField]
@@ -50,12 +45,12 @@ public class PlayerHUD : MonoBehaviour
     private TextMeshProUGUI _healthText;
 
     [SerializeField]
-    private Slider _awakenGaugeSlider;
+    private Image _awakenGaugeImage;
     [SerializeField]
     private TextMeshProUGUI _awakenGaugeText;
 
     [SerializeField]
-    private Slider _chargingTimeSlider;
+    private Image _chargingTimeImage;
     [SerializeField]
     private TextMeshProUGUI _chargingTimeText;
 
@@ -70,25 +65,15 @@ public class PlayerHUD : MonoBehaviour
         }
     }
 
-    public void SetNormalSkillIcon()
+    public void ChangeSkillIcon(bool isAwaken)
     {
-        _defenseSkillIconImage.sprite = _normalDefenseSkillIcon;
-        _chargingSkillIconImage.sprite = _normalChargingSkillIcon;
-        _slamSkillIconImage.sprite = _normalSlamSkillIcon;
-    }
-
-    public void SetAwakenSkillIcon()
-    {
-        _defenseSkillIconImage.sprite = _awakenDefenseSkillIcon;
-        _chargingSkillIconImage.sprite = _awakenChargingSkillIcon;
-        _slamSkillIconImage.sprite = _awakenSlamSkillIcons[0];
-    }
-
-    public void UpdateSkillComboIcon(int comboCounter)
-    {
-        if (_slamSkillIconImage.sprite == _awakenSlamSkillIcons[(comboCounter - 1) % 3])
+        if (!isAwaken)
         {
-            _slamSkillIconImage.sprite = _awakenSlamSkillIcons[comboCounter % 3];
+            _dashSkillIconImage.sprite = !PlayerReference.BuffCompo.GetBuffState(BuffType.Rune_Dash_1) ? _dashSkillNormalRollIcon : _dashSkillNormalDashIcon;
+        }
+        else
+        {
+            _dashSkillIconImage.sprite = !PlayerReference.BuffCompo.GetBuffState(BuffType.Rune_Dash_1) ? _dashSkillAwakenRollIcon : _dashSkillAwakenDashIcon;
         }
     }
 
@@ -124,11 +109,12 @@ public class PlayerHUD : MonoBehaviour
         }
     }
 
-    public void UpdateSkillCooldown(float dashLeftCooldown, float defenseLeftCooldown, float slamLeftCooldown, float chargingLeftCooldown)
+    public void UpdateSkillCooldown(float dashLeftCooldown, float chargeLeftCooldown, float slamLeftCooldown, float whirlwindLeftCooldown)
     {
-        _defenseSkillCooldownImage.fillAmount = defenseLeftCooldown;
-        _chargingSkillCooldownImage.fillAmount = chargingLeftCooldown;
+        _dashSkillCooldownImage.fillAmount = dashLeftCooldown;
+        _chargeSkillCooldownImage.fillAmount = chargeLeftCooldown;
         _slamSkillCooldownImage.fillAmount = slamLeftCooldown;
+        _whirlwindSkillCooldownImage.fillAmount = whirlwindLeftCooldown;
     }
 
     public void UpdateHealth()
@@ -143,17 +129,15 @@ public class PlayerHUD : MonoBehaviour
     {
         float currentAwakenGauge = GameManager.Instance.PlayerInstance.CurrentAwakenGauge;
         float maxAwakenGauge = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxAwakenGauge();
-        _awakenGaugeSlider.value = currentAwakenGauge;
-        _awakenGaugeSlider.maxValue = maxAwakenGauge;
+        _awakenGaugeImage.fillAmount = currentAwakenGauge / maxAwakenGauge;
         _awakenGaugeText.text = $"{(int)(currentAwakenGauge / maxAwakenGauge * 100f)}%";
     }
 
     public void UpdateChargingGauge()
     {
         float currentChargingTime = GameManager.Instance.PlayerInstance.CurrentChargingTime;
-        float maxChargingTime = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxChargingTime();
-        _chargingTimeSlider.value = currentChargingTime;
-        _chargingTimeSlider.maxValue = maxChargingTime;
+        float maxChargingTime = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxChargeTime();
+        _chargingTimeImage.fillAmount = currentChargingTime / maxChargingTime;
         _chargingTimeText.text = $"{(int)(currentChargingTime / maxChargingTime * 100f)}%";
     }
 

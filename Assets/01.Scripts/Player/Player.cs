@@ -60,7 +60,7 @@ public class Player : PlayerController
 
         set
         {
-            _currentChargingTime = Mathf.Clamp(value, 0f, PlayerStatData.GetMaxChargingTime());
+            _currentChargingTime = Mathf.Clamp(value, 0f, PlayerStatData.GetMaxChargeTime());
 
             UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge();
         }
@@ -86,7 +86,7 @@ public class Player : PlayerController
     public bool IsAttack;
     public bool IsDefense;
     public bool IsDie;
-    public bool IsAwakening;
+    public bool IsAwakened;
     public bool IsGroundState;
     public bool isShield;
     public PlayerControlEnum IsPlayerStop = PlayerControlEnum.Move;
@@ -165,17 +165,9 @@ public class Player : PlayerController
         {
             CurrentAwakenGauge += 100;
         }
-
-#if UNITY_EDITOR
-        if (Keyboard.current.bKey.wasPressedThisFrame)
-        {
-            PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.playerCenter.position);
-        }
-#endif
         #endregion
 
         SetMousePosInWorld();
-
     }
 
     protected override void FixedUpdate()
@@ -193,11 +185,6 @@ public class Player : PlayerController
 
     public void OnHit(float incomingDamage, Brain attacker = null)
     {
-        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Uriel) && attacker && !isShield)
-        {
-            attacker.OnHit(incomingDamage * 0.25f);
-        }
-
         if (IsDefense)
         {
             CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1.5f);
@@ -214,11 +201,6 @@ public class Player : PlayerController
         if (CurrentHealth > 0f)
         {
             CurrentHealth -= Mathf.Max(Mathf.RoundToInt(incomingDamage - PlayerStatData.GetDefensivePower()), 0);
-
-            if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
-            {
-                CurrentHealth = Mathf.Max(CurrentHealth, 1f);
-            }
         }
 
         UIManager.Instance.PlayerHUDProperty?.UpdateHealth();
@@ -242,7 +224,7 @@ public class Player : PlayerController
         PlayerStat stat = GameManager.Instance.PlayerInstance.PlayerStatData;
         dashLeftCooldown = Mathf.Clamp01((dashPrevTime + stat.GetDashCooldown() - Time.time) / stat.GetDashCooldown());
         defenseLeftCooldown = Mathf.Clamp01((defensePrevTime + stat.GetDefenseCooldown() - Time.time) / stat.GetDefenseCooldown());
-        chargingLeftCooldown = Mathf.Clamp01((chargingPrevTime + stat.GetChargingAttackCooldown() - Time.time) / stat.GetChargingAttackCooldown());
+        chargingLeftCooldown = Mathf.Clamp01((chargingPrevTime + stat.GetChargeAttackCooldown() - Time.time) / stat.GetChargeAttackCooldown());
         slamLeftCooldown = Mathf.Clamp01((slamPrevTime + stat.GetSlamCooldown() - Time.time) / stat.GetSlamCooldown());
 
         UIManager.Instance.PlayerHUDProperty?.UpdateSkillCooldown(dashLeftCooldown, defenseLeftCooldown, slamLeftCooldown, chargingLeftCooldown);
@@ -288,7 +270,7 @@ public class Player : PlayerController
     private void ResetSkillCooldown()
     {
         dashPrevTime = Time.time - PlayerStatData.GetDashCooldown() + 1f;
-        chargingPrevTime = Time.time - PlayerStatData.GetChargingAttackCooldown() + 1f;
+        chargingPrevTime = Time.time - PlayerStatData.GetChargeAttackCooldown() + 1f;
         slamPrevTime = Time.time - PlayerStatData.GetSlamCooldown() + 1f;
         defensePrevTime = Time.time - PlayerStatData.GetDefenseCooldown() + 1f;
     }
@@ -305,7 +287,7 @@ public class Player : PlayerController
 
         dashPrevTime = Time.time;
 
-        if (!IsAwakening)
+        if (!IsAwakened)
         {
             if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;

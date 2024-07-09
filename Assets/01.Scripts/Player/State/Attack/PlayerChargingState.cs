@@ -31,9 +31,9 @@ public class PlayerChargingState : PlayerChargeState
         _isEffectOn = false;
         _isBlink = false;
 
-        _thisParticle = _player.effectParent.Find(_player.IsAwakening ? _awakenEffectString : _effectString).GetComponent<ParticleSystem>();
+        _thisParticle = _player.effectParent.Find(_player.IsAwakened ? _awakenEffectString : _effectString).GetComponent<ParticleSystem>();
         var main = _thisParticle.main;
-        main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
+        main.startColor = _player.IsAwakened ? _awakenColor : _normalColor;
         
     }
 
@@ -67,7 +67,7 @@ public class PlayerChargingState : PlayerChargeState
         else
         {
             _player.chargingPrevTime = Time.time;
-            if (_player.IsAwakening)
+            if (_player.IsAwakened)
                 _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
             else
                 _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
@@ -77,7 +77,7 @@ public class PlayerChargingState : PlayerChargeState
     private void SetChargingGauge()
     {
         if (!_player.PlayerInput.isCharge) return;
-        if (_player.chargingPrevTime + _player.PlayerStatData.GetChargingAttackCooldown() > Time.time) return;
+        if (_player.chargingPrevTime + _player.PlayerStatData.GetChargeAttackCooldown() > Time.time) return;
 
         if (_player.CurrentChargingTime < _minChargeTime)
             _player.CurrentChargingTime += Time.deltaTime;
@@ -123,7 +123,7 @@ public class PlayerChargingState : PlayerChargeState
 
     private IEnumerator Blink()
     {
-        Material weaponMat = _player.materials[(_player.IsAwakening ? (int)PlayerMaterialIndex.Weapon_Awaken : (int)PlayerMaterialIndex.Weapon_Normal)];
+        Material weaponMat = _player.materials[(_player.IsAwakened ? (int)PlayerMaterialIndex.Weapon_Awaken : (int)PlayerMaterialIndex.Weapon_Normal)];
         Color color = weaponMat.GetColor("_EmissionColor");
 
         weaponMat.SetColor("_EmissionColor", color * 10f);

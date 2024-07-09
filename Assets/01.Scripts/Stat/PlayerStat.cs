@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum PlayerStatType
 {
@@ -15,9 +14,9 @@ public enum PlayerStatType
     attackSpeed,
     criticalChance = 110,
     criticalDamageMultiplier,
-    chargingAttackSpeed = 120,
-    chargingAttackDistance,
-    chargingAttackCooldown,
+    chargeAttackSpeed = 120,
+    chargeAttackDistance,
+    chargeAttackCooldown,
     knockbackPower = 130,
     knockbackDuration,
     moveSpeed = 200,
@@ -28,8 +27,8 @@ public enum PlayerStatType
     slamMaxDistance = 300,
     slamCooldown,
     maxAwakenGauge = 310,
-    minChargingTime = 320,
-    maxChargingTime,
+    minChargeTime = 320,
+    maxChargeTime,
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Player")]
@@ -55,11 +54,11 @@ public class PlayerStat : ScriptableObject
     [Tooltip("치명타 데미지")]
     public Stat criticalDamageMultiplier;
     [Tooltip("차징 공격 속도")]
-    public Stat chargingAttackSpeed;
+    public Stat chargeAttackSpeed;
     [Tooltip("차징 공격 찌르기 이동 거리")]
-    public Stat chargingAttackDistance;
+    public Stat chargeAttackDistance;
     [Tooltip("차징 공격 쿨다운")]
-    public Stat chargingAttackCooldown;
+    public Stat chargeAttackCooldown;
     [Tooltip("넉백 위력")]
     public Stat knockbackPower;
     [Tooltip("넉백 지속 시간")]
@@ -85,9 +84,9 @@ public class PlayerStat : ScriptableObject
     [Tooltip("최대 각성 게이지")]
     public Stat maxAwakenGauge;
     [Tooltip("최소 차징 시간")]
-    public Stat minChargingTime;
+    public Stat minChargeTime;
     [Tooltip("최대 차징 시간")]
-    public Stat maxChargingTime;
+    public Stat maxChargeTime;
 
     private PlayerController _owner;
 
@@ -171,19 +170,19 @@ public class PlayerStat : ScriptableObject
         return criticalDamageMultiplier.GetValue();
     }
 
-    public float GetChargingAttackSpeed()
+    public float GetChargeAttackSpeed()
     {
-        return chargingAttackSpeed.GetValue();
+        return chargeAttackSpeed.GetValue();
     }
 
-    public float GetChargingAttackDistance()
+    public float GetChargeAttackDistance()
     {
-        return chargingAttackDistance.GetValue();
+        return chargeAttackDistance.GetValue();
     }
 
-    public float GetChargingAttackCooldown()
+    public float GetChargeAttackCooldown()
     {
-        return chargingAttackCooldown.GetValue();
+        return chargeAttackCooldown.GetValue();
     }
 
     public float GetKnockbackPower()
@@ -236,13 +235,13 @@ public class PlayerStat : ScriptableObject
         return maxAwakenGauge.GetValue();
     }
 
-    public float GetMinChargingTime()
+    public float GetMinChargeTime()
     {
-        return minChargingTime.GetValue();
+        return minChargeTime.GetValue();
     }
 
-    public float GetMaxChargingTime()
+    public float GetMaxChargeTime()
     {
-        return maxChargingTime.GetValue();
+        return maxChargeTime.GetValue();
     }
 }

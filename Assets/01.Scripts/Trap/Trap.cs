@@ -73,7 +73,7 @@ public abstract class Trap : PoolableMono
 
     protected void Attack(Player player)
     {
-        if (player != null && !player.BuffCompo.GetBuffState(BuffType.Rune_Defense_Týr))
+        if (player != null)
             player.OnHit(_trapDamage);
     }
 }

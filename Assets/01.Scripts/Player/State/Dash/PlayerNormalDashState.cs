@@ -43,7 +43,7 @@ public class PlayerNormalDashState : PlayerDashState
 
         _player.slamPrevTime = Time.time;
 
-        if (_player.IsAwakening)
+        if (_player.IsAwakened)
             _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
         else
             _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);

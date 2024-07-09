@@ -49,7 +49,7 @@ public class PlayerGroundState : PlayerState
     private void AwakeningSkillHandle()
     {
         if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
-        if (_player.IsAwakening) return;
+        if (_player.IsAwakened) return;
         if (_player.CurrentAwakenGauge < _player.PlayerStatData.GetMaxAwakenGauge()) return;
 
         _stateMachine.ChangeState(PlayerStateEnum.Awakening);
@@ -63,7 +63,7 @@ public class PlayerGroundState : PlayerState
 
         _player.slamPrevTime = Time.time;
 
-        if (_player.IsAwakening)
+        if (_player.IsAwakened)
             _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
         else
             _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
