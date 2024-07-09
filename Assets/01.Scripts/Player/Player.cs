@@ -27,11 +27,14 @@ public class Player : PlayerController
     public float defensePrevTime = 0f;
     public float chargingPrevTime = 0f;
     public float slamPrevTime = 0f;
+    public float whirlwindPrevTime = 0f;
+    public float awakenTime = 0f;
+
     public float dashLeftCooldown;
     public float defenseLeftCooldown;
     public float chargingLeftCooldown;
     public float slamLeftCooldown;
-
+    
     public float defaultMoveSpeed = 0f;
 
     private float _currentAwakenGauge = 0f;
@@ -132,7 +135,7 @@ public class Player : PlayerController
     protected void OnEnable()
     {
         PlayerInput.DashEvent += HandleDashEvent;
-        PlayerInput.DefenseEvent += PlayerDefense;
+        //PlayerInput.DefenseEvent += PlayerDefense;
 
     }
 
@@ -188,7 +191,7 @@ public class Player : PlayerController
     protected void OnDisable()
     {
         PlayerInput.DashEvent -= HandleDashEvent;
-        PlayerInput.DefenseEvent -= PlayerDefense;
+        //PlayerInput.DefenseEvent -= PlayerDefense;
     }
 
     public void OnHit(float incomingDamage, Brain attacker = null)
@@ -291,6 +294,7 @@ public class Player : PlayerController
         chargingPrevTime = Time.time - PlayerStatData.GetChargingAttackCooldown() + 1f;
         slamPrevTime = Time.time - PlayerStatData.GetSlamCooldown() + 1f;
         defensePrevTime = Time.time - PlayerStatData.GetDefenseCooldown() + 1f;
+        whirlwindPrevTime = Time.time - PlayerStatData.GetWhirlWindCooldown() + 1f;
     }
     #endregion
 

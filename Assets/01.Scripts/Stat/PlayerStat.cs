@@ -28,8 +28,10 @@ public enum PlayerStatType
     slamMaxDistance = 300,
     slamCooldown,
     maxAwakenGauge = 310,
+    awakenTime,
     minChargingTime = 320,
     maxChargingTime,
+    whirlwindCoolDown = 330,
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Player")]
@@ -84,10 +86,14 @@ public class PlayerStat : ScriptableObject
     public Stat slamCooldown;
     [Tooltip("최대 각성 게이지")]
     public Stat maxAwakenGauge;
+    [Tooltip("각성 유지 시간")]
+    public Stat awakenTime;
     [Tooltip("최소 차징 시간")]
     public Stat minChargingTime;
     [Tooltip("최대 차징 시간")]
     public Stat maxChargingTime;
+    [Tooltip("E 스킬 쿨다운")]
+    public Stat whirlwindCoolDown;
 
     private PlayerController _owner;
 
@@ -236,6 +242,11 @@ public class PlayerStat : ScriptableObject
         return maxAwakenGauge.GetValue();
     }
 
+    public float GetAwakenTime()
+    {
+        return awakenTime.GetValue();
+    }
+
     public float GetMinChargingTime()
     {
         return minChargingTime.GetValue();
@@ -244,5 +255,10 @@ public class PlayerStat : ScriptableObject
     public float GetMaxChargingTime()
     {
         return maxChargingTime.GetValue();
+    }
+
+    public float GetWhirlWindCooldown()
+    {
+        return whirlwindCoolDown.GetValue();
     }
 }

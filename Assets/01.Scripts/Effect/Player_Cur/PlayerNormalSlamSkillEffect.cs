@@ -8,11 +8,6 @@ public class PlayerNormalSlamSkillEffect : PlayerEffect
     {
         base.InitializePoolItem();
 
-        if (GameManager.Instance.PlayerInstance.IsAwakening)
-        {
-            PoolManager.Instance.Push(this);
-        }
-
         PoolManager.Instance.Push(this, duration);
 
         Vector3 dir = Vector3.zero;

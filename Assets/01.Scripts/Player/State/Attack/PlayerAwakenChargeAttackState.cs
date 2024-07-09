@@ -101,7 +101,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
 
         foreach (var particle in _thisParticles)
         {
-            particle.Stop();
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             var main = particle.main;
             main.duration = playerDuration;
             particle.Play();

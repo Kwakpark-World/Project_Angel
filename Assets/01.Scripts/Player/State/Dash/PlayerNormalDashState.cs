@@ -40,12 +40,19 @@ public class PlayerNormalDashState : PlayerDashState
     {
         if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
         if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
+        if (_player.CurrentAwakenGauge <= 0) return;
+        if (!_player.IsAwakening)
+        {
+            _player.slamPrevTime = Time.time;
+            _player.StateMachine.ChangeState(PlayerStateEnum.Awakening);
+            return;
+        }
 
         _player.slamPrevTime = Time.time;
 
-        if (_player.IsAwakening)
-            _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
-        else
-            _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
+        _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
+        //if (_player.IsAwakening)
+        //    _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
+        //else
     }
 }

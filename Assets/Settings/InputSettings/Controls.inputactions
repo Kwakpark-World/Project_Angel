@@ -69,6 +69,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "RSkill",
+                    "type": "Button",
+                    "id": "66a9786d-a00e-4787-9830-5b548d61309d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "MousePos",
                     "type": "Value",
                     "id": "4c2b6f11-a8f4-4857-b3ca-0cd748a3716b",
@@ -228,6 +237,17 @@
                     "processors": "",
                     "groups": "KeyboardAndMouse",
                     "action": "MouseWheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5d08528f-ffa5-4f95-9cfd-941e14ee22bd",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RSkill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

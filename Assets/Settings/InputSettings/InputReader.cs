@@ -2,6 +2,13 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PressedKey
+{
+    None = 0,
+    Q,
+    E
+}
+
 [CreateAssetMenu(menuName = "SO/InputReader")]
 public class InputReader : ScriptableObject, Controls.IPlayerActions
 {
@@ -17,9 +24,11 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action DashEvent;
     public event Action MeleeAttackEvent;
     public event Action SlamSkillEvent;
+    public event Action WhirlwindEvent;
     public event Action AwakeningSkillEvent;
     public event Action DefenseEvent;
 
+    public PressedKey isPressedKey = PressedKey.None;
 
     private Controls _controls;
     private void OnEnable()
@@ -73,10 +82,30 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
         if (context.performed)
         {
             SlamSkillEvent?.Invoke();
+
+            isPressedKey = PressedKey.Q;
+        }
+        if (context.canceled)
+        {
+            isPressedKey = PressedKey.None;
         }
     }
 
     public void OnESkill(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            WhirlwindEvent?.Invoke();
+
+            isPressedKey = PressedKey.E;
+        }
+        if (context.canceled)
+        {
+            isPressedKey = PressedKey.None;
+        }
+    }
+
+    public void OnRSkill(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -105,4 +134,6 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
             MouseWheel = 0f;
         }
     }
+
+
 }
