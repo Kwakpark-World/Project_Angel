@@ -27,72 +27,47 @@ public enum PlayerStatType
     slamMaxDistance = 300,
     slamCooldown,
     maxAwakenGauge = 310,
-    awakenTime,
+    maxAwakenDuration,
     minChargeTime = 320,
     maxChargeTime,
-    whirlwindCoolDown = 330,
+    whirlwindCooldown = 330,
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Player")]
 public class PlayerStat : ScriptableObject
 {
     [Header("Defensive stats")]
-    [Tooltip("�ִ� ü��")]
     public Stat maxHealth;
-    [Tooltip("����")]
     public Stat defensivePower;
-    [Tooltip("��� ���� �ð�")]
     public Stat defenseDuration;
-    [Tooltip("��� ��ٿ�")]
     public Stat defenseCooldown;
 
     [Header("Offensive stats")]
-    [Tooltip("���ݷ�")]
     public Stat attackPower;
-    [Tooltip("���� �ӵ�")]
     public Stat attackSpeed;
-    [Tooltip("ġ��Ÿ Ȯ��")]
     public Stat criticalChance;
-    [Tooltip("ġ��Ÿ ������")]
     public Stat criticalDamageMultiplier;
-    [Tooltip("��¡ ���� �ӵ�")]
     public Stat chargeAttackSpeed;
-    [Tooltip("��¡ ���� ��� �̵� �Ÿ�")]
     public Stat chargeAttackDistance;
-    [Tooltip("��¡ ���� ��ٿ�")]
     public Stat chargeAttackCooldown;
-    [Tooltip("�˹� ����")]
     public Stat knockbackPower;
-    [Tooltip("�˹� ���� �ð�")]
     public Stat knockbackDuration;
 
     [Header("Move stats")]
-    [Tooltip("�̵� �ӵ�")]
     public Stat moveSpeed;
-    [Tooltip("��� �ӵ�")]
     public Stat dashSpeed;
-    [Tooltip("���� �� ��� �ִ� �Ÿ�")]
     public Stat dashMaxDistance;
-    [Tooltip("��� ��ٿ�")]
     public Stat dashCooldown;
-    [Tooltip("ȸ�� �ӵ�")]
     public Stat rotateSpeed;
 
     [Header("Skill stats")]
-    [Tooltip("Q ��ų �ִ� �̵� �Ÿ�")]
     public Stat slamMaxDistance;
-    [Tooltip("Q ��ų ��ٿ�")]
     public Stat slamCooldown;
-    [Tooltip("�ִ� ���� ������")]
     public Stat maxAwakenGauge;
-    [Tooltip("���� ���� �ð�")]
-    public Stat awakenTime;
-    [Tooltip("�ּ� ��¡ �ð�")]
+    public Stat maxAwakenDuration;
     public Stat minChargeTime;
-    [Tooltip("�ִ� ��¡ �ð�")]
     public Stat maxChargeTime;
-    [Tooltip("E ��ų ��ٿ�")]
-    public Stat whirlwindCoolDown;
+    public Stat whirlwindCooldown;
 
     private PlayerController _owner;
 
@@ -241,9 +216,9 @@ public class PlayerStat : ScriptableObject
         return maxAwakenGauge.GetValue();
     }
 
-    public float GetAwakenTime()
+    public float GetMaxAwakenDuration()
     {
-        return awakenTime.GetValue();
+        return maxAwakenDuration.GetValue();
     }
 
     public float GetMinChargeTime()
@@ -256,8 +231,8 @@ public class PlayerStat : ScriptableObject
         return maxChargeTime.GetValue();
     }
 
-    public float GetWhirlWindCooldown()
+    public float GetWhirlwindCooldown()
     {
-        return whirlwindCoolDown.GetValue();
+        return whirlwindCooldown.GetValue();
     }
 }

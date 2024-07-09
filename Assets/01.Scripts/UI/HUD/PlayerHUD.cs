@@ -133,12 +133,12 @@ public class PlayerHUD : MonoBehaviour
         _awakenGaugeText.text = $"{(int)(currentAwakenGauge / maxAwakenGauge * 100f)}%";
     }
 
-    public void UpdateChargingGauge()
+    public void UpdateChargeGauge()
     {
-        float currentChargingTime = GameManager.Instance.PlayerInstance.CurrentChargingTime;
-        float maxChargingTime = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxChargeTime();
-        _chargingTimeImage.fillAmount = currentChargingTime / maxChargingTime;
-        _chargingTimeText.text = $"{(int)(currentChargingTime / maxChargingTime * 100f)}%";
+        float currentChargeTime = GameManager.Instance.PlayerInstance.CurrentChargeTime;
+        float maxChargeTime = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxChargeTime();
+        _chargingTimeImage.fillAmount = currentChargeTime / maxChargeTime;
+        _chargingTimeText.text = $"{(int)(currentChargeTime / maxChargeTime * 100f)}%";
     }
 
     private IEnumerator BuffDurationCoroutine(BuffType buffType, Image buffDurationImage, float duration = 0)

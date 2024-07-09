@@ -192,7 +192,7 @@ public class PlayerAwakeningState : PlayerState
 
     private IEnumerator PlayerAwakening()
     {
-        while (_player.awakenTime < _player.PlayerStatData.GetAwakenTime())
+        while (_player.awakenTime < _player.PlayerStatData.GetMaxAwakenDuration())
         {
             if (_player.IsAwakened)
             {

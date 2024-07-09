@@ -27,7 +27,7 @@ public class PlayerChargingState : PlayerChargeState
         base.Enter();
         _player.StopImmediately(false);
 
-        _player.CurrentChargingTime = 0;
+        _player.CurrentChargeTime = 0;
         _isEffectOn = false;
         _isBlink = false;
 
@@ -59,14 +59,14 @@ public class PlayerChargingState : PlayerChargeState
 
         CameraManager.Instance.ResetCameraZoom();
 
-        if (_player.CurrentChargingTime < _minChargeTime)
+        if (_player.CurrentChargeTime < _minChargeTime)
         {
-            _player.CurrentChargingTime = 0;
+            _player.CurrentChargeTime = 0;
             _stateMachine.ChangeState(PlayerStateEnum.MeleeAttack);
         }
         else
         {
-            _player.chargingPrevTime = Time.time;
+            _player.chargePrevTime = Time.time;
             _player.awakenTime = 0;
 
             //if (_player.IsAwakened)
@@ -79,7 +79,7 @@ public class PlayerChargingState : PlayerChargeState
     private void SetChargingGauge()
     {
         if (!_player.PlayerInput.isCharge) return;
-        if (_player.chargingPrevTime + _player.PlayerStatData.GetChargeAttackCooldown() > Time.time) return;
+        if (_player.chargePrevTime + _player.PlayerStatData.GetChargeAttackCooldown() > Time.time) return;
 
         if (_player.CurrentChargeTime < _minChargeTime)
             _player.CurrentChargeTime += Time.deltaTime;
