@@ -105,6 +105,24 @@ public class Player : PlayerController
     private Volume _playerOnHitVolume;
     private Coroutine _playerOnHitVolumeCoroutine;
 
+    [Header("Rune Params"), Header("Charging")]
+    public bool isChargingTripleSting;
+    public bool isChargingMultipleSting;
+    public bool isChargingSlashOnceMore;
+    public bool isChargingSwordAura;
+    [Header("Slam")]
+    public bool isSlamSixTimeSlam;
+    [Header("Whirlwind")]
+    public bool isWhirlwindShockWave;
+    public bool isWhirlwindMoveAble;
+    public bool isWhirlwindPullEnemies;
+    public bool isWhirlwindRangeUp;
+    [Header("Dash")]
+    public bool isRollToDash;
+    public bool isRollAttack;
+    public bool isRollKnockback;
+    public bool isRollOnceMore;
+
     protected override void Awake()
     {
         base.Awake();
@@ -310,7 +328,7 @@ public class Player : PlayerController
         dashPrevTime = Time.time;
         awakenTime = 0;
 
-        if (!IsAwakening)
+        if (!isRollToDash)
         {
             if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
@@ -321,7 +339,7 @@ public class Player : PlayerController
         {
             if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
-
+        
             StateMachine.ChangeState(PlayerStateEnum.AwakenDash);
         }
     }
