@@ -10,7 +10,6 @@ public enum PlayerStateEnum
     Fall,
     NormalDash,
     AwakenDash,
-    Defense,
     MeleeAttack,
     Awakening,
     NormalSlam,

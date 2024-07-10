@@ -24,14 +24,12 @@ public class Player : PlayerController
 
     [Header("CoolTime Settings")]
     public float dashPrevTime = 0f;
-    public float defensePrevTime = 0f;
     public float chargingPrevTime = 0f;
     public float slamPrevTime = 0f;
     public float whirlwindPrevTime = 0f;
     public float awakenTime = 0f;
 
     public float dashLeftCooldown;
-    public float defenseLeftCooldown;
     public float chargingLeftCooldown;
     public float slamLeftCooldown;
     
@@ -153,8 +151,7 @@ public class Player : PlayerController
     protected void OnEnable()
     {
         PlayerInput.DashEvent += HandleDashEvent;
-        //PlayerInput.DefenseEvent += PlayerDefense;
-
+        
     }
 
     protected override void Start()
@@ -209,7 +206,6 @@ public class Player : PlayerController
     protected void OnDisable()
     {
         PlayerInput.DashEvent -= HandleDashEvent;
-        //PlayerInput.DefenseEvent -= PlayerDefense;
     }
 
     public void OnHit(float incomingDamage, Brain attacker = null)
@@ -290,28 +286,11 @@ public class Player : PlayerController
         return false;
     }
 
-    private void PlayerDefense()
-    {
-        if (IsPlayerStop == PlayerControlEnum.Stop) return;
-
-        if (IsGroundDetected())
-        {
-            if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time)
-            {
-                return;
-            }
-
-            StateMachine.ChangeState(PlayerStateEnum.Defense);
-        }
-
-    }
-
     private void ResetSkillCooldown()
     {
         dashPrevTime = Time.time - PlayerStatData.GetDashCooldown() + 1f;
         chargingPrevTime = Time.time - PlayerStatData.GetChargingAttackCooldown() + 1f;
         slamPrevTime = Time.time - PlayerStatData.GetSlamCooldown() + 1f;
-        defensePrevTime = Time.time - PlayerStatData.GetDefenseCooldown() + 1f;
         whirlwindPrevTime = Time.time - PlayerStatData.GetWhirlWindCooldown() + 1f;
     }
     #endregion
