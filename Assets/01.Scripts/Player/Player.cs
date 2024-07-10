@@ -192,6 +192,11 @@ public class Player : PlayerController
     {
         CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f);
         TimeManager.Instance.TimeChange(0.8f, 0.6f);
+        EarthQuake(attacker);
+        if (attacker && !isShield)
+        {
+            attacker.OnHit(incomingDamage * 0.25f);
+        }
 
         if (IsDefense)
         {
@@ -205,6 +210,7 @@ public class Player : PlayerController
             return;
 
         PlayerOnHitVolume();
+        
 
         if (CurrentHealth > 0f)
         {
@@ -471,6 +477,18 @@ public class Player : PlayerController
         if (Keyboard.current.shiftKey.wasPressedThisFrame)
         {
             StartCoroutine(IAS(3f));
+        }
+    }
+
+    public void EarthQuake(Brain enemy)
+    {
+        //어스퀘이크?
+        enemy.BuffCompo.PlayBuff(BuffType.Potion_Paralysis);
+        Debug.Log("됨");
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            
+            
         }
     }
 
