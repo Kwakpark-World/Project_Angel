@@ -81,11 +81,11 @@ public class PlayerAwakeningState : PlayerState
         if (_isAwakenOn) return;
 
         _isAwakenOn = true;
-        _player.IsAwakening = true;
+        _player.IsAwakened = true;
 
         //AwakeningEffect();
         ChangeModelMaterial();
-        UIManager.Instance.PlayerHUDProperty?.SetAwakenSkillIcon();
+        UIManager.Instance.PlayerHUDProperty?.ChangeSkillIcon(_player.IsAwakened);
 
         _player.StartCoroutine(PlayerAwakening());
     }
@@ -107,7 +107,7 @@ public class PlayerAwakeningState : PlayerState
 
             for (int j = 0; j < _player.renderers[i].materials.Length; j++)
             {
-                index = _player.IsAwakening ? awakenStartIndex : normalStartIndex;
+                index = _player.IsAwakened ? awakenStartIndex : normalStartIndex;
                 string[] matName = _player.renderers[i].materials[j].name.Split(' ');
 
                 switch (matName[0])
@@ -192,9 +192,9 @@ public class PlayerAwakeningState : PlayerState
 
     private IEnumerator PlayerAwakening()
     {
-        while (_player.awakenTime < _player.PlayerStatData.GetAwakenTime())
+        while (_player.awakenTime < _player.PlayerStatData.GetMaxAwakenDuration())
         {
-            if (_player.IsAwakening)
+            if (_player.IsAwakened)
             {
                 _player.awakenTime += Time.deltaTime;
             }
@@ -212,9 +212,9 @@ public class PlayerAwakeningState : PlayerState
     private void EndAwakening()
     {
         _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        _player.IsAwakening = false;
+        _player.IsAwakened = false;
         ChangeModelMaterial();
-        UIManager.Instance.PlayerHUDProperty?.SetNormalSkillIcon();
+        UIManager.Instance.PlayerHUDProperty?.ChangeSkillIcon(_player.IsAwakened);
 
         if (Mathf.Abs(_player.PlayerInput.XInput) > 0.05f || Mathf.Abs(_player.PlayerInput.YInput) > 0.05f)
             _stateMachine.ChangeState(PlayerStateEnum.Walk);

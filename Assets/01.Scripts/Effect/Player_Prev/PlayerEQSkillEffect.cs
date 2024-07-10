@@ -8,7 +8,7 @@ public class PlayerEQSkillEffect : PoolableMonoEffect
     {
         base.InitializePoolItem();
 
-        if (!GameManager.Instance.PlayerInstance.IsAwakening)
+        if (!GameManager.Instance.PlayerInstance.IsAwakened)
         {
             PoolManager.Instance.Push(this);
         }
@@ -18,7 +18,6 @@ public class PlayerEQSkillEffect : PoolableMonoEffect
 
     protected override void Update()
     {
-        Debug.Log("#");
         base.Update();
     }
 

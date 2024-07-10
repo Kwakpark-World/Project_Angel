@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class RuneManager : MonoSingleton<RuneManager>
 {
     [SerializeField]
-    private RuneListSO _baseRuneList;
     private RuneListSO _runeList;
     [field: SerializeField]
     public float UnequipWaitTime { get; private set; }
@@ -32,7 +31,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 
         if (_runeList.list.Count <= 0)
         {
-            _runeList = Instantiate(_baseRuneList);
+            _runeList = Instantiate(_runeList);
         }
 
         Rune rune = PoolManager.Instance.Pop(PoolType.Rune, runeSpawnPos) as Rune;
@@ -123,7 +122,7 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     protected override void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        _runeList = Instantiate(_baseRuneList);
+        _runeList = Instantiate(_runeList);
 
         for (int i = 0; i < _equipedRunes.Count; ++i)
         {

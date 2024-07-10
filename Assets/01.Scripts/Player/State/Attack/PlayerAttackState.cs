@@ -65,12 +65,9 @@ public class PlayerAttackState : PlayerState
                     if (IsCritical())
                         _player.PlayerStatData.attackPower.AddModifier(modifierValue);
 
-                    PlayRuneEffect();
-
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
                     HitEnemyAction(brain);
-
-                    
+        
                     _player.CurrentAwakenGauge++;
                     
                 }
@@ -97,7 +94,6 @@ public class PlayerAttackState : PlayerState
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
                     HitEnemyAction(brain);
 
-                    
                     _player.CurrentAwakenGauge++;
                     
                 }
@@ -188,61 +184,6 @@ public class PlayerAttackState : PlayerState
 
         return Random.Range(_player.PlayerStatData.GetAttackPower() - value, _player.PlayerStatData.GetAttackPower() + value);
     }
-
-    #region Rune
-    private void PlayRuneEffect()
-    {
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Heracles))
-        {
-            PlayerMeleeAttackState playerMeleeAttackState = this as PlayerMeleeAttackState;
-
-            if (playerMeleeAttackState != null && playerMeleeAttackState._comboCounter == 3)
-            {
-
-            }
-        }
-
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Heimdall))
-        {
-            _player.dashPrevTime += 0f; // +5f;
-            _player.defensePrevTime += 0f;
-            _player.chargingPrevTime += 0f;
-            _player.slamPrevTime += 0f;
-        }
-
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Freyja))
-        {
-            _player.PlayerStatData.maxHealth.AddModifier(1f);
-        }
-
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Health_Raphael))
-        {
-            _player.CurrentHealth += 3f;
-        }
-    }
-
-    private void HermesRun()
-    {
-        float timer;
-
-        timer = Time.deltaTime;
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Hermes))
-        {
-            if (timer > 3f)
-            {
-                _player.PlayerStatData.moveSpeed.AddModifier(3f);
-                _player.PlayerStatData.attackSpeed.AddModifier(1.5f);
-            }
-
-            else
-            {
-                _player.PlayerStatData.moveSpeed.RemoveModifier(3f);
-                _player.PlayerStatData.attackSpeed.AddModifier(1.5f);
-                timer = 0;
-            }
-        }
-    }
-    #endregion
 
     protected virtual void HitEnemyAction(Brain enemy) { }
 

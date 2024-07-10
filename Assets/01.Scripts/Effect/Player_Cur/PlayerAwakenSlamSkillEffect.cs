@@ -9,7 +9,7 @@ public class PlayerAwakenSlamSkillEffect : PlayerEffect
     {
         base.InitializePoolItem();
         
-        if (!GameManager.Instance.PlayerInstance.IsAwakening)
+        if (!GameManager.Instance.PlayerInstance.IsAwakened)
         {
             PoolManager.Instance.Push(this);
         }
