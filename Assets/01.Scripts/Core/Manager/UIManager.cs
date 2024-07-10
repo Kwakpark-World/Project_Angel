@@ -187,7 +187,8 @@ public class UIManager : MonoSingleton<UIManager>
         if (GameManager.Instance.HasPlayer)
         {
             PlayerHUDProperty = FindObjectOfType<PlayerHUD>();
-            PlayerHUDProperty.PlayerReference = GameManager.Instance.PlayerInstance;
+            if (PlayerHUDProperty != null)
+                PlayerHUDProperty.PlayerReference = GameManager.Instance.PlayerInstance;
             GameOverUIProperty = FindObjectOfType<GameOverUI>();
         }
     }
