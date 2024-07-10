@@ -50,9 +50,9 @@ public class PlayerGroundState : PlayerState
     {
         if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
         if (_player.CurrentAwakenGauge <= 0) return;
-        if (_player.IsAwakening)
+        if (_player.IsAwakened)
         {
-            _player.awakenTime = _player.PlayerStatData.GetAwakenTime();
+            _player.awakenTime = _player.PlayerStatData.GetMaxAwakenDuration();
             return;
         }
     }
@@ -63,17 +63,17 @@ public class PlayerGroundState : PlayerState
         if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
         if (!_player.IsGroundDetected()) return;
         if (_player.CurrentAwakenGauge <= 0) return;
-        
+
         _player.slamPrevTime = Time.time;
         _player.awakenTime = 0;
-        if (!_player.IsAwakening)
+        if (!_player.IsAwakened)
         {
             _player.StateMachine.ChangeState(PlayerStateEnum.Awakening);
             return;
         }
 
         _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
-        //if (_player.IsAwakening)
+        //if (_player.IsAwakened)
         //    _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
         //else
     }
@@ -81,14 +81,14 @@ public class PlayerGroundState : PlayerState
     private void WhirlwindSkillHandle()
     {
         if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
-        if (_player.whirlwindPrevTime + _player.PlayerStatData.GetWhirlWindCooldown() > Time.time) return;
+        if (_player.whirlwindPrevTime + _player.PlayerStatData.GetWhirlwindCooldown() > Time.time) return;
         if (!_player.IsGroundDetected()) return;
         if (_player.CurrentAwakenGauge <= 0) return;
-        
+
 
         _player.awakenTime = 0;
         _player.whirlwindPrevTime = Time.time;
-        if (!_player.IsAwakening)
+        if (!_player.IsAwakened)
         {
             _player.StateMachine.ChangeState(PlayerStateEnum.Awakening);
             return;

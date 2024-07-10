@@ -9,25 +9,30 @@ public enum BuffType
     None = 0,
     Scapegoat,
     Shield,
-    Rune_Attack_Heracles = 100,
-    Rune_Attack_Thor,
-    Rune_Attack_Michael,
-    Rune_Defense_Athena = 200,
-    Rune_Defense_Týr,
-    Rune_Defense_Uriel,
-    Rune_Acceleration_Hermes = 300,
-    Rune_Acceleration_Heimdall,
-    Rune_Acceleration_Gabriel,
-    Rune_Health_Demeter = 400,
-    Rune_Health_Freyja,
-    Rune_Health_Raphael,
-    Rune_Synergy_Attack = 500,
-    Rune_Synergy_Defense,
-    Rune_Synergy_Acceleration,
-    Rune_Synergy_Health,
-    Rune_Synergy_Zeus,
-    Rune_Synergy_Odin,
-    Rune_Synergy_Jesus,
+    Rune_Dash_1 = 100,
+    Rune_Dash_2,
+    Rune_Dash_3,
+    Rune_Dash_4,
+    Rune_Charge_1 = 200,
+    Rune_Charge_2,
+    Rune_Charge_3,
+    Rune_Charge_4,
+    Rune_Slam_1 = 300,
+    Rune_Slam_2,
+    Rune_Slam_3,
+    Rune_Slam_4,
+    Rune_Whirlwind_1 = 400,
+    Rune_Whirlwind_2,
+    Rune_Whirlwind_3,
+    Rune_Whirlwind_4,
+    Rune_Synergy_Dash = 500,
+    Rune_Synergy_Charge,
+    Rune_Synergy_Slam,
+    Rune_Synergy_Whirlwind,
+    Rune_Synergy_1,
+    Rune_Synergy_2,
+    Rune_Synergy_3,
+    Rune_Synergy_4,
     Potion_Poison = 1000,
     Potion_Freeze,
     Potion_Paralysis
@@ -207,28 +212,21 @@ public class Buff : MonoBehaviour
     #endregion
 
     #region Rune Buffs
-    #region Hermes Functions
-    public void BeginRuneHermes()
+    public void BeginDash1()
     {
-
-    }
-    #endregion
-
-    #region Gabriel Functions
-    public void BeginRuneGabriel()
-    {
-        _ownerController.PlayerStatData.maxAwakenGauge.AddModifier(-20f);
-
-        _ownerController.CurrentAwakenGauge = _ownerController.CurrentAwakenGauge;
-
-        UIManager.Instance.PlayerHUDProperty.UpdateAwakenGauge();
+        if (_isPlayer)
+        {
+            UIManager.Instance.PlayerHUDProperty.ChangeSkillIcon(_ownerController.IsAwakened);
+        }
     }
 
-    public void EndRuneGabriel()
+    public void EndDash1()
     {
-        _ownerController.PlayerStatData.maxAwakenGauge.RemoveModifier(-20f);
+        if (_isPlayer)
+        {
+            UIManager.Instance.PlayerHUDProperty.ChangeSkillIcon(_ownerController.IsAwakened);
+        }
     }
-    #endregion
     #endregion
 
     #region Potion Buffs

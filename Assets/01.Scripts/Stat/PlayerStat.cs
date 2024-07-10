@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum PlayerStatType
 {
@@ -15,9 +14,9 @@ public enum PlayerStatType
     attackSpeed,
     criticalChance = 110,
     criticalDamageMultiplier,
-    chargingAttackSpeed = 120,
-    chargingAttackDistance,
-    chargingAttackCooldown,
+    chargeAttackSpeed = 120,
+    chargeAttackDistance,
+    chargeAttackCooldown,
     knockbackPower = 130,
     knockbackDuration,
     moveSpeed = 200,
@@ -28,72 +27,47 @@ public enum PlayerStatType
     slamMaxDistance = 300,
     slamCooldown,
     maxAwakenGauge = 310,
-    awakenTime,
-    minChargingTime = 320,
-    maxChargingTime,
-    whirlwindCoolDown = 330,
+    maxAwakenDuration,
+    minChargeTime = 320,
+    maxChargeTime,
+    whirlwindCooldown = 330,
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Player")]
 public class PlayerStat : ScriptableObject
 {
     [Header("Defensive stats")]
-    [Tooltip("최대 체력")]
     public Stat maxHealth;
-    [Tooltip("방어력")]
     public Stat defensivePower;
-    [Tooltip("방어 지속 시간")]
     public Stat defenseDuration;
-    [Tooltip("방어 쿨다운")]
     public Stat defenseCooldown;
 
     [Header("Offensive stats")]
-    [Tooltip("공격력")]
     public Stat attackPower;
-    [Tooltip("공격 속도")]
     public Stat attackSpeed;
-    [Tooltip("치명타 확률")]
     public Stat criticalChance;
-    [Tooltip("치명타 데미지")]
     public Stat criticalDamageMultiplier;
-    [Tooltip("차징 공격 속도")]
-    public Stat chargingAttackSpeed;
-    [Tooltip("차징 공격 찌르기 이동 거리")]
-    public Stat chargingAttackDistance;
-    [Tooltip("차징 공격 쿨다운")]
-    public Stat chargingAttackCooldown;
-    [Tooltip("넉백 위력")]
+    public Stat chargeAttackSpeed;
+    public Stat chargeAttackDistance;
+    public Stat chargeAttackCooldown;
     public Stat knockbackPower;
-    [Tooltip("넉백 지속 시간")]
     public Stat knockbackDuration;
 
     [Header("Move stats")]
-    [Tooltip("이동 속도")]
     public Stat moveSpeed;
-    [Tooltip("대시 속도")]
     public Stat dashSpeed;
-    [Tooltip("각성 중 대시 최대 거리")]
     public Stat dashMaxDistance;
-    [Tooltip("대시 쿨다운")]
     public Stat dashCooldown;
-    [Tooltip("회전 속도")]
     public Stat rotateSpeed;
 
     [Header("Skill stats")]
-    [Tooltip("Q 스킬 최대 이동 거리")]
     public Stat slamMaxDistance;
-    [Tooltip("Q 스킬 쿨다운")]
     public Stat slamCooldown;
-    [Tooltip("최대 각성 게이지")]
     public Stat maxAwakenGauge;
-    [Tooltip("각성 유지 시간")]
-    public Stat awakenTime;
-    [Tooltip("최소 차징 시간")]
-    public Stat minChargingTime;
-    [Tooltip("최대 차징 시간")]
-    public Stat maxChargingTime;
-    [Tooltip("E 스킬 쿨다운")]
-    public Stat whirlwindCoolDown;
+    public Stat maxAwakenDuration;
+    public Stat minChargeTime;
+    public Stat maxChargeTime;
+    public Stat whirlwindCooldown;
 
     private PlayerController _owner;
 
@@ -177,19 +151,19 @@ public class PlayerStat : ScriptableObject
         return criticalDamageMultiplier.GetValue();
     }
 
-    public float GetChargingAttackSpeed()
+    public float GetChargeAttackSpeed()
     {
-        return chargingAttackSpeed.GetValue();
+        return chargeAttackSpeed.GetValue();
     }
 
-    public float GetChargingAttackDistance()
+    public float GetChargeAttackDistance()
     {
-        return chargingAttackDistance.GetValue();
+        return chargeAttackDistance.GetValue();
     }
 
-    public float GetChargingAttackCooldown()
+    public float GetChargeAttackCooldown()
     {
-        return chargingAttackCooldown.GetValue();
+        return chargeAttackCooldown.GetValue();
     }
 
     public float GetKnockbackPower()
@@ -242,23 +216,23 @@ public class PlayerStat : ScriptableObject
         return maxAwakenGauge.GetValue();
     }
 
-    public float GetAwakenTime()
+    public float GetMaxAwakenDuration()
     {
-        return awakenTime.GetValue();
+        return maxAwakenDuration.GetValue();
     }
 
-    public float GetMinChargingTime()
+    public float GetMinChargeTime()
     {
-        return minChargingTime.GetValue();
+        return minChargeTime.GetValue();
     }
 
-    public float GetMaxChargingTime()
+    public float GetMaxChargeTime()
     {
-        return maxChargingTime.GetValue();
+        return maxChargeTime.GetValue();
     }
 
-    public float GetWhirlWindCooldown()
+    public float GetWhirlwindCooldown()
     {
-        return whirlwindCoolDown.GetValue();
+        return whirlwindCooldown.GetValue();
     }
 }

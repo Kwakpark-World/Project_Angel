@@ -5798,9 +5798,9 @@ MonoBehaviour:
   IsDefense: 0
   IsDie: 0
   IsAwakening: 0
-  IsPlayerStop: 0
   IsGroundState: 0
   isShield: 0
+  IsPlayerStop: 0
   renderers:
   - {fileID: 9166074286034648693}
   - {fileID: 2866051191039960501}
@@ -5824,40 +5824,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffTriggers:
-  - buffType: 302
-    onBuffBegin:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6385291853889329438}
-          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: BeginRuneGabriel
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    onBuffPlaying:
-      m_PersistentCalls:
-        m_Calls: []
-    onBuffEnd:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6385291853889329438}
-          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
-          m_MethodName: EndRuneGabriel
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - buffType: 1000
     onBuffBegin:
       m_PersistentCalls:

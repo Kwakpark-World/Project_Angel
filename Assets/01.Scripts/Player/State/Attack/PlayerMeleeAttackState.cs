@@ -47,7 +47,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         _player.RigidbodyCompo.AddForce(_player.transform.forward * 10, ForceMode.Impulse);
 
-        _hitDist = _player.IsAwakening ? _awakenAttackDist : _normalAttackDist;
+        _hitDist = _player.IsAwakened ? _awakenAttackDist : _normalAttackDist;
 
         _player.StartDelayAction(0.1f, () =>
         {
@@ -55,8 +55,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
         });
 
         _thisParticle = _player.weapon.transform.Find(_effectString).GetComponent<ParticleSystem>();
-
-        HermesRun();
     }
 
     public override void Exit()
@@ -73,11 +71,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
         ++_comboCounter;
         _player.enemyNormalHitDuplicateChecker.Clear();
         _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-
-        if(Input.GetKeyDown(KeyCode.U)) 
-        {
-            PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.transform.position);
-        }
     }
 
     public override void UpdateState()
@@ -145,30 +138,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         Collider[] enemies = GetEnemyByOverlapBox(_player.weapon.transform.position, _player.weapon.transform.rotation);
 
-        shield();
         Attack(enemies.ToList());
-
-        GuidedBulletFire(5f);
-    }
-
-    IEnumerator GuidedBulletFire(float initialDelay)
-    {
-        float delay = initialDelay;
-
-        while (true)
-        {
-            if (_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Michael))
-            {
-                PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.transform.position);
-                delay = initialDelay; 
-            }
-            else
-            {
-                delay -= Time.deltaTime; 
-            }
-
-            yield return new WaitForSeconds(delay);
-        }
     }
 
 
@@ -179,11 +149,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
         if (_comboCounter == 3)
         {
             CameraManager.Instance.ShakeCam(0.2f, 0.5f, 0.5f);
-            if(_player.BuffCompo.GetBuffState(BuffType.Rune_Attack_Thor))
-            {
-                //여기에 파티클까지 나와야함 근데 파티클에 데미지 자체를 넣는 방법도 있긴함 그건 알아서 생각을 해보시길..
-                _player.PlayerStatData.attackPower.AddModifier(3f);
-            }
         }
     }
 
@@ -205,49 +170,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     }
 
-    private void HermesRun()
-    {
-        float timer;
-
-        timer = Time.deltaTime;
-        if (_player.BuffCompo.GetBuffState(BuffType.Rune_Acceleration_Hermes))
-        {
-            if (timer > 1f)
-            {
-                _player.PlayerStatData.moveSpeed.AddModifier(3f);
-                _player.PlayerStatData.attackSpeed.AddModifier(1f);
-                Debug.Log("난입이 됨");
-            }
-
-            else
-            {
-                _player.PlayerStatData.moveSpeed.RemoveModifier(3f);
-                _player.PlayerStatData.attackSpeed.RemoveModifier(1f);
-                timer = 0;
-            }
-        }
-    }
-
     private void ComboAttack()
     {
         _isCombo = true;
-    }
-
-    public void UpgradeActivePoison()
-    {
-        //TODO: use poison every attack
-    }
-
-    private void shield()
-    {
-        if(_player.BuffCompo.GetBuffState(BuffType.Rune_Defense_Athena) && !_player.isShield)
-        {
-            _player.isShield = true;
-        }
-    }
-
-    public void KillInactivePoison()
-    {
-
     }
 }

@@ -27,7 +27,7 @@ public class PlayerDefenseState : PlayerGroundState
         foreach (var particle in _thisParticles)
         {
             var main = particle.main;
-            main.startColor = _player.IsAwakening ? _awakenColor : _normalColor;
+            main.startColor = _player.IsAwakened ? _awakenColor : _normalColor;
             particle.Play();
         }
 

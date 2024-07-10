@@ -37,7 +37,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         _player.enemyNormalHitDuplicateChecker.Clear();
 
-        _player.CurrentChargingTime = 0;
+        _player.CurrentChargeTime = 0;
         _player.AnimatorCompo.speed = 1;
 
         _thisParticle.Stop();
@@ -122,17 +122,17 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         {
             _isStabMove = true;
 
-            float dashDistance = _player.PlayerStatData.GetChargingAttackDistance();
+            float dashDistance = _player.PlayerStatData.GetChargeAttackDistance();
 
             RaycastHit hit;
             Vector3 playerPos = _player.transform.position;
 
-            if (Physics.Raycast(playerPos, _player.transform.forward, out hit, _player.PlayerStatData.GetChargingAttackDistance(), _player.whatIsWall))
+            if (Physics.Raycast(playerPos, _player.transform.forward, out hit, _player.PlayerStatData.GetChargeAttackDistance(), _player.whatIsWall))
             {
                 dashDistance = hit.distance;
             }
 
-            float stabDistance = _player.CurrentChargingTime * dashDistance;
+            float stabDistance = _player.CurrentChargeTime * dashDistance;
 
             Vector3 moveDir = _player.transform.forward * stabDistance * 2;
             moveDir.y += _player.RigidbodyCompo.velocity.y;

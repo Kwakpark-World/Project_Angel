@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public enum PlayerControlEnum 
+public enum PlayerControlEnum
 {
     Move,
     Wait,
@@ -22,18 +22,19 @@ public class Player : PlayerController
 
     public LayerMask enemyLayer;
 
-    [Header("CoolTime Settings")]
+    [Header("Cooldown Settings")]
     public float dashPrevTime = 0f;
     public float defensePrevTime = 0f;
-    public float chargingPrevTime = 0f;
+    public float chargePrevTime = 0f;
     public float slamPrevTime = 0f;
     public float whirlwindPrevTime = 0f;
     public float awakenTime = 0f;
 
     public float dashLeftCooldown;
     public float defenseLeftCooldown;
-    public float chargingLeftCooldown;
-    public float QSkillCoolDonw;
+    public float chargeLeftCooldown;
+    public float slamLeftCooldown;
+    public float whirlwindLeftCooldown;
 
     public float defaultMoveSpeed = 0f;
 
@@ -53,19 +54,19 @@ public class Player : PlayerController
             UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge();
         }
     }
-    private float _currentChargingTime = 0f;
-    public float CurrentChargingTime
+    private float _currentChargeTime = 0f;
+    public float CurrentChargeTime
     {
         get
         {
-            return _currentChargingTime;
+            return _currentChargeTime;
         }
 
         set
         {
-            _currentChargingTime = Mathf.Clamp(value, 0f, PlayerStatData.GetMaxChargingTime());
+            _currentChargeTime = Mathf.Clamp(value, 0f, PlayerStatData.GetMaxChargeTime());
 
-            UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge();
+            UIManager.Instance.PlayerHUDProperty?.UpdateChargeGauge();
         }
     }
 
@@ -89,7 +90,7 @@ public class Player : PlayerController
     public bool IsAttack;
     public bool IsDefense;
     public bool IsDie;
-    public bool IsAwakening;
+    public bool IsAwakened;
     public bool IsGroundState;
     public bool isShield;
     public PlayerControlEnum IsPlayerStop = PlayerControlEnum.Move;
@@ -151,7 +152,7 @@ public class Player : PlayerController
 
         UIManager.Instance.PlayerHUDProperty?.UpdateHealth();
         UIManager.Instance.PlayerHUDProperty?.UpdateAwakenGauge();
-        UIManager.Instance.PlayerHUDProperty?.UpdateChargingGauge();
+        UIManager.Instance.PlayerHUDProperty?.UpdateChargeGauge();
     }
 
     protected override void Update()
@@ -162,24 +163,16 @@ public class Player : PlayerController
 
         GetSkillLeftCooldown();
 
-        //debug DeveloperKey.
+        // Debug(Developer Key)
         #region Debug
         if (Input.GetKeyDown(KeyCode.K))
         {
             CurrentAwakenGauge += 100;
         }
-
-#if UNITY_EDITOR
-        if (Keyboard.current.bKey.wasPressedThisFrame)
-        {
-            PoolManager.Instance.Pop(PoolType.GuidedBullet, GameManager.Instance.PlayerInstance.playerCenter.position);
-        }
-#endif
         #endregion
 
         SetMousePosInWorld();
         //Skill_Synergy(enemy);
-
     }
 
     protected override void FixedUpdate()
@@ -222,11 +215,6 @@ public class Player : PlayerController
         if (CurrentHealth > 0f)
         {
             CurrentHealth -= Mathf.Max(Mathf.RoundToInt(incomingDamage - PlayerStatData.GetDefensivePower()), 0);
-
-            if (BuffCompo.GetBuffState(BuffType.Rune_Health_Demeter))
-            {
-                CurrentHealth = Mathf.Max(CurrentHealth, 1f);
-            }
         }
 
         UIManager.Instance.PlayerHUDProperty?.UpdateHealth();
@@ -249,11 +237,11 @@ public class Player : PlayerController
     {
         PlayerStat stat = GameManager.Instance.PlayerInstance.PlayerStatData;
         dashLeftCooldown = Mathf.Clamp01((dashPrevTime + stat.GetDashCooldown() - Time.time) / stat.GetDashCooldown());
-        defenseLeftCooldown = Mathf.Clamp01((defensePrevTime + stat.GetDefenseCooldown() - Time.time) / stat.GetDefenseCooldown());
-        chargingLeftCooldown = Mathf.Clamp01((chargingPrevTime + stat.GetChargingAttackCooldown() - Time.time) / stat.GetChargingAttackCooldown());
-        QSkillCoolDonw = Mathf.Clamp01((slamPrevTime + stat.GetSlamCooldown() - Time.time) / stat.GetSlamCooldown());
+        chargeLeftCooldown = Mathf.Clamp01((chargePrevTime + stat.GetChargeAttackCooldown() - Time.time) / stat.GetChargeAttackCooldown());
+        slamLeftCooldown = Mathf.Clamp01((slamPrevTime + stat.GetSlamCooldown() - Time.time) / stat.GetSlamCooldown());
+        whirlwindLeftCooldown = Mathf.Clamp01((whirlwindPrevTime + stat.GetWhirlwindCooldown() - Time.time) / stat.GetWhirlwindCooldown());
 
-        UIManager.Instance.PlayerHUDProperty?.UpdateSkillCooldown(dashLeftCooldown, defenseLeftCooldown, QSkillCoolDonw, chargingLeftCooldown);
+        UIManager.Instance.PlayerHUDProperty?.UpdateSkillCooldown(dashLeftCooldown, chargeLeftCooldown, slamLeftCooldown, whirlwindLeftCooldown);
     }
     #endregion
 
@@ -297,10 +285,10 @@ public class Player : PlayerController
     private void ResetSkillCooldown()
     {
         dashPrevTime = Time.time - PlayerStatData.GetDashCooldown() + 1f;
-        chargingPrevTime = Time.time - PlayerStatData.GetChargingAttackCooldown() + 1f;
+        chargePrevTime = Time.time - PlayerStatData.GetChargeAttackCooldown() + 1f;
         slamPrevTime = Time.time - PlayerStatData.GetSlamCooldown() + 1f;
         defensePrevTime = Time.time - PlayerStatData.GetDefenseCooldown() + 1f;
-        whirlwindPrevTime = Time.time - PlayerStatData.GetWhirlWindCooldown() + 1f;
+        whirlwindPrevTime = Time.time - PlayerStatData.GetWhirlwindCooldown() + 1f;
     }
     #endregion
 
@@ -316,7 +304,7 @@ public class Player : PlayerController
         dashPrevTime = Time.time;
         awakenTime = 0;
 
-        if (!IsAwakening)
+        if (!IsAwakened)
         {
             if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
@@ -476,19 +464,19 @@ public class Player : PlayerController
         //������
         if (Keyboard.current.qKey.wasPressedThisFrame)
         {
-            QSkillCoolDonw = stat.GetSlamCooldown() - 4;
-            Debug.Log(QSkillCoolDonw);
+            // 현민씨 이거 현재 쿨타임 4초 감소 아니고 최대 쿨타임 4초 감소임. 약간 고치긴 했는데 알아서 수정(Modifier 안 쌓이게)
+            stat.slamCooldown.AddModifier(-4f);
+            Debug.Log(stat.GetSlamCooldown());
         }
 
-        if(Keyboard.current.eKey.wasPressedThisFrame)
+        if (Keyboard.current.eKey.wasPressedThisFrame)
         {
             CurrentHealth += 1;
         }
 
-        if(Keyboard.current.shiftKey.wasPressedThisFrame)
+        if (Keyboard.current.shiftKey.wasPressedThisFrame)
         {
             StartCoroutine(IAS(3f));
-            
         }
     }
 
