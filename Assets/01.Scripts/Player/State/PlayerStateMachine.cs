@@ -13,7 +13,6 @@ public enum PlayerStateEnum
     MeleeAttack,
     Awakening,
     NormalSlam,
-    AwakenSlam,
     Charging,
     NormalChargeAttack,
     NormalChargeStabAttack,

@@ -21,6 +21,7 @@ public class PlayerDashState : PlayerState
         base.Exit();
         CameraManager.Instance._currentCam.IsCamRotateStop = false;
         _player.IsDefense = false;
+
     }
 
     public override void UpdateState()

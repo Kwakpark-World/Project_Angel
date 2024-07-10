@@ -299,7 +299,6 @@ public class Player : PlayerController
         if (IsPlayerStop == PlayerControlEnum.Stop) return;
 
         if (PlayerStatData.GetDashCooldown() + dashPrevTime > Time.time) return;
-        if (StateMachine.CurrentState._actionTriggerCalled) return;
 
         dashPrevTime = Time.time;
         awakenTime = 0;
@@ -465,7 +464,7 @@ public class Player : PlayerController
         //������
         if (Keyboard.current.qKey.wasPressedThisFrame)
         {
-            // 현민씨 이거 현재 쿨타임 4초 감소 아니고 최대 쿨타임 4초 감소임. 약간 고치긴 했는데 알아서 수정(Modifier 안 쌓이게)
+            // ?��????�거 ?�재 쿨�???4�?감소 ?�니�?최�? 쿨�???4�?감소?? ?�간 고치�??�는???�아???�정(Modifier ???�이�?
             stat.slamCooldown.AddModifier(-4f);
             Debug.Log(stat.GetSlamCooldown());
         }
@@ -483,9 +482,8 @@ public class Player : PlayerController
 
     public void EarthQuake(Brain enemy)
     {
-        //어스퀘이크?
+        //?�스?�이??
         enemy.BuffCompo.PlayBuff(BuffType.Potion_Paralysis);
-        Debug.Log("됨");
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
             
