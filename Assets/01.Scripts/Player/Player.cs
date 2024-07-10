@@ -193,7 +193,7 @@ public class Player : PlayerController
         CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f);
         TimeManager.Instance.TimeChange(0.8f, 0.6f);
         EarthQuake(attacker);
-        if (BuffCompo.GetBuffState(BuffType.Rune_Defense_Uriel) && attacker && !isShield)
+        if (attacker && !isShield)
         {
             attacker.OnHit(incomingDamage * 0.25f);
         }
