@@ -27,6 +27,10 @@ public enum SFXType
     Enemy_Die,
     UI_Button_Hover,
     UI_Button_Click,
+    Player_MeleeAttack_0,
+    Player_MeleeAttack_1,
+    Player_MeleeAttack_2,
+    Player_MeleeAttack_3,
 }
 
 [Serializable]
