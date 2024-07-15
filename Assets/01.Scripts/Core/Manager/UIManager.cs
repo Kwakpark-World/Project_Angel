@@ -97,7 +97,7 @@ public class UIManager : MonoSingleton<UIManager>
 
                     CameraManager.Instance._currentCam.IsCamRotateStop = popupToggleValue;
 
-                    CameraManager.Instance.SetCursor(popupToggleValue);
+                    CameraManager.Instance.SetCursor(popupToggleValue); 
                 }
             }
         }
