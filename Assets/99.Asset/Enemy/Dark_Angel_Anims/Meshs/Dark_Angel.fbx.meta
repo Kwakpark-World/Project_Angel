@@ -14,7 +14,7 @@ ModelImporter:
     second: Attack_2.1
   - first:
       74: -5579599594208017201
-    second: EnemyAttack_Normal_Knight
+    second: Attack_2.1_To_Idle_2
   - first:
       74: 7204108427254732798
     second: Attack_2.2
@@ -44,7 +44,7 @@ ModelImporter:
     second: Combo_3
   - first:
       74: -8079408971285907983
-    second: EnemyHit
+    second: Damage_2
   - first:
       74: -5199077803881956379
     second: Damage_3
@@ -107,7 +107,7 @@ ModelImporter:
     second: Fly
   - first:
       74: -3620287812965500523
-    second: Stand_Attack
+    second: EnemyAttack_Normal_Knight
   - first:
       74: 7489349733683417492
     second: Attack_3.2_To_Idle_3
@@ -299,7 +299,7 @@ ModelImporter:
     second: Stand_Block_3
   - first:
       74: 6326913072529143518
-    second: Stand_Damage
+    second: EnemyHit_Death
   - first:
       74: -976349062099958243
     second: Stand_Dash_Back
@@ -317,7 +317,7 @@ ModelImporter:
     second: Stand_Death
   - first:
       74: 2298522436166581609
-    second: Stand_Idle
+    second: EnemyMove_Idle
   - first:
       74: -4706616949182007011
     second: Stand_Idle_Without_Sword_&_Shield
@@ -398,7 +398,7 @@ ModelImporter:
     second: Death_1.1
   - first:
       74: -7036101655599433920
-    second: EnemyHit_Die
+    second: Death_2
   - first:
       74: -3957946749124942033
     second: Death_2.1
@@ -407,7 +407,7 @@ ModelImporter:
     second: Death_3.1
   - first:
       74: -5533903024747340832
-    second: EnemyMove_Idle
+    second: Idle_1
   - first:
       74: -2437750757855199961
     second: Idle_1_To_Fly
@@ -551,14 +551,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.45334935
-        functionName: NewEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -745,7 +738,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: EnemyAttack_Normal_Knight
+      name: Attack_2.1_To_Idle_2
       takeName: Float_Attack_2.1_To_Idle_2
       internalID: 0
       firstFrame: 0
@@ -768,21 +761,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.57195574
-        functionName: OnAnimationPlaying
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: OnAnimationEnd
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -1513,7 +1492,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: EnemyHit
+      name: Damage_2
       takeName: Float_Damage_2
       internalID: 0
       firstFrame: 0
@@ -1536,28 +1515,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.30526316
-        functionName: OnAnimationPlaying
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: OnAnimationEnd
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: OnAnimationBegin
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -1679,7 +1637,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: EnemyHit_Die
+      name: Death_2
       takeName: MyCharacter|Float_Death_2
       internalID: 0
       firstFrame: 0
@@ -1867,7 +1825,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: EnemyMove_Idle
+      name: Idle_1
       takeName: MyCharacter|Float_Idle_1
       internalID: 0
       firstFrame: 0
@@ -2882,7 +2840,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Stand_Attack
+      name: EnemyAttack_Normal_Knight
       takeName: MyCharacter|Stand_Attack
       internalID: 0
       firstFrame: 0
@@ -2895,9 +2853,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -2905,7 +2863,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.53974897
+        functionName: OnAnimationPlaying
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OnAnimationEnd
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -3027,7 +2999,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Stand_Damage
+      name: EnemyHit
       takeName: MyCharacter|Stand_Damage
       internalID: 0
       firstFrame: 0
@@ -3050,7 +3022,28 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: OnAnimationBegin
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.47280332
+        functionName: OnAnimationPlaying
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OnAnimationEnd
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -3172,7 +3165,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Stand_Death
+      name: EnemyHit_Die
       takeName: MyCharacter|Stand_Death
       internalID: 0
       firstFrame: 0
@@ -3186,7 +3179,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -3195,13 +3188,27 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: OnAnimationBegin
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.39330542
+        functionName: OnAnimationPlaying
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Stand_Idle
+      name: EnemyMove_Idle
       takeName: MyCharacter|Stand_Idle
       internalID: 0
       firstFrame: 0
