@@ -23,19 +23,17 @@ public class Player : PlayerController
     public LayerMask enemyLayer;
 
     [Header("Cooldown Settings")]
-    public float dashPrevTime = 0f;
+    [HideInInspector]public float dashPrevTime = 0f;
+    [HideInInspector]public float chargePrevTime = 0f;
+    [HideInInspector]public float slamPrevTime = 0f;
+    [HideInInspector]public float whirlwindPrevTime = 0f;
 
-    public float chargePrevTime = 0f;
-
-    public float slamPrevTime = 0f;
-    public float whirlwindPrevTime = 0f;
-    public float awakenTime = 0f;
-
-    public float dashLeftCooldown;
-
-    public float chargeLeftCooldown;
-    public float slamLeftCooldown;
-    public float whirlwindLeftCooldown;
+    [HideInInspector]public float awakenTime = 0f;
+    
+    [HideInInspector]public float dashLeftCooldown;
+    [HideInInspector]public float chargeLeftCooldown;
+    [HideInInspector]public float slamLeftCooldown;
+    [HideInInspector] public float whirlwindLeftCooldown;
 
     public float defaultMoveSpeed = 0f;
 
