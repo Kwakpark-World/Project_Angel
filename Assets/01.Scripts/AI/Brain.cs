@@ -112,7 +112,8 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, bool isCritical = false, float knockbackPower = 0f)
     {
-        //hitEffect.RotatonEffect();
+        hitEffect.RotatonEffect();
+        Debug.Log(hitEffect);
         if (BuffCompo.GetBuffState(BuffType.Shield))
         {
             return;
