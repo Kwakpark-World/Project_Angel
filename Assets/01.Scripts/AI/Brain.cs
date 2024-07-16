@@ -13,6 +13,7 @@ public abstract class Brain : PoolableMono
 
     public BehaviourTreeRunner treeRunner;
     public Transform enemyCenter;
+    public HitEffect hitEffect;
 
     #region Components
     public Rigidbody RigidbodyCompo { get; private set; }
@@ -111,6 +112,8 @@ public abstract class Brain : PoolableMono
 
     public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, bool isCritical = false, float knockbackPower = 0f)
     {
+        hitEffect.RotatonEffect();
+        Debug.Log(hitEffect);
         if (BuffCompo.GetBuffState(BuffType.Shield))
         {
             return;

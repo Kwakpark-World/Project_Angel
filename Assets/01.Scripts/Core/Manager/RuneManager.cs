@@ -81,7 +81,10 @@ public class RuneManager : MonoSingleton<RuneManager>
             return false;
         }
 
-        GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_equipedRunes[index].buffType);
+        if (GameManager.Instance.HasPlayer)
+        {
+            GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_equipedRunes[index].buffType);
+        }
 
         _equipedRunes[index] = null;
 
