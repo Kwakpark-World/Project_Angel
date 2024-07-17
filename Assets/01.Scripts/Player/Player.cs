@@ -206,7 +206,6 @@ public class Player : PlayerController
     public void OnHit(float incomingDamage, Brain attacker = null)
     {
         CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f);
-        TimeManager.Instance.TimeChange(0.8f, 0.6f);
         //EarthQuake(attacker);
         if (attacker && !isShield)
         {
@@ -351,9 +350,14 @@ public class Player : PlayerController
         StateMachine.CurrentState.AnimationTickCheckTrigger();
     }
 
-    public void AnimationMoveFreezeToggleTrigger()
+    public void AnimationPlayerSoundTrigger()
     {
-        StateMachine.CurrentState.AnimationMoveFreezeToggleTrigger();
+        StateMachine.CurrentState.AnimationPlayerSoundTrigger();
+    }
+
+    public void AnimationPlayerAttackImpactTrigger()
+    {
+        StateMachine.CurrentState.AnimationPlayerAttackImpactTrigger();
     }
     #endregion
 

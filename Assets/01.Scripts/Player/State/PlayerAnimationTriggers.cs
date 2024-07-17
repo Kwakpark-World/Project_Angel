@@ -41,8 +41,13 @@ public class PlayerAnimationTriggers : MonoBehaviour
         _player.AnimationTickCheckTrigger();
     }
 
-    private void AnimationMoveFreezeToggleTrigger()
+    private void AnimationPlayerSoundTrigger()
     {
-        _player.AnimationMoveFreezeToggleTrigger();
+        _player.AnimationPlayerSoundTrigger();
+    }
+
+    private void AnimationPlayerAttackImpactTrigger()
+    {
+        _player.AnimationPlayerAttackImpactTrigger();
     }
 }
