@@ -123,6 +123,8 @@ public class Player : PlayerController
     public bool isRollKnockback;
     public bool isRollOnceMore;
 
+    [HideInInspector] public bool isOnRollOnceMore;
+
     protected override void Awake()
     {
         base.Awake();
@@ -297,6 +299,7 @@ public class Player : PlayerController
 
         if (PlayerStatData.GetDashCooldown() + dashPrevTime > Time.time) return;
 
+        isOnRollOnceMore = false;
         dashPrevTime = Time.time;
         awakenTime = 0;
 
