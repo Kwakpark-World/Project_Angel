@@ -19,7 +19,7 @@ public class CameraManager : MonoSingleton<CameraManager>
     {
         if (addCamera._type == CameraType.None)
         {
-            Debug.LogError($"{addCamera} type is None. Select Camera Type");
+
         }
 
         if (_cameraDictionary.ContainsKey(addCamera._type))
@@ -34,7 +34,6 @@ public class CameraManager : MonoSingleton<CameraManager>
     {
         if (selectCam == null)
         {
-            Debug.LogError($"CameraManager SetCam Error : {selectCam} is Not CameraState.");
             return;
         }
 
