@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
 
         SetCombo();
+
         _player.PlayerStatData.attackPower.AddModifier(_comboAttackAddtiveDamage * _comboCounter);
 
         _player.RigidbodyCompo.AddForce(_player.transform.forward * 10, ForceMode.Impulse);
@@ -89,6 +91,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
             if (!_isEffectOn)
             {
                 _isEffectOn = true;
+                AttackSound();
+
                 ChargingEffect();
             }
         }
@@ -137,7 +141,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
         //Attack(enemies);
 
         Collider[] enemies = GetEnemyByOverlapBox(_player.weapon.transform.position, _player.weapon.transform.rotation);
-
         Attack(enemies.ToList());
     }
 
@@ -174,4 +177,13 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         _isCombo = true;
     }
+
+    public void AttackSound()
+    {
+        string enumName = $"Player_MeleeAttack_{_comboCounter}";
+        SFXType sfxType = (SFXType)Enum.Parse(typeof(SFXType), enumName);
+
+        SoundManager.Instance.PlaySFX(sfxType);
+    }
+
 }

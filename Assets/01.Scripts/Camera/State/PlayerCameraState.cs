@@ -1,6 +1,8 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,19 +29,31 @@ public class PlayerCameraState : CameraState
 
     private void SetRotation()
     {
-        if (IsCamRotateStop) return;
+        if (!GameManager.Instance.PlayerInstance.IsAttack)
+        {
+            if (IsCamRotateStop) return;
 
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-        if (mouseDelta.x == 0) return;
+            Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+            if (mouseDelta.x == 0) return;
 
-        float rotationAmount = mouseDelta.x * Time.deltaTime * _player.PlayerStatData.GetRotateSpeed();
+            float rotationAmount = mouseDelta.x * Time.deltaTime * _player.PlayerStatData.GetRotateSpeed();
 
-        if (CameraManager.Instance.IsXReverse)
-            rotationAmount *= -1f;
+            if (CameraManager.Instance.IsXReverse)
+                rotationAmount *= -1f;
 
-        // 회전 값을 적용합니다.
-        _player.transform.Rotate(Vector3.up, rotationAmount);
+            _player.transform.Rotate(Vector3.up, rotationAmount);
+        }
+        else
+        {
+            if (_camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
+            {
+
+                _camera.gameObject.AddComponent(Vector3.zero.GetType());
+            }
+        }
     }
+
+
 
     /*private void SetRotation()
     {
