@@ -53,6 +53,10 @@ public class PlayerCameraState : CameraState
         }
     }
 
+    public void CameraAttack()
+    {
+        
+    }
 
 
     /*private void SetRotation()
