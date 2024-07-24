@@ -130,6 +130,9 @@ public abstract class Brain : PoolableMono
         DamageTextCompo.SpawnParticle(enemyCenter.position, finalDamage.ToString(), Color.red, 0.5f);
         HealthBarCompo.UpdateHealthBar();
         AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
+        
+        CameraManager.Instance.ShakeCam(0.5f, 1, 1);
+        TimeManager.Instance.TimeChange(0.85f, 1.5f);
 
         if (isHitPhysically)
         {

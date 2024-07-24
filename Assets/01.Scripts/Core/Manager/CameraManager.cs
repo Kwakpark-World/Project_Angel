@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -8,6 +9,8 @@ public class CameraManager : MonoSingleton<CameraManager>
 {
     private Dictionary<CameraType, CameraState> _cameraDictionary = new Dictionary<CameraType, CameraState>();
     public CameraState _currentCam { get; private set; } = null;
+    private MotionBlur motionBlur;
+
 
     [SerializeField]
     private NoiseSettings shake6DSettings;
@@ -190,6 +193,31 @@ public class CameraManager : MonoSingleton<CameraManager>
 
             vCam.m_Lens.OrthographicSize = Mathf.MoveTowards(vCam.m_Lens.OrthographicSize, targetValue, changeValuePerTick * Time.deltaTime);
             yield return null;
+        }
+    }
+
+    public IEnumerator HitMotionBlur(float duration, float intensity)
+    {
+        if (motionBlur != null)
+        {
+            float originalIntensity = motionBlur.shutterAngle.value;
+            float elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                motionBlur.shutterAngle.value = Mathf.Lerp(originalIntensity, intensity, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                motionBlur.shutterAngle.value = Mathf.Lerp(intensity, originalIntensity, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            motionBlur.shutterAngle.value = originalIntensity;
         }
     }
 
