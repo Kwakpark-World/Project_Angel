@@ -9,7 +9,7 @@ public class CameraManager : MonoSingleton<CameraManager>
 {
     private Dictionary<CameraType, CameraState> _cameraDictionary = new Dictionary<CameraType, CameraState>();
     public CameraState _currentCam { get; private set; } = null;
-    private MotionBlur motionBlur;
+    
 
 
     [SerializeField]
@@ -195,30 +195,4 @@ public class CameraManager : MonoSingleton<CameraManager>
             yield return null;
         }
     }
-
-    public IEnumerator HitMotionBlur(float duration, float intensity)
-    {
-        if (motionBlur != null)
-        {
-            float originalIntensity = motionBlur.shutterAngle.value;
-            float elapsedTime = 0f;
-            while (elapsedTime < duration)
-            {
-                motionBlur.shutterAngle.value = Mathf.Lerp(originalIntensity, intensity, elapsedTime / duration);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            elapsedTime = 0f;
-            while (elapsedTime < duration)
-            {
-                motionBlur.shutterAngle.value = Mathf.Lerp(intensity, originalIntensity, elapsedTime / duration);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            motionBlur.shutterAngle.value = originalIntensity;
-        }
-    }
-
 }
