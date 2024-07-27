@@ -10805,7 +10805,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 333496167}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 262144
+    m_Bits: 262400
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
@@ -43955,7 +43955,6 @@ GameObject:
   - component: {fileID: 1252773283}
   - component: {fileID: 1252773282}
   - component: {fileID: 1252773284}
-  - component: {fileID: 1252773285}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -44007,24 +44006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f16cc31f6295f8e45aa7279e90738663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  postProcessVolume: {fileID: 1252773285}
---- !u!114 &1252773285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1252773280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 49ec23c2566ac354eab470a1bf8d07f3, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
+  volume: {fileID: 1252773282}
 --- !u!1001 &1253547391
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74364,7 +74346,7 @@ PrefabInstance:
     - target: {fileID: 8963508395914442269, guid: 4cee9b5523abe0343825057e38f94709,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

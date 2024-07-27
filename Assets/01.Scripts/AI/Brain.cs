@@ -132,6 +132,7 @@ public abstract class Brain : PoolableMono
         AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
         
         CameraManager.Instance.ShakeCam(0.5f, 1, 1);
+        VolumeManager.Instance.HitMotionBlur(3,1);
         TimeManager.Instance.TimeChange(0.85f, 1.5f);
 
         if (isHitPhysically)
