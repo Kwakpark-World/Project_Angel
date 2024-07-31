@@ -128,6 +128,7 @@ public class Player : PlayerController
     public bool isRollOnceMore;
 
     [HideInInspector] public bool isOnRollOnceMore;
+    [HideInInspector] public bool isOnChargingSlashOnceMore;
 
     protected override void Awake()
     {

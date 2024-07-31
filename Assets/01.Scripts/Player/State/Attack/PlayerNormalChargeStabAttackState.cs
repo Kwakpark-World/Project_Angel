@@ -62,11 +62,13 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         if (_TickCheckTriggerCalled)
         {
-            if (!_player.isChargingMultipleSting) return;
+            if (_player.isChargingMultipleSting)
+            {
+                _TickCheckTriggerCalled = false;
+                _isEffectOn = false;
+                _player.enemyNormalHitDuplicateChecker.Clear();
+            }
 
-            _TickCheckTriggerCalled = false;
-            _isEffectOn = false;
-            _player.enemyNormalHitDuplicateChecker.Clear();
         }
 
         if (_effectTriggerCalled)
