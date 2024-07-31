@@ -99,6 +99,10 @@ public class Player : PlayerController
     public HashSet<Brain> enemyNormalHitDuplicateChecker = new HashSet<Brain>();
     public HashSet<Brain> enemyChainHitDuplicateChecker = new HashSet<Brain>();
 
+    public HashSet<Brain> enemyDashHitDuplicateChecker = new HashSet<Brain>();
+    public HashSet<Brain> enemyKnockBackDuplicateChecker = new HashSet<Brain>();
+
+
     [Header("Debuff Render")]
     public Renderer[] renderers;
 

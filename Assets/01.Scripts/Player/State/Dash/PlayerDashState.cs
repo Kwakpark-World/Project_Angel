@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerDashState : PlayerState
 {
-
     public PlayerDashState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -30,6 +27,9 @@ public class PlayerDashState : PlayerState
         CameraManager.Instance._currentCam.IsCamRotateStop = false;
         _player.IsDefense = false;
 
+        _player.enemyDashHitDuplicateChecker.Clear();
+        _player.enemyKnockBackDuplicateChecker.Clear();
+
     }
 
     public override void UpdateState()
@@ -37,6 +37,19 @@ public class PlayerDashState : PlayerState
         base.UpdateState();
         if (_player.IsPlayerStop == PlayerControlEnum.Stop)
             return;
+
+        List<Collider> enemies = GetEnemyToDash().ToList();
+        Debug.Log(enemies.Count);
+
+        if (_player.isRollKnockback)
+        {
+            KnockBack(enemies);
+        }
+
+        if (_player.isRollAttack)
+        {
+            Attack(enemies);
+        }
 
         _player.AnimatorCompo.SetBool("RollOnceMore", _player.isOnRollOnceMore);
     }
@@ -56,4 +69,47 @@ public class PlayerDashState : PlayerState
             _player.StateMachine.ChangeState(PlayerStateEnum.AwakenDash);
     }
 
+    private void KnockBack(List<Collider> enemies)
+    {
+        foreach (var enemy in enemies)
+        {
+            if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
+            {
+                if (_player.enemyKnockBackDuplicateChecker.Add(brain))
+                {
+                    Debug.Log("Knockback");
+                    _player.StartCoroutine(brain.Knockback(_player.PlayerStatData.GetKnockbackPower()));
+                }
+            }
+        }
+    }
+
+    ///
+    protected Collider[] GetEnemyToDash()
+    {
+        Vector3 pos = _player.transform.forward + _player.playerCenter.position;
+
+        Vector3 halfSize = Vector3.one * 0.5f;
+        halfSize.y *= 2;
+
+        return Physics.OverlapBox(pos, halfSize, _player.transform.rotation, _player.enemyLayer);
+    }
+
+    public void Attack(List<Collider> enemies)
+    {
+        foreach (var enemy in enemies)
+        {
+            if (enemy.transform.TryGetComponent<Brain>(out Brain brain))
+            {
+                if (_player.enemyDashHitDuplicateChecker.Add(brain))
+                {
+                    Debug.Log("roll attacks");
+
+                    brain.OnHit(_player.PlayerStatData.GetAttackPower(), true, false, 0);
+                    
+                    _player.CurrentAwakenGauge++;
+                }
+            }
+        }
+    }
 }
