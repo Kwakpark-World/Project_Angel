@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,7 @@ public class PlayerAttackState : PlayerState
         Gizmos.DrawWireCube(-_player.transform.position + _attackOffset, _attackSize);*/
 
         SetAttackSetting();
+        //CameraManager.Instance.AttackCamMove();
 
     }
 
@@ -68,7 +70,7 @@ public class PlayerAttackState : PlayerState
 
                     brain.OnHit(GetRandomDamage(), true, isCritical, _player.PlayerStatData.GetKnockbackPower());
                     HitEnemyAction(brain);
-        
+                    
                     _player.CurrentAwakenGauge++;
                     
                 }
@@ -78,7 +80,7 @@ public class PlayerAttackState : PlayerState
         }
     }
 
-    public void Attack(List<RaycastHit> enemies)
+    /*public void Attack(List<RaycastHit> enemies)
     {
         float modifierValue = _player.PlayerStatData.GetAttackPower() * _player.PlayerStatData.GetCriticalDamageMultiplier() - _player.PlayerStatData.GetAttackPower();
         if (IsCritical())
@@ -104,7 +106,7 @@ public class PlayerAttackState : PlayerState
 
         isCritical = false;
         _player.PlayerStatData.attackPower.RemoveModifier(modifierValue);
-    }
+    }*/
 
     public List<RaycastHit> GetEnemyByRaycast()
     {
