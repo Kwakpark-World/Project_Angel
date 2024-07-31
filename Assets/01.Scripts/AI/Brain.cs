@@ -131,7 +131,7 @@ public abstract class Brain : PoolableMono
         HealthBarCompo.UpdateHealthBar();
         AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
         
-        CameraManager.Instance.ShakeCam(0.5f, 1, 1);
+        CameraManager.Instance.ShakeCam(0.5f, 0.3f, 0.3f);
         VolumeManager.Instance.HitMotionBlur(3,1);
         TimeManager.Instance.TimeChange(0.85f, 1.5f);
 
