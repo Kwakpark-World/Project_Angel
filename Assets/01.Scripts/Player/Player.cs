@@ -92,6 +92,7 @@ public class Player : PlayerController
     public bool IsAwakened;
     public bool IsGroundState;
     public bool isShield;
+    public bool isReinforcedattack;
     public PlayerControlEnum IsPlayerStop = PlayerControlEnum.Move;
 
     public Vector3 MousePosInWorld { get; private set; }
