@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class PlayerAwakenChargeAttackState : PlayerChargeState
 {
@@ -27,8 +28,20 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         _isShaken = false;
 
         _player.AnimatorCompo.speed = 1 + (_player.CurrentChargeTime / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargeAttackSpeed();
-        _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
 
+        if (_player.isOnWhirlWindOnceMore)
+        {
+            _player.PlayerStatData.moveSpeed.AddModifier(-3f);
+            _thisParticles = _player.effectParent.Find($"{_effectString}_OnceMore").GetComponentsInChildren<ParticleSystem>();
+        }
+        else
+        {
+            _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
+            if (_player.isWhirlwindMoveAble)
+            {
+                _player.AnimatorCompo.speed += 0.2f;
+            }
+        }
     }
 
     public override void Exit()
@@ -38,16 +51,36 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         _player.AnimatorCompo.speed = 1;
         _player.enemyNormalHitDuplicateChecker.Clear();
 
+
         foreach (var particle in _thisParticles)
         {
             particle.Stop();
+            
         }
+        
+        if (_player.isWhirlwindMoveAble)
+            _player.PlayerStatData.moveSpeed.RemoveModifier(-3f);
+
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        _player.StopImmediately(false);
+
+        //if (!_player.isWhirlwindMoveAble)
+        //    _player.StopImmediately(false);
+        //else
+        if (_player.isWhirlwindMoveAble)
+        {
+            if (_actionTriggerCalled)
+            {
+                _player.AnimatorCompo.SetBool("WhirlWindOnceMore", true);
+                _player.isOnWhirlWindOnceMore = true;
+
+                _player.StateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
+                return;
+            }
+        }
 
         if (_effectTriggerCalled)
         {
@@ -65,6 +98,10 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
 
         if (_endTriggerCalled)
         {
+            if (_actionTriggerCalled && _player.isWhirlwindMoveAble) return;
+            _player.AnimatorCompo.SetBool("WhirlWindOnceMore", false);
+            _player.isOnWhirlWindOnceMore = false;
+
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
