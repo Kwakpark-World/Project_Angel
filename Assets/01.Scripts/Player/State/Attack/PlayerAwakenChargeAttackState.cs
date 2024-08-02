@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
 
 public class PlayerAwakenChargeAttackState : PlayerChargeState
 {
@@ -29,18 +28,19 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
 
         _player.AnimatorCompo.speed = 1 + (_player.CurrentChargeTime / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargeAttackSpeed();
 
+        if (_player.isWhirlwindMoveAble)
+        {
+            _player.PlayerStatData.moveSpeed.AddModifier(-5f);
+            _player.AnimatorCompo.speed += 0.2f;
+        }
+
         if (_player.isOnWhirlWindOnceMore)
         {
-            _player.PlayerStatData.moveSpeed.AddModifier(-3f);
             _thisParticles = _player.effectParent.Find($"{_effectString}_OnceMore").GetComponentsInChildren<ParticleSystem>();
         }
         else
         {
             _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
-            if (_player.isWhirlwindMoveAble)
-            {
-                _player.AnimatorCompo.speed += 0.2f;
-            }
         }
     }
 
@@ -59,7 +59,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         }
         
         if (_player.isWhirlwindMoveAble)
-            _player.PlayerStatData.moveSpeed.RemoveModifier(-3f);
+            _player.PlayerStatData.moveSpeed.RemoveModifier(-5f);
 
     }
 
@@ -67,11 +67,21 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
     {
         base.UpdateState();
 
-        //if (!_player.isWhirlwindMoveAble)
-        //    _player.StopImmediately(false);
-        //else
-        if (_player.isWhirlwindMoveAble)
+        if (!_player.isWhirlwindMoveAble)
+            _player.StopImmediately(false);
+        else
         {
+            float XInput = _player.PlayerInput.XInput;
+            float YInput = _player.PlayerInput.YInput;
+
+            Vector3 moveDir = new Vector3(XInput, 0 , YInput).normalized;
+
+            moveDir = (Quaternion.Euler(0, CameraManager.Instance.GetCameraByType(CameraType.PlayerCam).transform.eulerAngles.y, 0) * moveDir).normalized;
+            moveDir *= _player.PlayerStatData.GetMoveSpeed();
+
+            moveDir.y = _rigidbody.velocity.y;
+            _player.SetVelocity(moveDir);
+
             if (_actionTriggerCalled)
             {
                 _player.AnimatorCompo.SetBool("WhirlWindOnceMore", true);

@@ -18,12 +18,6 @@ MonoBehaviour:
   defensivePower:
     _baseValue: 0
     modifiers: []
-  defenseDuration:
-    _baseValue: 3
-    modifiers: []
-  defenseCooldown:
-    _baseValue: 2
-    modifiers: []
   attackPower:
     _baseValue: 10
     modifiers: []
@@ -75,7 +69,7 @@ MonoBehaviour:
   maxAwakenGauge:
     _baseValue: 100
     modifiers: []
-  awakenTime:
+  maxAwakenDuration:
     _baseValue: 10
     modifiers: []
   minChargeTime:
@@ -84,6 +78,6 @@ MonoBehaviour:
   maxChargeTime:
     _baseValue: 2
     modifiers: []
-  whirlwindCoolDown:
+  whirlwindCooldown:
     _baseValue: 10
     modifiers: []
