@@ -47,7 +47,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         _player.PlayerStatData.attackPower.AddModifier(_comboAttackAddtiveDamage * _comboCounter);
 
-        if(_comboCounter == 4)
+        if(_comboCounter == 3)
             _player.isReinforcedattack = true;
         else 
             _player.isReinforcedattack = false;

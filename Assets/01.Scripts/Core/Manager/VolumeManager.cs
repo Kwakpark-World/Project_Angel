@@ -40,7 +40,7 @@ public class VolumeManager : MonoSingleton<VolumeManager>
     {
         if (motionBlur != null)
         {
-            Debug.Log(motionBlur.intensity.value);
+            //Debug.Log(motionBlur.intensity.value);
         }
     }
 

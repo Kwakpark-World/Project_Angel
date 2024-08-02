@@ -113,7 +113,7 @@ public abstract class Brain : PoolableMono
     public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, bool isCritical = false, float knockbackPower = 0f)
     {
         hitEffect.RotatonEffect();
-        Debug.Log(hitEffect);
+        //Debug.Log(hitEffect);
         if (BuffCompo.GetBuffState(BuffType.Shield))
         {
             return;
@@ -131,9 +131,9 @@ public abstract class Brain : PoolableMono
         HealthBarCompo.UpdateHealthBar();
         
 
-        if(GameManager.Instance.PlayerInstance.isReinforcedattack)
+        if(GameManager.Instance.PlayerInstance.isReinforcedattack == true)
         {
-            AnimatorCompo.SetAnimationState("BackAttackHit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
+            AnimatorCompo.SetAnimationState("BackAttackHit", AnimatorCompo.GetCurrentAnimationState("BackAttackHit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
             Debug.Log("2");
         }
         else
