@@ -1,23 +1,46 @@
 using System.Collections;
-using UnityEngine.Rendering.PostProcessing;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class VolumeManager : MonoSingleton<VolumeManager>
 {
-    public PostProcessVolume postProcessVolume;
+    public Volume volume;
     private MotionBlur motionBlur;
+
+    private void Start()
+    {
+        if (volume != null && volume.profile != null)
+        {
+            // Volume 프로파일에서 모든 설정을 가져옴
+            foreach (var component in volume.profile.components)
+            {
+                // MotionBlur 타입인지 확인하고 가져옴
+                if (component is MotionBlur mb)
+                {
+                    motionBlur = mb;
+                    Debug.Log("Motion Blur component found");
+                    break;
+                }
+            }
+
+            if (motionBlur == null)
+            {
+                Debug.LogError("Motion Blur component not found in Volume profile");
+            }
+        }
+        else
+        {
+            Debug.LogError("Volume or Volume profile is not assigned");
+        }
+    }
 
     private void Update()
     {
-        postProcessVolume.profile.TryGetSettings(out motionBlur);
-        Debug.Log(motionBlur);
-
-        if(Input.GetKeyDown(KeyCode.O))
+        if (motionBlur != null)
         {
-            Debug.Log("2");
-            motionBlur.shutterAngle.value += 1;
+            //Debug.Log(motionBlur.intensity.value);
         }
     }
 
@@ -25,11 +48,11 @@ public class VolumeManager : MonoSingleton<VolumeManager>
     {
         if (motionBlur != null)
         {
-            float originalIntensity = motionBlur.shutterAngle.value;
+            float originalIntensity = motionBlur.intensity.value;
             float elapsedTime = 0f;
-            while (elapsedTime < duration)
+            while (elapsedTime < duration) 
             {
-                motionBlur.shutterAngle.value = Mathf.Lerp(originalIntensity, intensity, elapsedTime / duration);
+                motionBlur.intensity.value = Mathf.Lerp(originalIntensity, intensity, elapsedTime / duration);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
@@ -37,12 +60,12 @@ public class VolumeManager : MonoSingleton<VolumeManager>
             elapsedTime = 0f;
             while (elapsedTime < duration)
             {
-                motionBlur.shutterAngle.value = Mathf.Lerp(intensity, originalIntensity, elapsedTime / duration);
+                motionBlur.intensity.value = Mathf.Lerp(intensity, originalIntensity, elapsedTime / duration);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
-            motionBlur.shutterAngle.value = originalIntensity;
+            motionBlur.intensity.value = originalIntensity;
         }
     }
 }
