@@ -16,6 +16,9 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
     private bool _isShaken = false;
     private ParticleSystem[] _thisParticles;
 
+    private Vector3 defaultScale;
+
+
     public PlayerAwakenChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -42,6 +45,16 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         {
             _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
         }
+
+        defaultScale = _thisParticles[0].transform.localScale;
+        if (_player.isWhirlwindRangeUp)
+        {
+            foreach(var particle in _thisParticles)
+            {
+                particle.transform.localScale *= 1.2f;
+            }
+        }
+        
     }
 
     public override void Exit()
@@ -60,6 +73,15 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         
         if (_player.isWhirlwindMoveAble)
             _player.PlayerStatData.moveSpeed.RemoveModifier(-5f);
+
+        if (_player.isWhirlwindRangeUp)
+        {
+            foreach (var particle in _thisParticles)
+            {
+                particle.transform.localScale = defaultScale;
+            }
+        }
+
 
     }
 
@@ -169,6 +191,15 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         }
 
         Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
+
+        if (_player.isWhirlwindPullEnemies)
+        {
+            foreach (var enemy in enemies)
+            {
+                Vector3 dir = _player.transform.position - enemy.transform.position;
+                enemy.attachedRigidbody.velocity = (dir.normalized) * 2f;
+            }
+        }
 
         Attack(enemies.ToList());
     }
