@@ -1,12 +1,16 @@
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CameraManager : MonoSingleton<CameraManager>
 {
     private Dictionary<CameraType, CameraState> _cameraDictionary = new Dictionary<CameraType, CameraState>();
     public CameraState _currentCam { get; private set; } = null;
+    
+
 
     [SerializeField]
     private NoiseSettings shake6DSettings;
@@ -18,7 +22,7 @@ public class CameraManager : MonoSingleton<CameraManager>
     {
         if (addCamera._type == CameraType.None)
         {
-            Debug.LogError($"{addCamera} type is None. Select Camera Type");
+
         }
 
         if (_cameraDictionary.ContainsKey(addCamera._type))
@@ -33,7 +37,6 @@ public class CameraManager : MonoSingleton<CameraManager>
     {
         if (selectCam == null)
         {
-            Debug.LogError($"CameraManager SetCam Error : {selectCam} is Not CameraState.");
             return;
         }
 
