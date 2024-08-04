@@ -8,8 +8,6 @@ public enum PlayerStatType
 {
     maxHealth = 0,
     defensivePower = 10,
-    defenseDuration,
-    defenseCooldown,
     attackPower = 100,
     attackSpeed,
     criticalChance = 110,
@@ -39,8 +37,6 @@ public class PlayerStat : ScriptableObject
     [Header("Defensive stats")]
     public Stat maxHealth;
     public Stat defensivePower;
-    public Stat defenseDuration;
-    public Stat defenseCooldown;
 
     [Header("Offensive stats")]
     public Stat attackPower;
@@ -119,16 +115,6 @@ public class PlayerStat : ScriptableObject
     public float GetDefensivePower()
     {
         return defensivePower.GetValue();
-    }
-
-    public float GetDefenseDuration()
-    {
-        return defenseDuration.GetValue();
-    }
-
-    public float GetDefenseCooldown()
-    {
-        return defenseCooldown.GetValue();
     }
 
     public float GetAttackPower()

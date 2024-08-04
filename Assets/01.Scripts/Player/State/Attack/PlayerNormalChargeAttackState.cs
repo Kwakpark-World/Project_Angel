@@ -26,8 +26,15 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
         // (1 + (max):10%) * speed
         _player.AnimatorCompo.speed = (1 + (_player.CurrentChargeTime / (_maxChargeTime * 10))) * _player.PlayerStatData.GetChargeAttackSpeed();
-        _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
 
+        if (!_player.isOnChargingSlashOnceMore)
+        {
+            _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+        }
+        else
+        {
+            _thisParticle = _player.effectParent.Find($"{_effectString}_OnceMore").GetComponent<ParticleSystem>();
+        }
     }
 
     public override void Exit()
@@ -46,6 +53,18 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         if (_isHitAbleTriggerCalled)
             ChargeAttack();
 
+        // Rune 
+        if (_actionTriggerCalled)
+        {
+            if (_player.isChargingSlashOnceMore)
+            {
+                _player.AnimatorCompo.SetBool("ChargingSlashOnceMore", true);
+                _player.isOnChargingSlashOnceMore = true;
+                _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
+                return;
+            }
+        }
+
         if (_effectTriggerCalled)
         {
             if (!_isEffectOn)
@@ -58,6 +77,11 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
         if (_endTriggerCalled)                                                                                
         {
             if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
+            if (_actionTriggerCalled && _player.isChargingSlashOnceMore) return;
+
+            _player.AnimatorCompo.SetBool("ChargingSlashOnceMore", false);
+            _player.isOnChargingSlashOnceMore = false;
+
             _stateMachine.ChangeState(PlayerStateEnum.NormalChargeStabAttack);
         }
     }

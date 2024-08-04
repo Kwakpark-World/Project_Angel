@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: 01785f91d7fd0324ea3d77df8291185c
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       74: 5852982713372822042
-    second: Idle
+    second: EnemyWingMove_Idle
   - first:
       74: -5261464246212601520
     second: Idle_To_Rest
@@ -17,7 +17,7 @@ ModelImporter:
     second: NoWing_To_Rest
   - first:
       74: 3286355478159485509
-    second: Resting_Idle
+    second: EnemyWingMove_Idle
   - first:
       74: 4805745386581417271
     second: Block
@@ -29,7 +29,7 @@ ModelImporter:
     second: Fly_2
   - first:
       74: 1447812392098053192
-    second: Fly_3
+    second: EnemyWingMove
   - first:
       74: 9149466480886619012
     second: Plane-1
@@ -196,7 +196,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Resting_Idle
+      name: EnemyWingMove_Idle
       takeName: Armature|_Resting-idle
       internalID: 0
       firstFrame: 0
@@ -312,7 +312,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Fly_3
+      name: EnemyWingMove
       takeName: Armature|Fly_3
       internalID: 0
       firstFrame: 0
@@ -493,6 +493,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -520,6 +521,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -552,6 +554,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
