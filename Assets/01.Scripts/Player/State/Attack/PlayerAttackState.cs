@@ -72,7 +72,6 @@ public class PlayerAttackState : PlayerState
                     HitEnemyAction(brain);
                     
                     _player.CurrentAwakenGauge++;
-                    
                 }
                 isCritical = false;
                 _player.PlayerStatData.attackPower.RemoveModifier(modifierValue);

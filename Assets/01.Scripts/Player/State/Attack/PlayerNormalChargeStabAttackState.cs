@@ -111,8 +111,7 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
     private void ChargeAttackStabEffect()
     {
         
-        Vector3 pos = _weaponRB.transform.position;
-        pos.x = 0;
+        Vector3 pos = _player.playerCenter.position;
 
         for (int i = 0; i < 3; i++)
         {
