@@ -20,12 +20,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerAttack_Charged_Awaken_Main
+  m_Name: PlayerAttack_Charged_Awaken_Slash 1
   m_Shader: {fileID: 4800000, guid: 7a3251d4c3f85e947adfcdf71b061348, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _USE_CUSTOM_ON
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -86,7 +85,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _main_tex:
-        m_Texture: {fileID: 2800000, guid: 24d73a0978aa8264d8d2eafb48f370bb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 12f1fbd282af9ec419fc32c5b968de00, type: 3}
         m_Scale: {x: 1, y: 1.08}
         m_Offset: {x: 0, y: 0}
     - _normal_tex:
@@ -146,20 +145,20 @@ Material:
     - _ZWrite: 1
     - _diss_upanner: 0.48
     - _diss_vpanner: -0.95
-    - _dissolve: -0.338
+    - _dissolve: 1
     - _fade_depth: 0
-    - _main_intencity: 5.77
-    - _main_pow: 1.96
-    - _main_upanner: 0.99
+    - _main_intencity: 4.13
+    - _main_pow: 1
+    - _main_upanner: 3.34
     - _main_vpanner: -1.1
     - _mask_pow: 0
-    - _normal_str: 0
+    - _normal_str: 0.037
     - _normal_upanner: 0.52
     - _normal_vpanner: 0
     - _opacity: 10
     - _slash_uoff: -0.44
     - _slash_voff: 0
-    - _use_custom: 1
+    - _use_custom: 0
     - _use_mask_mirror: 0
     - _use_one_minus: 0
     m_Colors:
@@ -167,5 +166,5 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _main_color: {r: 0.016551144, g: 0, b: 0, a: 0}
+    - _main_color: {r: 0.03529412, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
