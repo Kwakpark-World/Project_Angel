@@ -113,7 +113,7 @@ public abstract class Brain : PoolableMono
     public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, bool isCritical = false, float knockbackPower = 0f)
     {
         hitEffect.RotatonEffect();
-        Debug.Log(hitEffect);
+        //Debug.Log(hitEffect);
         if (BuffCompo.GetBuffState(BuffType.Shield))
         {
             return;
@@ -129,7 +129,23 @@ public abstract class Brain : PoolableMono
 
         DamageTextCompo.SpawnParticle(enemyCenter.position, finalDamage.ToString(), Color.red, 0.5f);
         HealthBarCompo.UpdateHealthBar();
-        AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
+        
+
+        if(GameManager.Instance.PlayerInstance.isReinforcedattack == true)
+        {
+            AnimatorCompo.SetAnimationState("BackAttackHit", AnimatorCompo.GetCurrentAnimationState("BackAttackHit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
+            Debug.Log("2");
+        }
+        else
+        {
+            AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
+            Debug.Log("12");
+        }
+            
+
+        CameraManager.Instance.ShakeCam(0.5f, 0.3f, 0.3f);
+        VolumeManager.Instance.HitMotionBlur(3,1);
+        TimeManager.Instance.TimeChange(0.85f, 1.5f);
 
         if (isHitPhysically)
         {

@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class PlayerNormalChargeStabAttackState : PlayerChargeState
 {
-    private float _width = 6f;
+    private float _width = 4f;
     private float _height = 8f;
     private float _dist = 12f;
 
     private bool _isStabMove;
     private bool _isEffectOn = false;
 
-    private ParticleSystem _thisParticle;
+    private ParticleSystem[] _thisParticle = new ParticleSystem[3];
 
 
     public PlayerNormalChargeStabAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -25,7 +25,11 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         _isEffectOn = false;
         _isStabMove = false;
-        _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            _thisParticle[i] = _player.effectParent.Find(_effectString + i).GetComponent<ParticleSystem>();
+        }
 
         CameraManager.Instance._currentCam.IsCamRotateStop = true;
     }
@@ -40,7 +44,10 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         _player.CurrentChargeTime = 0;
         _player.AnimatorCompo.speed = 1;
 
-        _thisParticle.Stop();
+        for (int i = 0; i < 3; i++)
+        {
+            _thisParticle[i].Stop();
+        }
 
     }
 
@@ -51,6 +58,17 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
         if (_isHitAbleTriggerCalled)
         {
             ChargeAttackStab();
+        }
+
+        if (_TickCheckTriggerCalled)
+        {
+            if (_player.isChargingMultipleSting)
+            {
+                _TickCheckTriggerCalled = false;
+                _isEffectOn = false;
+                _player.enemyNormalHitDuplicateChecker.Clear();
+            }
+
         }
 
         if (_effectTriggerCalled)
@@ -86,17 +104,24 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         Vector3 size = new Vector3(_hitWidth, _hitHeight, _hitDist);
 
-        _attackOffset = _player.transform.forward * 3f;
+        _attackOffset = Vector3.zero;
         _attackSize = size;
     }
 
     private void ChargeAttackStabEffect()
     {
         
-        Vector3 pos = _weaponRB.transform.position;
-        _thisParticle.transform.position = pos;
+        Vector3 pos = _player.playerCenter.position;
 
-        _thisParticle.Play();
+        for (int i = 0; i < 3; i++)
+        {
+            _thisParticle[i].transform.position = pos;
+            _thisParticle[i].Play();
+            if (!_player.isChargingTripleSting)
+                break;
+        }
+
+
         //Vector3 pos = _player._weapon.transform.position;
         //EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Charged_Sting_Normal, pos);
 
@@ -104,7 +129,25 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
     private void ChargeAttackStab()
     {
-        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
+        List<Collider> result = new List<Collider>();
+
+        Vector3 forwardOffset = _player.transform.forward * 3f;
+        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position + forwardOffset, _player.transform.rotation);
+        
+        if (_player.isChargingTripleSting)
+        {
+            Vector3 rightDir = _player.transform.eulerAngles + new Vector3(0, 15, 0);
+            Vector3 rightOffset = (Quaternion.Euler(rightDir) * Vector3.forward) * 4;
+            Collider[] rightEnemies = GetEnemyByOverlapBox(_player.transform.position + rightOffset, Quaternion.Euler(rightDir));
+
+            Vector3 leftDir = _player.transform.eulerAngles - new Vector3(0, 15, 0);
+            Vector3 leftOffset = (Quaternion.Euler(leftDir) * Vector3.forward) * 4;
+            Collider[] leftEnemies = GetEnemyByOverlapBox(_player.transform.position + leftOffset, Quaternion.Euler(leftDir));
+
+            result.AddRange(rightEnemies);
+            result.AddRange(leftEnemies);            
+        }
+        result.AddRange(enemies);
 
         Attack(enemies.ToList());
     }

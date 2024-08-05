@@ -21,7 +21,9 @@ public class PlayerState
     public bool _effectTriggerCalled { get; private set; } = false;
     public bool _effectTriggerEndCalled { get; private set; } = false;
     public bool _TickCheckTriggerCalled;
-    public bool _animationMoveFreezeToggleTrigger;
+
+    public bool _playerSoundTrigger { get; private set; } = false;
+    public bool _playerAttackImpactTrigger { get; private set; } = false;
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, string animBoolName)
     {
@@ -41,7 +43,8 @@ public class PlayerState
         _effectTriggerCalled = false;
         _TickCheckTriggerCalled = false;
         _effectTriggerEndCalled = false;
-        _animationMoveFreezeToggleTrigger = false;
+        _playerSoundTrigger = false;
+        _playerAttackImpactTrigger = false;
 
         _player.AnimatorCompo.SetBool(_animBoolHash, true);
     }
@@ -110,9 +113,14 @@ public class PlayerState
     {
         _TickCheckTriggerCalled = true;
     }
-
-    public void AnimationMoveFreezeToggleTrigger()
+ 
+    public void AnimationPlayerSoundTrigger()
     {
-        _animationMoveFreezeToggleTrigger = !_animationMoveFreezeToggleTrigger;
+        _playerSoundTrigger = true;
+    }
+
+    public void AnimationPlayerAttackImpactTrigger()
+    {
+        _playerAttackImpactTrigger = true;
     }
 }

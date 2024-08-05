@@ -23,18 +23,17 @@ public class Player : PlayerController
     public LayerMask enemyLayer;
 
     [Header("Cooldown Settings")]
-    public float dashPrevTime = 0f;
-    public float defensePrevTime = 0f;
-    public float chargePrevTime = 0f;
-    public float slamPrevTime = 0f;
-    public float whirlwindPrevTime = 0f;
-    public float awakenTime = 0f;
+    [HideInInspector]public float dashPrevTime = 0f;
+    [HideInInspector]public float chargePrevTime = 0f;
+    [HideInInspector]public float slamPrevTime = 0f;
+    [HideInInspector]public float whirlwindPrevTime = 0f;
 
-    public float dashLeftCooldown;
-    public float defenseLeftCooldown;
-    public float chargeLeftCooldown;
-    public float slamLeftCooldown;
-    public float whirlwindLeftCooldown;
+    [HideInInspector]public float awakenTime = 0f;
+    
+    [HideInInspector]public float dashLeftCooldown;
+    [HideInInspector]public float chargeLeftCooldown;
+    [HideInInspector]public float slamLeftCooldown;
+    [HideInInspector] public float whirlwindLeftCooldown;
 
     public float defaultMoveSpeed = 0f;
 
@@ -93,6 +92,7 @@ public class Player : PlayerController
     public bool IsAwakened;
     public bool IsGroundState;
     public bool isShield;
+    public bool isReinforcedattack;
     public PlayerControlEnum IsPlayerStop = PlayerControlEnum.Move;
 
     public Vector3 MousePosInWorld { get; private set; }
@@ -100,11 +100,37 @@ public class Player : PlayerController
     public HashSet<Brain> enemyNormalHitDuplicateChecker = new HashSet<Brain>();
     public HashSet<Brain> enemyChainHitDuplicateChecker = new HashSet<Brain>();
 
+    public HashSet<Brain> enemyDashHitDuplicateChecker = new HashSet<Brain>();
+    public HashSet<Brain> enemyKnockBackDuplicateChecker = new HashSet<Brain>();
+
+
     [Header("Debuff Render")]
     public Renderer[] renderers;
 
     private Volume _playerOnHitVolume;
     private Coroutine _playerOnHitVolumeCoroutine;
+
+    [Header("Rune Params"), Header("Charging")]
+    public bool isChargingTripleSting;
+    public bool isChargingMultipleSting;
+    public bool isChargingSlashOnceMore;
+    public bool isChargingSwordAura;
+    [Header("Slam")]
+    public bool isSlamSixTimeSlam;
+    [Header("Whirlwind")]
+    public bool isWhirlwindShockWave;
+    public bool isWhirlwindMoveAble;
+    public bool isWhirlwindPullEnemies;
+    public bool isWhirlwindRangeUp;
+    [Header("Dash")]
+    public bool isRollToDash;
+    public bool isRollAttack;
+    public bool isRollKnockback;
+    public bool isRollOnceMore;
+
+    [HideInInspector] public bool isOnRollOnceMore;
+    [HideInInspector] public bool isOnChargingSlashOnceMore;
+    [HideInInspector] public bool isOnWhirlWindOnceMore;
 
     protected override void Awake()
     {
@@ -136,8 +162,7 @@ public class Player : PlayerController
     protected void OnEnable()
     {
         PlayerInput.DashEvent += HandleDashEvent;
-        //PlayerInput.DefenseEvent += PlayerDefense;
-
+        
     }
 
     protected override void Start()
@@ -185,13 +210,11 @@ public class Player : PlayerController
     protected void OnDisable()
     {
         PlayerInput.DashEvent -= HandleDashEvent;
-        //PlayerInput.DefenseEvent -= PlayerDefense;
     }
 
     public void OnHit(float incomingDamage, Brain attacker = null)
     {
         CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f);
-        TimeManager.Instance.TimeChange(0.8f, 0.6f);
         //EarthQuake(attacker);
         if (attacker && !isShield)
         {
@@ -266,28 +289,11 @@ public class Player : PlayerController
         return false;
     }
 
-    private void PlayerDefense()
-    {
-        if (IsPlayerStop == PlayerControlEnum.Stop) return;
-
-        if (IsGroundDetected())
-        {
-            if (PlayerStatData.GetDefenseCooldown() + defensePrevTime > Time.time)
-            {
-                return;
-            }
-
-            StateMachine.ChangeState(PlayerStateEnum.Defense);
-        }
-
-    }
-
     private void ResetSkillCooldown()
     {
         dashPrevTime = Time.time - PlayerStatData.GetDashCooldown() + 1f;
         chargePrevTime = Time.time - PlayerStatData.GetChargeAttackCooldown() + 1f;
         slamPrevTime = Time.time - PlayerStatData.GetSlamCooldown() + 1f;
-        defensePrevTime = Time.time - PlayerStatData.GetDefenseCooldown() + 1f;
         whirlwindPrevTime = Time.time - PlayerStatData.GetWhirlwindCooldown() + 1f;
     }
     #endregion
@@ -299,12 +305,13 @@ public class Player : PlayerController
         if (IsPlayerStop == PlayerControlEnum.Stop) return;
 
         if (PlayerStatData.GetDashCooldown() + dashPrevTime > Time.time) return;
-        if (StateMachine.CurrentState._actionTriggerCalled) return;
 
+        isOnRollOnceMore = false;
         dashPrevTime = Time.time;
         awakenTime = 0;
 
-        if (!IsAwakened)
+        if (!isRollToDash)
+
         {
             if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
@@ -315,7 +322,7 @@ public class Player : PlayerController
         {
             if (!IsGroundDetected()) return;
             if (StateMachine.CurrentState == StateMachine.GetState(PlayerStateEnum.Awakening)) return;
-
+        
             StateMachine.ChangeState(PlayerStateEnum.AwakenDash);
         }
     }
@@ -353,9 +360,14 @@ public class Player : PlayerController
         StateMachine.CurrentState.AnimationTickCheckTrigger();
     }
 
-    public void AnimationMoveFreezeToggleTrigger()
+    public void AnimationPlayerSoundTrigger()
     {
-        StateMachine.CurrentState.AnimationMoveFreezeToggleTrigger();
+        StateMachine.CurrentState.AnimationPlayerSoundTrigger();
+    }
+
+    public void AnimationPlayerAttackImpactTrigger()
+    {
+        StateMachine.CurrentState.AnimationPlayerAttackImpactTrigger();
     }
     #endregion
 
@@ -464,7 +476,7 @@ public class Player : PlayerController
         //������
         if (Keyboard.current.qKey.wasPressedThisFrame)
         {
-            // 현민씨 이거 현재 쿨타임 4초 감소 아니고 최대 쿨타임 4초 감소임. 약간 고치긴 했는데 알아서 수정(Modifier 안 쌓이게)
+            // ?��????�거 ?�재 쿨�???4�?감소 ?�니�?최�? 쿨�???4�?감소?? ?�간 고치�??�는???�아???�정(Modifier ???�이�?
             stat.slamCooldown.AddModifier(-4f);
             Debug.Log(stat.GetSlamCooldown());
         }
@@ -482,9 +494,8 @@ public class Player : PlayerController
 
     public void EarthQuake(Brain enemy)
     {
-        //어스퀘이크?
+        //?�스?�이??
         enemy.BuffCompo.PlayBuff(BuffType.Potion_Paralysis);
-        Debug.Log("됨");
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
             

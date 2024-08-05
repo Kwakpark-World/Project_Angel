@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -8,6 +9,8 @@ public class CameraManager : MonoSingleton<CameraManager>
 {
     private Dictionary<CameraType, CameraState> _cameraDictionary = new Dictionary<CameraType, CameraState>();
     public CameraState _currentCam { get; private set; } = null;
+    
+
 
     [SerializeField]
     private NoiseSettings shake6DSettings;
@@ -192,5 +195,4 @@ public class CameraManager : MonoSingleton<CameraManager>
             yield return null;
         }
     }
-
 }

@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerAttackState : PlayerState
@@ -71,7 +72,6 @@ public class PlayerAttackState : PlayerState
                     HitEnemyAction(brain);
                     
                     _player.CurrentAwakenGauge++;
-                    
                 }
                 isCritical = false;
                 _player.PlayerStatData.attackPower.RemoveModifier(modifierValue);
