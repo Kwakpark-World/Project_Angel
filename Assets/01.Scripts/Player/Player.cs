@@ -216,10 +216,10 @@ public class Player : PlayerController
     {
         CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f);
         //EarthQuake(attacker);
-        if (attacker && !isShield)
+       /* if (attacker && !isShield)
         {
             attacker.OnHit(incomingDamage * 0.25f);
-        }
+        }*/
 
         if (IsDefense)
         {
