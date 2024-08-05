@@ -12,7 +12,7 @@ public class PlayerNormalSlamSkillEffect : PlayerEffect
 
         Vector3 dir = Vector3.zero;
         dir.x = -90f; // default Effect angle
-        dir.z = _player.transform.eulerAngles.y; // x�� ���ư��� ����Ʈ�� Yȸ���� �ƴ� Zȸ���� ����ߵ�
+        dir.z = _player.transform.eulerAngles.y; // x�� ���ư��� ����Ʈ�� Yȸ���� �ƴ� Zȸ���� ����ߵ�?
 
         Quaternion rot = Quaternion.Euler(dir);
 

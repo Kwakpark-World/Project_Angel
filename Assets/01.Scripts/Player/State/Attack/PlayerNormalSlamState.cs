@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerNormalSlamState : PlayerAttackState
 {
@@ -102,21 +103,85 @@ public class PlayerNormalSlamState : PlayerAttackState
         pos.y = yOffset;
 
         EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Slam_Normal, pos);
+        
+        if (_player.isSlamSixTimeSlam)
+        {
+            _player.StartCoroutine(IsSlamSixTimeSlam(rayPos));
+        }
     }
 
-    private void JumpToFront()
+    private void IsSlamSixTimeSlamAttack(int idx)
     {
-        Vector3 move = Vector3.one;
-        move.y *= _jumpForce;
+        List<Collider> result = new List<Collider>();
 
-        float slamDist = Vector3.Distance(_player.transform.position, _player.MousePosInWorld) * 2f;
+        Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
 
-        move += _player.transform.forward * Mathf.Min(slamDist, _player.PlayerStatData.GetSlamMaxDistance());
-        _player.SetVelocity(move);
+        if (_player.isChargingTripleSting)
+        {
+            Vector3 rightDir = _player.transform.eulerAngles + new Vector3(0, 15 * idx, 0);
+            Collider[] rightEnemies = GetEnemyByOverlapBox(_player.transform.position, Quaternion.Euler(rightDir));
+
+            Vector3 leftDir = _player.transform.eulerAngles - new Vector3(0, 15 * idx, 0);
+            Collider[] leftEnemies = GetEnemyByOverlapBox(_player.transform.position, Quaternion.Euler(leftDir));
+
+            result.AddRange(rightEnemies);
+            result.AddRange(leftEnemies);
+        }
+        result.AddRange(enemies);
+
+        Attack(enemies.ToList());
     }
 
-    private void AttackDrop()
+    private IEnumerator IsSlamSixTimeSlam(Vector3 pos)
     {
-        _player.SetVelocity(Vector3.down * _dropForce);
+        for (int i = 1; i <= 2; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            _player.enemyNormalHitDuplicateChecker.Clear();
+
+            CameraManager.Instance.ShakeCam(0.2f, 0.4f, 5f);
+            Vector3 rayPos = _player.transform.position;
+            float yOffset = 0f;
+            RaycastHit hit;
+
+            rayPos.y += 1f;
+            if (Physics.Raycast(rayPos, Vector3.down, out hit, 300f, _player.whatIsGround))
+            {
+                yOffset = hit.transform.position.y;
+            }
+
+
+            Vector3 leftPos = pos + _attackOffset;
+            Vector3 rightPos = pos + _attackOffset;
+            Vector3 leftDir = Vector3.zero;
+            Vector3 rightDir = Vector3.zero;
+
+            leftPos -= (_player.transform.forward * i * 0.5f);
+            rightPos -= (_player.transform.forward * i * 0.5f);
+
+            leftPos -= (_player.transform.right * i * 0.5f);
+            rightPos += (_player.transform.right * i * 0.5f);
+
+            leftPos.y = yOffset;
+            rightPos.y = yOffset;
+
+            leftDir.x = -90f; // default Effect angle
+            leftDir.z = _player.transform.eulerAngles.y - (15 * i);
+
+            rightDir.x = -90f; // default Effect angle
+            rightDir.z = _player.transform.eulerAngles.y + (15 * i);
+
+            Quaternion leftRot = Quaternion.Euler(leftDir);
+            Quaternion rightRot = Quaternion.Euler(rightDir);
+
+            
+            PoolableMono leftParticle = EffectManager.Instance.PlayAndGetEffect(PoolType.Effect_PlayerAttack_Slam_Normal, leftPos);
+            PoolableMono rightParticle = EffectManager.Instance.PlayAndGetEffect(PoolType.Effect_PlayerAttack_Slam_Normal, rightPos);
+
+            leftParticle.transform.rotation = leftRot;
+            rightParticle.transform.rotation = rightRot;
+
+            IsSlamSixTimeSlamAttack(i);
+        }
     }
 }
