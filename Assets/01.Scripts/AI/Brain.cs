@@ -22,7 +22,7 @@ public abstract class Brain : PoolableMono
     public EnemyAnimator AnimatorCompo { get; private set; }
 
     public FloatingText DamageTextCompo { get; private set; }
-    public EnemyHealthBar HealthBarCompo { get; private set; }
+    public EnemyHealthBar HealthBarCompo { get; protected set; }
     #endregion
 
     [field: SerializeField]

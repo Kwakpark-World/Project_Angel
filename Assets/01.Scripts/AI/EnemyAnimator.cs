@@ -83,7 +83,7 @@ public class EnemyAnimator : MonoBehaviour
     public void SetAnimationState(string stateName = "Idle", AnimationStateMode stateMode = AnimationStateMode.None)
     {
         _animator.SetBool(_parameterHashes["is" + _currentState], false);
-        _wingAnimator.SetBool(_parameterHashes["isMove"], stateName == "Move");
+        _wingAnimator?.SetBool(_parameterHashes["isMove"], stateName == "Move");
 
         if (stateName != "Die" && GetCurrentAnimationState("Die"))
         {
