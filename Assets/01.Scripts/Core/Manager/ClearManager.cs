@@ -18,9 +18,9 @@ public class ClearManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI mainText;
     [SerializeField]
-    private RectTransform textContainer; // 텍스트 컨테이너의 RectTransform 추가
+    private RectTransform textContainer; 
     [SerializeField]
-    private float scrollDuration = 10f; // 텍스트가 스크롤되는 시간
+    private float scrollDuration = 11f; 
 
     private void OnTriggerEnter(Collider other)
     {
@@ -43,7 +43,7 @@ public class ClearManager : MonoBehaviour
     public void ClearPanel()
     {
         _fadePanel.gameObject.SetActive(true);
-        _fadePanel.DOFade(5f, _fadeDuration) 
+        _fadePanel.DOFade(1f, _fadeDuration) 
           .OnStart(() =>
           {
               _fadePanel.raycastTarget = true;
@@ -70,7 +70,7 @@ public class ClearManager : MonoBehaviour
           })
           .OnComplete(() =>
           {
-              StartCoroutine(SceneLoad("MainScene"));
+              StartCoroutine(SceneLoad("IntroScene"));
           });
     }
 
