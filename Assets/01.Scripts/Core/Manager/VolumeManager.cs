@@ -36,23 +36,17 @@ public class VolumeManager : MonoSingleton<VolumeManager>
         }
     }
 
-    private void Update()
-    {
-        if (motionBlur != null)
-        {
-            //Debug.Log(motionBlur.intensity.value);
-        }
-    }
-
     public IEnumerator HitMotionBlur(float duration, float intensity)
-    {
+    { 
         if (motionBlur != null)
         {
             float originalIntensity = motionBlur.intensity.value;
             float elapsedTime = 0f;
+            
             while (elapsedTime < duration) 
             {
                 motionBlur.intensity.value = Mathf.Lerp(originalIntensity, intensity, elapsedTime / duration);
+                Debug.Log(motionBlur.intensity.value);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
