@@ -71,6 +71,13 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
             {
                 _isEffectOn = true;
                 ChargeAttackEffect();
+                if (_player.isChargingSwordAura)
+                {
+                    Vector3 pos = _player.transform.position + _player.transform.forward;
+                    pos.y = 1;
+
+                    EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Charged_Aura, pos);
+                }
             }
         }
 

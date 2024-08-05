@@ -33,6 +33,7 @@ public enum PoolType
     Effect_PlayerAttack_Slam_Awaken_0,
     Effect_PlayerAttack_Slam_Awaken_1,
     Effect_PlayerAttack_Slam_Awaken_2,
+    Effect_PlayerAttack_Charged_Aura,
     Trap_Dynamite = 3000,
     Trap_Spike,
     UI_HealthBar = 4000,
