@@ -82,6 +82,7 @@ public class PlayerState
     public virtual void Exit()
     {
         _player.AnimatorCompo.SetBool(_animBoolHash, false);
+        _player.isHit = false;
     }
 
     public void AnimationEndTrigger()

@@ -93,6 +93,7 @@ public class Player : PlayerController
     public bool IsGroundState;
     public bool isShield;
     public bool isReinforcedattack;
+    public bool isHit;
     public PlayerControlEnum IsPlayerStop = PlayerControlEnum.Move;
 
     public Vector3 MousePosInWorld { get; private set; }
@@ -117,6 +118,7 @@ public class Player : PlayerController
     public bool isChargingSwordAura;
     [Header("Slam")]
     public bool isSlamSixTimeSlam;
+    public bool isSlamEarthquake;
     [Header("Whirlwind")]
     public bool isWhirlwindShockWave;
     public bool isWhirlwindMoveAble;
@@ -237,6 +239,7 @@ public class Player : PlayerController
 
         if (CurrentHealth > 0f)
         {
+            isHit = true;
             CurrentHealth -= Mathf.Max(Mathf.RoundToInt(incomingDamage - PlayerStatData.GetDefensivePower()), 0);
         }
 

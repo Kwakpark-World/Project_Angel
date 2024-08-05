@@ -15,6 +15,7 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
     private bool _isEffectOn = false;
     private bool _isShaken = false;
     private ParticleSystem[] _thisParticles;
+    private ParticleSystem _shockwaveParticle;
 
     private Vector3 defaultScale;
 
@@ -49,16 +50,39 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         defaultScale = _thisParticles[0].transform.localScale;
         if (_player.isWhirlwindRangeUp)
         {
+            _thisParticles = _thisParticles.Concat(_player.effectParent.Find($"{_effectString}_Plus").GetComponentsInChildren<ParticleSystem>()).ToArray();
+
             foreach(var particle in _thisParticles)
             {
                 particle.transform.localScale *= 1.2f;
             }
         }
-        
+
+        _shockwaveParticle = _player.effectParent.Find("PlayerShockwave").GetComponent<ParticleSystem>();
+
+
     }
 
     public override void Exit()
     {
+        if (_player.isWhirlwindShockWave)
+        {
+            if (_player.isHit)
+            {
+                _shockwaveParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                _shockwaveParticle.Play();
+
+                _player.enemyNormalHitDuplicateChecker.Clear();
+
+                _attackSize = new Vector3(14f, 2, 14f);
+                _attackOffset = new Vector3(0, -0.4f, 0);
+
+                Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
+
+                Attack(enemies.ToList());
+            }
+        }
+
         base.Exit();
 
         _player.AnimatorCompo.speed = 1;
