@@ -43,14 +43,6 @@ public class PlayerCameraState : CameraState
 
             _player.transform.Rotate(Vector3.up, rotationAmount);
         }
-        else
-        {
-            if (_camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
-            {
-
-                _camera.gameObject.AddComponent(Vector3.zero.GetType());
-            }
-        }
     }
 
     public void CameraAttack()

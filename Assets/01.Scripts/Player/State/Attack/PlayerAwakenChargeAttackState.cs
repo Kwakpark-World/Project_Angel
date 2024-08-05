@@ -16,6 +16,9 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
     private bool _isShaken = false;
     private ParticleSystem[] _thisParticles;
 
+    private Vector3 defaultScale;
+
+
     public PlayerAwakenChargeAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -27,8 +30,31 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         _isShaken = false;
 
         _player.AnimatorCompo.speed = 1 + (_player.CurrentChargeTime / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargeAttackSpeed();
-        _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
 
+        if (_player.isWhirlwindMoveAble)
+        {
+            _player.PlayerStatData.moveSpeed.AddModifier(-5f);
+            _player.AnimatorCompo.speed += 0.2f;
+        }
+
+        if (_player.isOnWhirlWindOnceMore)
+        {
+            _thisParticles = _player.effectParent.Find($"{_effectString}_OnceMore").GetComponentsInChildren<ParticleSystem>();
+        }
+        else
+        {
+            _thisParticles = _player.effectParent.Find(_effectString).GetComponentsInChildren<ParticleSystem>();
+        }
+
+        defaultScale = _thisParticles[0].transform.localScale;
+        if (_player.isWhirlwindRangeUp)
+        {
+            foreach(var particle in _thisParticles)
+            {
+                particle.transform.localScale *= 1.2f;
+            }
+        }
+        
     }
 
     public override void Exit()
@@ -38,16 +64,55 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         _player.AnimatorCompo.speed = 1;
         _player.enemyNormalHitDuplicateChecker.Clear();
 
+
         foreach (var particle in _thisParticles)
         {
             particle.Stop();
+            
         }
+        
+        if (_player.isWhirlwindMoveAble)
+            _player.PlayerStatData.moveSpeed.RemoveModifier(-5f);
+
+        if (_player.isWhirlwindRangeUp)
+        {
+            foreach (var particle in _thisParticles)
+            {
+                particle.transform.localScale = defaultScale;
+            }
+        }
+
+
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        _player.StopImmediately(false);
+
+        if (!_player.isWhirlwindMoveAble)
+            _player.StopImmediately(false);
+        else
+        {
+            float XInput = _player.PlayerInput.XInput;
+            float YInput = _player.PlayerInput.YInput;
+
+            Vector3 moveDir = new Vector3(XInput, 0 , YInput).normalized;
+
+            moveDir = (Quaternion.Euler(0, CameraManager.Instance.GetCameraByType(CameraType.PlayerCam).transform.eulerAngles.y, 0) * moveDir).normalized;
+            moveDir *= _player.PlayerStatData.GetMoveSpeed();
+
+            moveDir.y = _rigidbody.velocity.y;
+            _player.SetVelocity(moveDir);
+
+            if (_actionTriggerCalled)
+            {
+                _player.AnimatorCompo.SetBool("WhirlWindOnceMore", true);
+                _player.isOnWhirlWindOnceMore = true;
+
+                _player.StateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
+                return;
+            }
+        }
 
         if (_effectTriggerCalled)
         {
@@ -65,6 +130,10 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
 
         if (_endTriggerCalled)
         {
+            if (_actionTriggerCalled && _player.isWhirlwindMoveAble) return;
+            _player.AnimatorCompo.SetBool("WhirlWindOnceMore", false);
+            _player.isOnWhirlWindOnceMore = false;
+
             _stateMachine.ChangeState(PlayerStateEnum.Idle);
         }
     }
@@ -122,6 +191,15 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         }
 
         Collider[] enemies = GetEnemyByOverlapBox(_player.transform.position, _player.transform.rotation);
+
+        if (_player.isWhirlwindPullEnemies)
+        {
+            foreach (var enemy in enemies)
+            {
+                Vector3 dir = _player.transform.position - enemy.transform.position;
+                enemy.attachedRigidbody.velocity = (dir.normalized) * 2f;
+            }
+        }
 
         Attack(enemies.ToList());
     }

@@ -39,7 +39,6 @@ public class PlayerDashState : PlayerState
             return;
 
         List<Collider> enemies = GetEnemyToDash().ToList();
-        Debug.Log(enemies.Count);
 
         if (_player.isRollKnockback)
         {
