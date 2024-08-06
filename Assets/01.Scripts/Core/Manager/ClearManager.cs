@@ -18,15 +18,14 @@ public class ClearManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI mainText;
     [SerializeField]
-    private RectTransform textContainer; // 텍스트 컨테이너의 RectTransform 추가
+    private RectTransform textContainer; 
     [SerializeField]
-    private float scrollDuration = 10f; // 텍스트가 스크롤되는 시간
+    private float scrollDuration = 11f; 
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("2");
             ClearPanel();
         }
     }
@@ -35,7 +34,6 @@ public class ClearManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.V))
         {
-            Debug.Log("123");
             ClearPanel();
         }
     }
@@ -43,7 +41,7 @@ public class ClearManager : MonoBehaviour
     public void ClearPanel()
     {
         _fadePanel.gameObject.SetActive(true);
-        _fadePanel.DOFade(5f, _fadeDuration) 
+        _fadePanel.DOFade(1f, _fadeDuration) 
           .OnStart(() =>
           {
               _fadePanel.raycastTarget = true;
@@ -57,7 +55,7 @@ public class ClearManager : MonoBehaviour
     private IEnumerator ScrollTextAndLoadScene()
     {
         Vector3 startPosition = textContainer.anchoredPosition;
-        Vector3 endPosition = new Vector3(startPosition.x, startPosition.y + Screen.height + textContainer.rect.height);
+        Vector3 endPosition = new Vector3(startPosition.x, startPosition.y + Screen.height + textContainer.rect.height + 10);
 
         textContainer.DOAnchorPosY(endPosition.y, scrollDuration).SetEase(Ease.Linear);
 
@@ -70,7 +68,7 @@ public class ClearManager : MonoBehaviour
           })
           .OnComplete(() =>
           {
-              StartCoroutine(SceneLoad("MainScene"));
+              StartCoroutine(SceneLoad("IntroScene"));
           });
     }
 
