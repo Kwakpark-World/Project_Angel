@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Trap : PoolableMono
 {
-    protected float _trapDamage;
+    public float _trapDamage;
 
     protected bool _isOnTrap;
     protected bool _isPlayTrap { get; private set; }
