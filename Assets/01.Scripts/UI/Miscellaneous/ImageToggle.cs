@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ImageToggle : MonoBehaviour, IPointerDownHandler
@@ -16,13 +15,10 @@ public class ImageToggle : MonoBehaviour, IPointerDownHandler
     public bool isOn;
     private Image _toggleSpriteSocket;
 
-    
-
     private void Awake()
     {
         _toggleSpriteSocket = GetComponent<Image>();
-        _toggleSpriteSocket.sprite = _toggleOnSprite;
-        isOn = true;
+        _toggleSpriteSocket.sprite = isOn ? _toggleOnSprite : _toggleOffSprite;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -32,8 +28,8 @@ public class ImageToggle : MonoBehaviour, IPointerDownHandler
 
     public void ToggleSprite()
     {
-        _toggleSpriteSocket.sprite = isOn ? _toggleOffSprite : _toggleOnSprite;
         isOn = !isOn;
+        _toggleSpriteSocket.sprite = isOn ? _toggleOnSprite : _toggleOffSprite;
 
         onValueChanged?.Invoke(isOn);
     }
