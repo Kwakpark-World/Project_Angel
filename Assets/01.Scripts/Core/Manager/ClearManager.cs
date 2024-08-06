@@ -26,7 +26,6 @@ public class ClearManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("2");
             ClearPanel();
         }
     }
@@ -35,7 +34,6 @@ public class ClearManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.V))
         {
-            Debug.Log("123");
             ClearPanel();
         }
     }
@@ -57,7 +55,7 @@ public class ClearManager : MonoBehaviour
     private IEnumerator ScrollTextAndLoadScene()
     {
         Vector3 startPosition = textContainer.anchoredPosition;
-        Vector3 endPosition = new Vector3(startPosition.x, startPosition.y + Screen.height + textContainer.rect.height);
+        Vector3 endPosition = new Vector3(startPosition.x, startPosition.y + Screen.height + textContainer.rect.height + 10);
 
         textContainer.DOAnchorPosY(endPosition.y, scrollDuration).SetEase(Ease.Linear);
 
