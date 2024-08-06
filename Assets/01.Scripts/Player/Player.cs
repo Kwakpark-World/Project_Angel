@@ -118,6 +118,8 @@ public class Player : PlayerController
     public bool isChargingSwordAura;
     [Header("Slam")]
     public bool isSlamSixTimeSlam;
+    public bool isSlamStatic;
+    public bool isSlamFloorEnd;
     public bool isSlamEarthquake;
     [Header("Whirlwind")]
     public bool isWhirlwindShockWave;
@@ -482,27 +484,6 @@ public class Player : PlayerController
             // ?„ë????´ê±° ?„ì¬ ì¿¨í???4ì´?ê°ì†Œ ?„ë‹ˆê³?ìµœë? ì¿¨í???4ì´?ê°ì†Œ?? ?½ê°„ ê³ ì¹˜ê¸??ˆëŠ”???Œì•„???˜ì •(Modifier ???“ì´ê²?
             stat.slamCooldown.AddModifier(-4f);
             Debug.Log(stat.GetSlamCooldown());
-        }
-
-        if (Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            CurrentHealth += 1;
-        }
-
-        if (Keyboard.current.shiftKey.wasPressedThisFrame)
-        {
-            StartCoroutine(IAS(3f));
-        }
-    }
-
-    public void EarthQuake(Brain enemy)
-    {
-        //?´ìŠ¤?˜ì´??
-        enemy.BuffCompo.PlayBuff(BuffType.Potion_Paralysis);
-        if (Keyboard.current.pKey.wasPressedThisFrame)
-        {
-            
-            
         }
     }
 
