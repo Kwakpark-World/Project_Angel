@@ -11,7 +11,7 @@ public class EnemyHealthBar : PoolableMono
 
     private void Update()
     {
-        transform.position = _owner.transform.position + Vector3.up * 2.5f;
+        transform.position = _owner.enemyCenter.position + Vector3.up * 0.5f;
 
         AlignCamera();
     }

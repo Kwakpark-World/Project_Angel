@@ -35,13 +35,24 @@ public class EnemyAnimator : MonoBehaviour
     private Brain _owner;
 
     private Dictionary<string, int> _parameterHashes = new Dictionary<string, int>();
-    public Animator _animator;
+    private Animator _animator;
+    private Animator _wingAnimator;
     private string _currentState = "Idle";
     private string _previousState = "";
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+
+        foreach (var animator in GetComponentsInChildren<Animator>())
+        {
+            if (animator.transform != _animator.transform)
+            {
+                _wingAnimator = animator;
+
+                break;
+            }
+        }
 
         foreach (AnimationTrigger animationTrigger in animationTriggers)
         {
@@ -72,6 +83,7 @@ public class EnemyAnimator : MonoBehaviour
     public void SetAnimationState(string stateName = "Idle", AnimationStateMode stateMode = AnimationStateMode.None)
     {
         _animator.SetBool(_parameterHashes["is" + _currentState], false);
+        _wingAnimator?.SetBool(_parameterHashes["isMove"], stateName == "Move");
 
         if (stateName != "Die" && GetCurrentAnimationState("Die"))
         {

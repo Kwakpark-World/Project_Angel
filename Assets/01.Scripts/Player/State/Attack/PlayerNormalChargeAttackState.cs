@@ -29,11 +29,21 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
         if (!_player.isOnChargingSlashOnceMore)
         {
-            _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+            if (_player.IsAwakened)
+            {
+                _thisParticle = _player.effectParent.Find(_effectString + "_Awaken").GetComponent<ParticleSystem>();
+            }
+            else
+                _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         }
         else
         {
-            _thisParticle = _player.effectParent.Find($"{_effectString}_OnceMore").GetComponent<ParticleSystem>();
+            if (_player.IsAwakened)
+            {
+                _thisParticle = _player.effectParent.Find($"{_effectString}_OnceMore_Awaken").GetComponent<ParticleSystem>();
+            }
+            else
+                _thisParticle = _player.effectParent.Find($"{_effectString}_OnceMore").GetComponent<ParticleSystem>();
         }
     }
 
