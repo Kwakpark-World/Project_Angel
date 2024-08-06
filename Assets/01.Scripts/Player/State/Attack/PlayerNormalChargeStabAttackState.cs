@@ -28,7 +28,12 @@ public class PlayerNormalChargeStabAttackState : PlayerChargeState
 
         for (int i = 0; i < 3; i++)
         {
-            _thisParticle[i] = _player.effectParent.Find(_effectString + i).GetComponent<ParticleSystem>();
+            if (_player.IsAwakened)
+            {
+                _thisParticle[i] = _player.effectParent.Find(_effectString + i + "_Awaken").GetComponent<ParticleSystem>();
+            }
+            else
+                _thisParticle[i] = _player.effectParent.Find(_effectString + i).GetComponent<ParticleSystem>();
         }
 
         CameraManager.Instance._currentCam.IsCamRotateStop = true;
