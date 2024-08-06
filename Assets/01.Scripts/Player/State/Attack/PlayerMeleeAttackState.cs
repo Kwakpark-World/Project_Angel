@@ -16,7 +16,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
     private float _width = 0.8f;
     private float _height = 0.4f;
-    private float _dist = 2.6f;
+    private float _dist = 3f;
     private Vector3 _offset;
 
     private float _awakenAttackDist = 2.6f;
@@ -48,9 +48,9 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _player.PlayerStatData.attackPower.AddModifier(_comboAttackAddtiveDamage * _comboCounter);
 
         if(_comboCounter == 3)
-            _player.isReinforcedattack = true;
+            _player.isLastComboAttack = true;
         else 
-            _player.isReinforcedattack = false;
+            _player.isLastComboAttack = false;
 
         _player.RigidbodyCompo.AddForce(_player.transform.forward * 10, ForceMode.Impulse);
 

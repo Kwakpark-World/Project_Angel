@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class VolumeManager : MonoSingleton<VolumeManager>
 {
-    public Volume volume;
+    private Volume volume;
     private MotionBlur motionBlur;
 
-    private void Start()
+    protected override void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
+        volume = FindObjectOfType<Volume>();
+
         if (volume != null && volume.profile != null)
         {
             // Volume 프로파일에서 모든 설정을 가져옴

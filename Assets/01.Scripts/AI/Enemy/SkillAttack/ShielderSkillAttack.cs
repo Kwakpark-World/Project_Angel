@@ -30,7 +30,7 @@ public class ShielderSkillAttack : EnemyAttack
         int enemiesShielded = 0;
         foreach (RaycastHit hit in hits)
         {
-            OwnerNode.brain.AnimatorCompo.SetAnimationState("isSkillAttack");
+            OwnerNode.brain.AnimatorCompo.SetAnimationState("SkillAttack");
             if (enemiesShielded >= maxEnemiesToShield)
                 break;
 
