@@ -30520,8 +30520,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6487372e553b83d4286b162e49dfd409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSlider: {fileID: 0}
-  senstivivityValue: {fileID: 0}
+  mouseXSlider: {fileID: 0}
+  mouseYSlider: {fileID: 0}
+  XsenstivivityValue: {fileID: 0}
+  YsenstivivityValue: {fileID: 0}
 --- !u!1001 &878874623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57768,6 +57770,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1614015553967441602, guid: 68479dde4c401d147b3732f592f08bca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1886152482966613989, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -57926,17 +57933,17 @@ PrefabInstance:
     - target: {fileID: 2869124960790990676, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2869124960790990676, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2869124960790990676, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2997404418997914141, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
@@ -58096,17 +58103,17 @@ PrefabInstance:
     - target: {fileID: 4891096491829546837, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4891096491829546837, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4891096491829546837, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4951148325972036154, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
@@ -58201,17 +58208,17 @@ PrefabInstance:
     - target: {fileID: 5671882311229567834, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5671882311229567834, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5671882311229567834, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5848792674786803208, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
@@ -58241,17 +58248,17 @@ PrefabInstance:
     - target: {fileID: 5944842040248486351, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5944842040248486351, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5944842040248486351, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5973059642010638142, guid: 68479dde4c401d147b3732f592f08bca,
         type: 3}
@@ -75110,7 +75117,7 @@ PrefabInstance:
     - target: {fileID: 6677068758884378110, guid: 4cee9b5523abe0343825057e38f94709,
         type: 3}
       propertyPath: _nextSceneName
-      value: IntroScene
+      value: GameScene
       objectReference: {fileID: 0}
     - target: {fileID: 8963508395914442269, guid: 4cee9b5523abe0343825057e38f94709,
         type: 3}
