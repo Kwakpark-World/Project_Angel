@@ -48,9 +48,9 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _player.PlayerStatData.attackPower.AddModifier(_comboAttackAddtiveDamage * _comboCounter);
 
         if(_comboCounter == 3)
-            _player.isReinforcedattack = true;
+            _player.isLastComboAttack = true;
         else 
-            _player.isReinforcedattack = false;
+            _player.isLastComboAttack = false;
 
         _player.RigidbodyCompo.AddForce(_player.transform.forward * 10, ForceMode.Impulse);
 

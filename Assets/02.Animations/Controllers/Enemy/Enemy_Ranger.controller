@@ -98,7 +98,7 @@ AnimatorStateMachine:
     m_Position: {x: 230, y: -140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2755423908332520412}
-    m_Position: {x: 230, y: 220, z: 0}
+    m_Position: {x: 230, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7460359657905329337}
     m_Position: {x: 230, y: -80, z: 0}
@@ -110,10 +110,10 @@ AnimatorStateMachine:
     m_Position: {x: 230, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7585629386825609697}
-    m_Position: {x: 230, y: 160, z: 0}
+    m_Position: {x: 230, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7327071517428602506}
-    m_Position: {x: 230, y: 280, z: 0}
+    m_Position: {x: 230, y: 160, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -1927870282150022694}
@@ -168,7 +168,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isBackAttackHit
+    m_ConditionEvent: isLastComboHit
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7327071517428602506}
@@ -323,6 +323,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: isLastComboHit
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: isParalysis
     m_Type: 4
     m_DefaultFloat: 0
@@ -330,12 +336,6 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: isDie
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: isBackAttackHit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -490,7 +490,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EnemyHit
+  m_Name: Hit_LastCombo
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

@@ -92,9 +92,8 @@ public class Player : PlayerController
     public bool IsAwakened;
     public bool IsGroundState;
     public bool isShield;
-    public bool isReinforcedattack;
+    public bool isLastComboAttack;
     public bool isHit;
-    public PlayerControlEnum IsPlayerStop = PlayerControlEnum.Move;
 
     public Vector3 MousePosInWorld { get; private set; }
 
@@ -481,7 +480,7 @@ public class Player : PlayerController
         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (Keyboard.current.qKey.wasPressedThisFrame)
         {
-            // ?„ë????´ê±° ?„ì¬ ì¿¨í???4ì´?ê°ì†Œ ?„ë‹ˆê³?ìµœë? ì¿¨í???4ì´?ê°ì†Œ?? ?½ê°„ ê³ ì¹˜ê¸??ˆëŠ”???Œì•„???˜ì •(Modifier ???“ì´ê²?
+            // ?ï¿½ï¿½????ï¿½ê±° ?ï¿½ì¬ ì¿¨ï¿½???4ï¿½?ê°ì†Œ ?ï¿½ë‹ˆï¿½?ìµœï¿½? ì¿¨ï¿½???4ï¿½?ê°ì†Œ?? ?ï¿½ê°„ ê³ ì¹˜ï¿½??ï¿½ëŠ”???ï¿½ì•„???ï¿½ì •(Modifier ???ï¿½ì´ï¿½?
             stat.slamCooldown.AddModifier(-4f);
             Debug.Log(stat.GetSlamCooldown());
         }
