@@ -104,6 +104,12 @@ public class PlayerNormalSlamState : PlayerAttackState
 
         EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Slam_Normal, pos);
         
+        if (_player.isSlamEarthquake)
+        {
+            EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Slam_Awaken_0, pos);
+            EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Slam_Awaken_1, pos);
+        }
+
         if (_player.isSlamSixTimeSlam)
         {
             _player.StartCoroutine(IsSlamSixTimeSlam(rayPos));
@@ -177,6 +183,29 @@ public class PlayerNormalSlamState : PlayerAttackState
             
             PoolableMono leftParticle = EffectManager.Instance.PlayAndGetEffect(PoolType.Effect_PlayerAttack_Slam_Normal, leftPos);
             PoolableMono rightParticle = EffectManager.Instance.PlayAndGetEffect(PoolType.Effect_PlayerAttack_Slam_Normal, rightPos);
+            
+            if (_player.isSlamEarthquake)
+            {
+                PoolableMono learthquakeParticle_0 = EffectManager.Instance.PlayAndGetEffect(PoolType.Effect_PlayerAttack_Slam_Awaken_0, leftPos);
+                PoolableMono learthquakeParticle_1 = EffectManager.Instance.PlayAndGetEffect(PoolType.Effect_PlayerAttack_Slam_Awaken_1, leftPos);
+
+                PoolableMono rearthquakeParticle_0 = EffectManager.Instance.PlayAndGetEffect(PoolType.Effect_PlayerAttack_Slam_Awaken_0, rightPos);
+                PoolableMono rearthquakeParticle_1 = EffectManager.Instance.PlayAndGetEffect(PoolType.Effect_PlayerAttack_Slam_Awaken_1, rightPos);
+
+                Vector3 lRot = Vector3.zero;
+                Vector3 rRot = Vector3.zero;
+
+                lRot.y = leftDir.z;
+                rRot.y = rightDir.z;
+
+                Quaternion leftEarthquakeRot = Quaternion.Euler(lRot);
+                Quaternion rightEarthquakeRot = Quaternion.Euler(rRot);
+
+                learthquakeParticle_0.transform.rotation = leftEarthquakeRot;
+                learthquakeParticle_1.transform.rotation = leftEarthquakeRot;
+                rearthquakeParticle_0.transform.rotation = rightEarthquakeRot;
+                rearthquakeParticle_1.transform.rotation = rightEarthquakeRot;
+            }
 
             leftParticle.transform.rotation = leftRot;
             rightParticle.transform.rotation = rightRot;

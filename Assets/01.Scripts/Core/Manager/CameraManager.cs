@@ -17,6 +17,7 @@ public class CameraManager : MonoSingleton<CameraManager>
 
     private float DefaultOrthoSize;
     public bool IsXReverse;
+    public bool IsYReverse;
 
     public void AddCamera(CameraState addCamera)
     {

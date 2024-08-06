@@ -8,21 +8,33 @@ using UnityEngine.UI;
 
 public class MouseSensitivityPopupUI : PopupUI
 {
-    public Slider mouseSlider;
-    public TextMeshProUGUI senstivivityValue;
+    public Slider mouseXSlider;
+    public Slider mouseYSlider;
+    public TextMeshProUGUI XsenstivivityValue;
+    public TextMeshProUGUI YsenstivivityValue;
 
     public override void InitializePopup()
     {
         throw new NotImplementedException();
     }
 
-    public void Update()
+    void Update()
     {
-        float PlayerRotateSpeed = GameManager.Instance.PlayerInstance.PlayerStatData.rotateSpeed.GetValue();
-        PlayerRotateSpeed = mouseSlider.value;
-        GameManager.Instance.PlayerInstance.PlayerStatData.rotateSpeed.SetDefalutValue(PlayerRotateSpeed);
+        float playerRotateSpeedPercent = GameManager.Instance.PlayerInstance.PlayerStatData.GetRotateSpeed();
+        float playerYRotateSpeedPercent = GameManager.Instance.PlayerInstance.PlayerStatData.GetRotateYSpeed();
 
-        senstivivityValue.text = PlayerRotateSpeed.ToString("F0") + "%";
+        Debug.Log(playerRotateSpeedPercent);
+
+        playerRotateSpeedPercent = (mouseXSlider.value);
+        playerYRotateSpeedPercent = (mouseYSlider.value);
+
+        Debug.Log(playerRotateSpeedPercent);
+
+        GameManager.Instance.PlayerInstance.PlayerStatData.rotateSpeed.SetDefalutValue(playerRotateSpeedPercent);
+        GameManager.Instance.PlayerInstance.PlayerStatData.rotateYSpeed.SetDefalutValue(playerYRotateSpeedPercent);
+
+        XsenstivivityValue.text = playerRotateSpeedPercent.ToString("F0") + "%";
+        YsenstivivityValue.text = playerYRotateSpeedPercent.ToString("F0") + "%";
     }
 }
 

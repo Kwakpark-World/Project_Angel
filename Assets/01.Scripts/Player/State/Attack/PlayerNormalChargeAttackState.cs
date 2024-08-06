@@ -29,11 +29,21 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
 
         if (!_player.isOnChargingSlashOnceMore)
         {
-            _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
+            if (_player.IsAwakened)
+            {
+                _thisParticle = _player.effectParent.Find(_effectString + "_Awaken").GetComponent<ParticleSystem>();
+            }
+            else
+                _thisParticle = _player.effectParent.Find(_effectString).GetComponent<ParticleSystem>();
         }
         else
         {
-            _thisParticle = _player.effectParent.Find($"{_effectString}_OnceMore").GetComponent<ParticleSystem>();
+            if (_player.IsAwakened)
+            {
+                _thisParticle = _player.effectParent.Find($"{_effectString}_OnceMore_Awaken").GetComponent<ParticleSystem>();
+            }
+            else
+                _thisParticle = _player.effectParent.Find($"{_effectString}_OnceMore").GetComponent<ParticleSystem>();
         }
     }
 
@@ -71,6 +81,13 @@ public class PlayerNormalChargeAttackState : PlayerChargeState
             {
                 _isEffectOn = true;
                 ChargeAttackEffect();
+                if (_player.isChargingSwordAura)
+                {
+                    Vector3 pos = _player.transform.position + _player.transform.forward;
+                    pos.y = 1;
+
+                    EffectManager.Instance.PlayEffect(PoolType.Effect_PlayerAttack_Charged_Aura, pos);
+                }
             }
         }
 

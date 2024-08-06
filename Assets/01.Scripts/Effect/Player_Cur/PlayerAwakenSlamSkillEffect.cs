@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerAwakenSlamSkillEffect : PlayerEffect
 {
+    public int index;
     public override void InitializePoolItem()
     {
         base.InitializePoolItem();
@@ -15,10 +16,7 @@ public class PlayerAwakenSlamSkillEffect : PlayerEffect
         }
         PoolManager.Instance.Push(this, duration);
 
-
-        int comboCounter = gameObject.name[gameObject.name.Length - 1] - '0';
-
-        SetRotation(comboCounter);
+        SetRotation(index);
 
         PlayEffect();
     }
@@ -35,10 +33,10 @@ public class PlayerAwakenSlamSkillEffect : PlayerEffect
         base.RegisterEffect();
     }
 
-    private void SetRotation(int comboCounter)
+    private void SetRotation(int index)
     {
         Vector3 dir = Vector3.zero;
-        if (comboCounter < 2)
+        if (index < 2)
         {
             dir.y = _player.transform.eulerAngles.y;
         }

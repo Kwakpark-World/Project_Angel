@@ -93,7 +93,7 @@ public class Player : PlayerController
     public bool IsGroundState;
     public bool isShield;
     public bool isLastComboAttack;
-    public PlayerControlEnum IsPlayerStop = PlayerControlEnum.Move;
+    public bool isHit;
 
     public Vector3 MousePosInWorld { get; private set; }
 
@@ -117,6 +117,9 @@ public class Player : PlayerController
     public bool isChargingSwordAura;
     [Header("Slam")]
     public bool isSlamSixTimeSlam;
+    public bool isSlamStatic;
+    public bool isSlamFloorEnd;
+    public bool isSlamEarthquake;
     [Header("Whirlwind")]
     public bool isWhirlwindShockWave;
     public bool isWhirlwindMoveAble;
@@ -216,10 +219,10 @@ public class Player : PlayerController
     {
         CameraManager.Instance.ShakeCam(0.1f, 0.3f, 1f);
         //EarthQuake(attacker);
-        if (attacker && !isShield)
+       /* if (attacker && !isShield)
         {
             attacker.OnHit(incomingDamage * 0.25f);
-        }
+        }*/
 
         if (IsDefense)
         {
@@ -237,6 +240,7 @@ public class Player : PlayerController
 
         if (CurrentHealth > 0f)
         {
+            isHit = true;
             CurrentHealth -= Mathf.Max(Mathf.RoundToInt(incomingDamage - PlayerStatData.GetDefensivePower()), 0);
         }
 
@@ -476,30 +480,9 @@ public class Player : PlayerController
         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (Keyboard.current.qKey.wasPressedThisFrame)
         {
-            // ?„ë????´ê±° ?„ì¬ ì¿¨í???4ì´?ê°ì†Œ ?„ë‹ˆê³?ìµœë? ì¿¨í???4ì´?ê°ì†Œ?? ?½ê°„ ê³ ì¹˜ê¸??ˆëŠ”???Œì•„???˜ì •(Modifier ???“ì´ê²?
+            // ?ï¿½ï¿½????ï¿½ê±° ?ï¿½ì¬ ì¿¨ï¿½???4ï¿½?ê°ì†Œ ?ï¿½ë‹ˆï¿½?ìµœï¿½? ì¿¨ï¿½???4ï¿½?ê°ì†Œ?? ?ï¿½ê°„ ê³ ì¹˜ï¿½??ï¿½ëŠ”???ï¿½ì•„???ï¿½ì •(Modifier ???ï¿½ì´ï¿½?
             stat.slamCooldown.AddModifier(-4f);
             Debug.Log(stat.GetSlamCooldown());
-        }
-
-        if (Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            CurrentHealth += 1;
-        }
-
-        if (Keyboard.current.shiftKey.wasPressedThisFrame)
-        {
-            StartCoroutine(IAS(3f));
-        }
-    }
-
-    public void EarthQuake(Brain enemy)
-    {
-        //?´ìŠ¤?˜ì´??
-        enemy.BuffCompo.PlayBuff(BuffType.Potion_Paralysis);
-        if (Keyboard.current.pKey.wasPressedThisFrame)
-        {
-            
-            
         }
     }
 
