@@ -8,6 +8,6 @@ public class HitEffect : MonoBehaviour
 
     public void RotatonEffect()
     {
-        _hitParticle.transform.rotation = GameManager.Instance.PlayerInstance.weapon.transform.rotation;
+        _hitParticle.transform.rotation = GameManager.Instance.PlayerInstance.WeaponAngel;
     }
 }

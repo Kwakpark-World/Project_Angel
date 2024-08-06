@@ -37,6 +37,15 @@ public class PlayerAttackRangeEditor : MonoBehaviour
         if (WeaponLT == null) WeaponLT = Player.weapon.transform.Find("LeftPointTop");
         if (WeaponLB == null) WeaponLB = Player.weapon.transform.Find("LeftPointBottom");
 
+        Vector3 weaponLBPos = WeaponLB.position;
+        Vector3 weaponRTPos = WeaponRT.position;
+        Vector3 averageWeaponVector = weaponLBPos - weaponRTPos;
+
+        float averageWeaponAngle = Mathf.Atan2(averageWeaponVector.y, averageWeaponVector.x) * Mathf.Rad2Deg;
+
+ 
+        GameManager.Instance.PlayerInstance.WeaponAngel = Quaternion.Euler(0, 0, averageWeaponAngle);
+
         Gizmos.color = Color.red;
 
         if (MeleeAttack_Normal)
