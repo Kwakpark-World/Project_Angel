@@ -45,7 +45,7 @@ public class PlayerCameraState : CameraState
 
             _player.transform.Rotate(Vector3.up, rotationAmountX);
 
-            float rotationAmountY = mouseDelta.y * Time.deltaTime * _player.PlayerStatData.GetRotateYSpeed();
+            float rotationAmountY = mouseDelta.y * Time.deltaTime * _player.PlayerStatData.GetRotateYSpeed() * -1f;
             if (CameraManager.Instance.IsYReverse)
                 rotationAmountY *= -1f;
 
