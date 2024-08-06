@@ -28,8 +28,6 @@ public class RuneSpawn : MonoBehaviour
             RuneManager.Instance.SpawnRune(_runeSpawnTrm[spawnCount].position);
 
             spawnCount++;
-
-            Debug.Log("성공적으로 룬 소환함 : " + spawnCount + " 번째");
         }
     }
 }

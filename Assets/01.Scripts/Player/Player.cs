@@ -133,6 +133,10 @@ public class Player : PlayerController
     public bool isRollAttack;
     public bool isRollKnockback;
     public bool isRollOnceMore;
+    [Header("Senergy")]
+    public bool isSlamSenergy;
+    public bool isDashSenergy;
+    public bool isWhirlwindSenergy;
 
     [HideInInspector] public bool isOnRollOnceMore;
     [HideInInspector] public bool isOnChargingSlashOnceMore;
