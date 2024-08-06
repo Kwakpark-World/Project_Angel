@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
@@ -23,8 +24,19 @@ public class SettingPopupUI : PopupUI
     [SerializeField, SerializedDictionary("Audio mixer group name", "Slider")]
     private SerializedDictionary<string, VolumeSlider> _volumeSliders = new SerializedDictionary<string, VolumeSlider>();
 
-    public GameObject soundSetting;
-    public GameObject sensitivitySetting;
+    [SerializeField]
+    private Slider _xSensitivitySlider;
+    [SerializeField]
+    private Slider _ySensitivitySlider;
+    [SerializeField]
+    private TextMeshProUGUI _xSensitivityPercentageText;
+    [SerializeField]
+    private TextMeshProUGUI _ySensitivityPercentageText;
+
+    [SerializeField]
+    private GameObject _soundSetting;
+    [SerializeField]
+    private GameObject _sensitivitySetting;
 
     private bool _isPanelChange;
 
@@ -36,21 +48,24 @@ public class SettingPopupUI : PopupUI
             volumeSlider.Value.muteImageToggle.onValueChanged.AddListener((value) => ChangeVolumeSliderValue(volumeSlider.Key, value));
             ChangeVolumeSliderValue(volumeSlider.Key, 1f);
         }
+
+        ChangeXSensitivitySliderValue();
+        ChangeYSensitivitySliderValue();
     }
 
     public void Update()
     {
         if (Keyboard.current.rightArrowKey.wasPressedThisFrame && !_isPanelChange)
         {
-            soundSetting.SetActive(false);
-            sensitivitySetting.SetActive(true);
+            _soundSetting.SetActive(false);
+            _sensitivitySetting.SetActive(true);
             _isPanelChange = true;
         }
 
         else if (Keyboard.current.leftArrowKey.wasPressedThisFrame && _isPanelChange)
         {
-            soundSetting.SetActive(true);
-            sensitivitySetting.SetActive(false);
+            _soundSetting.SetActive(true);
+            _sensitivitySetting.SetActive(false);
             _isPanelChange = false;
         }
     }
@@ -91,5 +106,27 @@ public class SettingPopupUI : PopupUI
         {
             _volumeSliders[audioMixerGroupName].volumeSlider.onValueChanged.RemoveListener((value) => ChangeVolume(audioMixerGroupName, value));
         }
+    }
+
+    public void ChangeXSensitivitySliderValue()
+    {
+        GameManager.Instance.PlayerInstance.PlayerStatData.xRotateSpeed.SetDefalutValue(_xSensitivitySlider.value);
+        _xSensitivityPercentageText.text = $"{_xSensitivitySlider.value.ToString("##0")}%";
+    }
+
+    public void ChangeYSensitivitySliderValue()
+    {
+        GameManager.Instance.PlayerInstance.PlayerStatData.yRotateSpeed.SetDefalutValue(_ySensitivitySlider.value);
+        _ySensitivityPercentageText.text = $"{_ySensitivitySlider.value.ToString("##0")}%";
+    }
+
+    public void XReverse(bool value)
+    {
+        CameraManager.Instance.IsXReverse = value;
+    }
+
+    public void YReverse(bool value)
+    {
+        CameraManager.Instance.IsYReverse = value;
     }
 }
