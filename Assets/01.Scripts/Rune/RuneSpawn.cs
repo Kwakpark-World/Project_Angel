@@ -18,20 +18,18 @@ public class RuneSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (spawnCount > _runeSpawnTrm.Length)
-        {
-            return;
-        }
-        else
-        {
-            RuneSpawner();
-        }
+        RuneSpawner();
     }
 
     void RuneSpawner()
     {
-        RuneManager.Instance.SpawnRune(_runeSpawnTrm[spawnCount].position);
+        if (spawnCount < _runeSpawnTrm.Length)
+        {
+            RuneManager.Instance.SpawnRune(_runeSpawnTrm[spawnCount].position);
 
-        spawnCount++;
+            spawnCount++;
+
+            Debug.Log("성공적으로 룬 소환함 : " + spawnCount + " 번째");
+        }
     }
 }
