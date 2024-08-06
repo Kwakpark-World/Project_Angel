@@ -45,14 +45,14 @@ public class PlayerCameraState : CameraState
 
             _player.transform.Rotate(Vector3.up, rotationAmountX);
 
-            float rotationAmountY = mouseDelta.y * Time.deltaTime * _player.PlayerStatData.GetRotateSpeed();
+           /* float rotationAmountY = mouseDelta.y * Time.deltaTime * _player.PlayerStatData.GetRotateSpeed();
 
             float currentXRotation = _player.transform.eulerAngles.x;
 
             float newXRotation = currentXRotation + -rotationAmountY;
             if (newXRotation > 180) newXRotation -= 360; 
             newXRotation = Mathf.Clamp(newXRotation, -45f, 45f); 
-            _player.transform.eulerAngles = new Vector3(newXRotation, _player.transform.eulerAngles.y, _player.transform.eulerAngles.z);
+            _player.transform.eulerAngles = new Vector3(newXRotation, _player.transform.eulerAngles.y, _player.transform.eulerAngles.z);*/
         }
     }
 
