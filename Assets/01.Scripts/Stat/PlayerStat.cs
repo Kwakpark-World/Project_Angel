@@ -22,6 +22,7 @@ public enum PlayerStatType
     dashMaxDistance,
     dashCooldown,
     rotateSpeed = 220,
+    rotateYSpeed,
     slamMaxDistance = 300,
     slamCooldown,
     maxAwakenGauge = 310,
@@ -55,6 +56,7 @@ public class PlayerStat : ScriptableObject
     public Stat dashMaxDistance;
     public Stat dashCooldown;
     public Stat rotateSpeed;
+    public Stat rotateYSpeed;
 
     [Header("Skill stats")]
     public Stat slamMaxDistance;
@@ -185,6 +187,11 @@ public class PlayerStat : ScriptableObject
     public float GetRotateSpeed()
     {
         return rotateSpeed.GetValue();
+    }
+
+    public float GetRotateYSpeed()
+    {
+        return rotateYSpeed.GetValue();
     }
 
     public float GetSlamMaxDistance()

@@ -45,8 +45,27 @@ public class PlayerCameraState : CameraState
 
             _player.transform.Rotate(Vector3.up, rotationAmountX);
 
-           /* float rotationAmountY = mouseDelta.y * Time.deltaTime * _player.PlayerStatData.GetRotateSpeed();
+            float rotationAmountY = mouseDelta.y * Time.deltaTime * _player.PlayerStatData.GetRotateYSpeed();
+            if (CameraManager.Instance.IsYReverse)
+                rotationAmountY *= -1f;
 
+            if (_camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
+            {
+                var transposer = cam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+
+                if (transposer.ShoulderOffset.y + rotationAmountY < 0)
+                {
+                    transposer.ShoulderOffset.y = 0;
+                }
+                else if (transposer.ShoulderOffset.y + rotationAmountY > 6.5f)
+                {
+                    transposer.ShoulderOffset.y = 6.5f;
+                }
+                else
+                    transposer.ShoulderOffset.y += rotationAmountY;
+            }
+
+            /* 
             float currentXRotation = _player.transform.eulerAngles.x;
 
             float newXRotation = currentXRotation + -rotationAmountY;
