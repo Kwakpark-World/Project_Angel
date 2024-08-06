@@ -89,6 +89,8 @@ public class UIManager : MonoSingleton<UIManager>
                     }
                     else
                     {
+                        TimeManager.Instance.ResetTimeScale();
+
                         if (!GameManager.Instance.PlayerInstance.BuffCompo.GetBuffState(BuffType.Potion_Paralysis))
                         {
                             GameManager.Instance.PlayerInstance.IsPlayerStop = PlayerControlEnum.Move;
