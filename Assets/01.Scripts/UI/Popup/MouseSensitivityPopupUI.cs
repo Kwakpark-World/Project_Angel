@@ -15,13 +15,13 @@ public class MouseSensitivityPopupUI : PopupUI
 
     public override void InitializePopup()
     {
-        throw new NotImplementedException();
+
     }
 
     void Update()
     {
-        float playerRotateSpeedPercent = GameManager.Instance.PlayerInstance.PlayerStatData.GetRotateSpeed();
-        float playerYRotateSpeedPercent = GameManager.Instance.PlayerInstance.PlayerStatData.GetRotateYSpeed();
+        float playerRotateSpeedPercent = GameManager.Instance.PlayerInstance.PlayerStatData.GetXRotateSpeed();
+        float playerYRotateSpeedPercent = GameManager.Instance.PlayerInstance.PlayerStatData.GetYRotateSpeed();
 
         Debug.Log(playerRotateSpeedPercent);
 
@@ -30,8 +30,8 @@ public class MouseSensitivityPopupUI : PopupUI
 
         Debug.Log(playerRotateSpeedPercent);
 
-        GameManager.Instance.PlayerInstance.PlayerStatData.rotateSpeed.SetDefalutValue(playerRotateSpeedPercent);
-        GameManager.Instance.PlayerInstance.PlayerStatData.rotateYSpeed.SetDefalutValue(playerYRotateSpeedPercent);
+        GameManager.Instance.PlayerInstance.PlayerStatData.xRotateSpeed.SetDefalutValue(playerRotateSpeedPercent);
+        GameManager.Instance.PlayerInstance.PlayerStatData.yRotateSpeed.SetDefalutValue(playerYRotateSpeedPercent);
 
         XsenstivivityValue.text = playerRotateSpeedPercent.ToString("F0") + "%";
         YsenstivivityValue.text = playerYRotateSpeedPercent.ToString("F0") + "%";

@@ -14,8 +14,9 @@ public class ReversalUI : PopupUI
 
     public override void InitializePopup()
     {
-        throw new NotImplementedException();
+
     }
+
     private bool isFlipped = false;
 
     void Start()
