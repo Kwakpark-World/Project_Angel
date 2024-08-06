@@ -10,6 +10,7 @@ using UnityEngine.AI;
 public abstract class Brain : PoolableMono
 {
     static private List<Brain> enemyChain = new List<Brain>();
+    protected readonly string hitAnimationTrigger = "Hit";
 
     public BehaviourTreeRunner treeRunner;
     public Transform enemyCenter;
@@ -79,7 +80,7 @@ public abstract class Brain : PoolableMono
         CurrentHealth = EnemyStatData.GetMaxHealth();
         NormalAttackTimer = Time.time;
         SkillAttackTimer = Time.time;
-        HealthBarCompo = PoolManager.Instance.Pop(PoolType.UI_HealthBar, transform.position + Vector3.up * 2.5f) as EnemyHealthBar;
+        HealthBarCompo = PoolManager.Instance.Pop(PoolType.UI_HealthBar, enemyCenter.position + Vector3.up * 0.5f) as EnemyHealthBar;
 
         HealthBarCompo.SetOwner(this);
         HealthBarCompo.UpdateHealthBar();
@@ -113,7 +114,7 @@ public abstract class Brain : PoolableMono
     public virtual void OnHit(float incomingDamage, bool isHitPhysically = false, bool isCritical = false, float knockbackPower = 0f)
     {
         hitEffect.RotatonEffect();
-        //Debug.Log(hitEffect);
+
         if (BuffCompo.GetBuffState(BuffType.Shield))
         {
             return;
@@ -129,20 +130,10 @@ public abstract class Brain : PoolableMono
 
         DamageTextCompo.SpawnParticle(enemyCenter.position, finalDamage.ToString(), Color.red, 0.5f);
         HealthBarCompo.UpdateHealthBar();
-        
 
-        if(GameManager.Instance.PlayerInstance.isReinforcedattack == true)
-        {
-            AnimatorCompo.SetAnimationState("BackAttackHit", AnimatorCompo.GetCurrentAnimationState("BackAttackHit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
-            Debug.Log("2");
-        }
-        else
-        {
-            AnimatorCompo.SetAnimationState("Hit", AnimatorCompo.GetCurrentAnimationState("Hit") ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
-            Debug.Log("12");
-        }
-            
+        string finalHitTrigger = (GameManager.Instance.PlayerInstance.isLastComboAttack ? "LastCombo" : "") + hitAnimationTrigger;
 
+        AnimatorCompo.SetAnimationState(finalHitTrigger, AnimatorCompo.GetCurrentAnimationState(finalHitTrigger) ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
         CameraManager.Instance.ShakeCam(0.5f, 0.3f, 0.3f);
         VolumeManager.Instance.HitMotionBlur(3,1);
         TimeManager.Instance.TimeChange(0.85f, 1.5f);
