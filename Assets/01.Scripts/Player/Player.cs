@@ -88,6 +88,7 @@ public class Player : PlayerController
 
     public Transform effectParent;
 
+    public PlayerControlEnum IsPlayerStop;
     public bool IsAttack;
     public bool IsDefense;
     public bool IsDie;
