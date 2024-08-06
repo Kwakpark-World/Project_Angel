@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
@@ -72,7 +71,7 @@ public class SettingPopupUI : PopupUI
 
     public override void InitializePopup()
     {
-        // Fill here.
+        TimeManager.Instance.StopTimeScale();
     }
 
     public void ChangeVolume(string audioMixerGroupName, float volume)

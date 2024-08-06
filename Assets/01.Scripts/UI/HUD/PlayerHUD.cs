@@ -122,7 +122,7 @@ public class PlayerHUD : MonoBehaviour
         float currentHealth = GameManager.Instance.PlayerInstance.CurrentHealth;
         float maxHealth = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxHealth();
         _healthBarImage.fillAmount = currentHealth / maxHealth;
-        _healthText.text = $"{Mathf.Clamp(currentHealth, 0f, maxHealth)} / {maxHealth}";
+        //_healthText.text = $"{Mathf.Clamp(currentHealth, 0f, maxHealth)} / {maxHealth}";
     }
 
     public void UpdateAwakenGauge()
@@ -130,7 +130,7 @@ public class PlayerHUD : MonoBehaviour
         float currentAwakenGauge = GameManager.Instance.PlayerInstance.CurrentAwakenGauge;
         float maxAwakenGauge = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxAwakenGauge();
         _awakenGaugeImage.fillAmount = currentAwakenGauge / maxAwakenGauge;
-        _awakenGaugeText.text = $"{(int)(currentAwakenGauge / maxAwakenGauge * 100f)}%";
+        //_awakenGaugeText.text = $"{(int)(currentAwakenGauge / maxAwakenGauge * 100f)}%";
     }
 
     public void UpdateChargeGauge()
@@ -138,7 +138,7 @@ public class PlayerHUD : MonoBehaviour
         float currentChargeTime = GameManager.Instance.PlayerInstance.CurrentChargeTime;
         float maxChargeTime = GameManager.Instance.PlayerInstance.PlayerStatData.GetMaxChargeTime();
         _chargingTimeImage.fillAmount = currentChargeTime / maxChargeTime;
-        _chargingTimeText.text = $"{(int)(currentChargeTime / maxChargeTime * 100f)}%";
+        //_chargingTimeText.text = $"{(int)(currentChargeTime / maxChargeTime * 100f)}%";
     }
 
     private IEnumerator BuffDurationCoroutine(BuffType buffType, Image buffDurationImage, float duration = 0)

@@ -6,6 +6,6 @@ public class CreditPopupUI : PopupUI
 {
     public override void InitializePopup()
     {
-        // Do tween if necessary.
+        TimeManager.Instance.StopTimeScale();
     }
 }

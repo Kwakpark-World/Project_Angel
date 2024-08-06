@@ -7,7 +7,7 @@ public class PausePopupUI : PopupUI
 {
     public override void InitializePopup()
     {
-        Time.timeScale = 0.0f;
+        TimeManager.Instance.StopTimeScale();
     }
 
     public override void TogglePopup(bool value)
@@ -18,10 +18,5 @@ public class PausePopupUI : PopupUI
         }
 
         base.TogglePopup(value);
-
-        if (!value)
-        {
-            Time.timeScale = 1.0f;
-        }
     }
 }

@@ -49,7 +49,6 @@ public class VolumeManager : MonoSingleton<VolumeManager>
             while (elapsedTime < duration) 
             {
                 motionBlur.intensity.value = Mathf.Lerp(originalIntensity, intensity, elapsedTime / duration);
-                Debug.Log(motionBlur.intensity.value);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
