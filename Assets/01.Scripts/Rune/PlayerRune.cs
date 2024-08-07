@@ -65,7 +65,7 @@ public class PlayerRune : MonoBehaviour
         }
     }
 
-    /*public void Rune_Slam()
+    public void Rune_Slam()
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
@@ -76,11 +76,11 @@ public class PlayerRune : MonoBehaviour
                 break;
 
             case BuffType.Rune_Slam_2:
-                playerInstance. = true;
+                playerInstance.isSlamStatic = true;
                 break;
 
             case BuffType.Rune_Slam_3:
-                playerInstance. = true;
+                playerInstance.isSlamFloorEnd = true;
                 break;
 
             case BuffType.Rune_Slam_4:
@@ -90,7 +90,7 @@ public class PlayerRune : MonoBehaviour
             default:
                 break;
         }
-    }*/
+    }
 
     public void Rune_Whirlwind()
     {
