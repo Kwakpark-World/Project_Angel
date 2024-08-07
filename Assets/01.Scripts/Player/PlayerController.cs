@@ -15,7 +15,7 @@ public abstract class PlayerController : MonoBehaviour
 
     #region components
     [field: Space(30f), Header("Components")]
-    public Animator AnimatorCompo { get; private set; }
+    public Animator AnimatorCompo { get; set; }
     public Rigidbody RigidbodyCompo { get; private set; }
     public CapsuleCollider ColliderCompo { get; private set; }
     public Buff BuffCompo { get; private set; }

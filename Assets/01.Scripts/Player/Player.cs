@@ -142,9 +142,14 @@ public class Player : PlayerController
     [HideInInspector] public bool isOnChargingSlashOnceMore;
     [HideInInspector] public bool isOnWhirlWindOnceMore;
 
+    [HideInInspector] public PlayerTutorial _tutorial;
+
     protected override void Awake()
     {
         base.Awake();
+
+        if (transform.root.gameObject.scene.name == "TutorialScene") 
+            _tutorial = FindObjectOfType<PlayerTutorial>();
 
         //MaterialCaching();
 

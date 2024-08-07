@@ -17,6 +17,8 @@ public class ImageToggle : MonoBehaviour, IPointerDownHandler
 
     private void Awake()
     {
+        isOn = false;
+
         _toggleSpriteSocket = GetComponent<Image>();
         _toggleSpriteSocket.sprite = isOn ? _toggleOnSprite : _toggleOffSprite;
     }
@@ -28,7 +30,9 @@ public class ImageToggle : MonoBehaviour, IPointerDownHandler
 
     public void ToggleSprite()
     {
-        isOn = !isOn;
+        //isOn = !isOn;
+        isOn = true;
+
         _toggleSpriteSocket.sprite = isOn ? _toggleOnSprite : _toggleOffSprite;
 
         onValueChanged?.Invoke(isOn);
