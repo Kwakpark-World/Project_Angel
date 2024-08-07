@@ -11,6 +11,8 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        if (_player.transform.root.gameObject.scene.name == "TutorialScene")
+            _player._tutorial.PlayerTutorialToggle(1);
 
         _player.PlayerInput.DashEvent += HandleRollOnceMoreEvent;
         

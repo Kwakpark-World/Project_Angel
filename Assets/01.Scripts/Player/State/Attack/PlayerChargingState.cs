@@ -72,6 +72,7 @@ public class PlayerChargingState : PlayerChargeState
             //if (_player.IsAwakened)
             //    _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
             //else
+
             _stateMachine.ChangeState(PlayerStateEnum.NormalChargeAttack);
         }
     }
@@ -89,6 +90,9 @@ public class PlayerChargingState : PlayerChargeState
             CameraManager.Instance.ZoomCam(5.6f, _cameraZoomChangePerTick);
 
             _player.CurrentChargeTime += Time.deltaTime * 1.5f;
+
+            if (_player.transform.root.gameObject.scene.name == "TutorialScene")
+                _player._tutorial.PlayerTutorialToggle(5);
 
             if (_player.CurrentChargeTime >= _maxChargeTime - 0.1f)
             {

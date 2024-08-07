@@ -81,6 +81,12 @@ public class PlayerState
 
     public virtual void Exit()
     {
+        if (_player.AnimatorCompo == null)
+        {
+            Transform visualTrm = _player.transform.Find("Visual");
+            _player.AnimatorCompo = visualTrm.GetComponent<Animator>();
+        }
+
         _player.AnimatorCompo.SetBool(_animBoolHash, false);
         _player.isHit = false;
     }

@@ -5656,7 +5656,6 @@ GameObject:
   - component: {fileID: 5173864762241979809}
   - component: {fileID: 8523927444897520135}
   - component: {fileID: 6385291853889329438}
-  - component: {fileID: 4977708845564934515}
   - component: {fileID: -9026139763641048192}
   m_Layer: 6
   m_Name: Player
@@ -5767,7 +5766,7 @@ MonoBehaviour:
     type: 2}
   playerCenter: {fileID: 5140108053741916498}
   weapon: {fileID: 7559007113953224229}
-  WeaponAngel: {x: 0, y: 0, z: 0, w: 0}
+  WeaponAngle: {x: 0, y: 0, z: 0, w: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -5832,6 +5831,9 @@ MonoBehaviour:
   isRollAttack: 0
   isRollKnockback: 0
   isRollOnceMore: 0
+  isSlamSenergy: 0
+  isDashSenergy: 0
+  isWhirlwindSenergy: 0
   isOnRollOnceMore: 0
   isOnChargingSlashOnceMore: 0
   isOnWhirlWindOnceMore: 0
@@ -5952,27 +5954,6 @@ MonoBehaviour:
           m_CallState: 2
   <BuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
     type: 2}
---- !u!114 &4977708845564934515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1494236958258072100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25e3b19ef4c2c8a4394dffe3db2dc3de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  value: 3.81
-  size: {x: 12.82, y: -2.8, z: 13.23}
-  offset: {x: 0, y: 0.3, z: 0}
-  pos: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0}
-  MeleeAttack_Normal: 0
-  AttackRange_Weapon: 0
-  AttackRange_Player: 0
-  AttackRange_Rotation: 0
 --- !u!114 &-9026139763641048192
 MonoBehaviour:
   m_ObjectHideFlags: 0

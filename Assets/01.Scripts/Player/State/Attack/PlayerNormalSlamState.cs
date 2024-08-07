@@ -23,6 +23,9 @@ public class PlayerNormalSlamState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
+        if (_player.transform.root.gameObject.scene.name == "TutorialScene")
+            _player._tutorial.PlayerTutorialToggle(2);
+
         _player.StopImmediately(false);
         _isEffectOn = false;
 

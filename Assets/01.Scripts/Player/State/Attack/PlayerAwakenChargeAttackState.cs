@@ -29,6 +29,8 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         base.Enter();
         _isEffectOn = false;
         _isShaken = false;
+        if (_player.transform.root.gameObject.scene.name == "TutorialScene")
+            _player._tutorial.PlayerTutorialToggle(3);
 
         _player.AnimatorCompo.speed = 1 + (_player.CurrentChargeTime / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargeAttackSpeed();
 
