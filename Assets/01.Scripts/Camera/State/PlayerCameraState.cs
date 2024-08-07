@@ -33,6 +33,7 @@ public class PlayerCameraState : CameraState
     {
         if (!GameManager.Instance.PlayerInstance.IsAttack)
         {
+            Debug.Log("--");
             if (IsCamRotateStop) return;
 
             Vector2 mouseDelta = Mouse.current.delta.ReadValue();
@@ -64,14 +65,25 @@ public class PlayerCameraState : CameraState
                 else
                     transposer.ShoulderOffset.y += rotationAmountY;
             }
+        }
+        else
+        {
+            if (_camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
+            {
+                var transposer = cam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+                if (transposer.m_FollowOffset.y != 6)
+                {
+                    transposer.m_FollowOffset.y = 6;
+                    Debug.Log(transposer + "123");
+                }
 
-            /* 
-            float currentXRotation = _player.transform.eulerAngles.x;
+                else if(transposer.m_FollowOffset.z != -13)
+                {
+                    transposer.m_FollowOffset.z = -13;
+                    Debug.Log(transposer + "666");
+                }
+            }
 
-            float newXRotation = currentXRotation + -rotationAmountY;
-            if (newXRotation > 180) newXRotation -= 360; 
-            newXRotation = Mathf.Clamp(newXRotation, -45f, 45f); 
-            _player.transform.eulerAngles = new Vector3(newXRotation, _player.transform.eulerAngles.y, _player.transform.eulerAngles.z);*/
         }
     }
 
@@ -79,42 +91,25 @@ public class PlayerCameraState : CameraState
 
     public void CameraAttack()
     {
-        
-    }
-
-
-    /*private void SetRotation()
-    {
-        // 카메라의 Y축 회전 가져오기
-        float cameraYRotation = transform.eulerAngles.y;
-
-        // 플레이어 회전 벡터 가져오기
-        Vector3 playerRotation = _player.transform.eulerAngles;
-
-        // 플레이어의 Y축 회전을 카메라의 Y축 회전으로 설정
-        playerRotation.y = cameraYRotation;
-
-        // 플레이어의 회전 적용
-        _player.transform.eulerAngles = playerRotation;
-
-        // 입력 값 가져오기
-        float xInput = _player.PlayerInput.XInput;
-        float yInput = _player.PlayerInput.YInput;
-
-        // 카메라의 앞 방향 및 오른쪽 방향 가져오기
-        Vector3 cameraForward = transform.forward;
-        Vector3 cameraRight = transform.right;
-
-        // 원하는 방향 계산
-        Vector3 desiredDirection = (cameraForward * yInput + cameraRight * xInput).normalized;
-
-        // 원하는 방향이 0이 아닐 경우 회전 처리
-        if (desiredDirection != Vector3.zero)
+        if(GameManager.Instance.PlayerInstance.IsAttack)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(desiredDirection);
-            _player.transform.rotation = Quaternion.Slerp(_player.transform.rotation, targetRotation, Time.deltaTime * _player.PlayerStatData.GetRotateSpeed());
+            if (_camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
+            {
+                var transposer = cam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+                if (transposer)
+                {
+                    if (IsCamRotateStop)
+                    {
+                        transposer.m_XAxis.m_MaxSpeed = 0;
+                    }
+                    else
+                        transposer.m_XAxis.m_MaxSpeed = 100;
+                }
+            }
         }
-    }*/
-
-
+        else
+        {
+            
+        }
+    }
 }
