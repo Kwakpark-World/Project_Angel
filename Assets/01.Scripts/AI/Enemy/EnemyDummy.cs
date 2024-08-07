@@ -14,7 +14,6 @@ public class EnemyDummy : Brain
     {
         base.Initialize();
 
-        AnimatorCompo?.SetAnimationState();
         EnemyStatData.InitializeAllModifiers();
 
         CurrentHealth = EnemyStatData.GetMaxHealth();
@@ -39,7 +38,6 @@ public class EnemyDummy : Brain
 
         AnimatorCompo.SetAnimationState(finalHitTrigger, AnimatorCompo.GetCurrentAnimationState(finalHitTrigger) ? AnimationStateMode.None : AnimationStateMode.SavePreviousState);
         CameraManager.Instance.ShakeCam(0.5f, 0.3f, 0.3f);
-        VolumeManager.Instance.HitMotionBlur(3, 1);
         TimeManager.Instance.TimeChange(0.85f, 1.5f);
 
         if (isHitPhysically)

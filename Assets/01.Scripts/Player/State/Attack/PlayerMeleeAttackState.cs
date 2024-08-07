@@ -41,6 +41,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.PlayerStatData.attackPower.InitializeModifier();
 
+        _player.IsAttack = true;
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
@@ -74,6 +75,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         _player.AnimatorCompo.speed = 1f;
 
+        _player.IsAttack = false;
+        
         _attackPrevTime = Time.time;
 
         ++_comboCounter;
@@ -97,7 +100,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
             if (!_isEffectOn)
             {
                 _isEffectOn = true;
-                _player.IsAttack = true;
 
                 AttackSound();
 
@@ -107,7 +109,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         if (_effectTriggerEndCalled)
         {
-            _player.IsAttack = false;
 
             _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }

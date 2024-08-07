@@ -15,26 +15,21 @@ public class PlayerRune : MonoBehaviour
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
-        switch (buffType)
+        if (buffType == BuffType.Rune_Dash_1)
         {
-            case BuffType.Rune_Dash_1:
-                playerInstance.isRollToDash = true;
-                break;
-
-            case BuffType.Rune_Dash_2:
-                playerInstance.isRollAttack = true;
-                break;
-
-            case BuffType.Rune_Dash_3:
-                playerInstance.isRollKnockback = true;
-                break;
-
-            case BuffType.Rune_Dash_4:
-                playerInstance.isRollOnceMore = true;
-                break;
-
-            default:
-                break;
+            playerInstance.isRollToDash = true;
+        }
+        if (buffType == BuffType.Rune_Dash_2)
+        {
+            playerInstance.isRollAttack = true;
+        }
+        if (buffType == BuffType.Rune_Dash_3)
+        {
+            playerInstance.isRollKnockback = true;
+        }
+        if (buffType == BuffType.Rune_Dash_4)
+        {
+            playerInstance.isRollOnceMore = true;
         }
     }
 
@@ -42,26 +37,21 @@ public class PlayerRune : MonoBehaviour
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
-        switch (buffType)
+        if (buffType == BuffType.Rune_Charge_1)
         {
-            case BuffType.Rune_Charge_1:
-                playerInstance.isChargingTripleSting = true;
-                break;
-
-            case BuffType.Rune_Charge_2:
-                playerInstance.isChargingMultipleSting = true;
-                break;
-
-            case BuffType.Rune_Charge_3:
-                playerInstance.isChargingSlashOnceMore = true;
-                break;
-
-            case BuffType.Rune_Charge_4:
-                playerInstance.isChargingSwordAura = true;
-                break;
-
-            default:
-                break;
+            playerInstance.isChargingTripleSting = true;
+        }
+        if (buffType == BuffType.Rune_Charge_2)
+        {
+            playerInstance.isChargingMultipleSting = true;
+        }
+        if (buffType == BuffType.Rune_Charge_3)
+        {
+            playerInstance.isChargingSlashOnceMore = true;
+        }
+        if (buffType == BuffType.Rune_Charge_4)
+        {
+            playerInstance.isChargingSwordAura = true;
         }
     }
 
@@ -69,26 +59,21 @@ public class PlayerRune : MonoBehaviour
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
-        switch (buffType)
+        if (buffType == BuffType.Rune_Slam_1)
         {
-            case BuffType.Rune_Slam_1:
-                playerInstance.isSlamEarthquake = true;
-                break;
-
-            case BuffType.Rune_Slam_2:
-                playerInstance.isSlamStatic = true;
-                break;
-
-            case BuffType.Rune_Slam_3:
-                playerInstance.isSlamFloorEnd = true;
-                break;
-
-            case BuffType.Rune_Slam_4:
-                playerInstance.isSlamSixTimeSlam = true;
-                break;
-
-            default:
-                break;
+            playerInstance.isSlamEarthquake = true;
+        }
+        if (buffType == BuffType.Rune_Slam_2)
+        {
+            playerInstance.isSlamStatic = true;
+        }
+        if (buffType == BuffType.Rune_Slam_3)
+        {
+            playerInstance.isSlamFloorEnd = true;
+        }
+        if (buffType == BuffType.Rune_Slam_4)
+        {
+            playerInstance.isSlamSixTimeSlam = true;
         }
     }
 
@@ -96,26 +81,21 @@ public class PlayerRune : MonoBehaviour
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
-        switch (buffType)
+        if (buffType == BuffType.Rune_Whirlwind_1)
         {
-            case BuffType.Rune_Whirlwind_1:
-                playerInstance.isWhirlwindShockWave = true;
-                break;
-
-            case BuffType.Rune_Whirlwind_2:
-                playerInstance.isWhirlwindMoveAble = true;
-                break;
-
-            case BuffType.Rune_Whirlwind_3:
-                playerInstance.isWhirlwindPullEnemies = true;
-                break;
-
-            case BuffType.Rune_Whirlwind_4:
-                playerInstance.isWhirlwindRangeUp = true;
-                break;
-
-            default:
-                break;
+            playerInstance.isWhirlwindShockWave = true;
+        }
+        if (buffType == BuffType.Rune_Whirlwind_2)
+        {
+            playerInstance.isWhirlwindMoveAble = true;
+        }
+        if (buffType == BuffType.Rune_Whirlwind_3)
+        {
+            playerInstance.isWhirlwindPullEnemies = true;
+        }
+        if (buffType == BuffType.Rune_Whirlwind_4)
+        {
+            playerInstance.isWhirlwindRangeUp = true;
         }
     }
 
