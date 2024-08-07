@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class ButtonEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
+    public UnityEvent OnClick;
     private Vector3 _originalScale;
     private bool _isEntered;
 
@@ -37,5 +39,7 @@ public class ButtonEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerUp(PointerEventData eventData)
     {
         transform.localScale = _originalScale * (_isEntered ? 1.1f : 1f);
+
+        OnClick?.Invoke();
     }
 }
