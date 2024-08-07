@@ -41,18 +41,12 @@ public class PlayerHUD : MonoBehaviour
     [Header("Player Stat")]
     [SerializeField]
     private Image _healthBarImage;
-    [SerializeField]
-    private TextMeshProUGUI _healthText;
 
     [SerializeField]
     private Image _awakenGaugeImage;
-    [SerializeField]
-    private TextMeshProUGUI _awakenGaugeText;
 
     [SerializeField]
     private Image _chargingTimeImage;
-    [SerializeField]
-    private TextMeshProUGUI _chargingTimeText;
 
     public Player PlayerReference { get; set; }
     private Dictionary<BuffType, Coroutine> _durationCoroutines = new Dictionary<BuffType, Coroutine>();
