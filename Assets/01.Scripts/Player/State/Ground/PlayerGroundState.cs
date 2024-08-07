@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerGroundState : PlayerState
 {
@@ -62,7 +63,7 @@ public class PlayerGroundState : PlayerState
         if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
         if (_player.slamPrevTime + _player.PlayerStatData.GetSlamCooldown() > Time.time) return;
         if (!_player.IsGroundDetected()) return;
-        if (_player.CurrentAwakenGauge <= 0) return;
+        if (_player.CurrentAwakenGauge <= 19) return;
 
         _player.slamPrevTime = Time.time;
         _player.awakenTime = 0;
@@ -72,6 +73,7 @@ public class PlayerGroundState : PlayerState
             return;
         }
 
+        _player.CurrentAwakenGauge -= 20;
         _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
         //if (_player.IsAwakened)
         //    _stateMachine.ChangeState(PlayerStateEnum.AwakenSlam);
@@ -83,7 +85,7 @@ public class PlayerGroundState : PlayerState
         if (_player.IsPlayerStop == PlayerControlEnum.Stop) return;
         if (_player.whirlwindPrevTime + _player.PlayerStatData.GetWhirlwindCooldown() > Time.time) return;
         if (!_player.IsGroundDetected()) return;
-        if (_player.CurrentAwakenGauge <= 0) return;
+        if (_player.CurrentAwakenGauge <= 9) return;
 
 
         _player.awakenTime = 0;
@@ -93,6 +95,8 @@ public class PlayerGroundState : PlayerState
             _player.StateMachine.ChangeState(PlayerStateEnum.Awakening);
             return;
         }
+
+        _player.CurrentAwakenGauge -= 10f;
 
         _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
         //if (_player.IsAwakening)
