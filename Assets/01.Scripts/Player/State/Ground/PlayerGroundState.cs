@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerGroundState : PlayerState
 {
@@ -54,6 +53,9 @@ public class PlayerGroundState : PlayerState
         if (_player.IsAwakened)
         {
             _player.awakenTime = _player.PlayerStatData.GetMaxAwakenDuration();
+
+            if (_player.transform.root.gameObject.scene.name == "TutorialScene")
+                _player._tutorial.PlayerTutorialToggle(4);
             return;
         }
     }

@@ -35,10 +35,12 @@ public class PlayerMeleeAttackState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
+        if (_player.transform.root.gameObject.scene.name == "TutorialScene")
+            _player._tutorial.PlayerTutorialToggle(0);
+
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.PlayerStatData.attackPower.InitializeModifier();
 
-        _player.IsAttack = true;
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
@@ -69,7 +71,6 @@ public class PlayerMeleeAttackState : PlayerAttackState
         base.Exit();
 
         _player.PlayerInput.MeleeAttackEvent -= ComboAttack;
-        _player.IsAttack = false;
 
         _player.AnimatorCompo.speed = 1f;
 
@@ -96,6 +97,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
             if (!_isEffectOn)
             {
                 _isEffectOn = true;
+                _player.IsAttack = true;
+
                 AttackSound();
 
                 ChargingEffect();
@@ -104,6 +107,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         if (_effectTriggerEndCalled)
         {
+            _player.IsAttack = false;
+
             _thisParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
