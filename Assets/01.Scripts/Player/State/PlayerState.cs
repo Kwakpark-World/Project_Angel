@@ -37,6 +37,11 @@ public class PlayerState
 
     public virtual void Enter()
     {
+        if (_player == null)
+        {
+            _player = GameManager.Instance.PlayerInstance;
+        }
+
         _endTriggerCalled = false;
         _actionTriggerCalled = false;
         _isHitAbleTriggerCalled = false;
@@ -81,10 +86,9 @@ public class PlayerState
 
     public virtual void Exit()
     {
-        if (_player.AnimatorCompo == null)
+        if (_player == null)
         {
-            Transform visualTrm = _player.transform.Find("Visual");
-            _player.AnimatorCompo = visualTrm.GetComponent<Animator>();
+            _player = GameManager.Instance.PlayerInstance;
         }
 
         _player.AnimatorCompo.SetBool(_animBoolHash, false);
