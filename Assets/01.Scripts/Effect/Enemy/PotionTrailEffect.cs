@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PotionTrailEffect : MonoBehaviour
 {
+    public ParticleSystem trail;
     public Transform parentTransform; 
 
     void LateUpdate()
     {
         if (parentTransform != null)
         {
-            transform.position = parentTransform.position;
+            trail.Play();
+            //transform.position = parentTransform.position;
         }
     }
 }
