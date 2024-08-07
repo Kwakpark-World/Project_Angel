@@ -44,7 +44,7 @@ public class PlayerAttackRangeEditor : MonoBehaviour
         float averageWeaponAngle = Mathf.Atan2(averageWeaponVector.y, averageWeaponVector.x) * Mathf.Rad2Deg;
 
  
-        GameManager.Instance.PlayerInstance.WeaponAngel = Quaternion.Euler(0, 0, averageWeaponAngle);
+        GameManager.Instance.PlayerInstance.WeaponAngle = Quaternion.Euler(0, 0, averageWeaponAngle);
 
         Gizmos.color = Color.red;
 
