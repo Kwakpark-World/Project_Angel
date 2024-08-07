@@ -12,6 +12,8 @@ public class EnemyAreaPotion : PoolableMono
     [SerializeField]
     private LayerMask _environmentLayer;
     [SerializeField]
+    private ParticleSystem trail;
+    [SerializeField]
     private int _lifetime = 5;
     [SerializeField]
     private float _speed = 10f;
@@ -29,6 +31,7 @@ public class EnemyAreaPotion : PoolableMono
     private void Update()
     {
         _rigidbody.velocity = direction * speed;
+        gameObject.transform.position = trail.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
