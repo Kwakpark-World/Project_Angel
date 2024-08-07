@@ -14,7 +14,6 @@ public class EnemyDummy : Brain
     {
         base.Initialize();
 
-        AnimatorCompo?.SetAnimationState();
         EnemyStatData.InitializeAllModifiers();
 
         CurrentHealth = EnemyStatData.GetMaxHealth();
