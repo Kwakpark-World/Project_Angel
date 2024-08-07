@@ -8,10 +8,12 @@ public class EnemySpawner : MonoBehaviour
 
     private string targetTag = "EnemyMannequin";
 
+    public bool allEnemysDead = false;
+
     [SerializeField] private GameObject[] _MannequinObject;
     [SerializeField] private List<EnemyMannequin> _mannequinList = new List<EnemyMannequin>();
 
-    [SerializeField] private HashSet<EnemyMannequin> _spawnedMannequins = new HashSet<EnemyMannequin>();
+    private HashSet<EnemyMannequin> _spawnedMannequins = new HashSet<EnemyMannequin>();
 
     private void Start()
     {
@@ -32,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         PerformActionInRadius();
+        CheckAllEnemiesDead();
     }
 
     void PerformActionInRadius()
@@ -43,8 +46,6 @@ public class EnemySpawner : MonoBehaviour
 
             if (distance <= actionRadius)
             {
-                obj.SetActive(true);
-
                 EnemyMannequin mannequin = obj.GetComponent<EnemyMannequin>();
 
                 if (mannequin != null && !_spawnedMannequins.Contains(mannequin))
@@ -52,13 +53,34 @@ public class EnemySpawner : MonoBehaviour
                     mannequin.SpawnEnemy();
                     _spawnedMannequins.Add(mannequin); // 소환된 오브젝트를 추적 리스트에 추가
                 }
+
+                obj.SetActive(false);
             }
         }
     }
 
-    void OnDrawGizmosSelected()
+    void CheckAllEnemiesDead()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, actionRadius);
+        bool allEnemiesDead = true;
+
+        foreach (GameObject obj in _MannequinObject)
+        {
+            if (obj.activeSelf)
+            {
+                allEnemiesDead = false;
+                break;
+            }
+        }
+
+        if (allEnemiesDead)
+        {
+            OnAllEnemiesDead();
+        }
     }
+
+    void OnAllEnemiesDead()
+    {
+        allEnemysDead = true;
+    }
+
 }

@@ -20,11 +20,19 @@ public class ClearManager : MonoBehaviour
     [SerializeField]
     private RectTransform textContainer; 
     [SerializeField]
-    private float scrollDuration = 11f; 
+    private float scrollDuration = 11f;
+
+    private EnemySpawner _enemySpawner;
+
+
+    private void Start()
+    {
+        _enemySpawner = GameObject.FindGameObjectWithTag("Player").GetComponent<EnemySpawner>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && _enemySpawner.allEnemysDead)
         {
             ClearPanel();
         }
@@ -32,10 +40,7 @@ public class ClearManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.V))
-        {
-            ClearPanel();
-        }
+
     }
 
     public void ClearPanel()
