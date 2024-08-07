@@ -8,9 +8,9 @@ public class MaterialManager : MonoSingleton<MaterialManager>
 {
     private Dictionary<string, List<Material>> _materials = new Dictionary<string, List<Material>>(); // Label, (matName, mat)
 
-    private async void Start()
+    private void Start()
     {
-        //await LoadMaterial();
+        
     }
 
     private async Task LoadMaterial()

@@ -5657,6 +5657,7 @@ GameObject:
   - component: {fileID: 8523927444897520135}
   - component: {fileID: 6385291853889329438}
   - component: {fileID: 4977708845564934515}
+  - component: {fileID: -9026139763641048192}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -5766,6 +5767,7 @@ MonoBehaviour:
     type: 2}
   playerCenter: {fileID: 5140108053741916498}
   weapon: {fileID: 7559007113953224229}
+  WeaponAngel: {x: 0, y: 0, z: 0, w: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -5795,15 +5797,15 @@ MonoBehaviour:
     type: 2}
   playerAnims: []
   effectParent: {fileID: 0}
+  IsPlayerStop: 0
   IsAttack: 0
   IsDefense: 0
   IsDie: 0
   IsAwakened: 0
   IsGroundState: 0
   isShield: 0
-  isReinforcedattack: 0
+  isLastComboAttack: 0
   isHit: 0
-  IsPlayerStop: 0
   renderers:
   - {fileID: 9166074286034648693}
   - {fileID: 2866051191039960501}
@@ -5819,6 +5821,8 @@ MonoBehaviour:
   isChargingSlashOnceMore: 0
   isChargingSwordAura: 0
   isSlamSixTimeSlam: 0
+  isSlamStatic: 0
+  isSlamFloorEnd: 0
   isSlamEarthquake: 0
   isWhirlwindShockWave: 0
   isWhirlwindMoveAble: 0
@@ -5969,6 +5973,21 @@ MonoBehaviour:
   AttackRange_Weapon: 0
   AttackRange_Player: 0
   AttackRange_Rotation: 0
+--- !u!114 &-9026139763641048192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494236958258072100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7a856e16a555d4180b05cc3713b795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionRadius: 35
+  _MannequinObject: []
+  _mannequinList: []
 --- !u!1 &1534901178157195354
 GameObject:
   m_ObjectHideFlags: 0

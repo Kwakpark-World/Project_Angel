@@ -12,21 +12,6 @@ public class EnemyMannequin : MonoBehaviour
         InitializeSpawner();
     }
 
-    private void Update()
-    {
-        if (!_brain)
-        {
-            return;
-        }
-
-        if (_brain.AnimatorCompo.GetCurrentAnimationState("Die"))
-        {
-            _brain = null;
-
-            gameObject.SetActive(false);
-        }
-    }
-
     public void InitializeSpawner()
     {
         enemySpawnData = Instantiate(enemySpawnData, transform);
@@ -71,5 +56,7 @@ public class EnemyMannequin : MonoBehaviour
                 break;
             }
         }
+
+        gameObject.SetActive(false);
     }
 }
