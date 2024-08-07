@@ -68,48 +68,48 @@ public class PlayerCameraState : CameraState
         }
         else
         {
-            if (_camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
-            {
-                var transposer = cam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-                if (transposer.m_FollowOffset.y != 6)
-                {
-                    transposer.m_FollowOffset.y = 6;
-                    Debug.Log(transposer + "123");
-                }
+            //if (_camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
+            //{
+            //    var transposer = cam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+            //    if (transposer.m_FollowOffset.y != 6)
+            //    {
+            //        transposer.m_FollowOffset.y = 6;
+            //        Debug.Log(transposer + "123");
+            //    }
 
-                else if(transposer.m_FollowOffset.z != -13)
-                {
-                    transposer.m_FollowOffset.z = -13;
-                    Debug.Log(transposer + "666");
-                }
-            }
+            //    else if(transposer.m_FollowOffset.z != -13)
+            //    {
+            //        transposer.m_FollowOffset.z = -13;
+            //        Debug.Log(transposer + "666");
+            //    }
+            //}
 
         }
     }
 
 
 
-    public void CameraAttack()
-    {
-        if(GameManager.Instance.PlayerInstance.IsAttack)
-        {
-            if (_camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
-            {
-                var transposer = cam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-                if (transposer)
-                {
-                    if (IsCamRotateStop)
-                    {
-                        transposer.m_XAxis.m_MaxSpeed = 0;
-                    }
-                    else
-                        transposer.m_XAxis.m_MaxSpeed = 100;
-                }
-            }
-        }
-        else
-        {
+    //public void CameraAttack()
+    //{
+    //    if(GameManager.Instance.PlayerInstance.IsAttack)
+    //    {
+    //        if (_camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
+    //        {
+    //            var transposer = cam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+    //            if (transposer)
+    //            {
+    //                if (IsCamRotateStop)
+    //                {
+    //                    transposer.m_XAxis.m_MaxSpeed = 0;
+    //                }
+    //                else
+    //                    transposer.m_XAxis.m_MaxSpeed = 100;
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
             
-        }
-    }
+    //    }
+    //}
 }
