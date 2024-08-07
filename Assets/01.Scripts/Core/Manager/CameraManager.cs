@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CameraManager : MonoSingleton<CameraManager>
 {
