@@ -180,7 +180,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4969,7 +4969,7 @@ PrefabInstance:
     - target: {fileID: 2068781867949969752, guid: 4fa0eeb36af7ad343a4748c96159e40b,
         type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2068781867949969752, guid: 4fa0eeb36af7ad343a4748c96159e40b,
         type: 3}
@@ -5044,32 +5044,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5876429979132276803, guid: 4fa0eeb36af7ad343a4748c96159e40b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 405634676056112005}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fa0eeb36af7ad343a4748c96159e40b, type: 3}
---- !u!1 &20341360155440153 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5876429979132276803, guid: 4fa0eeb36af7ad343a4748c96159e40b,
-    type: 3}
-  m_PrefabInstance: {fileID: 5892117566934123610}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &405634676056112005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20341360155440153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c65c7374ad8495548a60ed824d8e9633, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trail: {fileID: 0}
-  parentTransform: {fileID: 5365186689569083641}
 --- !u!4 &2913138498630245713 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8766412470985971979, guid: 4fa0eeb36af7ad343a4748c96159e40b,
