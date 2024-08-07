@@ -20,7 +20,7 @@ public class Player : PlayerController
     [Space(30f), Header("Attack Settings")]
     public GameObject weapon;
 
-    public Quaternion WeaponAngel;
+    public Quaternion WeaponAngle;
 
     public LayerMask enemyLayer;
 
