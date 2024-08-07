@@ -51,14 +51,16 @@ public class PlayerAwakeningState : PlayerState
             {
                 if (_player.PlayerInput.isPressedKey == PressedKey.Q)
                 {
+                    _player.CurrentAwakenGauge -= 20f;
                     _stateMachine.ChangeState(PlayerStateEnum.NormalSlam);
                 }
                 else if (_player.PlayerInput.isPressedKey == PressedKey.E)
                 {
+                    _player.CurrentAwakenGauge -= 10f;
                     _stateMachine.ChangeState(PlayerStateEnum.AwakenChargeAttack);
                 }
-
                 _player.PlayerInput.isPressedKey = PressedKey.None;
+
                 return;
             }
 
