@@ -22,6 +22,8 @@ public class ClearManager : MonoBehaviour
     [SerializeField]
     private float scrollDuration = 11f;
 
+    public GameObject PlayerHUD;
+
     private EnemySpawner _enemySpawner;
 
 
@@ -50,6 +52,7 @@ public class ClearManager : MonoBehaviour
           .OnStart(() =>
           {
               _fadePanel.raycastTarget = true;
+              PlayerHUD.SetActive(false);
           })
           .OnComplete(() =>
           {
