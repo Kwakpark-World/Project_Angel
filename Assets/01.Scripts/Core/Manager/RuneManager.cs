@@ -89,8 +89,8 @@ public class RuneManager : MonoSingleton<RuneManager>
             GameManager.Instance.PlayerInstance.BuffCompo.StopBuff(_equipedRunes[index].buffType);
         }
 
-        _equipedRunes[index] = null;
         Rune_Pick(_equipedRunes[index].buffType, false);
+        _equipedRunes[index] = null;
 
         for (int i = 0; i < 2; ++i)
         {

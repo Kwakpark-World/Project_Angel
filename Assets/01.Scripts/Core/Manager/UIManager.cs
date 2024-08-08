@@ -177,6 +177,7 @@ public class UIManager : MonoSingleton<UIManager>
 
                 break;
 
+            case "TutorialScene":
             case "GameScene":
                 SoundManager.Instance.ChangeBGMMode(BGMMode.NonCombat);
 
