@@ -33,7 +33,6 @@ public class PlayerCameraState : CameraState
     {
         if (!GameManager.Instance.PlayerInstance.IsAttack)
         {
-            Debug.Log("--");
             if (IsCamRotateStop) return;
 
             Vector2 mouseDelta = Mouse.current.delta.ReadValue();
