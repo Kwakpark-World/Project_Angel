@@ -12,8 +12,6 @@ public class EnemyHealthBar : PoolableMono
     private void Update()
     {
         transform.position = _owner.enemyCenter.position + Vector3.up * 0.5f;
-
-        AlignCamera();
     }
 
     public void SetOwner(Brain owner)
@@ -24,19 +22,5 @@ public class EnemyHealthBar : PoolableMono
     public void UpdateHealthBar()
     {
         _healthBarImage.fillAmount = Mathf.Clamp(_owner.CurrentHealth / _owner.EnemyStatData.GetMaxHealth(), 0f, _owner.EnemyStatData.GetMaxHealth());
-    }
-
-    private void AlignCamera()
-    {
-        if (Camera.main != null)
-        {
-            var camXform = Camera.main.transform;
-            var forward = transform.position - camXform.position;
-
-            forward.Normalize();
-
-            var up = Vector3.Cross(forward, camXform.right);
-            transform.rotation = Quaternion.LookRotation(forward, up);
-        }
     }
 }

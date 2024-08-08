@@ -6,18 +6,22 @@ using UnityEngine.UI;
 public class SkipButton : MonoBehaviour
 {
     private Button _skipButton;
-    private bool _isPressed = false;
 
     private void Awake()
     {
         _skipButton = GetComponent<Button>();
 
-        if (_isPressed) return;
         _skipButton.onClick.AddListener(() => 
         {
-            _isPressed = true;
             PoolManager.Instance.Push(FindObjectOfType<EnemyHealthBar>());
+            UIManager.Instance.TogglePopupUniquely("Pause");
+
+            if (Time.timeScale == 0f)
+            {
+                UIManager.Instance.TogglePopupUniquely("Pause");
+            }
+
+            UIManager.Instance.LoadScene("GameScene");
         });
-        _skipButton.onClick.AddListener(() => UIManager.Instance.LoadScene("GameScene"));
     }
 }

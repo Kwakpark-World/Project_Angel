@@ -45,7 +45,28 @@ public class SettingPopupUI : PopupUI
         {
             volumeSlider.Value.volumeSlider.onValueChanged.AddListener((value) => ChangeVolume(volumeSlider.Key, value));
             volumeSlider.Value.muteImageToggle.onValueChanged.AddListener((value) => ChangeVolumeSliderValue(volumeSlider.Key, value));
-            ChangeVolumeSliderValue(volumeSlider.Key, 1f);
+
+            switch (volumeSlider.Key)
+            {
+                case "Master":
+                case "BGM":
+                    ChangeVolume(volumeSlider.Key, 1f);
+                    ChangeVolumeSliderValue(volumeSlider.Key, 1f);
+
+                    break;
+
+                case "ENV":
+                    ChangeVolume(volumeSlider.Key, 0.3f);
+                    ChangeVolumeSliderValue(volumeSlider.Key, 0.3f);
+
+                    break;
+
+                case "SFX":
+                    ChangeVolume(volumeSlider.Key, 0.5f);
+                    ChangeVolumeSliderValue(volumeSlider.Key, 0.5f);
+
+                    break;
+            }
         }
 
         ChangeXSensitivitySliderValue();
@@ -60,7 +81,6 @@ public class SettingPopupUI : PopupUI
             _sensitivitySetting.SetActive(true);
             _isPanelChange = true;
         }
-
         else if (Keyboard.current.leftArrowKey.wasPressedThisFrame && _isPanelChange)
         {
             _soundSetting.SetActive(true);
@@ -72,6 +92,9 @@ public class SettingPopupUI : PopupUI
     public override void InitializePopup()
     {
         TimeManager.Instance.StopTimeScale();
+        _soundSetting.SetActive(true);
+        _sensitivitySetting.SetActive(false);
+        _isPanelChange = false;
     }
 
     public void ChangeVolume(string audioMixerGroupName, float volume)
