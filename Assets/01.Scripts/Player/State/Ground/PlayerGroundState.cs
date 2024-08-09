@@ -55,7 +55,13 @@ public class PlayerGroundState : PlayerState
             _player.awakenTime = _player.PlayerStatData.GetMaxAwakenDuration();
 
             if (_player.transform.root.gameObject.scene.name == "TutorialScene")
-                _player._tutorial.PlayerTutorialToggle(4);
+            {
+                if (!_player._awakenReleaseFisrt)
+                {
+                    _player._awakenReleaseFisrt = true;
+                    _player._tutorial.PlayerTutorialToggle(4);
+                }
+            }
             return;
         }
     }

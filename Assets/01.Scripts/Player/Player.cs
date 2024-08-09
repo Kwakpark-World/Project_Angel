@@ -144,6 +144,11 @@ public class Player : PlayerController
 
     [HideInInspector] public PlayerTutorial _tutorial;
     [HideInInspector] public bool _meleeFirst = false;
+    [HideInInspector] public bool _chargingFirst = false;
+    [HideInInspector] public bool _rollFirst = false;
+    [HideInInspector] public bool _SlamFirst = false;
+    [HideInInspector] public bool _WhirlWindFirst = false;
+    [HideInInspector] public bool _awakenReleaseFisrt = false;
 
     protected override void Awake()
     {
@@ -152,6 +157,11 @@ public class Player : PlayerController
         if (transform.root.gameObject.scene.name == "TutorialScene") 
             _tutorial = FindObjectOfType<PlayerTutorial>();
         _meleeFirst = false;
+        _chargingFirst = false;
+        _rollFirst = false;
+        _SlamFirst = false;
+        _WhirlWindFirst = false;
+        _awakenReleaseFisrt = false;
 
         //MaterialCaching();
 

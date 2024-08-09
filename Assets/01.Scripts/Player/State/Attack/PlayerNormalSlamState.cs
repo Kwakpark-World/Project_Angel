@@ -24,8 +24,14 @@ public class PlayerNormalSlamState : PlayerAttackState
     {
         base.Enter();
         if (_player.transform.root.gameObject.scene.name == "TutorialScene")
-            _player._tutorial.PlayerTutorialToggle(2);
-
+        {
+            if (!_player._SlamFirst)
+            {
+                _player._SlamFirst = true;
+                _player._tutorial.PlayerTutorialToggle(2);
+            }
+        }
+        
         _player.StopImmediately(false);
         _isEffectOn = false;
 

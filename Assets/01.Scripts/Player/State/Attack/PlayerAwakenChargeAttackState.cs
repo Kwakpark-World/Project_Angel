@@ -30,8 +30,14 @@ public class PlayerAwakenChargeAttackState : PlayerChargeState
         _isEffectOn = false;
         _isShaken = false;
         if (_player.transform.root.gameObject.scene.name == "TutorialScene")
-            _player._tutorial.PlayerTutorialToggle(3);
-
+        {
+            if (!_player._WhirlWindFirst)
+            {
+                _player._WhirlWindFirst = true;
+                _player._tutorial.PlayerTutorialToggle(3);
+            }
+        }
+        
         _player.AnimatorCompo.speed = 1 + (_player.CurrentChargeTime / (_maxChargeTime * 10)) * _player.PlayerStatData.GetChargeAttackSpeed();
 
         if (_player.isWhirlwindMoveAble)

@@ -12,7 +12,13 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
         if (_player.transform.root.gameObject.scene.name == "TutorialScene")
-            _player._tutorial.PlayerTutorialToggle(1);
+        {
+            if (!_player._rollFirst)
+            {
+                _player._rollFirst = true;
+                _player._tutorial.PlayerTutorialToggle(1);
+            }
+        }
 
         _player.PlayerInput.DashEvent += HandleRollOnceMoreEvent;
         

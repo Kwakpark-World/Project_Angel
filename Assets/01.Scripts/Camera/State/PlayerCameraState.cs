@@ -86,7 +86,15 @@ public class PlayerCameraState : CameraState
         }
     }
 
+    public void ChangeOrbitBody()
+    {
 
+    }
+
+    public void Change3rdPersonBody()
+    {
+
+    }
 
     //public void CameraAttack()
     //{
