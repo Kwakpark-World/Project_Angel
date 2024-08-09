@@ -40,9 +40,12 @@ public class EnemyDie : MonoBehaviour
         // 적이 비활성화될 때 EnemySpawner의 EnemyDead 메서드를 호출합니다.
         if (enable == true)
         {
-            Debug.Log("Calling EnemyDead method.");
-            enemySpawner.EnemyDead();
-            enable = false;
+            if (GameManager.Instance.IsGameStart)
+            {
+                Debug.Log("Calling EnemyDead method.");
+                enemySpawner.EnemyDead();
+                enable = false;
+            }
         }
 
         else

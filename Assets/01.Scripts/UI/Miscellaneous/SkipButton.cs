@@ -22,6 +22,7 @@ public class SkipButton : MonoBehaviour
             }
 
             UIManager.Instance.LoadScene("GameScene");
+            GameManager.Instance.IsGameStart = true;
         });
     }
 }
