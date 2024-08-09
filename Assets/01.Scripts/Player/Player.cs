@@ -143,6 +143,7 @@ public class Player : PlayerController
     [HideInInspector] public bool isOnWhirlWindOnceMore;
 
     [HideInInspector] public PlayerTutorial _tutorial;
+    [HideInInspector] public bool _meleeFirst = false;
 
     protected override void Awake()
     {
@@ -150,6 +151,7 @@ public class Player : PlayerController
 
         if (transform.root.gameObject.scene.name == "TutorialScene") 
             _tutorial = FindObjectOfType<PlayerTutorial>();
+        _meleeFirst = false;
 
         //MaterialCaching();
 

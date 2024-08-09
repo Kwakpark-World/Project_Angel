@@ -36,7 +36,13 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         base.Enter();
         if (_player.transform.root.gameObject.scene.name == "TutorialScene")
-            _player._tutorial.PlayerTutorialToggle(0);
+        {
+            if (!_player._meleeFirst)
+            {
+                _player._meleeFirst = true;
+                _player._tutorial.PlayerTutorialToggle(0);
+            }
+        }
 
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.PlayerStatData.attackPower.InitializeModifier();
