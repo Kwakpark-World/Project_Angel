@@ -20,9 +20,11 @@ public class PlayerDashState : PlayerState
             }
         }
 
+
+
         _player.PlayerInput.DashEvent += HandleRollOnceMoreEvent;
         
-        CameraManager.Instance._currentCam.IsCamRotateStop = true;
+        CameraManager.Instance.ChangeOrbitBody();
 
         _player.IsDefense = true;
     }
@@ -32,7 +34,8 @@ public class PlayerDashState : PlayerState
         base.Exit();
         _player.PlayerInput.DashEvent -= HandleRollOnceMoreEvent;
 
-        CameraManager.Instance._currentCam.IsCamRotateStop = false;
+        CameraManager.Instance.Change3rdPersonBody();
+
         _player.IsDefense = false;
 
         _player.enemyDashHitDuplicateChecker.Clear();

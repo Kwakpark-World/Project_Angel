@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CameraManager : MonoSingleton<CameraManager>
 {
@@ -136,6 +137,55 @@ public class CameraManager : MonoSingleton<CameraManager>
     {
         Cursor.visible = isOnCursor;
         Cursor.lockState = isOnCursor ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    public void ChangeOrbitBody()
+    {
+        if (_currentCam._camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
+        {
+            var body = cam.AddCinemachineComponent<CinemachineOrbitalTransposer>();
+            if (body)
+            {
+                GameManager.Instance.PlayerInstance.IsAttack = true;
+                if (_currentCam.IsCamRotateStop)
+                    body.m_XAxis.m_MaxSpeed = 0;
+                else
+                    body.m_XAxis.m_MaxSpeed = GameManager.Instance.PlayerInstance.PlayerStatData.GetXRotateSpeed() * 10;
+
+                body.m_FollowOffset = new Vector3(0, 6.9f, -13f);
+                body.m_XDamping = 0;
+                body.m_YDamping = 0;
+                body.m_ZDamping = 1;
+
+                body.m_XAxis.m_InvertInput = IsXReverse;
+            }
+        }
+    }
+
+    public void Change3rdPersonBody()
+    {
+
+        Vector3 rot = CameraManager.Instance._currentCam._camera.transform.eulerAngles;
+        rot.x = 0;
+        rot.z = 0;
+        GameManager.Instance.PlayerInstance.IsAttack = false;
+
+        GameManager.Instance.PlayerInstance.transform.rotation = Quaternion.Euler(rot);
+
+        if (_currentCam._camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
+        {
+            var body = cam.AddCinemachineComponent<Cinemachine3rdPersonFollow>();
+            if (body)
+            {
+                body.Damping = new Vector3(0, 0, 1);
+                body.ShoulderOffset = new Vector3(0, 6.5f, 0);
+                body.CameraDistance = 13f;
+                body.CameraSide = 1;
+                body.CameraRadius = 0.2f;
+                body.DampingFromCollision = 2f;
+                body.VerticalArmLength = 0.4f;
+            }
+        }
     }
 
     // ½Ã°£, ºóµµ, ÁøÆø

@@ -47,7 +47,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.PlayerStatData.attackPower.InitializeModifier();
 
-        _player.IsAttack = true;
+        CameraManager.Instance.ChangeOrbitBody();
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
@@ -81,8 +81,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         _player.AnimatorCompo.speed = 1f;
 
-        _player.IsAttack = false;
-        
+        CameraManager.Instance.Change3rdPersonBody();
+
         _attackPrevTime = Time.time;
 
         ++_comboCounter;
