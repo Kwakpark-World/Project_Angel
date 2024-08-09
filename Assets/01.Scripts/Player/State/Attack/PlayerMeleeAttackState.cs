@@ -48,6 +48,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         _player.PlayerStatData.attackPower.InitializeModifier();
 
         CameraManager.Instance.ChangeOrbitBody();
+
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();

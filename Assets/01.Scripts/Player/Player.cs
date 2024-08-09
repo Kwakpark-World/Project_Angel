@@ -87,6 +87,7 @@ public class Player : PlayerController
     public AnimationClip[] playerAnims;
 
     public Transform effectParent;
+    public Transform camPivot;
 
     public PlayerControlEnum IsPlayerStop;
     public bool IsAttack;
@@ -180,6 +181,7 @@ public class Player : PlayerController
 
         weapon = GameObject.FindGameObjectWithTag("Weapon");
         effectParent = transform.Find("Effects");
+        camPivot = transform.Find("CamPivot");
         playerCenter = transform.Find("PlayerCenter");
         playerAnims = AnimatorCompo.runtimeAnimatorController.animationClips;
 

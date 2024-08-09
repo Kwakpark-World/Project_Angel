@@ -19,6 +19,7 @@ public class CameraManager : MonoSingleton<CameraManager>
     public bool IsXReverse;
     public bool IsYReverse;
 
+
     public void AddCamera(CameraState addCamera)
     {
         if (addCamera._type == CameraType.None)
@@ -141,51 +142,25 @@ public class CameraManager : MonoSingleton<CameraManager>
 
     public void ChangeOrbitBody()
     {
-        if (_currentCam._camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
-        {
-            var body = cam.AddCinemachineComponent<CinemachineOrbitalTransposer>();
-            if (body)
-            {
-                GameManager.Instance.PlayerInstance.IsAttack = true;
-                if (_currentCam.IsCamRotateStop)
-                    body.m_XAxis.m_MaxSpeed = 0;
-                else
-                    body.m_XAxis.m_MaxSpeed = GameManager.Instance.PlayerInstance.PlayerStatData.GetXRotateSpeed() * 10;
+        // 공격시 회전 되는 피벗
+        GameManager.Instance.PlayerInstance.camPivot.rotation = Quaternion.Euler(GameManager.Instance.PlayerInstance.transform.eulerAngles);
 
-                body.m_FollowOffset = new Vector3(0, 6.9f, -13f);
-                body.m_XDamping = 0;
-                body.m_YDamping = 0;
-                body.m_ZDamping = 1;
+        GameManager.Instance.PlayerInstance.IsAttack = true;
 
-                body.m_XAxis.m_InvertInput = IsXReverse;
-            }
-        }
+        _currentCam._camera.LookAt = GameManager.Instance.PlayerInstance.camPivot;
+        _currentCam._camera.Follow = GameManager.Instance.PlayerInstance.camPivot;
+
     }
 
     public void Change3rdPersonBody()
     {
+        // 평상시 플레이어 회전
+        GameManager.Instance.PlayerInstance.transform.rotation = Quaternion.Euler(GameManager.Instance.PlayerInstance.camPivot.eulerAngles);
 
-        Vector3 rot = CameraManager.Instance._currentCam._camera.transform.eulerAngles;
-        rot.x = 0;
-        rot.z = 0;
         GameManager.Instance.PlayerInstance.IsAttack = false;
 
-        GameManager.Instance.PlayerInstance.transform.rotation = Quaternion.Euler(rot);
-
-        if (_currentCam._camera.TryGetComponent<CinemachineVirtualCamera>(out CinemachineVirtualCamera cam))
-        {
-            var body = cam.AddCinemachineComponent<Cinemachine3rdPersonFollow>();
-            if (body)
-            {
-                body.Damping = new Vector3(0, 0, 1);
-                body.ShoulderOffset = new Vector3(0, 6.5f, 0);
-                body.CameraDistance = 13f;
-                body.CameraSide = 1;
-                body.CameraRadius = 0.2f;
-                body.DampingFromCollision = 2f;
-                body.VerticalArmLength = 0.4f;
-            }
-        }
+        _currentCam._camera.LookAt = GameManager.Instance.PlayerInstance.transform;
+        _currentCam._camera.Follow = GameManager.Instance.PlayerInstance.transform;
     }
 
     // 시간, 빈도, 진폭
