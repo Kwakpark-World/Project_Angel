@@ -55,7 +55,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         else 
             _player.isLastComboAttack = false;
 
-        _player.RigidbodyCompo.AddForce(_player.transform.forward * 10, ForceMode.Impulse);
+        _player.RigidbodyCompo.AddForce(_player.transform.forward * 15, ForceMode.Impulse);
 
         _hitDist = _player.IsAwakened ? _awakenAttackDist : _normalAttackDist;
 
