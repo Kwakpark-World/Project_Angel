@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CameraManager : MonoSingleton<CameraManager>
 {
@@ -155,6 +154,7 @@ public class CameraManager : MonoSingleton<CameraManager>
     public void Change3rdPersonBody()
     {
         // 평상시 플레이어 회전
+        Debug.Log(GameManager.Instance.PlayerInstance);
         GameManager.Instance.PlayerInstance.transform.rotation = Quaternion.Euler(GameManager.Instance.PlayerInstance.camPivot.eulerAngles);
 
         GameManager.Instance.PlayerInstance.IsAttack = false;

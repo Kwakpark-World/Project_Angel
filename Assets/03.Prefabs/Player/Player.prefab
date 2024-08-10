@@ -5687,6 +5687,7 @@ Transform:
   - {fileID: 6183121039938298199}
   - {fileID: 5687084255750170166}
   - {fileID: 8942705090258817422}
+  - {fileID: 4118729171930500263}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &5323078755393635929
@@ -5797,6 +5798,7 @@ MonoBehaviour:
     type: 2}
   playerAnims: []
   effectParent: {fileID: 0}
+  camPivot: {fileID: 0}
   IsPlayerStop: 0
   IsAttack: 0
   IsDefense: 0
@@ -5839,6 +5841,12 @@ MonoBehaviour:
   isOnChargingSlashOnceMore: 0
   isOnWhirlWindOnceMore: 0
   _tutorial: {fileID: 0}
+  _meleeFirst: 0
+  _chargingFirst: 0
+  _rollFirst: 0
+  _SlamFirst: 0
+  _WhirlWindFirst: 0
+  _awakenReleaseFisrt: 0
 --- !u!114 &6385291853889329438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22004,6 +22012,37 @@ Transform:
   m_Children:
   - {fileID: 4038008061736139778}
   m_Father: {fileID: 6224211286303114027}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9075468565195456809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4118729171930500263}
+  m_Layer: 6
+  m_Name: CamPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4118729171930500263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9075468565195456809}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 626907113407866902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9147093538108030007
 GameObject:
