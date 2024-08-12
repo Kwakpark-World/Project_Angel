@@ -92,8 +92,14 @@ public class PlayerChargingState : PlayerChargeState
             _player.CurrentChargeTime += Time.deltaTime * 1.5f;
 
             if (_player.transform.root.gameObject.scene.name == "TutorialScene")
-                _player._tutorial.PlayerTutorialToggle(5);
-
+            {
+                if (!_player._chargingFirst)
+                {
+                    _player._chargingFirst = true;
+                    _player._tutorial.PlayerTutorialToggle(5);
+                }
+            }
+            
             if (_player.CurrentChargeTime >= _maxChargeTime - 0.1f)
             {
                 if (_isBlink) return;

@@ -3989,6 +3989,7 @@ GameObject:
   - component: {fileID: 7781143045359994050}
   - component: {fileID: 2278817147483382656}
   - component: {fileID: 4450875782849930655}
+  - component: {fileID: -2587217722317140666}
   m_Layer: 7
   m_Name: Enemy_Archer
   m_TagString: Untagged
@@ -4412,6 +4413,19 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   <BuffStatData>k__BackingField: {fileID: 0}
+--- !u!114 &-2587217722317140666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8410252228677821323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae02105c0fb6b44da628a7f81a11529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enable: 0
 --- !u!1 &8444811165945322804
 GameObject:
   m_ObjectHideFlags: 0

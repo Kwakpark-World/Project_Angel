@@ -91,6 +91,11 @@ public class PlayerWalkState : PlayerGroundState
     {
         //if (_animationMoveFreezeToggleTrigger) return Vector3.zero;
 
+        if (_player.BuffCompo.GetBuffState(BuffType.Potion_Paralysis))
+        {
+            return Vector3.zero;
+        }
+
         Vector3 moveDir = new Vector3(xInput, 0, yInput).normalized;
 
         float backMoveSpeedAdd = 3f;

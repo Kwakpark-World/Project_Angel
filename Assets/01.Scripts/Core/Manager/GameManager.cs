@@ -33,6 +33,13 @@ public class GameManager : MonoSingleton<GameManager>
 
         }
     }
+    public bool IsGameStart = false;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        IsGameStart = false;
+    }
     protected override void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         if (HasPlayer)

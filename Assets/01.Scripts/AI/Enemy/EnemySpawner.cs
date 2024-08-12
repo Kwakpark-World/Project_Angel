@@ -8,6 +8,7 @@ public class EnemySpawner : MonoBehaviour
 
     private string targetTag = "EnemyMannequin";
 
+    public float enemyDeathCount;
     public bool allEnemysDead = false;
 
     [SerializeField] private GameObject[] _MannequinObject;
@@ -29,6 +30,8 @@ public class EnemySpawner : MonoBehaviour
                 _mannequinList.Add(mannequin);
             }
         }
+
+        enemyDeathCount = 0;
     }
 
     private void Update()
@@ -53,26 +56,18 @@ public class EnemySpawner : MonoBehaviour
                     mannequin.SpawnEnemy();
                     _spawnedMannequins.Add(mannequin); // 소환된 오브젝트를 추적 리스트에 추가
                 }
-
-                obj.SetActive(false);
             }
         }
     }
 
+    public void EnemyDead()
+    {
+        enemyDeathCount += 1;
+    }
+
     void CheckAllEnemiesDead()
     {
-        bool allEnemiesDead = true;
-
-        foreach (GameObject obj in _MannequinObject)
-        {
-            if (obj.activeSelf)
-            {
-                allEnemiesDead = false;
-                break;
-            }
-        }
-
-        if (allEnemiesDead)
+        if(enemyDeathCount >= _mannequinList.Count)
         {
             OnAllEnemiesDead();
         }

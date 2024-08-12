@@ -12,11 +12,19 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
         if (_player.transform.root.gameObject.scene.name == "TutorialScene")
-            _player._tutorial.PlayerTutorialToggle(1);
+        {
+            if (!_player._rollFirst)
+            {
+                _player._rollFirst = true;
+                _player._tutorial.PlayerTutorialToggle(1);
+            }
+        }
+
+
 
         _player.PlayerInput.DashEvent += HandleRollOnceMoreEvent;
         
-        CameraManager.Instance._currentCam.IsCamRotateStop = true;
+        CameraManager.Instance.ChangeOrbitBody();
 
         _player.IsDefense = true;
     }
@@ -26,7 +34,8 @@ public class PlayerDashState : PlayerState
         base.Exit();
         _player.PlayerInput.DashEvent -= HandleRollOnceMoreEvent;
 
-        CameraManager.Instance._currentCam.IsCamRotateStop = false;
+        CameraManager.Instance.Change3rdPersonBody();
+
         _player.IsDefense = false;
 
         _player.enemyDashHitDuplicateChecker.Clear();

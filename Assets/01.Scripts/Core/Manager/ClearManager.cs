@@ -38,11 +38,19 @@ public class ClearManager : MonoBehaviour
         {
             ClearPanel();
         }
+
+        else
+        {
+            Debug.Log("조건 미달");
+        }
     }
 
     private void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            ClearPanel();
+        }
     }
 
     public void ClearPanel()

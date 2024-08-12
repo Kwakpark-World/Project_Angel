@@ -2898,6 +2898,7 @@ GameObject:
   - component: {fileID: 7700814571572305591}
   - component: {fileID: 8909113713508752019}
   - component: {fileID: 6098907853124249871}
+  - component: {fileID: -6341230112699631866}
   m_Layer: 7
   m_Name: Enemy_Shielder
   m_TagString: Untagged
@@ -3257,6 +3258,19 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   <BuffStatData>k__BackingField: {fileID: 0}
+--- !u!114 &-6341230112699631866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7234891252622568735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae02105c0fb6b44da628a7f81a11529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enable: 0
 --- !u!1 &7259109201846599702
 GameObject:
   m_ObjectHideFlags: 0

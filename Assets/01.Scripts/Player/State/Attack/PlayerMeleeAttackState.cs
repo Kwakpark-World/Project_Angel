@@ -36,12 +36,19 @@ public class PlayerMeleeAttackState : PlayerAttackState
     {
         base.Enter();
         if (_player.transform.root.gameObject.scene.name == "TutorialScene")
-            _player._tutorial.PlayerTutorialToggle(0);
+        {
+            if (!_player._meleeFirst)
+            {
+                _player._meleeFirst = true;
+                _player._tutorial.PlayerTutorialToggle(0);
+            }
+        }
 
         _player.PlayerInput.MeleeAttackEvent += ComboAttack;
         _player.PlayerStatData.attackPower.InitializeModifier();
 
-        _player.IsAttack = true;
+        CameraManager.Instance.ChangeOrbitBody();
+
         _isEffectOn = false;
 
         _player.AnimatorCompo.speed = _player.PlayerStatData.GetAttackSpeed();
@@ -55,7 +62,7 @@ public class PlayerMeleeAttackState : PlayerAttackState
         else 
             _player.isLastComboAttack = false;
 
-        _player.RigidbodyCompo.AddForce(_player.transform.forward * 10, ForceMode.Impulse);
+        _player.RigidbodyCompo.AddForce(_player.transform.forward * 15, ForceMode.Impulse);
 
         _hitDist = _player.IsAwakened ? _awakenAttackDist : _normalAttackDist;
 
@@ -75,8 +82,8 @@ public class PlayerMeleeAttackState : PlayerAttackState
 
         _player.AnimatorCompo.speed = 1f;
 
-        _player.IsAttack = false;
-        
+        CameraManager.Instance.Change3rdPersonBody();
+
         _attackPrevTime = Time.time;
 
         ++_comboCounter;

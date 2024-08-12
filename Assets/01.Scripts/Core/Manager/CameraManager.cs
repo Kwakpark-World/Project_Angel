@@ -18,6 +18,7 @@ public class CameraManager : MonoSingleton<CameraManager>
     public bool IsXReverse;
     public bool IsYReverse;
 
+
     public void AddCamera(CameraState addCamera)
     {
         if (addCamera._type == CameraType.None)
@@ -136,6 +137,30 @@ public class CameraManager : MonoSingleton<CameraManager>
     {
         Cursor.visible = isOnCursor;
         Cursor.lockState = isOnCursor ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    public void ChangeOrbitBody()
+    {
+        // 공격시 회전 되는 피벗
+        GameManager.Instance.PlayerInstance.camPivot.rotation = Quaternion.Euler(GameManager.Instance.PlayerInstance.transform.eulerAngles);
+
+        GameManager.Instance.PlayerInstance.IsAttack = true;
+
+        _currentCam._camera.LookAt = GameManager.Instance.PlayerInstance.camPivot;
+        _currentCam._camera.Follow = GameManager.Instance.PlayerInstance.camPivot;
+
+    }
+
+    public void Change3rdPersonBody()
+    {
+        // 평상시 플레이어 회전
+        Debug.Log(GameManager.Instance.PlayerInstance);
+        GameManager.Instance.PlayerInstance.transform.rotation = Quaternion.Euler(GameManager.Instance.PlayerInstance.camPivot.eulerAngles);
+
+        GameManager.Instance.PlayerInstance.IsAttack = false;
+
+        _currentCam._camera.LookAt = GameManager.Instance.PlayerInstance.transform;
+        _currentCam._camera.Follow = GameManager.Instance.PlayerInstance.transform;
     }
 
     // 시간, 빈도, 진폭

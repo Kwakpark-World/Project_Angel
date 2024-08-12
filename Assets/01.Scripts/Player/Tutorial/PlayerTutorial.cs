@@ -25,6 +25,7 @@ public class PlayerTutorial : MonoBehaviour
 
             PoolManager.Instance.Push(FindObjectOfType<EnemyHealthBar>());
             UIManager.Instance.LoadScene("GameScene");
+            GameManager.Instance.IsGameStart = true;
         }
     }
 }
