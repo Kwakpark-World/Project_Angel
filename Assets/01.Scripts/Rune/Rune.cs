@@ -18,6 +18,8 @@ public class Rune : PoolableMono
     [SerializeField]
     private float nearPlayer = 5f;
 
+    public ParticleSystem runeParticle;
+
     private RuneDataSO _runeData;
     public RuneDataSO RuneData
     {
@@ -53,11 +55,26 @@ public class Rune : PoolableMono
             }
 
             StopAllCoroutines();
-            GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_runeData.buffType);
-            transform.Find(_runeData.name).gameObject.SetActive(false);
-            PoolManager.Instance.Push(this);
+
+            runeParticle.Play();
+
+            // 파티클이 끝난 후 실행될 코루틴 시작
+            StartCoroutine(WaitForParticleToFinish());
         }
         /* CameraManager.Instance.StopZoomCam();*/
+    }
+
+    private IEnumerator WaitForParticleToFinish()
+    {
+        // 파티클이 실행 중인 동안 기다림
+        while (runeParticle.isPlaying)
+        {
+            Debug.Log("실행중");
+            yield return null;
+        }
+        GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_runeData.buffType);
+        transform.Find(_runeData.name).gameObject.SetActive(false);
+        PoolManager.Instance.Push(this);
     }
 
     public override void InitializePoolItem()
