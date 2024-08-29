@@ -81,19 +81,19 @@ public class PlayerHUD : MonoBehaviour
         switch (buffType)
         {
             case BuffType.Potion_Poison:
-                _poisonBuffDurationImage.transform.gameObject.SetActive(true);
+                _poisonBuffDurationImage.transform.parent.gameObject.SetActive(true);
                 _durationCoroutines[buffType] = StartCoroutine(BuffDurationCoroutine(buffType, _poisonBuffDurationImage, duration));
 
                 break;
 
             case BuffType.Potion_Freeze:
-                _freezeBuffDurationImage.transform.gameObject.SetActive(true);
+                _freezeBuffDurationImage.transform.parent.gameObject.SetActive(true);
                 _durationCoroutines[buffType] = StartCoroutine(BuffDurationCoroutine(buffType, _freezeBuffDurationImage, duration));
 
                 break;
 
             case BuffType.Potion_Paralysis:
-                _paralysisBuffDurationImage.transform.gameObject.SetActive(true);
+                _paralysisBuffDurationImage.transform.parent.gameObject.SetActive(true);
                 _durationCoroutines[buffType] = StartCoroutine(BuffDurationCoroutine(buffType, _paralysisBuffDurationImage, duration));
 
                 break;
@@ -160,6 +160,6 @@ public class PlayerHUD : MonoBehaviour
         buffDurationImage.fillAmount = 1f;
         _durationCoroutines[buffType] = null;
 
-        buffDurationImage.transform.gameObject.SetActive(false);
+        buffDurationImage.transform.parent.gameObject.SetActive(false);
     }
 }
