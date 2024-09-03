@@ -91,8 +91,11 @@ public abstract class PlayerController : MonoBehaviour
     #region Collision Check logic
     public virtual bool IsGroundDetected()
     {
+        if (_groundChecker == null)
+            _groundChecker = transform.Find("GroundChecker");
 
         bool groundCheck = Physics.Raycast(_groundChecker.position, Vector3.down, out groundCheckHit, groundCheckDistanceTolerance * transform.localScale.y, whatIsGround);
+
 
         playerCenterToGroundDistance = Vector3.Distance(groundCheckHit.point, playerCenter.position);
 
