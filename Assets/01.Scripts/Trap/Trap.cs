@@ -11,17 +11,15 @@ public abstract class Trap : PoolableMono
 
     protected virtual void Awake()
     {
-        _isOnTrap = false;
+        _isOnTrap = gameObject.activeSelf;
         _isPlayTrap = false;
+
+        InitializePoolItem();
     }
 
     public override void InitializePoolItem()
     {
         base.InitializePoolItem();
-
-        _isOnTrap = true;
-        _isPlayTrap = false;
-
     }
 
     protected virtual void Update()

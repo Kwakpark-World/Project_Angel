@@ -43,7 +43,13 @@ public abstract class InteractableTrap : Trap
 
     private Collider[] GetHitableObject()
     {
-        return Physics.OverlapBox(_attackCenter, _attackHalfSize, _attackRotation, hitableLayer);
+        Vector3 pos = _attackCenter;
+        Vector3 size = _attackHalfSize;
+        Quaternion rot = _attackRotation;
+
+        size *= 0.5f;
+
+        return Physics.OverlapBox(pos, size, rot, hitableLayer);
     }
 
     protected void AttackObject()
@@ -52,6 +58,7 @@ public abstract class InteractableTrap : Trap
 
         foreach (var obj in hitableObj)
         {
+            Debug.Log(obj.name);
             if (obj.TryGetComponent<Brain>(out Brain enemy))
             {
                 if (_enemyDuplicateCheck.Add(enemy))
@@ -59,7 +66,7 @@ public abstract class InteractableTrap : Trap
                     Attack(enemy);
                 }
             }
-            else if (obj.TryGetComponent<Player>(out Player player))
+            if (obj.TryGetComponent<Player>(out Player player))
             {
                 if (_playerDuplicateCheck.Add(player))
                 {
@@ -100,7 +107,6 @@ public abstract class InteractableTrap : Trap
             yield return null;
         }
         action?.Invoke();
-    }
-
+    }   
 
 }

@@ -10,6 +10,8 @@ public abstract class PlayerCheckTrap : InteractableTrap
     protected Vector3 _playerCheckHalfSize = Vector3.zero;
     protected Quaternion _playerCheckRotation = Quaternion.identity;
 
+    protected bool _isCheckTrap;
+
     protected override void Awake()
     {
         base.Awake();
@@ -23,18 +25,27 @@ public abstract class PlayerCheckTrap : InteractableTrap
 
         if (PlayerCheck())
         {
-            if (CoolCheck())
+            if (_isCheckTrap)
             {
                 OnTrap();
             }
+            else
+            {
+                _isCheckTrap = PlayerCheck();
+            }
         }
+    }
+
+    protected override void EndTrap()
+    {
+        base.EndTrap();
+
+        _isCheckTrap = false;
     }
 
     protected bool PlayerCheck()
     {
         Collider[] playerCheck = Physics.OverlapBox(_playerCheckCenter, _playerCheckHalfSize, _playerCheckRotation, _playerLayer);
-
-        Debug.Log(playerCheck.Length);
 
         if (playerCheck.Length > 0)
             return true;
