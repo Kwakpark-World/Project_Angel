@@ -14,6 +14,11 @@ public class DynamiteTrap : HitableTrap
     protected override void StartTrap()
     {
         // 터지는 사운드나 이펙트?
+        Vector3 pos = transform.position;
+        pos.y += 1f;
+
+        EffectManager.Instance.PlayEffect(PoolType.Effect_Trap_Dynamite, pos);
+
         base.StartTrap();
     }
 
