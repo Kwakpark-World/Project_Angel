@@ -31,6 +31,8 @@ public enum SFXType
     Player_MeleeAttack_1,
     Player_MeleeAttack_2,
     Player_MeleeAttack_3,
+    Trap_bomb,
+    Trap_Spike,
 }
 
 [Serializable]
