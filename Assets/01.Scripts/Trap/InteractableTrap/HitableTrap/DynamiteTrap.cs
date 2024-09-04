@@ -14,6 +14,10 @@ public class DynamiteTrap : HitableTrap
     protected override void StartTrap()
     {
         // 터지는 사운드나 이펙트?
+        Vector3 pos = transform.position;
+        pos.y += 1f;
+
+        EffectManager.Instance.PlayEffect(PoolType.Effect_Trap_Dynamite, pos);
 
         base.StartTrap();
     }
@@ -37,7 +41,7 @@ public class DynamiteTrap : HitableTrap
     protected override void SetPlayerRangeParameter()
     {
         _attackCenter = transform.position + center;
-        _attackHalfSize = size / 2;
+        _attackHalfSize = size;
         _attackRotation = transform.rotation * Quaternion.Euler(rotation);
 
         _trapDamage = _damage;

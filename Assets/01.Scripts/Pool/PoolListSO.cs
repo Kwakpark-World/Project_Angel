@@ -36,6 +36,7 @@ public enum PoolType
     Effect_PlayerAttack_Charged_Aura,
     Trap_Dynamite = 3000,
     Trap_Spike,
+    Effect_Trap_Dynamite,
     UI_HealthBar = 4000,
 }
 
