@@ -59,8 +59,6 @@ public class SpikeTrap : PlayerCheckTrap
 
     protected override void PlayTrap()
     {
-        AttackObject();
-
         base.PlayTrap();
     }
 
@@ -100,6 +98,7 @@ public class SpikeTrap : PlayerCheckTrap
     {
         float delta = 0;
         float t = 0;
+        bool isAtk = false;
 
         yield return new WaitForSeconds(delay);
 
@@ -110,8 +109,18 @@ public class SpikeTrap : PlayerCheckTrap
             spearObj.transform.position = Vector3.LerpUnclamped(spearObj.transform.position, targetPos, t);
             delta += Time.deltaTime;
 
+            if (t > 0.5f)
+            {
+                if (!isAtk)
+                {
+                    isAtk = true;
+                    AttackObject();
+                }
+            }
+
             yield return null;
         }
+
 
         DelayActionStop();
         _spikeCoroutine = null;
