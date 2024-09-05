@@ -14,6 +14,7 @@ public class DynamiteTrap : HitableTrap
     protected override void StartTrap()
     {
         // 터지는 사운드나 이펙트?
+        SoundManager.Instance.PlaySFX(SFXType.Trap_bomb);
         Vector3 pos = transform.position;
         pos.y += 1f;
 

@@ -53,7 +53,7 @@ public class SpikeTrap : PlayerCheckTrap
     {
         // 가시 발판 빤짝하기 (나오기 전 나올거라 알림)
         OnSpike();
-
+        SoundManager.Instance.PlaySFX(SFXType.Trap_Spike);
         StartDelayAction(()=> base.StartTrap());
     }
 
@@ -65,7 +65,7 @@ public class SpikeTrap : PlayerCheckTrap
     protected override void EndTrap()
     {
         OffSpike();
-
+        
         StartDelayAction(()=> base.EndTrap());
     }
 
