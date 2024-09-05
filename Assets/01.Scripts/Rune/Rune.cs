@@ -19,6 +19,7 @@ public class Rune : PoolableMono
     private float nearPlayer = 5f;
 
     public ParticleSystem runeParticle;
+    private bool isParticlePlaying = false;
 
     private RuneDataSO _runeData;
     public RuneDataSO RuneData
@@ -49,10 +50,12 @@ public class Rune : PoolableMono
 
         if (distancePlayer <= nearPlayer)
         {
-            if (!RuneManager.Instance.TryEquipRune(RuneData))
+            if (!RuneManager.Instance.TryEquipRune(RuneData) || isParticlePlaying)
             {
                 return;
             }
+
+            isParticlePlaying = true; // 파티클 실행 중으로 설정
 
             StopAllCoroutines();
 
@@ -61,7 +64,6 @@ public class Rune : PoolableMono
             // 파티클이 끝난 후 실행될 코루틴 시작
             StartCoroutine(WaitForParticleToFinish());
         }
-        /* CameraManager.Instance.StopZoomCam();*/
     }
 
     private IEnumerator WaitForParticleToFinish()
@@ -72,9 +74,12 @@ public class Rune : PoolableMono
             Debug.Log("실행중");
             yield return null;
         }
+
         GameManager.Instance.PlayerInstance.BuffCompo.PlayBuff(_runeData.buffType);
         transform.Find(_runeData.name).gameObject.SetActive(false);
         PoolManager.Instance.Push(this);
+
+        isParticlePlaying = false; // 파티클 실행 종료로 설정
     }
 
     public override void InitializePoolItem()
