@@ -5,28 +5,28 @@ using UnityEngine;
 public class PlayerWalkState : PlayerGroundState
 {
     // Movement
-    private float   _movementMultiplier                       = 30.0f;
+    private float _movementMultiplier = 30.0f;
 
     // Stair
-    private int     _numberOfStepDetectRays                 = 0;
-    private float   _maxStepHeight                          = 0.5f;
-    private float   _minStepDepth                           = 0.3f;
-    private float   _stairHeightPaddingMultiplier           = 0.3f;
-    private float   _firstStepVelocityDistanceMultiplier    = 0.1f;
-    private float   _ascendingStairsMovementMultiplier      = 0.35f;
-    private float   _descendingStairsMovementMultiplier     = 0.7f;
-    private float   _maximumAngleOfApproachToAscend         = 360.0f;
-    private float   _playerHalfHeightToGround               = 0.0f;
-    private float   _maxAscendRayDistance                   = 0.0f;
-    private float   _maxDescnedRayDistance                  = 0.0f;
-    private float   _rayIncrementAmount                     = 0.0f;
-    private bool    _isFirstStep                            = true;
-    private bool    _isPlayerAscendingStairs                = false;
-    private bool    _isPlayerDescendingStairs               = false;
+    private int _numberOfStepDetectRays = 0;
+    private float _maxStepHeight = 0.5f;
+    private float _minStepDepth = 0.3f;
+    private float _stairHeightPaddingMultiplier = 0.2f;
+    private float _firstStepVelocityDistanceMultiplier = 0.025f;
+    private float _ascendingStairsMovementMultiplier = 0.35f;
+    private float _descendingStairsMovementMultiplier = 0.7f;
+    private float _maximumAngleOfApproachToAscend = 360.0f;
+    private float _playerHalfHeightToGround = 0.0f;
+    private float _maxAscendRayDistance = 0.0f;
+    private float _maxDescnedRayDistance = 0.0f;
+    private float _rayIncrementAmount = 0.0f;
+    private bool _isFirstStep = true;
+    private bool _isPlayerAscendingStairs = false;
+    private bool _isPlayerDescendingStairs = false;
 
     // other
-    private float   _gravityGrounded                        = -1.0f;
-    private float   _maxSlopeAngle                          = 47.5f;
+    private float _gravityGrounded = -1.0f;
+    private float _maxSlopeAngle = 47.5f;
 
 
     public PlayerWalkState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -38,8 +38,8 @@ public class PlayerWalkState : PlayerGroundState
     {
         base.Enter();
 
-        _maxAscendRayDistance = _maxStepHeight / Mathf.Cos(_maximumAngleOfApproachToAscend * Mathf.Deg2Rad);
-        _maxDescnedRayDistance = _maxStepHeight / Mathf.Cos(80.0f  * Mathf.Deg2Rad);
+        _maxAscendRayDistance = _maxStepHeight / Mathf.Cos(_maximumAngleOfApproachToAscend * Mathf.Deg2Rad) * 0.25f;
+        _maxDescnedRayDistance = _maxStepHeight / Mathf.Cos(80.0f * Mathf.Deg2Rad);
 
         _numberOfStepDetectRays = Mathf.RoundToInt(((_maxStepHeight * 100.0f) * 0.5f) + 1.0f);
         _rayIncrementAmount = _maxStepHeight / _numberOfStepDetectRays;
@@ -103,7 +103,7 @@ public class PlayerWalkState : PlayerGroundState
             _player.PlayerStatData.moveSpeed.SetDefalutValue(backMoveSpeedAdd);
         else
             _player.PlayerStatData.moveSpeed.SetDefalutValue(_player.defaultMoveSpeed);
-        
+
         moveDir = (Quaternion.Euler(0, CameraManager.Instance.GetCameraByType(CameraType.PlayerCam).transform.eulerAngles.y, 0) * moveDir).normalized;
         moveDir *= _player.PlayerStatData.GetMoveSpeed();
 
@@ -126,7 +126,7 @@ public class PlayerWalkState : PlayerGroundState
         //    calculatedStepInput = DescendStairs(calculatedStepInput, moveDir);
         //}
 
-        return calculatedStepInput; 
+        return calculatedStepInput;
     }
 
     private Vector3 AscendStairs(Vector3 calculatedStepInput, Vector3 moveDir)
@@ -159,7 +159,8 @@ public class PlayerWalkState : PlayerGroundState
                 Physics.Raycast(rayUpper, _player.transform.forward, out hitUpper, calculatedVelDistance + (_maxAscendRayDistance * 2.0f), _player.whatIsStair);
                 if (!hitUpper.collider || (hitUpper.distance - raysThatHit[0].distance) > _minStepDepth)
                 {
-                    if (Vector3.Angle(raysThatHit[0].normal, -_rigidbody.transform.TransformDirection(moveDir)) <= _maximumAngleOfApproachToAscend){
+                    if (Vector3.Angle(raysThatHit[0].normal, -_rigidbody.transform.TransformDirection(moveDir)) <= _maximumAngleOfApproachToAscend)
+                    {
                         Debug.DrawRay(rayUpper, _player.transform.forward * (calculatedVelDistance + (_maxAscendRayDistance * 2.0f)), Color.red, 5.0f);
 
                         _isPlayerAscendingStairs = true;
