@@ -15,19 +15,26 @@ public class RuneSpawn : MonoBehaviour
         spawnCount = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        RuneSpawner();
+        RuneSpawner(); 
     }
 
     void RuneSpawner()
     {
-        if (spawnCount < _runeSpawnTrm.Length)
+        if(_runeSpawnTrm != null)
         {
-            RuneManager.Instance.SpawnRune(_runeSpawnTrm[spawnCount].position);
+            for(spawnCount = 0; spawnCount <= _runeSpawnTrm.Length; spawnCount++)
+            {
+                if (spawnCount >= _runeSpawnTrm.Length)
+                {
+                    break;
+                }
 
-            spawnCount++;
+                RuneManager.Instance.SpawnRune(_runeSpawnTrm[spawnCount].position);
+
+                Debug.Log("Rune Successfully Spanwed" + spawnCount);
+            }
         }
     }
 }
