@@ -63,11 +63,11 @@ public class PlayerHUD : MonoBehaviour
     {
         if (!isAwaken)
         {
-            _dashSkillIconImage.sprite = !PlayerReference.BuffCompo.GetBuffState(BuffType.Rune_Dash_1) ? _dashSkillNormalRollIcon : _dashSkillNormalDashIcon;
+            _dashSkillIconImage.sprite = !PlayerReference.BuffCompo.GetBuffState(BuffType.Rune_Dash_Hermes) ? _dashSkillNormalRollIcon : _dashSkillNormalDashIcon;
         }
         else
         {
-            _dashSkillIconImage.sprite = !PlayerReference.BuffCompo.GetBuffState(BuffType.Rune_Dash_1) ? _dashSkillAwakenRollIcon : _dashSkillAwakenDashIcon;
+            _dashSkillIconImage.sprite = !PlayerReference.BuffCompo.GetBuffState(BuffType.Rune_Dash_Hermes) ? _dashSkillAwakenRollIcon : _dashSkillAwakenDashIcon;
         }
     }
 
