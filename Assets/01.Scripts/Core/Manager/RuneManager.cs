@@ -16,7 +16,7 @@ public class RuneManager : MonoSingleton<RuneManager>
     public int EquipableRuneAmount { get; private set; }
     private BuffType buffType;
 
-    private List<RuneDataSO> _equipedRunes = Enumerable.Repeat<RuneDataSO>(null, 5).ToList();
+    private List<RuneDataSO> _equipedRunes = Enumerable.Repeat<RuneDataSO>(null, 4).ToList();
     private BuffType _synergizeRuneType;
 
     private List<Rune> _runes;
