@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,7 @@ public class RuneManager : MonoSingleton<RuneManager>
         _runeList.list.Remove(runeData);
     }
 
-    //�̰� �Ա�
+    //이게 먹기
     public bool TryEquipRune(RuneDataSO runeData)
     {
         if (!runeData)
@@ -141,70 +141,70 @@ public class RuneManager : MonoSingleton<RuneManager>
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
-        if (runeType == BuffType.Rune_Dash_1)
+        if (runeType == BuffType.Rune_Dash_Hermes)
         {
             playerInstance.isRollToDash = isOn;
         }
-        if (runeType == BuffType.Rune_Dash_2)
+        if (runeType == BuffType.Rune_Dash_Hermóðr)
         {
             playerInstance.isRollAttack = isOn;
         }
-        if (runeType == BuffType.Rune_Dash_3)
+        if (runeType == BuffType.Rune_Dash_Horus)
         {
             playerInstance.isRollKnockback = isOn;
         }
-        if (runeType == BuffType.Rune_Dash_4)
+        if (runeType == BuffType.Rune_Dash_Gabriel)
         {
             playerInstance.isRollOnceMore = isOn;
         }
 
-        if (runeType == BuffType.Rune_Slam_1)
+        if (runeType == BuffType.Rune_Slam_Cronus)
         {
             playerInstance.isSlamEarthquake = isOn;
         }
-        if (runeType == BuffType.Rune_Slam_2)
+        if (runeType == BuffType.Rune_Slam_Thor)
         {
             playerInstance.isSlamStatic = isOn;
         }
-        if (runeType == BuffType.Rune_Slam_3)
+        if (runeType == BuffType.Rune_Slam_Geb)
         {
             playerInstance.isSlamFloorEnd = isOn;
         }
-        if (runeType == BuffType.Rune_Slam_4)
+        if (runeType == BuffType.Rune_Slam_Uriel)
         {
             playerInstance.isSlamSixTimeSlam = isOn;
         }
 
-        if (runeType == BuffType.Rune_Whirlwind_1)
+        if (runeType == BuffType.Rune_Whirlwind_Hades)
         {
             playerInstance.isWhirlwindShockWave = isOn;
         }
-        if (runeType == BuffType.Rune_Whirlwind_2)
+        if (runeType == BuffType.Rune_Whirlwind_Víðarr)
         {
             playerInstance.isWhirlwindMoveAble = isOn;
         }
-        if (runeType == BuffType.Rune_Whirlwind_3)
+        if (runeType == BuffType.Rune_Whirlwind_Anubis)
         {
             playerInstance.isWhirlwindPullEnemies = isOn;
         }
-        if (runeType == BuffType.Rune_Whirlwind_4)
+        if (runeType == BuffType.Rune_Whirlwind_Sariel)
         {
             playerInstance.isWhirlwindRangeUp = isOn;
         }
 
-        if (runeType == BuffType.Rune_Charge_1)
+        if (runeType == BuffType.Rune_Charge_Ares)
         {
             playerInstance.isChargingTripleSting = isOn;
         }
-        if (runeType == BuffType.Rune_Charge_2)
+        if (runeType == BuffType.Rune_Charge_Týr)
         {
             playerInstance.isChargingMultipleSting = isOn;
         }
-        if (runeType == BuffType.Rune_Charge_3)
+        if (runeType == BuffType.Rune_Charge_Neith)
         {
             playerInstance.isChargingSlashOnceMore = isOn;
         }
-        if (runeType == BuffType.Rune_Charge_4)
+        if (runeType == BuffType.Rune_Charge_Michael)
         {
             playerInstance.isChargingSwordAura = isOn;
         }

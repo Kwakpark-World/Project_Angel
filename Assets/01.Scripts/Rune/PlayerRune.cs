@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,19 +15,19 @@ public class PlayerRune : MonoBehaviour
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
-        if (buffType == BuffType.Rune_Dash_1)
+        if (buffType == BuffType.Rune_Dash_Hermes)
         {
             playerInstance.isRollToDash = true;
         }
-        if (buffType == BuffType.Rune_Dash_2)
+        if (buffType == BuffType.Rune_Dash_Hermóðr)
         {
             playerInstance.isRollAttack = true;
         }
-        if (buffType == BuffType.Rune_Dash_3)
+        if (buffType == BuffType.Rune_Dash_Horus)
         {
             playerInstance.isRollKnockback = true;
         }
-        if (buffType == BuffType.Rune_Dash_4)
+        if (buffType == BuffType.Rune_Dash_Gabriel)
         {
             playerInstance.isRollOnceMore = true;
         }
@@ -37,19 +37,19 @@ public class PlayerRune : MonoBehaviour
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
-        if (buffType == BuffType.Rune_Charge_1)
+        if (buffType == BuffType.Rune_Charge_Ares)
         {
             playerInstance.isChargingTripleSting = true;
         }
-        if (buffType == BuffType.Rune_Charge_2)
+        if (buffType == BuffType.Rune_Charge_Týr)
         {
             playerInstance.isChargingMultipleSting = true;
         }
-        if (buffType == BuffType.Rune_Charge_3)
+        if (buffType == BuffType.Rune_Charge_Neith)
         {
             playerInstance.isChargingSlashOnceMore = true;
         }
-        if (buffType == BuffType.Rune_Charge_4)
+        if (buffType == BuffType.Rune_Charge_Michael)
         {
             playerInstance.isChargingSwordAura = true;
         }
@@ -59,19 +59,19 @@ public class PlayerRune : MonoBehaviour
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
-        if (buffType == BuffType.Rune_Slam_1)
+        if (buffType == BuffType.Rune_Slam_Cronus)
         {
             playerInstance.isSlamEarthquake = true;
         }
-        if (buffType == BuffType.Rune_Slam_2)
+        if (buffType == BuffType.Rune_Slam_Thor)
         {
             playerInstance.isSlamStatic = true;
         }
-        if (buffType == BuffType.Rune_Slam_3)
+        if (buffType == BuffType.Rune_Slam_Geb)
         {
             playerInstance.isSlamFloorEnd = true;
         }
-        if (buffType == BuffType.Rune_Slam_4)
+        if (buffType == BuffType.Rune_Slam_Uriel)
         {
             playerInstance.isSlamSixTimeSlam = true;
         }
@@ -81,19 +81,19 @@ public class PlayerRune : MonoBehaviour
     {
         var playerInstance = GameManager.Instance.PlayerInstance;
 
-        if (buffType == BuffType.Rune_Whirlwind_1)
+        if (buffType == BuffType.Rune_Whirlwind_Hades)
         {
             playerInstance.isWhirlwindShockWave = true;
         }
-        if (buffType == BuffType.Rune_Whirlwind_2)
+        if (buffType == BuffType.Rune_Whirlwind_Víðarr)
         {
             playerInstance.isWhirlwindMoveAble = true;
         }
-        if (buffType == BuffType.Rune_Whirlwind_3)
+        if (buffType == BuffType.Rune_Whirlwind_Anubis)
         {
             playerInstance.isWhirlwindPullEnemies = true;
         }
-        if (buffType == BuffType.Rune_Whirlwind_4)
+        if (buffType == BuffType.Rune_Whirlwind_Sariel)
         {
             playerInstance.isWhirlwindRangeUp = true;
         }
