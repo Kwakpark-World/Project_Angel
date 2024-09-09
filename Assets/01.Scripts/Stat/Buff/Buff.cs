@@ -212,21 +212,269 @@ public class Buff : MonoBehaviour
     #endregion
 
     #region Rune Buffs
-    public void BeginDash1()
+    #region Dash Functions
+    public void BeginDashHermes()
     {
         if (_isPlayer)
         {
-            UIManager.Instance.PlayerHUDProperty.ChangeSkillIcon(_ownerController.IsAwakened);
+            _ownerController.isRollKnockback = true;
         }
     }
 
-    public void EndDash1()
+    public void BeginDashHermóðr()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isRollAttack = true;
+        }
+    }
+
+    public void BeginDashHorus()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isRollOnceMore = true;
+        }
+    }
+
+    public void BeginDashGabriel()
     {
         if (_isPlayer)
         {
             UIManager.Instance.PlayerHUDProperty.ChangeSkillIcon(_ownerController.IsAwakened);
+
+            _ownerController.isRollToDash = true;
         }
     }
+    public void EndDashHermes()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isRollKnockback = false;
+        }
+    }
+
+    public void EndDashHermóðr()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isRollAttack = false;
+        }
+    }
+
+    public void EndDashHorus()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isRollOnceMore = false;
+        }
+    }
+
+    public void EndDashGabriel()
+    {
+        if (_isPlayer)
+        {
+            UIManager.Instance.PlayerHUDProperty.ChangeSkillIcon(_ownerController.IsAwakened);
+
+            _ownerController.isRollToDash = false;
+        }
+    }
+    #endregion
+
+    #region Charge Functions
+    public void BeginChargeAres()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isChargingMultipleSting = true;
+        }
+    }
+
+    public void BeginChargeTýr()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isChargingSlashOnceMore = true;
+        }
+    }
+
+    public void BeginChargeNeith()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isChargingSwordAura = true;
+        }
+    }
+
+    public void BeginChargeMichael()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isChargingTripleSting = true;
+        }
+    }
+    public void EndChargeAres()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isChargingMultipleSting = false;
+        }
+    }
+
+    public void EndChargeTýr()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isChargingSlashOnceMore = false;
+        }
+    }
+
+    public void EndChargeNeith()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isChargingSwordAura = false;
+        }
+    }
+
+    public void EndChargeMichael()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isChargingTripleSting = false;
+        }
+    }
+    #endregion
+
+    #region Slam Functions
+    public void BeginSlamCronus()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isSlamEarthquake = true;
+        }
+    }
+
+    public void BeginSlamThor()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isSlamStatic = true;
+        }
+    }
+
+    public void BeginSlamGeb()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isSlamFloorEnd = true;
+        }
+    }
+
+    public void BeginSlamUriel()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isSlamSixTimeSlam = true;
+        }
+    }
+    public void EndSlamCronus()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isSlamEarthquake = false;
+        }
+    }
+
+    public void EndSlamThor()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isSlamStatic = false;
+        }
+    }
+
+    public void EndSlamGeb()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isSlamFloorEnd = false;
+        }
+    }
+
+    public void EndSlamUriel()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isSlamSixTimeSlam = false;
+        }
+    }
+    #endregion
+
+    #region Whirlwind Functions
+    public void BeginWhirlwindHades()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isWhirlwindPullEnemies = true;
+        }
+    }
+
+    public void BeginWhirlwindVíðarr()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isWhirlwindShockWave = true;
+        }
+    }
+
+    public void BeginWhirlwindAnubis()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isWhirlwindMoveAble = true;
+        }
+    }
+
+    public void BeginWhirlwindSariel()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isWhirlwindRangeUp = true;
+        }
+    }
+    public void EndWhirlwindHades()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isWhirlwindPullEnemies = false;
+        }
+    }
+
+    public void EndWhirlwindVíðarr()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isWhirlwindShockWave = false;
+        }
+    }
+
+    public void EndWhirlwindAnubis()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isWhirlwindMoveAble = false;
+        }
+    }
+
+    public void EndWhirlwindSariel()
+    {
+        if (_isPlayer)
+        {
+            _ownerController.isWhirlwindRangeUp = false;
+        }
+    }
+    #endregion
     #endregion
 
     #region Potion Buffs

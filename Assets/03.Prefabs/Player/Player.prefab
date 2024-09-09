@@ -5656,7 +5656,6 @@ GameObject:
   - component: {fileID: 5173864762241979809}
   - component: {fileID: 8523927444897520135}
   - component: {fileID: 6385291853889329438}
-  - component: {fileID: 8611719584220610114}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -5962,20 +5961,552 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - buffType: 100
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginDashHermes
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndDashHermes
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 101
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: "BeginDashHerm\xF3\xF0r"
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: "EndDashHerm\xF3\xF0r"
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 102
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginDashHorus
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndDashHorus
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 103
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginDashGabriel
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndDashGabriel
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 200
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginChargeAres
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginChargeAres
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 201
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: "BeginChargeT\xFDr"
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: "EndChargeT\xFDr"
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 202
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginChargeNeith
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndChargeNeith
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 203
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginChargeMichael
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndChargeMichael
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 300
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginSlamCronus
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndSlamCronus
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 301
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginSlamThor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndSlamThor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 302
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginSlamGeb
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndSlamGeb
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 303
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginSlamUriel
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndSlamUriel
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 400
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginWhirlwindHades
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndWhirlwindHades
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 401
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: "BeginWhirlwindV\xED\xF0arr"
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: "EndWhirlwindV\xED\xF0arr"
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 402
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginWhirlwindAnubis
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndWhirlwindAnubis
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - buffType: 403
+    onBuffBegin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: BeginWhirlwindSariel
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onBuffPlaying:
+      m_PersistentCalls:
+        m_Calls: []
+    onBuffEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6385291853889329438}
+          m_TargetAssemblyTypeName: Buff, Assembly-CSharp
+          m_MethodName: EndWhirlwindSariel
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   <BuffStatData>k__BackingField: {fileID: 11400000, guid: 9fd5fa67e15e35a4a925ad745e471d17,
     type: 2}
---- !u!114 &8611719584220610114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1494236958258072100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47156611c506ed4abba52cc082c5d6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1534901178157195354
 GameObject:
   m_ObjectHideFlags: 0

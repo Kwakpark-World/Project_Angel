@@ -46,11 +46,16 @@ public class Rune : PoolableMono
 
     private void Interactive()
     {
+        if (isParticlePlaying)
+        {
+            return;
+        }
+
         float distancePlayer = Vector3.Distance(gameObject.transform.position, GameManager.Instance.PlayerInstance.transform.position);
 
         if (distancePlayer <= nearPlayer)
         {
-            if (!RuneManager.Instance.TryEquipRune(RuneData) || isParticlePlaying)
+            if (!RuneManager.Instance.TryEquipRune(RuneData))
             {
                 return;
             }
@@ -58,7 +63,6 @@ public class Rune : PoolableMono
             isParticlePlaying = true; // 파티클 실행 중으로 설정
 
             StopAllCoroutines();
-
             runeParticle.Play();
 
             // 파티클이 끝난 후 실행될 코루틴 시작
