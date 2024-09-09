@@ -21,6 +21,14 @@ public class RuneManager : MonoSingleton<RuneManager>
 
     private List<Rune> _runes;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SpawnRune(GameManager.Instance.PlayerInstance.transform.forward * 3);
+        }
+    }
+
     public void SetRuneList(RuneListSO list)
     {
         _runeList = list;
